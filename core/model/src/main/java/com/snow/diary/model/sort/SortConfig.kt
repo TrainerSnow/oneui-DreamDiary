@@ -2,8 +2,8 @@ package com.snow.diary.model.sort
 
 data class SortConfig(
 
-    val mode: SortMode,
+    val mode: SortMode = SortMode.None,
 
-    val direction: SortDirection
+    val direction: SortDirection = SortDirection.Unspecified
 
 )
