@@ -18,3 +18,5 @@ rootProject.name = "oneui-dream_diary"
 include(":app")
 include(":core:database")
 include(":core:model")
+include(":core:data")
+include(":core:common")

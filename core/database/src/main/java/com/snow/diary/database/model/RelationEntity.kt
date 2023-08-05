@@ -17,7 +17,15 @@ data class RelationEntity(
 
     val color: Color
 
-)
+) {
+
+    constructor(relation: Relation) : this(
+        relation.id,
+        relation.name,
+        relation.color
+    )
+
+}
 
 val RelationEntity.asModel: Relation
     get() = Relation(id, name, color)

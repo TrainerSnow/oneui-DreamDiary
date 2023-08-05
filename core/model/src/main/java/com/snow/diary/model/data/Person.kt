@@ -6,7 +6,7 @@ data class Person(
 
     val name: String,
 
-    val relationId: String,
+    val relationId: Long,
 
     val notes: String?
 )

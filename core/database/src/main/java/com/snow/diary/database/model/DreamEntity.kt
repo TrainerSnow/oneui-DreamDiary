@@ -24,7 +24,19 @@ data class DreamEntity(
     val clearness: Float?,
 
     val happiness: Float?
-)
+){
+
+    constructor(dream: Dream) : this(
+        dream.id,
+        dream.description,
+        dream.note,
+        dream.created,
+        dream.updated,
+        dream.clearness,
+        dream.happiness
+    )
+
+}
 
 val DreamEntity.asModel: Dream
     get() = Dream(

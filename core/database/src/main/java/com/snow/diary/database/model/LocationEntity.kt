@@ -18,7 +18,16 @@ data class LocationEntity(
     val coordinates: PointF,
 
     val notes: String
-)
+){
+
+    constructor(location: Location) : this(
+        location.id,
+        location.name,
+        location.coordinates,
+        location.notes
+    )
+
+}
 
 val LocationEntity.asModel: Location
     get() = Location(id, name, coordinates, notes)

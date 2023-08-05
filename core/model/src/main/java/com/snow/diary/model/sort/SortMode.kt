@@ -14,6 +14,8 @@ enum class SortMode {
 
     Relation,
 
-    Length
+    Length,
+
+    None
 
 }
