@@ -3,6 +3,7 @@ package com.snow.diary.database.model
 import android.graphics.Color
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.snow.diary.model.data.Relation
 
 @Entity(
     tableName = "person_relation"
@@ -17,3 +18,6 @@ data class RelationEntity(
     val color: Color
 
 )
+
+val RelationEntity.asModel: Relation
+    get() = Relation(id, name, color)

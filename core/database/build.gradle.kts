@@ -47,4 +47,6 @@ dependencies {
     implementation(libs.androidx.room.ktx)
 
     implementation(libs.org.jetbrains.kotlinx.coroutines.core)
+
+    implementation(project(":core:model"))
 }

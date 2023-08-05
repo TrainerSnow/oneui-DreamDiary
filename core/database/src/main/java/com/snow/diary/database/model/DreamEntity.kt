@@ -2,6 +2,7 @@ package com.snow.diary.database.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.snow.diary.model.data.Dream
 import java.util.Date
 
 @Entity(
@@ -24,3 +25,8 @@ data class DreamEntity(
 
     val happiness: Float?
 )
+
+val DreamEntity.asModel: Dream
+    get() = Dream(
+        id, description, note, created, updated, clearness, happiness
+    )
