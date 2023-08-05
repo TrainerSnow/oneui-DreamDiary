@@ -2,7 +2,7 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.kotlinAndroid)
-    alias(libs.plugins.com.google.devtools.ksp)
+    id("kotlin-kapt")
     alias(libs.plugins.com.google.dagger.hilt.android)
 }
 
@@ -40,10 +40,11 @@ dependencies {
     implementation(libs.core.ktx)
 
     implementation(libs.com.google.dagger.hilt.android)
-    ksp(libs.com.google.dagger.hilt.android.compiler)
+    kapt(libs.com.google.dagger.hilt.android.compiler)
 
     implementation(libs.org.jetbrains.kotlinx.coroutines.core)
 
     implementation(project(":core:model"))
     implementation(project(":core:database"))
+    implementation(project(":core:common"))
 }
