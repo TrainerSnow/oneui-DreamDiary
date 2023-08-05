@@ -45,4 +45,6 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
+
+    implementation(libs.org.jetbrains.kotlinx.coroutines.core)
 }

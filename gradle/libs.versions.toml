@@ -13,6 +13,7 @@ material = "1.8.0"
 ksp = "1.9.0-1.0.11"
 dagger_hilt = "2.44"
 room = "2.5.2"
+coroutines = "1.7.3"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -36,6 +37,7 @@ com-google-dagger-hilt-android-compiler = { group = "com.google.dagger", name = 
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+org-jetbrains-kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx.coroutines", name = "core", version.ref = "coroutines" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
