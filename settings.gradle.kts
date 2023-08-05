@@ -17,3 +17,4 @@ dependencyResolutionManagement {
 rootProject.name = "oneui-dream_diary"
 include(":app")
 include(":core:database")
+include(":core:model")
