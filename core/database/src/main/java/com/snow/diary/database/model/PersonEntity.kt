@@ -24,10 +24,19 @@ data class PersonEntity(
 
     val name: String,
 
-    val relationId: String,
+    val relationId: Long,
 
     val notes: String?
-)
+) {
+
+    constructor(person: Person) : this(
+        person.id,
+        person.name,
+        person.relationId,
+        person.notes
+    )
+
+}
 
 val PersonEntity.asModel: Person
     get() = Person(id, name, relationId, notes)
