@@ -3,6 +3,7 @@ package com.snow.diary.database.model
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.snow.diary.model.data.Person
 import java.util.UUID
 
 @Entity(
@@ -27,3 +28,6 @@ data class PersonEntity(
 
     val notes: String?
 )
+
+val PersonEntity.asModel: Person
+    get() = Person(id, name, relationId, notes)
