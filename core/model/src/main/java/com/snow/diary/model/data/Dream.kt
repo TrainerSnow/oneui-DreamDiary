@@ -1,6 +1,6 @@
 package com.snow.diary.model.data
 
-import java.util.Date
+import java.time.LocalDate
 
 data class Dream(
 
@@ -10,9 +10,9 @@ data class Dream(
 
     val note: String?,
 
-    val created: Date,
+    val created: LocalDate,
 
-    val updated: Date,
+    val updated: LocalDate,
 
     val clearness: Float?,
 

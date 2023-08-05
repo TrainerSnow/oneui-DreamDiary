@@ -2,7 +2,6 @@ package com.snow.diary.database.type;
 
 import android.graphics.Color
 import androidx.room.TypeConverter
-import java.util.Date
 
 class ColorConverter {
 

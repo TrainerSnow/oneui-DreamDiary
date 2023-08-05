@@ -3,7 +3,7 @@ package com.snow.diary.database.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.snow.diary.model.data.Dream
-import java.util.Date
+import java.time.LocalDate
 
 @Entity(
     tableName = "dream"
@@ -17,9 +17,9 @@ data class DreamEntity(
 
     val note: String?,
 
-    val created: Date,
+    val created: LocalDate,
 
-    val updated: Date,
+    val updated: LocalDate,
 
     val clearness: Float?,
 
