@@ -13,9 +13,12 @@ room = "2.5.2"
 coroutines = "1.7.3"
 org-jetbrains-kotlin-jvm = "1.9.0"
 foundation = "1.6.0-alpha03" # For some reason, this needs to be the same version as the one in the lib. I don't know why.
+oneui_icons = "1.1.0"
 
 [libraries]
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+
+oneui-icons = { group = "io.github.oneuiproject", name = "icons", version.ref = "oneui_icons" }
 
 compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 compose-material = { group = "androidx.compose.material", name = "material" }
