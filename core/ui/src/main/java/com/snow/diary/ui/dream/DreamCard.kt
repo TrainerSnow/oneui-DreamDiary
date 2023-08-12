@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.snow.diary.common.removeLineBreaks
 import com.snow.diary.common.time.TimeFormat.formatFullDescription
+import com.snow.diary.common.util.ListPosition
 import com.snow.diary.model.data.Dream
 import com.snow.diary.ui.R
 import com.snow.diary.ui.param.DreamParamProvider
@@ -34,11 +35,12 @@ import java.time.LocalDate
 import java.time.Period
 import dev.oneuiproject.oneui.R as IconR
 
-//TODO: When https://github.com/TrainerSnow/oneui-compose/issues/26 is resolved, option for "last", "first" or "middle" for displaying in list
 @Composable
 fun DreamCard(
     modifier: Modifier = Modifier,
     dream: Dream,
+    //TODO: When https://github.com/TrainerSnow/oneui-compose/issues/26 is resolved, use this param to style the component
+    listPosition: ListPosition = ListPosition.Middle,
     onClick: (() -> Unit)? = null,
     onFavouriteClick: (() -> Unit)? = null
 ) {
