@@ -8,15 +8,18 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.snow.diary.common.removeLineBreaks
@@ -38,7 +41,6 @@ import dev.oneuiproject.oneui.R as IconR
 fun DreamCard(
     modifier: Modifier = Modifier,
     dream: Dream,
-    //TODO: When https://github.com/TrainerSnow/oneui-compose/issues/26 is resolved, use this param to style the component
     listPosition: ListPosition = ListPosition.Middle,
     onClick: (() -> Unit)? = null,
     onFavouriteClick: (() -> Unit)? = null
@@ -63,7 +65,8 @@ fun DreamCard(
 
     RoundedCornerBox(
         onClick = onClick,
-        modifier = modifier
+        modifier = modifier,
+        shape = shapeForListPos(26.dp, listPosition)
     ) {
         Column(
             modifier = Modifier
@@ -142,6 +145,19 @@ fun DreamCard(
             }
         }
     }
+}
+
+private fun shapeForListPos(dp: Dp, listPosition: ListPosition): Shape = when (listPosition) {
+    ListPosition.First -> RoundedCornerShape(
+        topStart = dp, topEnd = dp
+    )
+    ListPosition.Middle -> RoundedCornerShape(size = 0.dp)
+    ListPosition.Last -> RoundedCornerShape(
+        bottomStart = dp, bottomEnd = dp
+    )
+    ListPosition.Single -> RoundedCornerShape(
+        dp
+    )
 }
 
 private object DreamCardDefaults {
