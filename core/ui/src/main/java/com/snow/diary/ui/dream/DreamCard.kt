@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -13,7 +15,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -32,6 +37,7 @@ import org.oneui.compose.base.Icon
 import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.util.OneUIPreview
 import org.oneui.compose.widgets.box.RoundedCornerBox
+import org.oneui.compose.widgets.box.RoundedCornerBoxDefaults
 import org.oneui.compose.widgets.buttons.IconButton
 import java.time.LocalDate
 import java.time.Period
@@ -63,9 +69,29 @@ fun DreamCard(
         fontSize = 10.sp
     )
 
+    val strokeColor = OneUITheme.colors.seslListDividerColor
+    val padding = RoundedCornerBoxDefaults.padding
+    val ld = LocalLayoutDirection.current
     RoundedCornerBox(
         onClick = onClick,
-        modifier = modifier,
+        padding = padding,
+        modifier = modifier.drawWithContent {
+            drawContent()
+            if (listPosition == ListPosition.Middle || listPosition == ListPosition.First) {
+                drawLine(
+                    color = strokeColor,
+                    start = Offset(
+                        x = padding.calculateStartPadding(ld).toPx(),
+                        y = size.height
+                    ),
+                    end = Offset(
+                        x = size.width - padding.calculateEndPadding(ld).toPx(),
+                        y = size.height
+                    ),
+                    strokeWidth = DreamCardDefaults.borderStrokeWidth
+                )
+            }
+        },
         shape = shapeForListPos(26.dp, listPosition)
     ) {
         Column(
@@ -171,6 +197,8 @@ private object DreamCardDefaults {
     val updatedIconSpacing = 8.dp
 
     const val maxLinesDesc = 3
+
+    const val borderStrokeWidth = 4F
 
 }
 
