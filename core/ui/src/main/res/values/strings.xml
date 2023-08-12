@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="dreamcard_time_passed">%s days ago</string>
+    <string name="dreamcard_time_passed_placeholder">Today</string>
+    <string name="dreamcard_updated">Updated %s days ago</string>
+
+</resources>
