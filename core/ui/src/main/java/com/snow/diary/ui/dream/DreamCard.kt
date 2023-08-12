@@ -17,7 +17,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.snow.diary.common.removeLineBreaks
@@ -25,7 +24,7 @@ import com.snow.diary.common.time.TimeFormat.formatFullDescription
 import com.snow.diary.common.util.ListPosition
 import com.snow.diary.model.data.Dream
 import com.snow.diary.ui.R
-import com.snow.diary.ui.param.DreamParamProvider
+import com.snow.diary.ui.data.DreamPreviewData
 import org.oneui.compose.base.Icon
 import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.util.OneUIPreview
@@ -161,17 +160,12 @@ private object DreamCardDefaults {
 
 @Preview
 @Composable
-fun DreamCardPreview(
-    @PreviewParameter(
-        DreamParamProvider::class,
-        1
-    ) dream: Dream
-) = OneUIPreview(
+fun DreamCardPreview() = OneUIPreview(
     title = "DreamCard",
     padding = PaddingValues()
 ) {
     DreamCard(
-        dream = dream,
+        dream = DreamPreviewData.dreams.first(),
         onClick = { }
     )
 }

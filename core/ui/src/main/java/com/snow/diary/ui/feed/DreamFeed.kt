@@ -2,6 +2,7 @@ package com.snow.diary.ui.feed
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.snow.diary.common.util.ListPosition
@@ -26,7 +26,7 @@ import com.snow.diary.model.sort.SortConfig
 import com.snow.diary.model.sort.SortMode
 import com.snow.diary.ui.R
 import com.snow.diary.ui.dream.DreamCard
-import com.snow.diary.ui.param.DreamsParamProvider
+import com.snow.diary.ui.data.DreamPreviewData
 import org.oneui.compose.base.Icon
 import org.oneui.compose.base.IconView
 import org.oneui.compose.base.iconColors
@@ -360,7 +360,7 @@ sealed class DreamFeedState {
 @Composable
 private fun DreamFeedEmpty(
 
-) = OneUIPreview(title = "DreamFeedEmpty") {
+) = OneUIPreview(title = "DreamFeedEmpty", padding = PaddingValues()) {
     DreamFeed(
         state = DreamFeedState.Empty,
         onDreamClick = { },
@@ -372,7 +372,7 @@ private fun DreamFeedEmpty(
 @Composable
 private fun DreamFeedError(
 
-) = OneUIPreview(title = "DreamFeedError") {
+) = OneUIPreview(title = "DreamFeedError", padding = PaddingValues()) {
     DreamFeed(
         state = DreamFeedState.Error(
             msg = "ErrorCode[404]"
@@ -386,7 +386,7 @@ private fun DreamFeedError(
 @Composable
 private fun DreamFeedLoading(
 
-) = OneUIPreview(title = "DreamFeedLoading") {
+) = OneUIPreview(title = "DreamFeedLoading", padding = PaddingValues()) {
     DreamFeed(
         state = DreamFeedState.Loading,
         onDreamClick = { },
@@ -396,15 +396,10 @@ private fun DreamFeedLoading(
 
 @Preview
 @Composable
-private fun DreamFeedSuccess(
-    @PreviewParameter(
-        provider = DreamsParamProvider::class,
-        limit = 1
-    ) dreams: List<Dream>
-) = OneUIPreview(title = "DreamFeedSuccess") {
+private fun DreamFeedSuccess() = OneUIPreview(title = "DreamFeedSuccess", padding = PaddingValues()) {
     DreamFeed(
         state = DreamFeedState.Success(
-            dreams = dreams,
+            dreams = DreamPreviewData.dreams,
             temporallySort = false,
             sortConfig = SortConfig(
                 mode = SortMode.Updated
