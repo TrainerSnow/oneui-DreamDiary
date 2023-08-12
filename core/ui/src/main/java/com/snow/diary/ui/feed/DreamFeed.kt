@@ -396,16 +396,14 @@ private fun DreamFeedLoading(
 
 @Preview
 @Composable
-private fun DreamFeedSuccess() = OneUIPreview(title = "DreamFeedSuccess", padding = PaddingValues()) {
-    DreamFeed(
-        state = DreamFeedState.Success(
-            dreams = DreamPreviewData.dreams,
-            temporallySort = false,
-            sortConfig = SortConfig(
-                mode = SortMode.Updated
-            )
-        ),
-        onDreamClick = { },
-        onDreamFavouriteClick = { }
-    )
-}
+private fun DreamFeedSuccess() = DreamFeed(
+    state = DreamFeedState.Success(
+        dreams = DreamPreviewData.dreams,
+        temporallySort = true,
+        sortConfig = SortConfig(
+            mode = SortMode.Created
+        )
+    ),
+    onDreamClick = { },
+    onDreamFavouriteClick = { }
+)
