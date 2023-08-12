@@ -12,13 +12,14 @@ dagger_hilt = "2.47"
 room = "2.5.2"
 coroutines = "1.7.3"
 org-jetbrains-kotlin-jvm = "1.9.0"
+foundation = "1.6.0-alpha03" # For some reason, this needs to be the same version as the one in the lib. I don't know why.
 
 [libraries]
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
 
 compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 compose-material = { group = "androidx.compose.material", name = "material" }
-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
 compose-ui-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 compose-animation = { group = "androidx.compose.animation", name = "animation" }

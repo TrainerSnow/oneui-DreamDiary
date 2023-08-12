@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.snow.diary"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.snow.diary"
