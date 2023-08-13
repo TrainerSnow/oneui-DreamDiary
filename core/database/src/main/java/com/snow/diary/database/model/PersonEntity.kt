@@ -1,10 +1,10 @@
 package com.snow.diary.database.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.snow.diary.model.data.Person
-import java.util.UUID
 
 @Entity(
     foreignKeys = [
@@ -20,10 +20,12 @@ import java.util.UUID
 data class PersonEntity(
 
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val personId: Long,
 
     val name: String,
 
+
+    @ColumnInfo(index = true)
     val relationId: Long,
 
     val notes: String?
@@ -39,4 +41,4 @@ data class PersonEntity(
 }
 
 val PersonEntity.asModel: Person
-    get() = Person(id, name, relationId, notes)
+    get() = Person(personId, name, relationId, notes)

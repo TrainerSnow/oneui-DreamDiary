@@ -3,6 +3,8 @@ package com.snow.diary.database.base;
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.snow.diary.database.cross.DreamLocationCrossref
+import com.snow.diary.database.cross.DreamPersonCrossref
 import com.snow.diary.database.dao.DreamDao
 import com.snow.diary.database.dao.LocationDao
 import com.snow.diary.database.dao.PersonDao
@@ -20,7 +22,9 @@ import com.snow.diary.database.type.PointFConverters
         DreamEntity::class,
         LocationEntity::class,
         PersonEntity::class,
-        RelationEntity::class
+        RelationEntity::class,
+        DreamPersonCrossref::class,
+        DreamLocationCrossref::class
     ],
     version = DiaryDatabase.DB_VERSION
 )

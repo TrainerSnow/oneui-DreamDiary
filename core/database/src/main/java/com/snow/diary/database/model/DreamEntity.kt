@@ -11,7 +11,7 @@ import java.time.LocalDate
 data class DreamEntity(
 
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val dreamId: Long,
 
     val description: String,
 
@@ -40,5 +40,5 @@ data class DreamEntity(
 
 val DreamEntity.asModel: Dream
     get() = Dream(
-        id, description, note, created, updated, clearness, happiness
+        dreamId, description, note, created, updated, clearness, happiness
     )

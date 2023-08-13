@@ -6,6 +6,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
 import com.snow.diary.database.model.LocationEntity
+import com.snow.diary.database.model.cross.LocationWithDreams
 import kotlinx.coroutines.flow.Flow
 
 
@@ -24,6 +25,14 @@ interface LocationDao {
     fun getAllLocations(): Flow<List<LocationEntity>>
 
     @Transaction
-    @Query("SELECT * FROM Location WHERE id = :locationId")
+    @Query("SELECT * FROM Location WHERE locationId = :locationId")
     fun getLocationById(locationId: Long): Flow<LocationEntity?>
+
+    @Transaction
+    @Query("SELECT * FROM location WHERE locationId = :id")
+    fun getLocationWithDreamsById(id: Long): Flow<LocationWithDreams?>
+
+    @Transaction
+    @Query("SELECT * FROM location")
+    fun getAllLocationsWithDreams(): Flow<List<LocationWithDreams>>
 }

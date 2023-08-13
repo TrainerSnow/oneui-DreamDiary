@@ -29,9 +29,9 @@ interface RelationDao {
 
     @Transaction
     @Query("SELECT * FROM person_relation")
-    fun getRelationsWithPersons(): Flow<List<RelationWithPersons>>
+    fun getAllRelationsWithPersons(): Flow<List<RelationWithPersons>>
 
     @Transaction
     @Query("SELECT * FROM person_relation WHERE id = :id")
-    fun getRelationWithPersons(id: Long): Flow<RelationWithPersons>
+    fun getRelationWithPersonsById(id: Long): Flow<RelationWithPersons>
 }
