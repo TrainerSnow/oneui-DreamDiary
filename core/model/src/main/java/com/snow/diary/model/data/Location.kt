@@ -1,6 +1,7 @@
 package com.snow.diary.model.data
 
 import android.graphics.PointF
+import com.snow.diary.model.Searchable
 
 data class Location(
 
@@ -11,4 +12,11 @@ data class Location(
     val coordinates: PointF,
 
     val notes: String
-)
+
+): Searchable {
+
+    override fun getStringFields(): List<String> = listOf(
+        name, notes
+    )
+
+}

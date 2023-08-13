@@ -1,6 +1,7 @@
 package com.snow.diary.model.data
 
 import android.graphics.Color
+import com.snow.diary.model.Searchable
 
 data class Relation(
 
@@ -10,4 +11,10 @@ data class Relation(
 
     val color: Color
 
-)
+): Searchable {
+
+    override fun getStringFields(): List<String> = listOf(
+        name
+    )
+
+}

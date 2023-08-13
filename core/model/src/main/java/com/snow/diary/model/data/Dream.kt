@@ -1,5 +1,6 @@
 package com.snow.diary.model.data
 
+import com.snow.diary.model.Searchable
 import java.time.LocalDate
 
 data class Dream(
@@ -17,4 +18,12 @@ data class Dream(
     val clearness: Float?,
 
     val happiness: Float?
-)
+
+): Searchable {
+
+    override fun getStringFields(): List<String> = listOf(
+        description, note ?: ""
+    )
+
+}
+
