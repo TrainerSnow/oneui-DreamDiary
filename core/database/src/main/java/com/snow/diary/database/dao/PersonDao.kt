@@ -24,11 +24,11 @@ interface PersonDao {
     fun getAllPersons(): Flow<List<PersonEntity>>
 
     @Transaction
-    @Query("SELECT * FROM person WHERE id = :id")
+    @Query("SELECT * FROM person WHERE personId = :id")
     fun getPersonById(id: Long): Flow<PersonEntity?>
 
     @Transaction
-    @Query("SELECT * FROM person WHERE id = :id")
+    @Query("SELECT * FROM person WHERE personId = :id")
     fun getPersonWithDreamsById(id: Long): Flow<PersonWithDreams?>
 
     @Transaction

@@ -11,7 +11,7 @@ import com.snow.diary.model.data.Location
 data class LocationEntity(
 
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val locationId: Long,
 
     val name: String,
 
@@ -30,4 +30,4 @@ data class LocationEntity(
 }
 
 val LocationEntity.asModel: Location
-    get() = Location(id, name, coordinates, notes)
+    get() = Location(locationId, name, coordinates, notes)

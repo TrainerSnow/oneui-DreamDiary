@@ -25,11 +25,11 @@ interface DreamDao {
     fun getAllDreams(): Flow<List<DreamEntity>>
 
     @Transaction
-    @Query("SELECT * FROM Dream WHERE id = :dreamId")
+    @Query("SELECT * FROM Dream WHERE dreamId = :dreamId")
     fun getDreamById(dreamId: Long): Flow<DreamEntity?>
 
     @Transaction
-    @Query("SELECT * FROM dream WHERE id = :id")
+    @Query("SELECT * FROM dream WHERE dreamId = :id")
     fun getDreamWithPersonsById(id: Long): Flow<DreamWithPersons?>
 
     @Transaction
@@ -37,7 +37,7 @@ interface DreamDao {
     fun getAllDreamsWithPersons(): Flow<List<DreamWithPersons>>
 
     @Transaction
-    @Query("SELECT * FROM dream WHERE id = :id")
+    @Query("SELECT * FROM dream WHERE dreamId = :id")
     fun getDreamWithLocationsById(id: Long): Flow<DreamWithLocations?>
 
     @Transaction
