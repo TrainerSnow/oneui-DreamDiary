@@ -16,7 +16,7 @@ data class DreamWithLocations(
         entityColumn = "locationId",
         associateBy = Junction(DreamLocationCrossref::class)
     )
-    val persons: List<LocationEntity>
+    val locations: List<LocationEntity>
 
 )
 
