@@ -17,6 +17,7 @@ object DreamPreviewData {
                 .values
                 .take(100)
                 .joinToString(),
+            isFavourite = it % 2 == 0,
             clearness = it / 200F,
             happiness = it / 200F,
             created = LocalDate.now().minusDays(it.toLong()),

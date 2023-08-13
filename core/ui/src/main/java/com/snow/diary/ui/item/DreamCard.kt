@@ -23,6 +23,7 @@ import com.snow.diary.common.removeLineBreaks
 import com.snow.diary.common.time.TimeFormat.formatFullDescription
 import com.snow.diary.model.data.Dream
 import com.snow.diary.ui.R
+import com.snow.diary.ui.callback.DreamCallback
 import com.snow.diary.ui.data.DreamPreviewData
 import org.oneui.compose.base.Icon
 import org.oneui.compose.theme.OneUITheme
@@ -30,6 +31,7 @@ import org.oneui.compose.util.ListPosition
 import org.oneui.compose.util.OneUIPreview
 import org.oneui.compose.widgets.box.RoundedCornerListItem
 import org.oneui.compose.widgets.buttons.IconButton
+import org.oneui.compose.widgets.buttons.iconButtonColors
 import java.time.LocalDate
 import java.time.Period
 import dev.oneuiproject.oneui.R as IconR
@@ -39,8 +41,7 @@ fun DreamCard(
     modifier: Modifier = Modifier,
     dream: Dream,
     listPosition: ListPosition = ListPosition.Middle,
-    onClick: (() -> Unit)? = null,
-    onFavouriteClick: (() -> Unit)? = null
+    dreamCallback: DreamCallback = DreamCallback
 ) {
     val titleTextStyle = TextStyle(
         color = OneUITheme.colors.seslPrimaryTextColor,
@@ -62,7 +63,7 @@ fun DreamCard(
 
     RoundedCornerListItem(
         modifier = modifier,
-        onClick = onClick,
+        onClick = { dreamCallback.onClick(dream) },
         listPosition = listPosition
     ) {
         Column(
@@ -120,7 +121,7 @@ fun DreamCard(
                     )
             ) {
                 val didUpdate = dream.updated != dream.created
-                if(didUpdate) {
+                if (didUpdate) {
                     val days = Period.between(dream.updated, LocalDate.now()).days
                     Text(
                         text = stringResource(
@@ -131,13 +132,18 @@ fun DreamCard(
                     )
                 }
 
-                //TODO: Animate this button!
                 IconButton(
                     padding = PaddingValues(),
-                    icon = Icon.Resource(IconR.drawable.ic_oui_favorite_off),
+                    icon = Icon.Resource(
+                        if (dream.isFavourite) IconR.drawable.ic_oui_favorite_on
+                        else IconR.drawable.ic_oui_favorite_off
+                    ),
                     modifier = Modifier
                         .size(DreamCardDefaults.favIconSize),
-                    onClick = { onFavouriteClick?.let { it() } }
+                    colors = if (dream.isFavourite) iconButtonColors(
+                        tint = OneUITheme.colors.seslFunctionalOrange
+                    ) else iconButtonColors(),
+                    onClick = { dreamCallback.onFavouriteClick(dream) }
                 )
             }
         }
@@ -167,7 +173,6 @@ fun DreamCardPreview() = OneUIPreview(
     padding = PaddingValues()
 ) {
     DreamCard(
-        dream = DreamPreviewData.dreams.first(),
-        onClick = { }
+        dream = DreamPreviewData.dreams.random()
     )
 }

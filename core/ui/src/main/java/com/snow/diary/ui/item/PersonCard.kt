@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import com.snow.diary.common.removeLineBreaks
 import com.snow.diary.model.data.Person
 import com.snow.diary.model.data.Relation
+import com.snow.diary.ui.callback.PersonCallback
 import com.snow.diary.ui.data.PersonPreviewData
 import com.snow.diary.ui.data.RelationPreviewData
 import org.oneui.compose.base.Icon
@@ -34,6 +35,7 @@ import org.oneui.compose.util.ListPosition
 import org.oneui.compose.util.OneUIPreview
 import org.oneui.compose.widgets.box.RoundedCornerListItem
 import org.oneui.compose.widgets.buttons.IconButton
+import org.oneui.compose.widgets.buttons.iconButtonColors
 import dev.oneuiproject.oneui.R as IconR
 
 @Composable
@@ -41,9 +43,7 @@ fun PersonCard(
     modifier: Modifier = Modifier,
     person: Person,
     relation: Relation? = null,
-    onClick: ((Person) -> Unit)? = null,
-    onFavouriteClick: (() -> Unit)? = null,
-    onRelationClick: (() -> Unit)? = null,
+    personCallback: PersonCallback = PersonCallback,
     listPosition: ListPosition = ListPosition.Middle,
 ) {
     val titleTextStyle = TextStyle(
@@ -58,7 +58,7 @@ fun PersonCard(
 
     RoundedCornerListItem(
         modifier = modifier,
-        onClick = { onClick?.let { it(person) } },
+        onClick = { personCallback.onClick(person) },
         listPosition = listPosition,
         padding = PersonCardDefaults.padding
     ) {
@@ -86,7 +86,7 @@ fun PersonCard(
                             .clickable(
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null,
-                                onClick = { onRelationClick?.let { it() } }
+                                onClick = { personCallback.onRelationClick(rel) }
                             )
                     )
                 }
@@ -110,9 +110,17 @@ fun PersonCard(
                 }
 
                 IconButton(
-                    icon = Icon.Resource(IconR.drawable.ic_oui_favorite_off),
                     padding = PaddingValues(),
-                    onClick = { onFavouriteClick?.let { it() } }
+                    icon = Icon.Resource(
+                        if (person.isFavourite) IconR.drawable.ic_oui_favorite_on
+                        else IconR.drawable.ic_oui_favorite_off
+                    ),
+                    modifier = Modifier
+                        .size(PersonCardDefaults.favIconSize),
+                    colors = if (person.isFavourite) iconButtonColors(
+                        tint = OneUITheme.colors.seslFunctionalOrange
+                    ) else iconButtonColors(),
+                    onClick = { personCallback.onFavouriteClick(person) }
                 )
             }
         }
@@ -134,6 +142,8 @@ private object PersonCardDefaults {
         bottom = 12.dp
     )
 
+    val favIconSize = 20.dp
+
 }
 
 @Preview
@@ -142,10 +152,10 @@ fun PersonCard() = OneUIPreview(title = "PersonCard", padding = PaddingValues())
     PersonCard(
         person = PersonPreviewData
             .persons
-            .component1(),
+            .random(),
         relation = RelationPreviewData
             .relations
-            .first(),
+            .random(),
         listPosition = ListPosition.Single
     )
 }

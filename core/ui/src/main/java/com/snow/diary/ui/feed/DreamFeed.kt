@@ -23,6 +23,7 @@ import com.snow.diary.model.data.Dream
 import com.snow.diary.model.sort.SortConfig
 import com.snow.diary.model.sort.SortMode
 import com.snow.diary.ui.R
+import com.snow.diary.ui.callback.DreamCallback
 import com.snow.diary.ui.data.DreamPreviewData
 import com.snow.diary.ui.item.DreamCard
 import org.oneui.compose.base.Icon
@@ -44,8 +45,7 @@ import dev.oneuiproject.oneui.R as IconR
 fun DreamFeed(
     modifier: Modifier = Modifier,
     state: DreamFeedState,
-    onDreamClick: (Dream) -> Unit,
-    onDreamFavouriteClick: (Dream) -> Unit
+    dreamCallback: DreamCallback = DreamCallback
 ) {
     when (state) {
         DreamFeedState.Empty -> {
@@ -62,8 +62,7 @@ fun DreamFeed(
 
         is DreamFeedState.Success -> SuccessFeed(
             state = state,
-            onDreamClick = onDreamClick,
-            onDreamFavouriteClick = onDreamFavouriteClick
+            dreamCallback = dreamCallback
         )
     }
 }
@@ -109,8 +108,7 @@ private fun EmptyFeed(
 private fun SuccessFeed(
     modifier: Modifier = Modifier,
     state: DreamFeedState.Success,
-    onDreamClick: (Dream) -> Unit,
-    onDreamFavouriteClick: (Dream) -> Unit
+    dreamCallback: DreamCallback
 ) {
 
     val today = LocalDate.now()
@@ -155,8 +153,7 @@ private fun SuccessFeed(
                 DreamCard(
                     dream = state.dreams[it],
                     listPosition = ListPosition.get(state.dreams[it], state.dreams),
-                    onClick = { onDreamClick(state.dreams[it]) },
-                    onFavouriteClick = { onDreamFavouriteClick(state.dreams[it]) }
+                    dreamCallback = dreamCallback
                 )
             }
             return@LazyVerticalGrid
@@ -175,8 +172,7 @@ private fun SuccessFeed(
                     fromIndex, state.dreams.size
                 ),
                 date = datePicker,
-                onDreamClick = onDreamClick,
-                onDreamFavouriteClick = onDreamFavouriteClick,
+                dreamCallback = dreamCallback,
                 separatorTitle = title,
                 dateFrom = from,
                 dateTo = to
@@ -190,8 +186,7 @@ private fun SuccessFeed(
 private fun LazyGridScope.temporallyDreamItems(
     dreams: List<Dream>,
     date: (Dream) -> LocalDate,
-    onDreamClick: (Dream) -> Unit,
-    onDreamFavouriteClick: (Dream) -> Unit,
+    dreamCallback: DreamCallback,
     separatorTitle: String,
     dateFrom: LocalDate, //Inclusive
     dateTo: LocalDate //Exclusive
@@ -210,8 +205,7 @@ private fun LazyGridScope.temporallyDreamItems(
         ) {
             DreamCard(
                 dream = drms[it],
-                onClick = { onDreamClick(drms[it]) },
-                onFavouriteClick = { onDreamFavouriteClick(drms[it]) },
+                dreamCallback = dreamCallback,
                 listPosition = ListPosition.get(drms[it], drms)
             )
         }
@@ -361,9 +355,7 @@ private fun DreamFeedEmpty(
 
 ) = OneUIPreview(title = "DreamFeedEmpty") {
     DreamFeed(
-        state = DreamFeedState.Empty,
-        onDreamClick = { },
-        onDreamFavouriteClick = { }
+        state = DreamFeedState.Empty
     )
 }
 
@@ -375,9 +367,7 @@ private fun DreamFeedError(
     DreamFeed(
         state = DreamFeedState.Error(
             msg = "ErrorCode[404]"
-        ),
-        onDreamClick = { },
-        onDreamFavouriteClick = { }
+        )
     )
 }
 
@@ -387,9 +377,7 @@ private fun DreamFeedLoading(
 
 ) = OneUIPreview(title = "DreamFeedLoading") {
     DreamFeed(
-        state = DreamFeedState.Loading,
-        onDreamClick = { },
-        onDreamFavouriteClick = { }
+        state = DreamFeedState.Loading
     )
 }
 
@@ -402,7 +390,5 @@ private fun DreamFeedSuccess() = DreamFeed(
         sortConfig = SortConfig(
             mode = SortMode.Created
         )
-    ),
-    onDreamClick = { },
-    onDreamFavouriteClick = { }
+    )
 )

@@ -24,6 +24,7 @@ data class PersonEntity(
 
     val name: String,
 
+    val isFavourite: Boolean,
 
     @ColumnInfo(index = true)
     val relationId: Long,
@@ -34,6 +35,7 @@ data class PersonEntity(
     constructor(person: Person) : this(
         person.id,
         person.name,
+        person.isFavourite,
         person.relationId,
         person.notes
     )
@@ -41,4 +43,4 @@ data class PersonEntity(
 }
 
 val PersonEntity.asModel: Person
-    get() = Person(personId, name, relationId, notes)
+    get() = Person(personId, name, isFavourite, relationId, notes)

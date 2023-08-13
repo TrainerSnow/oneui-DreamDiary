@@ -17,6 +17,8 @@ data class DreamEntity(
 
     val note: String?,
 
+    val isFavourite: Boolean,
+
     val created: LocalDate,
 
     val updated: LocalDate,
@@ -30,6 +32,7 @@ data class DreamEntity(
         dream.id,
         dream.description,
         dream.note,
+        dream.isFavourite,
         dream.created,
         dream.updated,
         dream.clearness,
@@ -40,5 +43,5 @@ data class DreamEntity(
 
 val DreamEntity.asModel: Dream
     get() = Dream(
-        dreamId, description, note, created, updated, clearness, happiness
+        dreamId, description, note, isFavourite, created, updated, clearness, happiness
     )
