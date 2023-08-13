@@ -1,5 +1,6 @@
 package com.snow.diary.database.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -23,6 +24,8 @@ data class PersonEntity(
 
     val name: String,
 
+
+    @ColumnInfo(index = true)
     val relationId: Long,
 
     val notes: String?

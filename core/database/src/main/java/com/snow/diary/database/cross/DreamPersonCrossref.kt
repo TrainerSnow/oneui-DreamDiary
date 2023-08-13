@@ -1,5 +1,6 @@
 package com.snow.diary.database.cross
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 
 @Entity(
@@ -8,8 +9,10 @@ import androidx.room.Entity
 )
 data class DreamPersonCrossref(
 
+    @ColumnInfo(index = true)
     val dreamId: Long,
 
+    @ColumnInfo(index = true)
     val personId: Long
 
 )
