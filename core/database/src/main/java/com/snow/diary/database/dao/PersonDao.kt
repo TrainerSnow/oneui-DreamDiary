@@ -6,6 +6,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
 import com.snow.diary.database.model.PersonEntity
+import com.snow.diary.database.model.cross.PersonWithDreams
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -25,4 +26,12 @@ interface PersonDao {
     @Transaction
     @Query("SELECT * FROM person WHERE id = :id")
     fun getPersonById(id: Long): Flow<PersonEntity?>
+
+    @Transaction
+    @Query("SELECT * FROM person WHERE id = :id")
+    fun getPersonWithDreamsById(id: Long): Flow<PersonWithDreams?>
+
+    @Transaction
+    @Query("SELECT * FROM person")
+    fun getAllPersonsWithDreams(): Flow<List<PersonWithDreams>>
 }
