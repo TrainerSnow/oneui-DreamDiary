@@ -23,6 +23,7 @@ import com.snow.diary.common.removeLineBreaks
 import com.snow.diary.common.time.TimeFormat.formatFullDescription
 import com.snow.diary.model.data.Dream
 import com.snow.diary.ui.R
+import com.snow.diary.ui.callback.DreamCallback
 import com.snow.diary.ui.data.DreamPreviewData
 import org.oneui.compose.base.Icon
 import org.oneui.compose.theme.OneUITheme
@@ -39,8 +40,7 @@ fun DreamCard(
     modifier: Modifier = Modifier,
     dream: Dream,
     listPosition: ListPosition = ListPosition.Middle,
-    onClick: (() -> Unit)? = null,
-    onFavouriteClick: (() -> Unit)? = null
+    dreamCallback: DreamCallback = DreamCallback
 ) {
     val titleTextStyle = TextStyle(
         color = OneUITheme.colors.seslPrimaryTextColor,
@@ -62,7 +62,7 @@ fun DreamCard(
 
     RoundedCornerListItem(
         modifier = modifier,
-        onClick = onClick,
+        onClick = { dreamCallback.onClick(dream) },
         listPosition = listPosition
     ) {
         Column(
@@ -137,7 +137,7 @@ fun DreamCard(
                     icon = Icon.Resource(IconR.drawable.ic_oui_favorite_off),
                     modifier = Modifier
                         .size(DreamCardDefaults.favIconSize),
-                    onClick = { onFavouriteClick?.let { it() } }
+                    onClick = { dreamCallback.onFavouriteClick(dream) }
                 )
             }
         }
@@ -167,7 +167,6 @@ fun DreamCardPreview() = OneUIPreview(
     padding = PaddingValues()
 ) {
     DreamCard(
-        dream = DreamPreviewData.dreams.first(),
-        onClick = { }
+        dream = DreamPreviewData.dreams.first()
     )
 }

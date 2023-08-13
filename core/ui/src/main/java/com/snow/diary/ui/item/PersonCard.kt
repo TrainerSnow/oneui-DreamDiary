@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import com.snow.diary.common.removeLineBreaks
 import com.snow.diary.model.data.Person
 import com.snow.diary.model.data.Relation
+import com.snow.diary.ui.callback.PersonCallback
 import com.snow.diary.ui.data.PersonPreviewData
 import com.snow.diary.ui.data.RelationPreviewData
 import org.oneui.compose.base.Icon
@@ -41,9 +42,7 @@ fun PersonCard(
     modifier: Modifier = Modifier,
     person: Person,
     relation: Relation? = null,
-    onClick: ((Person) -> Unit)? = null,
-    onFavouriteClick: (() -> Unit)? = null,
-    onRelationClick: (() -> Unit)? = null,
+    personCallback: PersonCallback = PersonCallback,
     listPosition: ListPosition = ListPosition.Middle,
 ) {
     val titleTextStyle = TextStyle(
@@ -58,7 +57,7 @@ fun PersonCard(
 
     RoundedCornerListItem(
         modifier = modifier,
-        onClick = { onClick?.let { it(person) } },
+        onClick = { personCallback.onClick(person) },
         listPosition = listPosition,
         padding = PersonCardDefaults.padding
     ) {
@@ -86,7 +85,7 @@ fun PersonCard(
                             .clickable(
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null,
-                                onClick = { onRelationClick?.let { it() } }
+                                onClick = { personCallback.onRelationClick(rel) }
                             )
                     )
                 }
@@ -112,7 +111,7 @@ fun PersonCard(
                 IconButton(
                     icon = Icon.Resource(IconR.drawable.ic_oui_favorite_off),
                     padding = PaddingValues(),
-                    onClick = { onFavouriteClick?.let { it() } }
+                    onClick = { personCallback.onFavouriteClick(person) }
                 )
             }
         }

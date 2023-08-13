@@ -26,6 +26,7 @@ import com.snow.diary.model.data.Relation
 import com.snow.diary.model.sort.SortConfig
 import com.snow.diary.model.sort.SortMode
 import com.snow.diary.ui.R
+import com.snow.diary.ui.callback.PersonCallback
 import com.snow.diary.ui.data.PersonPreviewData
 import com.snow.diary.ui.item.PersonCard
 import org.oneui.compose.base.Icon
@@ -43,9 +44,7 @@ import org.oneui.compose.widgets.text.TextSeparator
 fun PersonFeed(
     modifier: Modifier = Modifier,
     state: PersonFeedState,
-    onPersonClick: (Person) -> Unit,
-    onPersonFavouriteClick: (Person) -> Unit,
-    onRelationClick: (Relation) -> Unit
+    personCallback: PersonCallback = PersonCallback
 ) {
     when (state) {
         PersonFeedState.Empty -> {
@@ -63,9 +62,7 @@ fun PersonFeed(
         is PersonFeedState.Success -> {
             SuccessFeed(
                 state = state,
-                onPersonClick = onPersonClick,
-                onPersonFavouriteClick = onPersonFavouriteClick,
-                onRelationClick = onRelationClick
+                personCallback = personCallback
             )
         }
     }
@@ -75,9 +72,7 @@ fun PersonFeed(
 private fun SuccessFeed(
     modifier: Modifier = Modifier,
     state: PersonFeedState.Success,
-    onPersonClick: (Person) -> Unit,
-    onPersonFavouriteClick: (Person) -> Unit,
-    onRelationClick: (Relation) -> Unit
+    personCallback: PersonCallback
 ) {
     LazyVerticalGrid(
         modifier = modifier,
@@ -94,9 +89,7 @@ private fun SuccessFeed(
                 PersonCard(
                     person = state.persons[it].person,
                     relation = state.persons[it].relation,
-                    onClick = onPersonClick,
-                    onRelationClick = { onRelationClick(state.persons[it].relation) },
-                    onFavouriteClick = { onPersonFavouriteClick(state.persons[it].person) },
+                    personCallback = personCallback,
                     listPosition = ListPosition.get(state.persons[it], state.persons)
                 )
             }
@@ -110,9 +103,7 @@ private fun SuccessFeed(
         while(fromIndex != state.persons.size) {
             val res = relationSortedPersonItems(
                 persons = state.persons.subList(fromIndex, state.persons.size),
-                onPersonClick = onPersonClick,
-                onPersonFavouriteClick = onPersonFavouriteClick,
-                onRelationClick = onRelationClick,
+                personCallback = personCallback,
                 relation = state.persons[fromIndex].relation
             )
 
@@ -124,9 +115,7 @@ private fun SuccessFeed(
 
 private fun LazyGridScope.relationSortedPersonItems(
     persons: List<PersonWithRelation>,
-    onPersonClick: (Person) -> Unit,
-    onPersonFavouriteClick: (Person) -> Unit,
-    onRelationClick: (Relation) -> Unit,
+    personCallback: PersonCallback = PersonCallback,
     relation: Relation
 ): Int {
     val prsns = persons.takeWhile { it.relation == relation }
@@ -142,9 +131,7 @@ private fun LazyGridScope.relationSortedPersonItems(
             PersonCard(
                 person = person.person,
                 relation = person.relation,
-                onClick = { onPersonClick(person.person) },
-                onRelationClick = { onRelationClick(person.relation) },
-                onFavouriteClick = { onPersonFavouriteClick(person.person) },
+                personCallback = personCallback,
                 listPosition = ListPosition.get(person, prsns)
             )
         }
@@ -331,10 +318,7 @@ private fun PersonFeedEmpty(
 
 ) = OneUIPreview(title = "PersonFeedEmpty") {
     PersonFeed(
-        state = PersonFeedState.Empty,
-        onPersonClick = { },
-        onPersonFavouriteClick = { },
-        onRelationClick = { }
+        state = PersonFeedState.Empty
     )
 }
 
@@ -346,10 +330,7 @@ private fun PersonFeedError(
     PersonFeed(
         state = PersonFeedState.Error(
             msg = "Error[404]"
-        ),
-        onPersonClick = { },
-        onPersonFavouriteClick = { },
-        onRelationClick = { }
+        )
     )
 }
 
@@ -359,10 +340,7 @@ private fun PersonFeedLoading(
 
 ) = OneUIPreview(title = "PersonFeedLoading") {
     PersonFeed(
-        state = PersonFeedState.Loading,
-        onPersonClick = { },
-        onPersonFavouriteClick = { },
-        onRelationClick = { }
+        state = PersonFeedState.Loading
     )
 }
 
@@ -380,9 +358,6 @@ private fun PersonFeedSuccess(
             sortConfig = SortConfig(
                 mode = SortMode.Relation
             )
-        ),
-        onPersonClick = { },
-        onPersonFavouriteClick = { },
-        onRelationClick = { }
+        )
     )
 }
