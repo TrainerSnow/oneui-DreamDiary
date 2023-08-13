@@ -31,6 +31,7 @@ import org.oneui.compose.util.ListPosition
 import org.oneui.compose.util.OneUIPreview
 import org.oneui.compose.widgets.box.RoundedCornerListItem
 import org.oneui.compose.widgets.buttons.IconButton
+import org.oneui.compose.widgets.buttons.iconButtonColors
 import java.time.LocalDate
 import java.time.Period
 import dev.oneuiproject.oneui.R as IconR
@@ -120,7 +121,7 @@ fun DreamCard(
                     )
             ) {
                 val didUpdate = dream.updated != dream.created
-                if(didUpdate) {
+                if (didUpdate) {
                     val days = Period.between(dream.updated, LocalDate.now()).days
                     Text(
                         text = stringResource(
@@ -131,12 +132,17 @@ fun DreamCard(
                     )
                 }
 
-                //TODO: Animate this button!
                 IconButton(
                     padding = PaddingValues(),
-                    icon = Icon.Resource(IconR.drawable.ic_oui_favorite_off),
+                    icon = Icon.Resource(
+                        if (dream.isFavourite) IconR.drawable.ic_oui_favorite_on
+                        else IconR.drawable.ic_oui_favorite_off
+                    ),
                     modifier = Modifier
                         .size(DreamCardDefaults.favIconSize),
+                    colors = if (dream.isFavourite) iconButtonColors(
+                        tint = OneUITheme.colors.seslFunctionalOrange
+                    ) else iconButtonColors(),
                     onClick = { dreamCallback.onFavouriteClick(dream) }
                 )
             }
@@ -167,6 +173,6 @@ fun DreamCardPreview() = OneUIPreview(
     padding = PaddingValues()
 ) {
     DreamCard(
-        dream = DreamPreviewData.dreams.first()
+        dream = DreamPreviewData.dreams.random()
     )
 }

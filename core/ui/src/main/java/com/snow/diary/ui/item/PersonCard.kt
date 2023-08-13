@@ -35,6 +35,7 @@ import org.oneui.compose.util.ListPosition
 import org.oneui.compose.util.OneUIPreview
 import org.oneui.compose.widgets.box.RoundedCornerListItem
 import org.oneui.compose.widgets.buttons.IconButton
+import org.oneui.compose.widgets.buttons.iconButtonColors
 import dev.oneuiproject.oneui.R as IconR
 
 @Composable
@@ -109,8 +110,16 @@ fun PersonCard(
                 }
 
                 IconButton(
-                    icon = Icon.Resource(IconR.drawable.ic_oui_favorite_off),
                     padding = PaddingValues(),
+                    icon = Icon.Resource(
+                        if (person.isFavourite) IconR.drawable.ic_oui_favorite_on
+                        else IconR.drawable.ic_oui_favorite_off
+                    ),
+                    modifier = Modifier
+                        .size(PersonCardDefaults.favIconSize),
+                    colors = if (person.isFavourite) iconButtonColors(
+                        tint = OneUITheme.colors.seslFunctionalOrange
+                    ) else iconButtonColors(),
                     onClick = { personCallback.onFavouriteClick(person) }
                 )
             }
@@ -133,6 +142,8 @@ private object PersonCardDefaults {
         bottom = 12.dp
     )
 
+    val favIconSize = 20.dp
+
 }
 
 @Preview
@@ -141,10 +152,10 @@ fun PersonCard() = OneUIPreview(title = "PersonCard", padding = PaddingValues())
     PersonCard(
         person = PersonPreviewData
             .persons
-            .component1(),
+            .random(),
         relation = RelationPreviewData
             .relations
-            .first(),
+            .random(),
         listPosition = ListPosition.Single
     )
 }
