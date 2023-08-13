@@ -1,4 +1,4 @@
-package com.snow.diary.ui.dream
+package com.snow.diary.ui.item
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

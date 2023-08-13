@@ -25,7 +25,7 @@ import com.snow.diary.model.data.Dream
 import com.snow.diary.model.sort.SortConfig
 import com.snow.diary.model.sort.SortMode
 import com.snow.diary.ui.R
-import com.snow.diary.ui.dream.DreamCard
+import com.snow.diary.ui.item.DreamCard
 import com.snow.diary.ui.data.DreamPreviewData
 import org.oneui.compose.base.Icon
 import org.oneui.compose.base.IconView
