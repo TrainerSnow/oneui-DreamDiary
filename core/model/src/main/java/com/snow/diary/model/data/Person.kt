@@ -8,6 +8,8 @@ data class Person(
 
     val name: String,
 
+    val isFavourite: Boolean,
+
     val relationId: Long,
 
     val notes: String?

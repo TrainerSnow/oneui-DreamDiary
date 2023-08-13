@@ -10,6 +10,7 @@ object PersonPreviewData {
         Person(
             id = it.toLong(),
             name = "Person $it",
+            isFavourite = it % 2 == 0,
             relationId = it.toLong(),
             notes = if (it % 2 == 0) null else LoremIpsum(200)
                 .values

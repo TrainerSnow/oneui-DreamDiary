@@ -11,6 +11,8 @@ data class Dream(
 
     val note: String?,
 
+    val isFavourite: Boolean,
+
     val created: LocalDate,
 
     val updated: LocalDate,
