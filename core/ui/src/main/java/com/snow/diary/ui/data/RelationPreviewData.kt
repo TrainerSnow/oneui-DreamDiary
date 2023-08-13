@@ -23,7 +23,7 @@ object RelationPreviewData {
         android.graphics.Color.valueOf(Color(it).toArgb())
     }
 
-    val relations = (1..200).map {
+    val relations = (1..20).map {
         Relation(
             id = it.toLong(),
             name = "Relation $it",

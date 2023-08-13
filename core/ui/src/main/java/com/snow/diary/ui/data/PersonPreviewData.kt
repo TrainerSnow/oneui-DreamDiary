@@ -1,6 +1,7 @@
 package com.snow.diary.ui.data
 
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
+import com.snow.diary.model.combine.PersonWithRelation
 import com.snow.diary.model.data.Person
 
 object PersonPreviewData {
@@ -10,9 +11,16 @@ object PersonPreviewData {
             id = it.toLong(),
             name = "Person $it",
             relationId = it.toLong(),
-            notes = if(it % 2 == 0) null else LoremIpsum(200)
+            notes = if (it % 2 == 0) null else LoremIpsum(200)
                 .values
                 .joinToString(" ")
+        )
+    }
+
+    val personsWithRelation = persons.map { person ->
+        PersonWithRelation(
+            person = person,
+            relation = RelationPreviewData.relations.random()
         )
     }
 
