@@ -2,7 +2,6 @@ package com.snow.diary.ui.feed
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -360,7 +359,7 @@ sealed class DreamFeedState {
 @Composable
 private fun DreamFeedEmpty(
 
-) = OneUIPreview(title = "DreamFeedEmpty", padding = PaddingValues()) {
+) = OneUIPreview(title = "DreamFeedEmpty") {
     DreamFeed(
         state = DreamFeedState.Empty,
         onDreamClick = { },
@@ -372,7 +371,7 @@ private fun DreamFeedEmpty(
 @Composable
 private fun DreamFeedError(
 
-) = OneUIPreview(title = "DreamFeedError", padding = PaddingValues()) {
+) = OneUIPreview(title = "DreamFeedError") {
     DreamFeed(
         state = DreamFeedState.Error(
             msg = "ErrorCode[404]"
@@ -386,7 +385,7 @@ private fun DreamFeedError(
 @Composable
 private fun DreamFeedLoading(
 
-) = OneUIPreview(title = "DreamFeedLoading", padding = PaddingValues()) {
+) = OneUIPreview(title = "DreamFeedLoading") {
     DreamFeed(
         state = DreamFeedState.Loading,
         onDreamClick = { },
