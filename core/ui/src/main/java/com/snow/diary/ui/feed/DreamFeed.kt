@@ -20,13 +20,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.snow.diary.common.util.ListPosition
 import com.snow.diary.model.data.Dream
 import com.snow.diary.model.sort.SortConfig
 import com.snow.diary.model.sort.SortMode
 import com.snow.diary.ui.R
-import com.snow.diary.ui.item.DreamCard
 import com.snow.diary.ui.data.DreamPreviewData
+import com.snow.diary.ui.item.DreamCard
 import org.oneui.compose.base.Icon
 import org.oneui.compose.base.IconView
 import org.oneui.compose.base.iconColors
@@ -34,6 +33,7 @@ import org.oneui.compose.progress.CircularProgressIndicatorSize
 import org.oneui.compose.progress.ProgressIndicator
 import org.oneui.compose.progress.ProgressIndicatorType
 import org.oneui.compose.theme.OneUITheme
+import org.oneui.compose.util.ListPosition
 import org.oneui.compose.util.OneUIPreview
 import org.oneui.compose.widgets.text.TextSeparator
 import java.time.DayOfWeek

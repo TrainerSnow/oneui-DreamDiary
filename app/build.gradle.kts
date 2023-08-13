@@ -68,5 +68,5 @@ dependencies {
     implementation(libs.activity.compose)
 
     implementation(project(":core:database"))
-    implementation("com.github.TrainerSnow:oneui-compose:+")
+    implementation(libs.oneui)
 }

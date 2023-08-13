@@ -56,6 +56,6 @@ dependencies {
 
     implementation(project(":core:model"))
     implementation(project(":core:common"))
-    implementation("com.github.TrainerSnow:oneui-compose:0.1.2-hf1")
+    implementation(libs.oneui)
     implementation(libs.oneui.icons)
 }
