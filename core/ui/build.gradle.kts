@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.snow.diary.common"
+    namespace = "com.snow.diary.ui"
     compileSdk = 34
 
     defaultConfig {
@@ -31,10 +31,31 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
 }
 
 dependencies {
+    implementation(platform(libs.compose.bom))
+
+    implementation(libs.compose.material3)
+    implementation(libs.compose.material)
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.tooling)
+    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.animation)
+
     implementation(libs.core.ktx)
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.activity.compose)
 
     implementation(project(":core:model"))
+    implementation(project(":core:common"))
+    implementation(libs.oneui)
+    implementation(libs.oneui.icons)
 }

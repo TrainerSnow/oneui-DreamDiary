@@ -1,17 +1,15 @@
 package com.snow.diary.database.type;
 
 import androidx.room.TypeConverter
-import java.time.Instant
-import java.util.Date
+import java.time.LocalDate
 
 class DateConverters {
 
     @TypeConverter
-    fun dateToMillis(date: Date?): Long? = date?.time
+    fun dateToIso(date: LocalDate?): String? = date?.toString()
 
     @TypeConverter
-    fun millisToDate(millis: Long?): Date? = millis?.let {
-        Date(millis)
-    }
+    fun isoToDate(iso: String?): LocalDate? = LocalDate
+        .parse(iso)
 
 }

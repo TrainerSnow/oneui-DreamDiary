@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="dreamcard_time_passed">%s days ago</string>
+    <string name="dreamcard_time_passed_placeholder">Today</string>
+    <string name="dreamcard_updated">Updated %s days ago</string>
+
+    <string name="dreamfeed_empty_label">There are currently no dreams. Start off by adding some!</string>
+    <string name="dreamfeed_error_label">An error occurred while getting your dreams.</string>
+    <string name="dreamfeed_loading_label">Loading your dreams. Stay tuned.</string>
+    <string name="dreamfeed_tempsort_today">Today</string>
+    <string name="dreamfeed_tempsort_yesterday">Yesterday</string>
+    <string name="dreamfeed_tempsort_thisweek">This week</string>
+    <string name="dreamfeed_tempsort_thismonth">This month</string>
+    <string name="dreamfeed_tempsort_earlier">Earlier</string>
+
+    <string name="personfeed_empty_label">There are currently no persons. Start off by adding some!</string>
+    <string name="personfeed_error_label">An error occurred while getting your persons.</string>
+    <string name="personfeed_loading_label">Loading your persons. Stay tuned.</string>
+
+</resources>

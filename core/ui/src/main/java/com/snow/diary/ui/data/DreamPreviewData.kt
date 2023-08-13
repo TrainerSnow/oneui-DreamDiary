@@ -1,0 +1,27 @@
+package com.snow.diary.ui.data;
+
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
+import com.snow.diary.model.data.Dream
+import java.time.LocalDate
+
+object DreamPreviewData {
+
+    val dreams = (1..200).map {
+        Dream(
+            id = it.toLong(),
+            description = LoremIpsum()
+                .values
+                .take(100)
+                .joinToString(),
+            note = LoremIpsum()
+                .values
+                .take(100)
+                .joinToString(),
+            clearness = it / 200F,
+            happiness = it / 200F,
+            created = LocalDate.now().minusDays(it.toLong()),
+            updated = LocalDate.now().minusDays(it + 2L)
+        )
+    }
+
+}
