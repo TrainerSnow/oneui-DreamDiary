@@ -18,4 +18,17 @@
     <string name="personfeed_error_label">An error occurred while getting your persons.</string>
     <string name="personfeed_loading_label">Loading your persons. Stay tuned.</string>
 
+    <string name="sortmode_created">Created</string>
+    <string name="sortmode_updated">Updated</string>
+    <string name="sortmode_alphabetically">Name</string>
+    <string name="sortmode_happiness">Happiness</string>
+    <string name="sortmode_clearness">Clearness</string>
+    <string name="sortmode_relation">Relation</string>
+    <string name="sortmode_length">Length</string>
+    <string name="sortmode_none">None</string>
+
+    <string name="sortdirection_ascending">Ascending</string>
+    <string name="sortdirection_descending">Descending</string>
+    <string name="sortdirection_none">None</string>
+
 </resources>
