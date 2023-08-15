@@ -2,6 +2,8 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.kotlinAndroid)
+    id("kotlin-kapt")
+    alias(libs.plugins.com.google.dagger.hilt.android)
 }
 
 android {
@@ -40,8 +42,12 @@ android {
 }
 
 dependencies {
-    implementation(platform(libs.compose.bom))
 
+    implementation(libs.com.google.dagger.hilt.android)
+    kapt(libs.com.google.dagger.hilt.android.compiler)
+    implementation(libs.compose.navigation.hilt)
+
+    implementation(platform(libs.compose.bom))
     implementation(libs.compose.material3)
     implementation(libs.compose.material)
     implementation(libs.compose.foundation)
