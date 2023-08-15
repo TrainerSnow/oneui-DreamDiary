@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.compose.ui.tooling)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.animation)
+    implementation(libs.compose.navigation)
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
