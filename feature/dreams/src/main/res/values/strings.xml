@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="dream_list_title">Dreams</string>
+    <string name="dream_list_subtitle">%s total</string>
+
+</resources>
