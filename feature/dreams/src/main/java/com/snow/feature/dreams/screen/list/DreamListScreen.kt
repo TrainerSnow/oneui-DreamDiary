@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.model.data.Dream
 import com.snow.diary.model.sort.SortConfig
 import com.snow.diary.model.sort.SortDirection
@@ -25,6 +27,8 @@ import com.snow.feature.dreams.R
 import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.widgets.buttons.IconButton
+import org.oneui.compose.widgets.menu.MenuItem
+import org.oneui.compose.widgets.menu.PopupMenu
 import dev.oneuiproject.oneui.R as IconR
 
 @Composable
@@ -32,19 +36,41 @@ internal fun DreamListScreen(
     viewModel: DreamListViewModel = hiltViewModel()
 ) {
 
+    val listState by viewModel.dreamListState.collectAsStateWithLifecycle()
+    val sortConfig by viewModel.sortConfig.collectAsStateWithLifecycle()
+    val showMenu by viewModel.showMenu.collectAsStateWithLifecycle()
+
+    DreamListScreen(
+        listState = listState,
+        sortConfig = sortConfig,
+        showMenu = showMenu,
+        onAddClick = { /*TODO*/ },
+        onSearchClick = { /*TODO*/ },
+        onMenuClick = viewModel::onMenuClick,
+        onDreamClick = { /*TODO*/ },
+        onDreamFavouriteClick = viewModel::onDreamFavouriteClick,
+        onSortChange = viewModel::onSortChange,
+        onNavigateBack = { /*TODO*/ },
+        onExportClick = { /*TODO*/ },
+        onAboutClick = { /*TODO*/ }
+    )
+
 }
 
 @Composable
 private fun DreamListScreen(
     listState: DreamFeedState,
     sortConfig: SortConfig,
+    showMenu: Boolean,
     onAddClick: () -> Unit,
     onSearchClick: () -> Unit,
     onMenuClick: () -> Unit,
     onDreamClick: (Dream) -> Unit,
     onDreamFavouriteClick: (Dream) -> Unit,
     onSortChange: (SortConfig) -> Unit,
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    onExportClick: () -> Unit,
+    onAboutClick: () -> Unit
 ) {
     //TODO: When issue resolved, also show subtitle when collapsed
     //TODO: Possibly adapt nav icon to tablet mode
@@ -69,6 +95,22 @@ private fun DreamListScreen(
             )
         },
         appbarActions = {
+            //TODO: When https://github.com/TrainerSnow/oneui-compose/issues/31 is fixed, place menu somewhere else
+            if(showMenu) {
+                PopupMenu(
+                    onDismissRequest = onMenuClick
+                ) {
+                    MenuItem(
+                        label = stringResource(R.string.dream_list_menu_export),
+                        onClick = onExportClick
+                    )
+                    MenuItem(
+                        label = stringResource(R.string.dream_list_menu_about),
+                        onClick = onAboutClick
+                    )
+                }
+            }
+
             IconButton(
                 icon = Icon.Resource(
                     IconR.drawable.ic_oui_add
@@ -155,12 +197,15 @@ private fun DreamListScreenPreview() {
             mode = SortMode.Created,
             direction = SortDirection.Descending
         ),
+        showMenu = true,
         onAddClick = { },
         onSearchClick = { },
         onMenuClick = { },
         onDreamClick = { },
         onDreamFavouriteClick = { },
         onSortChange = { },
-        onNavigateBack = { }
+        onNavigateBack = { },
+        onExportClick = {  },
+        onAboutClick = { }
     )
 }

@@ -16,6 +16,7 @@ foundation = "1.6.0-alpha03" # For some reason, this needs to be the same versio
 oneui_icons = "1.1.0"
 oneui = "0.1.4"
 nav = "2.7.0"
+compose_lifecycle = "2.6.1"
 hilt_nav = "1.1.0-alpha01"
 
 [libraries]
@@ -33,6 +34,7 @@ compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling
 compose-animation = { group = "androidx.compose.animation", name = "animation" }
 compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "nav" }
 compose-navigation-hilt = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt_nav" }
+compose-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "compose_lifecycle" }
 
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
