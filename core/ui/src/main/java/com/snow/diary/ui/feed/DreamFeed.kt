@@ -1,24 +1,15 @@
 package com.snow.diary.ui.feed
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.snow.diary.model.data.Dream
 import com.snow.diary.model.sort.SortConfig
 import com.snow.diary.model.sort.SortMode
@@ -26,20 +17,15 @@ import com.snow.diary.ui.R
 import com.snow.diary.ui.callback.DreamCallback
 import com.snow.diary.ui.data.DreamPreviewData
 import com.snow.diary.ui.item.DreamCard
-import org.oneui.compose.base.Icon
-import org.oneui.compose.base.IconView
-import org.oneui.compose.base.iconColors
-import org.oneui.compose.progress.CircularProgressIndicatorSize
-import org.oneui.compose.progress.ProgressIndicator
-import org.oneui.compose.progress.ProgressIndicatorType
-import org.oneui.compose.theme.OneUITheme
+import com.snow.diary.ui.screen.EmptyScreen
+import com.snow.diary.ui.screen.ErrorScreen
+import com.snow.diary.ui.screen.LoadingScreen
 import org.oneui.compose.util.ListPosition
 import org.oneui.compose.util.OneUIPreview
 import org.oneui.compose.widgets.text.TextSeparator
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.temporal.TemporalAdjusters
-import dev.oneuiproject.oneui.R as IconR
 
 @Composable
 fun DreamFeed(
@@ -49,57 +35,35 @@ fun DreamFeed(
 ) {
     when (state) {
         DreamFeedState.Empty -> {
-            EmptyFeed(modifier)
+            EmptyScreen(
+                modifier,
+                title = stringResource(
+                    id = R.string.dreamfeed_empty_label
+                )
+            )
         }
 
         is DreamFeedState.Error -> {
-            ErrorFeed(modifier, state)
+            ErrorScreen(
+                modifier = modifier,
+                title = stringResource(
+                    id = R.string.dreamfeed_error_label
+                ),
+                description = state.msg
+            )
         }
 
         DreamFeedState.Loading -> {
-            LoadingFeed(modifier)
+            LoadingScreen(
+                title = stringResource(
+                    id = R.string.dreamfeed_loading_label
+                )
+            )
         }
 
         is DreamFeedState.Success -> SuccessFeed(
             state = state,
             dreamCallback = dreamCallback
-        )
-    }
-}
-
-@Composable
-private fun EmptyFeed(
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement
-            .spacedBy(DreamFeedDefaults.emptyIconTextSpacing, Alignment.CenterVertically),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        val style = TextStyle(
-            color = OneUITheme.colors.seslSecondaryTextColor,
-            fontSize = 12.sp
-        )
-
-        IconView(
-            icon = Icon.Resource(IconR.drawable.ic_oui_lasso_add),
-            colors = iconColors(
-                tint = OneUITheme.colors.seslSecondaryTextColor.copy(
-                    alpha = 0.4F
-                )
-            ),
-            modifier = Modifier
-                .size(DreamFeedDefaults.emptyIconSize),
-            contentDescription = stringResource(
-                id = R.string.dreamfeed_empty_label
-            )
-        )
-        Text(
-            text = stringResource(
-                id = R.string.dreamfeed_empty_label
-            ),
-            style = style
         )
     }
 }
@@ -232,92 +196,7 @@ private fun LazyGridScope.separatorItem(
     }
 }
 
-@Composable
-private fun ErrorFeed(
-    modifier: Modifier = Modifier,
-    state: DreamFeedState.Error
-) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        val warningStyle = TextStyle(
-            color = OneUITheme.colors.seslErrorColor,
-            fontSize = 12.sp
-        )
-
-        IconView(
-            icon = Icon.Resource(IconR.drawable.ic_oui_error),
-            colors = iconColors(
-                tint = OneUITheme.colors.seslErrorColor
-            ),
-            modifier = Modifier
-                .size(DreamFeedDefaults.errorIconSize),
-            contentDescription = stringResource(
-                id = R.string.dreamfeed_empty_label
-            )
-        )
-        Spacer(
-            modifier = Modifier
-                .height(DreamFeedDefaults.errorIconTextSpacing)
-        )
-        Text(
-            text = stringResource(
-                id = R.string.dreamfeed_error_label
-            ),
-            style = warningStyle
-        )
-        Spacer(
-            modifier = Modifier
-                .height(DreamFeedDefaults.errorTextMsgSPacing)
-        )
-        Text(
-            text = state.msg,
-            style = warningStyle
-        )
-    }
-}
-
-@Composable
-private fun LoadingFeed(
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement
-            .spacedBy(DreamFeedDefaults.loadingIconTextSpacing, Alignment.CenterVertically),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        val style = TextStyle(
-            color = OneUITheme.colors.seslPrimaryTextColor,
-            fontSize = 12.sp
-        )
-
-        ProgressIndicator(
-            type = ProgressIndicatorType.CircularIndeterminate(
-                size = CircularProgressIndicatorSize.Companion.Large
-            )
-        )
-        Text(
-            text = stringResource(
-                id = R.string.dreamfeed_loading_label
-            ),
-            style = style
-        )
-    }
-}
-
 private object DreamFeedDefaults {
-
-    val emptyIconSize = 65.dp
-    val emptyIconTextSpacing = 16.dp
-
-    val loadingIconTextSpacing = 16.dp
-
-    val errorIconSize = 65.dp
-    val errorIconTextSpacing = 16.dp
-    val errorTextMsgSPacing = 4.dp
 
     val dreamItemMinSize = 350.dp
 
