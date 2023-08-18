@@ -33,7 +33,13 @@ import dev.oneuiproject.oneui.R as IconR
 
 @Composable
 internal fun DreamListScreen(
-    viewModel: DreamListViewModel = hiltViewModel()
+    viewModel: DreamListViewModel = hiltViewModel(),
+    onAddClick: () -> Unit,
+    onSearchClick: () -> Unit,
+    onDreamClick: (Dream) -> Unit,
+    onNavigateBack: () -> Unit,
+    onExportClick: () -> Unit,
+    onAboutClick: () -> Unit
 ) {
 
     val listState by viewModel.dreamListState.collectAsStateWithLifecycle()
@@ -44,15 +50,15 @@ internal fun DreamListScreen(
         listState = listState,
         sortConfig = sortConfig,
         showMenu = showMenu,
-        onAddClick = { /*TODO*/ },
-        onSearchClick = { /*TODO*/ },
+        onAddClick = onAddClick,
+        onSearchClick = onSearchClick,
         onMenuClick = viewModel::onMenuClick,
-        onDreamClick = { /*TODO*/ },
+        onDreamClick = onDreamClick,
         onDreamFavouriteClick = viewModel::onDreamFavouriteClick,
         onSortChange = viewModel::onSortChange,
-        onNavigateBack = { /*TODO*/ },
-        onExportClick = { /*TODO*/ },
-        onAboutClick = { /*TODO*/ }
+        onNavigateBack = onNavigateBack,
+        onExportClick = onExportClick,
+        onAboutClick = onAboutClick
     )
 
 }
