@@ -2,6 +2,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
+    id("kotlin-kapt")
+    alias(libs.plugins.com.google.dagger.hilt.android)
 }
 
 android {
@@ -52,6 +54,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.com.google.dagger.hilt.android)
+    kapt(libs.com.google.dagger.hilt.android.compiler)
 
     implementation(libs.core.ktx)
     implementation(platform(libs.compose.bom))
@@ -63,11 +67,12 @@ dependencies {
     implementation(libs.compose.ui.tooling)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.animation)
+    implementation(libs.compose.navigation)
 
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
 
-    implementation(project(":core:database"))
     implementation(project(":feature:dreams"))
+    implementation(project(":core:model"))
     implementation(libs.oneui)
 }

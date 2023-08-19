@@ -15,7 +15,7 @@ import com.snow.feature.dreams.screen.detail.DreamDetailScreen
 private const val dreamIdArg = "dreamId"
 private const val dreamDetailName = "dream_detail/%s"
 
-private val dreamDetailRoute = dreamDetailName.format(dreamIdArg)
+private val dreamDetailRoute = dreamDetailName.format("{$dreamIdArg}")
 
 internal class DreamDetailArgs(
     val dreamId: Long
@@ -45,7 +45,7 @@ fun NavGraphBuilder.dreamDetail(
             navArgument(
                 name = dreamIdArg
             ) {
-                type = NavType.StringType
+                type = NavType.LongType
             }
         )
     ) {
