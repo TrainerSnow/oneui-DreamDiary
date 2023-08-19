@@ -5,11 +5,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.common.time.TimeFormat.formatFullDescription
 import com.snow.diary.model.data.Location
+import com.snow.diary.model.data.Person
+import com.snow.diary.model.data.Relation
 import com.snow.diary.model.sort.SortConfig
 import com.snow.diary.ui.callback.PersonCallback
 import com.snow.diary.ui.feed.LocationFeed
@@ -33,9 +37,31 @@ import dev.oneuiproject.oneui.R as IconR
 
 @Composable
 internal fun DreamDetailScreen(
-    viewModel: DreamDetailViewModel = hiltViewModel()
+    viewModel: DreamDetailViewModel = hiltViewModel(),
+    onNavigateBack: () -> Unit,
+    onLocationClick: (Location) -> Unit,
+    onPersonClick: (Person) -> Unit,
+    onRelationClick: (Relation) -> Unit
 ) {
+    val dreamState by viewModel.dreamDetailState.collectAsStateWithLifecycle()
+    val tabState by viewModel.tabState.collectAsStateWithLifecycle()
 
+    DreamDetailScreen(
+        state = dreamState,
+        tabState = tabState,
+        onNavigateBack = onNavigateBack,
+        onTabStateChange = { },
+        personCallback = object : PersonCallback {
+
+            override fun onClick(person: Person) { onPersonClick(person) }
+
+            override fun onRelationClick(relation: Relation) { onRelationClick(relation) }
+
+            override fun onFavouriteClick(person: Person) { viewModel.personFavouriteClick(person) }
+
+        },
+        onLocationClick = onLocationClick
+    )
 }
 
 @Composable
@@ -43,7 +69,7 @@ private fun DreamDetailScreen(
     state: DreamDetailState,
     tabState: DreamDetailTabState,
     onTabStateChange: (DreamDetailTabState) -> Unit,
-    onDrawerOpen: () -> Unit,
+    onNavigateBack: () -> Unit,
     personCallback: PersonCallback,
     onLocationClick: (Location) -> Unit
 ) {
@@ -61,8 +87,8 @@ private fun DreamDetailScreen(
         toolbarTitle = title,
         appbarNavAction = {
             IconButton(
-                icon = Icon.Resource(IconR.drawable.ic_oui_drawer),
-                onClick = onDrawerOpen
+                icon = Icon.Resource(IconR.drawable.ic_oui_back),
+                onClick = onNavigateBack
             )
         }
     ) {
