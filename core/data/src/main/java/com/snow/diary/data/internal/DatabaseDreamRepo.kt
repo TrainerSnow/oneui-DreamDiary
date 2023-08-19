@@ -50,15 +50,18 @@ class DatabaseDreamRepo @Inject constructor(
     override fun getExtendedDreamById(id: Long): Flow<DreamAggregate?> {
         val persons = dreamDao
             .getDreamWithPersonsById(id)
-            .map { it?.persons }
+            .map {
+                it?.persons ?: emptyList()
+            }
 
         val relations = persons //Getting relations off the persons we got
             .flatMapMerge { personEntities ->
-                val flows = personEntities?.map { person ->
+                val flows = personEntities.map { person ->
                     relationDao
                         .getRelationById(person.relationId)
                         .map { it!! }
-                } ?: return@flatMapMerge flowOf(null)
+                }
+                if(flows.isEmpty()) return@flatMapMerge flowOf(emptyList())
                 combine(
                     flows
                 ) {
@@ -71,8 +74,7 @@ class DatabaseDreamRepo @Inject constructor(
             persons,
             relations
         ) { ps, rs -> //Combining persons and relations to PersonWithRelation
-            if (ps == null || rs == null) null
-            else List(ps.size) { index ->
+            List(ps.size) { index ->
                 PersonWithRelation(
                     ps[index].asModel,
                     rs[index].asModel
@@ -84,7 +86,7 @@ class DatabaseDreamRepo @Inject constructor(
             .getDreamWithLocationsById(id)
             .map {
                 it?.locations
-                    ?.map { it.asModel }
+                    ?.map { it.asModel } ?: emptyList()
             }
 
         return combine(
@@ -93,7 +95,7 @@ class DatabaseDreamRepo @Inject constructor(
             dreamDao
                 .getDreamById(id)
         ) { ps, ls, dream ->
-            if (ps == null || ls == null || dream == null) null
+            if (dream == null) null
             else DreamAggregate(
                 dream.asModel,
                 ps,
