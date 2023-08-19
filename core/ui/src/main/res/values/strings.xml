@@ -18,6 +18,10 @@
     <string name="personfeed_error_label">An error occurred while getting your persons.</string>
     <string name="personfeed_loading_label">Loading your persons. Stay tuned.</string>
 
+    <string name="locationfeed_empty_label">There are currently no locations. Start off by adding some!</string>
+    <string name="locationfeed_error_label">An error occurred while getting your locations.</string>
+    <string name="locationfeed_loading_label">Loading your locations. Stay tuned.</string>
+
     <string name="sortmode_created">Created</string>
     <string name="sortmode_updated">Updated</string>
     <string name="sortmode_alphabetically">Name</string>
