@@ -7,4 +7,21 @@
     <string name="dream_list_menu_export">Export</string>
     <string name="dream_list_menu_about">About this app</string>
 
+    <string name="dream_detail_title">Dream from %s</string>
+    <string name="dream_detail_title_placeholder">Dream</string>
+
+    <string name="dream_detail_content">Content</string>
+    <string name="dream_detail_notes">Notes</string>
+    <string name="dream_detail_clearness">Clearness</string>
+    <string name="dream_detail_happiness">Happiness</string>
+
+    <string name="dream_detail_error_title">An error occurred getting dream with id %s.</string>
+    <string name="dream_detail_loading_title">Loading the dream…</string>
+
+    <string name="dream_detail_tab_general">General</string>
+    <string name="dream_detail_tab_persons">Persons</string>
+    <string name="dream_detail_tab_locations">Locations</string>
+    <string name="dream_detail_tab_content">Content</string>
+    <string name="dream_detail_tab_other">Other</string>
+
 </resources>

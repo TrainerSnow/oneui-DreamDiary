@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.activity.compose)
 
     implementation(project(":core:model"))
+    implementation(project(":core:common"))
     implementation(project(":core:data"))
     implementation(project(":core:ui"))
     implementation(libs.oneui)
