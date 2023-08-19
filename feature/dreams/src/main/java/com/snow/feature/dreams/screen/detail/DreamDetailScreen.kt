@@ -1,16 +1,22 @@
 package com.snow.feature.dreams.screen.detail
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.common.time.TimeFormat.formatFullDescription
+import com.snow.diary.model.combine.DreamAggregate
 import com.snow.diary.model.data.Location
 import com.snow.diary.model.data.Person
 import com.snow.diary.model.data.Relation
@@ -50,14 +56,20 @@ internal fun DreamDetailScreen(
         state = dreamState,
         tabState = tabState,
         onNavigateBack = onNavigateBack,
-        onTabStateChange = { },
+        onTabStateChange = viewModel::changeTabState,
         personCallback = object : PersonCallback {
 
-            override fun onClick(person: Person) { onPersonClick(person) }
+            override fun onClick(person: Person) {
+                onPersonClick(person)
+            }
 
-            override fun onRelationClick(relation: Relation) { onRelationClick(relation) }
+            override fun onRelationClick(relation: Relation) {
+                onRelationClick(relation)
+            }
 
-            override fun onFavouriteClick(person: Person) { viewModel.personFavouriteClick(person) }
+            override fun onFavouriteClick(person: Person) {
+                viewModel.personFavouriteClick(person)
+            }
 
         },
         onLocationClick = onLocationClick
@@ -81,88 +93,112 @@ private fun DreamDetailScreen(
         id = R.string.dream_detail_title_placeholder
     )
 
-    CollapsingToolbarLayout(
+    Column(
         modifier = Modifier
-            .fillMaxSize(),
-        toolbarTitle = title,
-        appbarNavAction = {
-            IconButton(
-                icon = Icon.Resource(IconR.drawable.ic_oui_back),
-                onClick = onNavigateBack
-            )
-        }
+            .fillMaxSize()
     ) {
-        when (state) {
-            is DreamDetailState.Error -> {
-                ErrorScreen(
-                    title = stringResource(
-                        id = R.string.dream_detail_title,
-                        state.id.toString()
-                    ),
-                    description = state.msg
+        CollapsingToolbarLayout(
+            modifier = Modifier
+                .weight(1F)
+                .fillMaxWidth(),
+            toolbarTitle = title,
+            appbarNavAction = {
+                IconButton(
+                    icon = Icon.Resource(IconR.drawable.ic_oui_back),
+                    onClick = onNavigateBack
                 )
             }
-
-            DreamDetailState.Loading -> {
-                LoadingScreen(
-                    title = stringResource(
-                        id = R.string.dream_detail_loading_title
+        ) {
+            when (state) {
+                is DreamDetailState.Error -> {
+                    ErrorScreen(
+                        title = stringResource(
+                            id = R.string.dream_detail_title,
+                            state.id.toString()
+                        ),
+                        description = state.msg
                     )
-                )
-            }
+                }
 
-            is DreamDetailState.Success -> {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Tabs(
+                DreamDetailState.Loading -> {
+                    LoadingScreen(
+                        title = stringResource(
+                            id = R.string.dream_detail_loading_title
+                        )
+                    )
+                }
+
+                is DreamDetailState.Success -> {
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .padding(DreamDetailScreenDefaults.contentPadding),
+                        verticalArrangement = Arrangement.SpaceBetween
                     ) {
-                        DreamDetailTab.values().forEach { tab ->
-                            TabItem(
-                                onClick = { onTabStateChange(tabState.copy(tab = tab)) },
-                                text = tab.localizedName(),
-                                selected = tab == tabState.tab
+                        when (tabState.tab) {
+                            DreamDetailTab.General -> GeneralTab(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                state = state,
+                                tabState = tabState,
+                                onSubtabChange = { subtab ->
+                                    onTabStateChange(
+                                        tabState.copy(
+                                            subtab = subtab
+                                        )
+                                    )
+                                }
+                            )
+
+                            DreamDetailTab.Persons -> PersonTab(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                state = state,
+                                personCallback = personCallback
+                            )
+
+                            DreamDetailTab.Locations -> LocationTab(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                state = state,
+                                onLocationClick = onLocationClick
                             )
                         }
-                    }
-
-                    when (tabState.tab) {
-                        DreamDetailTab.General -> GeneralTab(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            state = state,
-                            tabState = tabState,
-                            onSubtabChange = { subtab ->
-                                onTabStateChange(
-                                    tabState.copy(
-                                        subtab = subtab
-                                    )
-                                )
-                            }
-                        )
-
-                        DreamDetailTab.Persons -> PersonTab(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            state = state,
-                            personCallback = personCallback
-                        )
-
-                        DreamDetailTab.Locations -> LocationTab(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            state = state,
-                            onLocationClick = onLocationClick
-                        )
                     }
                 }
             }
         }
+
+        Tabs(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(DreamDetailScreenDefaults.contentPadding)
+        ) {
+            DreamDetailTab.values().forEach { tab ->
+                TabItem(
+                    modifier = Modifier
+                        .weight(1F),
+                    onClick = { onTabStateChange(tabState.copy(tab = tab)) },
+                    text = tab.localizedName(),
+                    selected = tab == tabState.tab,
+                    enabled = tab.enabled((state as? DreamDetailState.Success)?.dream)
+                )
+            }
+        }
     }
 }
+
+private fun DreamDetailTab.enabled(dream: DreamAggregate?): Boolean = when (this) {
+    DreamDetailTab.General -> true
+    DreamDetailTab.Persons -> dream?.persons?.isNotEmpty() ?: true
+    DreamDetailTab.Locations -> dream?.locations?.isNotEmpty() ?: true
+}
+
+private fun DreamDetailSubtab.enabled(dream: DreamAggregate?): Boolean =
+    if (dream == null) true else when (this) {
+        DreamDetailSubtab.Other -> dream.dream.let { it.happiness != null || it.clearness != null }
+        else -> true
+    }
 
 @Composable
 private fun LocationTab(
@@ -207,12 +243,32 @@ private fun GeneralTab(
         modifier = modifier
     ) {
         val dream = state.dream.dream
+        Tabs(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            DreamDetailSubtab.values().forEach { subtab ->
+                SubTabItem(
+                    modifier = Modifier
+                        .weight(1F),
+                    onClick = { onSubtabChange(subtab) },
+                    text = subtab.localizedName(),
+                    selected = tabState.subtab == subtab,
+                    enabled = subtab.enabled(state.dream)
+                )
+            }
+        }
+
         when (tabState.subtab) {
             DreamDetailSubtab.Content -> {
                 TextSeparator(
                     text = stringResource(R.string.dream_detail_content)
                 )
-                RoundedCornerBox {
+                RoundedCornerBox(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.TopStart
+                ) {
                     Text(
                         text = dream.description
                     )
@@ -222,7 +278,11 @@ private fun GeneralTab(
                     TextSeparator(
                         text = stringResource(R.string.dream_detail_notes)
                     )
-                    RoundedCornerBox {
+                    RoundedCornerBox(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.TopStart
+                    ) {
                         Text(
                             text = note
                         )
@@ -253,22 +313,13 @@ private fun GeneralTab(
                 }
             }
         }
-
-        Tabs(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            DreamDetailSubtab.values().forEach { subtab ->
-                SubTabItem(
-                    onClick = { onSubtabChange(subtab) },
-                    text = subtab.localizedName(),
-                    selected = tabState.subtab == subtab,
-                    enabled = subtab == DreamDetailSubtab.Content ||
-                            dream.happiness != null || dream.clearness != null
-                )
-            }
-        }
     }
+}
 
+private object DreamDetailScreenDefaults {
+
+    val contentPadding = PaddingValues(
+        horizontal = 16.dp
+    )
 }
 
