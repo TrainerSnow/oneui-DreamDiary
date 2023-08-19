@@ -1,11 +1,13 @@
 package com.snow.feature.dreams.screen.detail
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -99,8 +101,7 @@ private fun DreamDetailScreen(
     ) {
         CollapsingToolbarLayout(
             modifier = Modifier
-                .weight(1F)
-                .fillMaxWidth(),
+                .weight(1F),
             toolbarTitle = title,
             appbarNavAction = {
                 IconButton(
@@ -109,7 +110,7 @@ private fun DreamDetailScreen(
                 )
             }
         ) {
-            when (state) {
+            val content = @Composable { when (state) {
                 is DreamDetailState.Error -> {
                     ErrorScreen(
                         title = stringResource(
@@ -129,46 +130,43 @@ private fun DreamDetailScreen(
                 }
 
                 is DreamDetailState.Success -> {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(DreamDetailScreenDefaults.contentPadding),
-                        verticalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        when (tabState.tab) {
-                            DreamDetailTab.General -> GeneralTab(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                state = state,
-                                tabState = tabState,
-                                onSubtabChange = { subtab ->
-                                    onTabStateChange(
-                                        tabState.copy(
-                                            subtab = subtab
-                                        )
+                    when (tabState.tab) {
+                        DreamDetailTab.General -> GeneralTab(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            state = state,
+                            tabState = tabState,
+                            onSubtabChange = { subtab ->
+                                onTabStateChange(
+                                    tabState.copy(
+                                        subtab = subtab
                                     )
-                                }
-                            )
+                                )
+                            }
+                        )
 
-                            DreamDetailTab.Persons -> PersonTab(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                state = state,
-                                personCallback = personCallback
-                            )
+                        DreamDetailTab.Persons -> PersonTab(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            state = state,
+                            personCallback = personCallback
+                        )
 
-                            DreamDetailTab.Locations -> LocationTab(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                state = state,
-                                onLocationClick = onLocationClick
-                            )
-                        }
+                        DreamDetailTab.Locations -> LocationTab(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            state = state,
+                            onLocationClick = onLocationClick
+                        )
                     }
                 }
-            }
-        }
+            } }
 
+            Box(
+                modifier = Modifier
+                    .padding(DreamDetailScreenDefaults.contentPadding)
+            ) { content() }
+        }
         Tabs(
             modifier = Modifier
                 .fillMaxWidth()
@@ -261,22 +259,12 @@ private fun GeneralTab(
 
         when (tabState.subtab) {
             DreamDetailSubtab.Content -> {
-                TextSeparator(
-                    text = stringResource(R.string.dream_detail_content)
-                )
-                RoundedCornerBox(
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth(),
-                    contentAlignment = Alignment.TopStart
+                        .verticalScroll(rememberScrollState())
                 ) {
-                    Text(
-                        text = dream.description
-                    )
-                }
-
-                dream.note?.let { note ->
                     TextSeparator(
-                        text = stringResource(R.string.dream_detail_notes)
+                        text = stringResource(R.string.dream_detail_content)
                     )
                     RoundedCornerBox(
                         modifier = Modifier
@@ -284,8 +272,23 @@ private fun GeneralTab(
                         contentAlignment = Alignment.TopStart
                     ) {
                         Text(
-                            text = note
+                            text = dream.description
                         )
+                    }
+
+                    dream.note?.let { note ->
+                        TextSeparator(
+                            text = stringResource(R.string.dream_detail_notes)
+                        )
+                        RoundedCornerBox(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            contentAlignment = Alignment.TopStart
+                        ) {
+                            Text(
+                                text = note
+                            )
+                        }
                     }
                 }
             }
