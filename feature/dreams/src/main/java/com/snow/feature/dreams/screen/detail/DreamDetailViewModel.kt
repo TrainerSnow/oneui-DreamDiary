@@ -3,6 +3,7 @@ package com.snow.feature.dreams.screen.detail;
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.snow.diary.common.launchInBackground
 import com.snow.diary.data.repository.DreamRepository
 import com.snow.diary.data.repository.PersonRepository
 import com.snow.diary.model.data.Dream
@@ -46,7 +47,7 @@ internal class DreamDetailViewModel @Inject constructor(
     )
     val tabState: StateFlow<DreamDetailTabState> = _tabState
 
-    fun personFavouriteClick(person: Person) = viewModelScope.launch {
+    fun personFavouriteClick(person: Person) = viewModelScope.launchInBackground {
         personRepo.upsertPerson(
             person.copy(
                 isFavourite = !person.isFavourite
@@ -54,7 +55,7 @@ internal class DreamDetailViewModel @Inject constructor(
         )
     }
 
-    fun deleteDream(dream: Dream) = viewModelScope.launch {
+    fun deleteDream(dream: Dream) = viewModelScope.launchInBackground {
         //TODO: Give option to restore dream via global toast
         dreamRepo
             .deleteDream(dream)

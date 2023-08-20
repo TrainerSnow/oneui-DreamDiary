@@ -2,6 +2,7 @@ package com.snow.feature.dreams.screen.list;
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.snow.diary.common.launchInBackground
 import com.snow.diary.data.repository.DreamRepository
 import com.snow.diary.model.data.Dream
 import com.snow.diary.model.sort.SortConfig
@@ -51,7 +52,7 @@ internal class DreamListViewModel @Inject constructor(
         )
     }
 
-    fun onDreamFavouriteClick(dream: Dream) = viewModelScope.launch {
+    fun onDreamFavouriteClick(dream: Dream) = viewModelScope.launchInBackground {
         dreamRepo
             .upsertDream(
                 dream
