@@ -12,12 +12,14 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
     @Provides
+    @Singleton
     fun database(
         @ApplicationContext context: Context
     ): DiaryDatabase = Room.databaseBuilder(
@@ -29,21 +31,25 @@ object DatabaseModule {
         .build()
 
     @Provides
+    @Singleton
     fun dreamDao(
         db: DiaryDatabase
     ): DreamDao = db.dreamDao()
 
     @Provides
+    @Singleton
     fun personDao(
         db: DiaryDatabase
     ): PersonDao = db.personDao()
 
     @Provides
+    @Singleton
     fun locationDao(
         db: DiaryDatabase
     ): LocationDao = db.locationDao()
 
     @Provides
+    @Singleton
     fun relationDao(
         db: DiaryDatabase
     ): RelationDao = db.relationDao()

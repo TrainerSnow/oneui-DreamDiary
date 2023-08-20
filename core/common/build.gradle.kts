@@ -36,5 +36,7 @@ android {
 dependencies {
     implementation(libs.core.ktx)
 
+    implementation(libs.org.jetbrains.kotlinx.coroutines.core)
+
     implementation(project(":core:model"))
 }

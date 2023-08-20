@@ -1,25 +1,16 @@
 package com.snow.diary.ui.feed
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.snow.diary.model.combine.PersonWithRelation
 import com.snow.diary.model.data.Person
 import com.snow.diary.model.data.Relation
@@ -29,13 +20,9 @@ import com.snow.diary.ui.R
 import com.snow.diary.ui.callback.PersonCallback
 import com.snow.diary.ui.data.PersonPreviewData
 import com.snow.diary.ui.item.PersonCard
-import org.oneui.compose.base.Icon
-import org.oneui.compose.base.IconView
-import org.oneui.compose.base.iconColors
-import org.oneui.compose.progress.CircularProgressIndicatorSize
-import org.oneui.compose.progress.ProgressIndicator
-import org.oneui.compose.progress.ProgressIndicatorType
-import org.oneui.compose.theme.OneUITheme
+import com.snow.diary.ui.screen.EmptyScreen
+import com.snow.diary.ui.screen.ErrorScreen
+import com.snow.diary.ui.screen.LoadingScreen
 import org.oneui.compose.util.ListPosition
 import org.oneui.compose.util.OneUIPreview
 import org.oneui.compose.widgets.text.TextSeparator
@@ -48,15 +35,30 @@ fun PersonFeed(
 ) {
     when (state) {
         PersonFeedState.Empty -> {
-            EmptyFeed(modifier)
+            EmptyScreen(
+                modifier,
+                title = stringResource(
+                    id = R.string.personfeed_empty_label
+                )
+            )
         }
 
         is PersonFeedState.Error -> {
-            ErrorFeed(modifier, state)
+            ErrorScreen(
+                modifier = modifier,
+                title = stringResource(
+                    id = R.string.personfeed_error_label
+                ),
+                description = state.msg
+            )
         }
 
         PersonFeedState.Loading -> {
-            LoadingFeed(modifier)
+            LoadingScreen(
+                title = stringResource(
+                    id = R.string.personfeed_error_label
+                )
+            )
         }
 
         is PersonFeedState.Success -> {
@@ -80,7 +82,9 @@ private fun SuccessFeed(
             minSize = PersonFeedDefaults.personItemMinWidth
         )
     ) {
-        if(!state.relationSectionSort) {
+        val doRelationSort = state.relationSectionSort && state.sortConfig.mode == SortMode.Relation
+
+        if(!doRelationSort) {
             items(
                 count = state.persons.size,
                 key = { state.persons[it].person.id },
@@ -95,8 +99,6 @@ private fun SuccessFeed(
             }
             return@LazyVerticalGrid
         }
-
-        require(state.sortConfig.mode == SortMode.Relation) { "relationSectionSort is enabled, but the SortConfig is not sorting by relation." }
 
         var fromIndex = 0
 
@@ -158,129 +160,7 @@ private fun LazyGridScope.separatorItem(
     }
 }
 
-@Composable
-private fun EmptyFeed(
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement
-            .spacedBy(PersonFeedDefaults.emptyIconTextSpacing, Alignment.CenterVertically),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        val style = TextStyle(
-            color = OneUITheme.colors.seslSecondaryTextColor,
-            fontSize = 12.sp
-        )
-
-        IconView(
-            icon = Icon.Resource(dev.oneuiproject.oneui.R.drawable.ic_oui_lasso_add),
-            colors = iconColors(
-                tint = OneUITheme.colors.seslSecondaryTextColor.copy(
-                    alpha = 0.4F
-                )
-            ),
-            modifier = Modifier
-                .size(PersonFeedDefaults.emptyIconSize),
-            contentDescription = stringResource(
-                id = R.string.personfeed_empty_label
-            )
-        )
-        Text(
-            text = stringResource(
-                id = R.string.personfeed_empty_label
-            ),
-            style = style
-        )
-    }
-}
-
-@Composable
-private fun ErrorFeed(
-    modifier: Modifier = Modifier,
-    state: PersonFeedState.Error
-) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        val warningStyle = TextStyle(
-            color = OneUITheme.colors.seslErrorColor,
-            fontSize = 12.sp
-        )
-
-        IconView(
-            icon = Icon.Resource(dev.oneuiproject.oneui.R.drawable.ic_oui_error),
-            colors = iconColors(
-                tint = OneUITheme.colors.seslErrorColor
-            ),
-            modifier = Modifier
-                .size(PersonFeedDefaults.errorIconSize),
-            contentDescription = stringResource(
-                id = R.string.personfeed_error_label
-            )
-        )
-        Spacer(
-            modifier = Modifier
-                .height(PersonFeedDefaults.errorIconTextSpacing)
-        )
-        Text(
-            text = stringResource(
-                id = R.string.personfeed_error_label
-            ),
-            style = warningStyle
-        )
-        Spacer(
-            modifier = Modifier
-                .height(PersonFeedDefaults.errorTextMsgSPacing)
-        )
-        Text(
-            text = state.msg,
-            style = warningStyle
-        )
-    }
-}
-
-@Composable
-private fun LoadingFeed(
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement
-            .spacedBy(PersonFeedDefaults.loadingIconTextSpacing, Alignment.CenterVertically),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        val style = TextStyle(
-            color = OneUITheme.colors.seslPrimaryTextColor,
-            fontSize = 12.sp
-        )
-
-        ProgressIndicator(
-            type = ProgressIndicatorType.CircularIndeterminate(
-                size = CircularProgressIndicatorSize.Companion.Large
-            )
-        )
-        Text(
-            text = stringResource(
-                id = R.string.personfeed_loading_label
-            ),
-            style = style
-        )
-    }
-}
-
 private object PersonFeedDefaults {
-
-    val emptyIconSize = 65.dp
-    val emptyIconTextSpacing = 16.dp
-
-    val loadingIconTextSpacing = 16.dp
-
-    val errorIconSize = 65.dp
-    val errorIconTextSpacing = 16.dp
-    val errorTextMsgSPacing = 4.dp
 
     val personItemMinWidth = 350.dp
 
