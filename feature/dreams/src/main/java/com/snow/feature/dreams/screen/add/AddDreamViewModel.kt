@@ -1,5 +1,6 @@
 package com.snow.feature.dreams.screen.add;
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,7 @@ import com.snow.diary.common.search.Search.filterSearch
 import com.snow.diary.data.repository.DreamRepository
 import com.snow.diary.data.repository.LocationRepository
 import com.snow.diary.data.repository.PersonRepository
+import com.snow.diary.model.combine.PersonWithRelation
 import com.snow.diary.model.data.Dream
 import com.snow.diary.model.data.Location
 import com.snow.diary.model.data.Person
@@ -20,6 +22,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -31,10 +34,11 @@ internal class AddDreamViewModel @Inject constructor(
     val dreamRepo: DreamRepository,
     val personRepo: PersonRepository,
     val locationRepo: LocationRepository,
-    @ApplicationContext val context: Context
+    @SuppressLint("StaticFieldLeak") @ApplicationContext val context: Context
 ) : ViewModel() {
 
-    val args = AddDreamArgs(savedStateHandle)
+    private val args = AddDreamArgs(savedStateHandle)
+    val isEdit = args.dreamId != null
 
     private val _inputState = MutableStateFlow(AddDreamInputState())
     val inputState = _inputState.asStateFlow()
@@ -47,6 +51,36 @@ internal class AddDreamViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(AddDreamUiState())
     val uiState = _uiState.asStateFlow()
+
+    init {
+        if (isEdit) {
+            viewModelScope.launchInBackground {
+                val dream = dreamRepo
+                    .getExtendedDreamById(args.dreamId!!)
+                    .lastOrNull()!!
+
+                _inputState.emit(
+                    inputState.value.run {
+                        copy(
+                            description = description.copy(dream.dream.description),
+                            note = note.copy(dream.dream.note ?: ""),
+                            markAsFavourite = dream.dream.isFavourite,
+                            happiness = dream.dream.happiness,
+                            clearness = dream.dream.clearness
+                        )
+                    }
+                )
+                _extrasState.emit(
+                    extrasState.value.run {
+                        copy(
+                            persons = dream.persons.map(PersonWithRelation::person),
+                            locations = dream.locations
+                        )
+                    }
+                )
+            }
+        }
+    }
 
 
     private var personJob: Job? = null
@@ -212,17 +246,49 @@ internal class AddDreamViewModel @Inject constructor(
                 )
             }
 
-            val id = dreamRepo
+            val id = if (isEdit) {
+                dreamRepo.update(dream)
+                args.dreamId!!
+            } else dreamRepo
                 .insert(dream)
                 .first()
 
-            extrasState.value.persons.forEach { person ->
-                dreamRepo
-                    .upsertDreamPersonCrossref(id, person.id!!)
-            }
-            extrasState.value.locations.forEach { location ->
-                dreamRepo
-                    .upsertDreamLocationCrossref(id, location.id!!)
+            if(!isEdit) {
+                extrasState.value.persons.forEach { person ->
+                    dreamRepo
+                        .upsertDreamPersonCrossref(id, person.id!!)
+                }
+                extrasState.value.locations.forEach { location ->
+                    dreamRepo
+                        .upsertDreamLocationCrossref(id, location.id!!)
+                }
+            } else {
+                val dreamAgg = dreamRepo
+                    .getExtendedDreamById(id)
+                    .first()!!
+
+                val persons = dreamAgg.persons.map(PersonWithRelation::person)
+                val locations = dreamAgg.locations
+
+                val newPersons = extrasState.value.persons - persons.toSet()
+                val newLocations = extrasState.value.locations - locations.toSet()
+
+                val toRemovePersons = persons - extrasState.value.persons.toSet()
+                val toRemoveLocations = locations - extrasState.value.locations.toSet()
+
+                toRemovePersons.forEach {
+                    dreamRepo.deleteDreamPersonCrossref(id, it.id!!)
+                }
+                toRemoveLocations.forEach {
+                    dreamRepo.deleteDreamLocationCrossref(id, it.id!!)
+                }
+
+                newPersons.forEach {
+                    dreamRepo.upsertDreamPersonCrossref(id, it.id!!)
+                }
+                newLocations.forEach {
+                    dreamRepo.upsertDreamLocationCrossref(id, it.id!!)
+                }
             }
         }
     }

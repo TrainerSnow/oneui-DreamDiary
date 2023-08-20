@@ -14,10 +14,10 @@ private const val addDreamName = "add_dream"
 private fun String.withArg(name: String, value: String): String = "$this?$name=$value"
 
 internal class AddDreamArgs(
-    val dreamId: Long
+    val dreamId: Long?
 ) {
     constructor(savedStateHandle: SavedStateHandle) : this(
-        checkNotNull(savedStateHandle[dreamIdArg]) as Long
+        dreamId = savedStateHandle[dreamIdArg]
     )
 }
 
