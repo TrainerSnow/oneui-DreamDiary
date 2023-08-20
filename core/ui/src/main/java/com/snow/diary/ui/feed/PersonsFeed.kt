@@ -82,7 +82,9 @@ private fun SuccessFeed(
             minSize = PersonFeedDefaults.personItemMinWidth
         )
     ) {
-        if(!state.relationSectionSort) {
+        val doRelationSort = state.relationSectionSort && state.sortConfig.mode == SortMode.Relation
+
+        if(!doRelationSort) {
             items(
                 count = state.persons.size,
                 key = { state.persons[it].person.id },
@@ -97,8 +99,6 @@ private fun SuccessFeed(
             }
             return@LazyVerticalGrid
         }
-
-        require(state.sortConfig.mode == SortMode.Relation) { "relationSectionSort is enabled, but the SortConfig is not sorting by relation." }
 
         var fromIndex = 0
 

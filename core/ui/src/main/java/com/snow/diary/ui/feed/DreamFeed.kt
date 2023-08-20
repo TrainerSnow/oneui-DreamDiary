@@ -108,7 +108,9 @@ private fun SuccessFeed(
             minSize = DreamFeedDefaults.dreamItemMinSize
         )
     ) {
-        if (!state.temporallySort) {
+        val doTemporallySort = state.temporallySort && state.sortConfig.mode.let { it == SortMode.Created || it == SortMode.Updated }
+
+        if (!doTemporallySort) {
             items(
                 count = state.dreams.size,
                 key = { state.dreams[it].id },
@@ -122,8 +124,6 @@ private fun SuccessFeed(
             }
             return@LazyVerticalGrid
         }
-
-        require(state.sortConfig.mode == SortMode.Created || state.sortConfig.mode == SortMode.Updated) { "temporallySort is enabled, but the SortConfig is not sorting by date." }
 
         var fromIndex = 0
         ranges.forEach {
