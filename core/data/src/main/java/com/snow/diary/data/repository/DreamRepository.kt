@@ -7,7 +7,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface DreamRepository {
 
-    suspend fun upsertDream(vararg dream: Dream)
+    suspend fun insert(vararg dream: Dream): List<Long>
+
+    suspend fun update(vararg dream: Dream)
 
     suspend fun deleteDream(vararg dream: Dream)
 

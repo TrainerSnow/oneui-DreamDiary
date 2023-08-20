@@ -11,7 +11,7 @@ import com.snow.diary.model.data.Location
 data class LocationEntity(
 
     @PrimaryKey(autoGenerate = true)
-    val locationId: Long,
+    val locationId: Long? = null,
 
     val name: String,
 

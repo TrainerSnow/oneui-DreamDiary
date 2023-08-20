@@ -54,7 +54,7 @@ internal class DreamListViewModel @Inject constructor(
 
     fun onDreamFavouriteClick(dream: Dream) = viewModelScope.launchInBackground {
         dreamRepo
-            .upsertDream(
+            .update(
                 dream
                     .copy(
                         isFavourite = !dream.isFavourite

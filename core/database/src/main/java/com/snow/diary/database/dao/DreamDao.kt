@@ -2,9 +2,10 @@ package com.snow.diary.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
-import androidx.room.Upsert
+import androidx.room.Update
 import com.snow.diary.database.model.DreamEntity
 import com.snow.diary.database.model.cross.DreamWithLocations
 import com.snow.diary.database.model.cross.DreamWithPersons
@@ -13,8 +14,12 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface DreamDao {
     @Transaction
-    @Upsert
-    fun upsert(vararg dream: DreamEntity)
+    @Insert
+    fun insert(vararg dream: DreamEntity): List<Long>
+
+    @Transaction
+    @Update
+    fun update(vararg dream: DreamEntity)
 
     @Transaction
     @Delete

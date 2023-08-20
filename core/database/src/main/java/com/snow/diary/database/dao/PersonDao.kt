@@ -2,9 +2,10 @@ package com.snow.diary.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
-import androidx.room.Upsert
+import androidx.room.Update
 import com.snow.diary.database.model.PersonEntity
 import com.snow.diary.database.model.cross.PersonWithDreams
 import kotlinx.coroutines.flow.Flow
@@ -12,8 +13,12 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PersonDao {
     @Transaction
-    @Upsert
-    fun upsert(vararg person: PersonEntity)
+    @Insert
+    fun insert(vararg person: PersonEntity): List<Long>
+
+    @Transaction
+    @Update
+    fun update(vararg person: PersonEntity)
 
     @Transaction
     @Delete

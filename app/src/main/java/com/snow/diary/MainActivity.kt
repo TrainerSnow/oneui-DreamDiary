@@ -35,7 +35,7 @@ class MainActivity: ComponentActivity() {
                     onSearchClick = { },
                     onDreamClick = { dream ->
                         navController
-                            .goToDreamDetail(dream.id)
+                            .goToDreamDetail(dream.id!!)
                     },
                     onExportClick = { },
                     onNavigateBack = { }

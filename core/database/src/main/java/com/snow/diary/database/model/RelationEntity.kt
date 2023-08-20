@@ -11,7 +11,7 @@ import com.snow.diary.model.data.Relation
 data class RelationEntity(
 
     @PrimaryKey(autoGenerate = true)
-    val id: Long,
+    val id: Long? = null,
 
     val name: String,
 

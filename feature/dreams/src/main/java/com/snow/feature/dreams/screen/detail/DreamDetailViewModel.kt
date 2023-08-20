@@ -48,7 +48,7 @@ internal class DreamDetailViewModel @Inject constructor(
     val tabState: StateFlow<DreamDetailTabState> = _tabState
 
     fun personFavouriteClick(person: Person) = viewModelScope.launchInBackground {
-        personRepo.upsertPerson(
+        personRepo.update(
             person.copy(
                 isFavourite = !person.isFavourite
             )

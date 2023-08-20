@@ -28,8 +28,11 @@ class DatabaseDreamRepo @Inject constructor(
     val locationDao: LocationDao,
     val personDao: PersonDao
 ) : DreamRepository {
-    override suspend fun upsertDream(vararg dream: Dream) = dreamDao
-        .upsert(*dream.map { DreamEntity(it) })
+    override suspend fun insert(vararg dream: Dream): List<Long> = dreamDao
+        .insert(*dream.map { DreamEntity(it) })
+
+    override suspend fun update(vararg dream: Dream) = dreamDao
+        .update(*dream.map { DreamEntity(it) })
 
     override suspend fun deleteDream(vararg dream: Dream) = dreamDao
         .delete(*dream.map { DreamEntity(it) })
@@ -111,7 +114,7 @@ class DatabaseDreamRepo @Inject constructor(
         .flatMapMerge {
             combine(
                 it.map {
-                    getExtendedDreamById(it.dreamId)
+                    getExtendedDreamById(it.dreamId!!)
                 }
             ) {
                 it

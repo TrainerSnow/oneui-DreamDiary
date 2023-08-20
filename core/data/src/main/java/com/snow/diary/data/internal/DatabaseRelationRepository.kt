@@ -17,8 +17,11 @@ import javax.inject.Inject
 class DatabaseRelationRepository @Inject constructor(
     val relationDao: RelationDao
 ) : RelationRepository {
-    override suspend fun upsertRelation(vararg relation: Relation) = relationDao
-        .upsert(*relation.map { RelationEntity(it) })
+    override suspend fun insert(vararg relation: Relation): List<Long> = relationDao
+        .insert(*relation.map { RelationEntity(it) })
+
+    override suspend fun update(vararg relation: Relation) = relationDao
+        .update(*relation.map { RelationEntity(it) })
 
     override suspend fun deleteRelation(vararg relation: Relation) = relationDao
         .delete(*relation.map { RelationEntity(it) })

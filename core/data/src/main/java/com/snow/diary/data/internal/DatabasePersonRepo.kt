@@ -17,8 +17,11 @@ import javax.inject.Inject
 class DatabasePersonRepo @Inject constructor(
     val personDao: PersonDao
 ) : PersonRepository {
-    override suspend fun upsertPerson(vararg person: Person) = personDao
-        .upsert(*person.map { PersonEntity(it) })
+    override suspend fun insert(vararg person: Person): List<Long> = personDao
+        .insert(*person.map { PersonEntity(it) })
+
+    override suspend fun update(vararg person: Person) = personDao
+        .update(*person.map { PersonEntity(it) })
 
     override suspend fun deletePerson(vararg person: Person) = personDao
         .delete(*person.map { PersonEntity(it) })

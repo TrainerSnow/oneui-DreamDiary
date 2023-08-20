@@ -20,7 +20,7 @@ import com.snow.diary.model.data.Person
 data class PersonEntity(
 
     @PrimaryKey(autoGenerate = true)
-    val personId: Long,
+    val personId: Long? = null,
 
     val name: String,
 

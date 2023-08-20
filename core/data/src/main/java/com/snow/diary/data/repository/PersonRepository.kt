@@ -7,7 +7,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface PersonRepository {
 
-    suspend fun upsertPerson(vararg person: Person)
+    suspend fun insert(vararg person: Person): List<Long>
+
+
+    suspend fun update(vararg person: Person)
 
     suspend fun deletePerson(vararg person: Person)
 

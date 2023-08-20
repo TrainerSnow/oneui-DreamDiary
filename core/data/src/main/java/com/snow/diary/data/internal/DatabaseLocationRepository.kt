@@ -1,23 +1,26 @@
 package com.snow.diary.data.internal;
 
+import com.snow.diary.common.map
+import com.snow.diary.common.sortedDirectional
 import com.snow.diary.data.repository.LocationRepository
 import com.snow.diary.database.dao.LocationDao
 import com.snow.diary.database.model.LocationEntity
+import com.snow.diary.database.model.asModel
 import com.snow.diary.model.data.Location
 import com.snow.diary.model.sort.SortConfig
-import kotlinx.coroutines.flow.Flow
-import com.snow.diary.common.map
-import com.snow.diary.common.sortedDirectional
-import com.snow.diary.database.model.asModel
 import com.snow.diary.model.sort.SortMode
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class DatabaseLocationRepository @Inject constructor(
     val locationDao: LocationDao
 ): LocationRepository {
-    override suspend fun upsertLocation(vararg location: Location) = locationDao
-        .upsert(*location.map { LocationEntity(it) })
+    override suspend fun insert(vararg location: Location): List<Long> = locationDao
+        .insert(*location.map { LocationEntity(it) })
+
+    override suspend fun update(vararg location: Location) = locationDao
+        .update(*location.map { LocationEntity(it) })
 
     override suspend fun deleteLocation(vararg location: Location) = locationDao
         .delete(*location.map { LocationEntity(it) })

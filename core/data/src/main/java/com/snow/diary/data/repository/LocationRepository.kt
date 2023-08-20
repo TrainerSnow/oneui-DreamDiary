@@ -6,7 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocationRepository {
 
-    suspend fun upsertLocation(vararg location: Location)
+    suspend fun insert(vararg location: Location): List<Long>
+
+    suspend fun update(vararg location: Location)
 
     suspend fun deleteLocation(vararg location: Location)
 
