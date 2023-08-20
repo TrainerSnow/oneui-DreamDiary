@@ -24,4 +24,7 @@
     <string name="dream_detail_tab_content">Content</string>
     <string name="dream_detail_tab_other">Other</string>
 
+    <string name="dream_add_person_search_hint">Search person…</string>
+    <string name="dream_add_location_search_hint">Search location…</string>
+
 </resources>
