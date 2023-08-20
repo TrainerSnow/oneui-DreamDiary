@@ -44,7 +44,8 @@ class MainActivity: ComponentActivity() {
                     onNavigateBack = navController::navigateUp,
                     onLocationClick = { },
                     onPersonClick = { },
-                    onRelationClick = { }
+                    onRelationClick = { },
+                    onEditClick = { }
                 )
             }
         }

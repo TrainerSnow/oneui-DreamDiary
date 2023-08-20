@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.data.repository.DreamRepository
 import com.snow.diary.data.repository.PersonRepository
+import com.snow.diary.model.data.Dream
 import com.snow.diary.model.data.Person
 import com.snow.feature.dreams.nav.DreamDetailArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,23 +19,25 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class DreamDetailViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle, dreamRepo: DreamRepository, val personRepo: PersonRepository
+    savedStateHandle: SavedStateHandle,
+    val dreamRepo: DreamRepository,
+    val personRepo: PersonRepository
 ) : ViewModel() {
 
     private val args = DreamDetailArgs(savedStateHandle)
 
     val dreamDetailState = dreamRepo.getExtendedDreamById(args.dreamId).map { dream ->
-            if (dream == null) DreamDetailState.Error(
-                    id = args.dreamId
-                )
-            else DreamDetailState.Success(
-                    dream = dream
-                )
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000L),
-            initialValue = DreamDetailState.Loading
+        if (dream == null) DreamDetailState.Error(
+            id = args.dreamId
         )
+        else DreamDetailState.Success(
+            dream = dream
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000L),
+        initialValue = DreamDetailState.Loading
+    )
 
     private val _tabState = MutableStateFlow(
         DreamDetailTabState(
@@ -45,10 +48,16 @@ internal class DreamDetailViewModel @Inject constructor(
 
     fun personFavouriteClick(person: Person) = viewModelScope.launch {
         personRepo.upsertPerson(
-                person.copy(
-                    isFavourite = !person.isFavourite
-                )
+            person.copy(
+                isFavourite = !person.isFavourite
             )
+        )
+    }
+
+    fun deleteDream(dream: Dream) = viewModelScope.launch {
+        //TODO: Give option to restore dream via global toast
+        dreamRepo
+            .deleteDream(dream)
     }
 
     fun changeTabState(tabState: DreamDetailTabState) =

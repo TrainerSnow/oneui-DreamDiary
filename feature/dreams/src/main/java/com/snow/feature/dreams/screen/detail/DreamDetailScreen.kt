@@ -19,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.common.time.TimeFormat.formatFullDescription
 import com.snow.diary.model.combine.DreamAggregate
+import com.snow.diary.model.data.Dream
 import com.snow.diary.model.data.Location
 import com.snow.diary.model.data.Person
 import com.snow.diary.model.data.Relation
@@ -49,7 +50,8 @@ internal fun DreamDetailScreen(
     onNavigateBack: () -> Unit,
     onLocationClick: (Location) -> Unit,
     onPersonClick: (Person) -> Unit,
-    onRelationClick: (Relation) -> Unit
+    onRelationClick: (Relation) -> Unit,
+    onEditClick: (Dream) -> Unit
 ) {
     val dreamState by viewModel.dreamDetailState.collectAsStateWithLifecycle()
     val tabState by viewModel.tabState.collectAsStateWithLifecycle()
@@ -74,7 +76,16 @@ internal fun DreamDetailScreen(
             }
 
         },
-        onLocationClick = onLocationClick
+        onLocationClick = onLocationClick,
+        onEditClick = { (dreamState as? DreamDetailState.Success)?.let { onEditClick(it.dream.dream) } },
+        onDeleteClick = {
+            if (dreamState is DreamDetailState.Success) {
+                onNavigateBack()
+                viewModel.deleteDream(
+                    (dreamState as DreamDetailState.Success).dream.dream
+                )
+            }
+        }
     )
 }
 
@@ -85,7 +96,9 @@ private fun DreamDetailScreen(
     onTabStateChange: (DreamDetailTabState) -> Unit,
     onNavigateBack: () -> Unit,
     personCallback: PersonCallback,
-    onLocationClick: (Location) -> Unit
+    onLocationClick: (Location) -> Unit,
+    onEditClick: () -> Unit,
+    onDeleteClick: () -> Unit
 ) {
     val title = if (state is DreamDetailState.Success)
         stringResource(
@@ -108,59 +121,73 @@ private fun DreamDetailScreen(
                     icon = Icon.Resource(IconR.drawable.ic_oui_back),
                     onClick = onNavigateBack
                 )
+            },
+            appbarActions = {
+                IconButton(
+                    icon = Icon.Resource(IconR.drawable.ic_oui_edit_outline),
+                    onClick = onEditClick,
+                    enabled = state is DreamDetailState.Success
+                )
+                IconButton(
+                    icon = Icon.Resource(IconR.drawable.ic_oui_delete_outline),
+                    onClick = onDeleteClick,
+                    enabled = state is DreamDetailState.Success
+                )
             }
         ) {
-            val content = @Composable { when (state) {
-                is DreamDetailState.Error -> {
-                    ErrorScreen(
-                        title = stringResource(
-                            id = R.string.dream_detail_title,
-                            state.id.toString()
-                        ),
-                        description = state.msg
-                    )
-                }
-
-                DreamDetailState.Loading -> {
-                    LoadingScreen(
-                        title = stringResource(
-                            id = R.string.dream_detail_loading_title
-                        )
-                    )
-                }
-
-                is DreamDetailState.Success -> {
-                    when (tabState.tab) {
-                        DreamDetailTab.General -> GeneralTab(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            state = state,
-                            tabState = tabState,
-                            onSubtabChange = { subtab ->
-                                onTabStateChange(
-                                    tabState.copy(
-                                        subtab = subtab
-                                    )
-                                )
-                            }
-                        )
-
-                        DreamDetailTab.Persons -> PersonTab(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            state = state,
-                            personCallback = personCallback
-                        )
-
-                        DreamDetailTab.Locations -> LocationTab(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            state = state,
-                            onLocationClick = onLocationClick
+            val content = @Composable {
+                when (state) {
+                    is DreamDetailState.Error -> {
+                        ErrorScreen(
+                            title = stringResource(
+                                id = R.string.dream_detail_title,
+                                state.id.toString()
+                            ),
+                            description = state.msg
                         )
                     }
+
+                    DreamDetailState.Loading -> {
+                        LoadingScreen(
+                            title = stringResource(
+                                id = R.string.dream_detail_loading_title
+                            )
+                        )
+                    }
+
+                    is DreamDetailState.Success -> {
+                        when (tabState.tab) {
+                            DreamDetailTab.General -> GeneralTab(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                state = state,
+                                tabState = tabState,
+                                onSubtabChange = { subtab ->
+                                    onTabStateChange(
+                                        tabState.copy(
+                                            subtab = subtab
+                                        )
+                                    )
+                                }
+                            )
+
+                            DreamDetailTab.Persons -> PersonTab(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                state = state,
+                                personCallback = personCallback
+                            )
+
+                            DreamDetailTab.Locations -> LocationTab(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                state = state,
+                                onLocationClick = onLocationClick
+                            )
+                        }
+                    }
                 }
-            } }
+            }
 
             Box(
                 modifier = Modifier

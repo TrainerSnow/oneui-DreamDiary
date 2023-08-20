@@ -7,6 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.snow.diary.model.data.Dream
 import com.snow.diary.model.data.Location
 import com.snow.diary.model.data.Person
 import com.snow.diary.model.data.Relation
@@ -37,7 +38,8 @@ fun NavGraphBuilder.dreamDetail(
     onNavigateBack: () -> Unit,
     onLocationClick: (Location) -> Unit,
     onPersonClick: (Person) -> Unit,
-    onRelationClick: (Relation) -> Unit
+    onRelationClick: (Relation) -> Unit,
+    onEditClick: (Dream) -> Unit
 ) {
     composable(
         route = dreamDetailRoute,
@@ -53,7 +55,8 @@ fun NavGraphBuilder.dreamDetail(
             onNavigateBack = onNavigateBack,
             onLocationClick = onLocationClick,
             onPersonClick = onPersonClick,
-            onRelationClick = onRelationClick
+            onRelationClick = onRelationClick,
+            onEditClick = onEditClick
         )
     }
 }
