@@ -6,6 +6,9 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+import androidx.room.Upsert
+import com.snow.diary.database.cross.DreamLocationCrossref
+import com.snow.diary.database.cross.DreamPersonCrossref
 import com.snow.diary.database.model.DreamEntity
 import com.snow.diary.database.model.cross.DreamWithLocations
 import com.snow.diary.database.model.cross.DreamWithPersons
@@ -16,6 +19,22 @@ interface DreamDao {
     @Transaction
     @Insert
     fun insert(vararg dream: DreamEntity): List<Long>
+
+    @Transaction
+    @Upsert
+    fun upsertDreamPersonCrossref(vararg cross: DreamPersonCrossref)
+
+    @Transaction
+    @Upsert
+    fun upsertDreamLocationCrossref(vararg cross: DreamLocationCrossref)
+
+    @Transaction
+    @Delete
+    fun deleteDreamPersonCrossref(vararg cross: DreamPersonCrossref)
+
+    @Transaction
+    @Delete
+    fun deleteDreamLocationCrossref(vararg cross: DreamLocationCrossref)
 
     @Transaction
     @Update

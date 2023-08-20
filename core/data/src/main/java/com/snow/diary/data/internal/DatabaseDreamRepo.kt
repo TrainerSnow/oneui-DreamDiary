@@ -3,6 +3,8 @@ package com.snow.diary.data.internal;
 import com.snow.diary.common.map
 import com.snow.diary.common.sortedDirectional
 import com.snow.diary.data.repository.DreamRepository
+import com.snow.diary.database.cross.DreamLocationCrossref
+import com.snow.diary.database.cross.DreamPersonCrossref
 import com.snow.diary.database.dao.DreamDao
 import com.snow.diary.database.dao.LocationDao
 import com.snow.diary.database.dao.PersonDao
@@ -30,6 +32,18 @@ class DatabaseDreamRepo @Inject constructor(
 ) : DreamRepository {
     override suspend fun insert(vararg dream: Dream): List<Long> = dreamDao
         .insert(*dream.map { DreamEntity(it) })
+
+    override suspend fun upsertDreamPersonCrossref(dreamId: Long, personId: Long) = dreamDao
+        .upsertDreamPersonCrossref(DreamPersonCrossref(dreamId, personId))
+
+    override suspend fun upsertDreamLocationCrossref(dreamId: Long, locationId: Long) = dreamDao
+        .upsertDreamLocationCrossref(DreamLocationCrossref(dreamId, locationId))
+
+    override suspend fun deleteDreamPersonCrossref(dreamId: Long, personId: Long) = dreamDao
+        .deleteDreamPersonCrossref(DreamPersonCrossref(dreamId, personId))
+
+    override suspend fun deleteDreamLocationCrossref(dreamId: Long, locationId: Long) = dreamDao
+        .deleteDreamLocationCrossref(DreamLocationCrossref(dreamId, locationId))
 
     override suspend fun update(vararg dream: Dream) = dreamDao
         .update(*dream.map { DreamEntity(it) })

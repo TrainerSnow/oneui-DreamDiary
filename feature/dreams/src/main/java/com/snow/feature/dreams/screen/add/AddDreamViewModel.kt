@@ -1,22 +1,28 @@
 package com.snow.feature.dreams.screen.add;
 
+import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.snow.diary.Validator
 import com.snow.diary.common.launchInBackground
 import com.snow.diary.common.search.Search.filterSearch
 import com.snow.diary.data.repository.DreamRepository
 import com.snow.diary.data.repository.LocationRepository
 import com.snow.diary.data.repository.PersonRepository
+import com.snow.diary.model.data.Dream
 import com.snow.diary.model.data.Location
 import com.snow.diary.model.data.Person
+import com.snow.diary.rules.Rules
 import com.snow.feature.dreams.nav.AddDreamArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,8 +30,9 @@ internal class AddDreamViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     val dreamRepo: DreamRepository,
     val personRepo: PersonRepository,
-    val locationRepo: LocationRepository
-): ViewModel() {
+    val locationRepo: LocationRepository,
+    @ApplicationContext val context: Context
+) : ViewModel() {
 
     val args = AddDreamArgs(savedStateHandle)
 
@@ -48,15 +55,19 @@ internal class AddDreamViewModel @Inject constructor(
     fun changeDescription(desc: String) = viewModelScope.launch {
         _inputState.emit(
             inputState.value.copy(
-                description = desc
+                description = inputState.value.description.copy(
+                    input = desc
+                )
             )
         )
     }
 
-    fun changeNote(note: String?) = viewModelScope.launch {
+    fun changeNote(note: String) = viewModelScope.launch {
         _inputState.emit(
             inputState.value.copy(
-                note = note
+                note = inputState.value.note.copy(
+                    input = note
+                )
             )
         )
     }
@@ -81,7 +92,9 @@ internal class AddDreamViewModel @Inject constructor(
         launch {
             _inputState.emit(
                 inputState.value.copy(
-                    personQuery = personQuery
+                    personQuery = inputState.value.personQuery.copy(
+                        input = personQuery
+                    )
                 )
             )
         }
@@ -108,7 +121,9 @@ internal class AddDreamViewModel @Inject constructor(
         launch {
             _inputState.emit(
                 inputState.value.copy(
-                    locationQuery = locationQuery
+                    locationQuery = inputState.value.locationQuery.copy(
+                        input = locationQuery
+                    )
                 )
             )
         }
@@ -163,6 +178,53 @@ internal class AddDreamViewModel @Inject constructor(
                 locations = extrasState.value.locations - location
             )
         )
+    }
+
+    fun addDream() {
+
+        var isOk = true
+        //Form validation
+        viewModelScope.launch {
+            _inputState.emit(
+                inputState.value.copy(
+                    description = Validator.validate(
+                        Rules.DreamContent,
+                        context,
+                        inputState.value.description.input
+                    )
+                )
+            )
+            isOk = inputState.value.description.error == null
+        }
+
+        if (isOk) return
+
+        viewModelScope.launchInBackground {
+            val dream = with(inputState.value) {
+                Dream(
+                    description = description.input,
+                    note = note.input,
+                    isFavourite = markAsFavourite,
+                    created = LocalDate.now(),
+                    updated = LocalDate.now(),
+                    clearness = clearness,
+                    happiness = happiness
+                )
+            }
+
+            val id = dreamRepo
+                .insert(dream)
+                .first()
+
+            extrasState.value.persons.forEach { person ->
+                dreamRepo
+                    .upsertDreamPersonCrossref(id, person.id!!)
+            }
+            extrasState.value.locations.forEach { location ->
+                dreamRepo
+                    .upsertDreamLocationCrossref(id, location.id!!)
+            }
+        }
     }
 
     fun togglePersonPopupVisibility(

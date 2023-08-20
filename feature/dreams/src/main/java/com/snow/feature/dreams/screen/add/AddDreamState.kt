@@ -1,5 +1,6 @@
 package com.snow.feature.dreams.screen.add;
 
+import com.snow.diary.TextInput
 import com.snow.diary.model.data.Location
 import com.snow.diary.model.data.Person
 
@@ -8,9 +9,9 @@ import com.snow.diary.model.data.Person
  */
 internal data class AddDreamInputState (
 
-    val description: String = "",
+    val description: TextInput = TextInput(""),
 
-    val note: String? = null,
+    val note: TextInput = TextInput(""),
 
     val markAsFavourite: Boolean = false,
 
@@ -18,9 +19,9 @@ internal data class AddDreamInputState (
 
     val clearness: Float? = null,
 
-    val personQuery: String = "",
+    val personQuery: TextInput = TextInput(""),
 
-    val locationQuery: String = ""
+    val locationQuery: TextInput = TextInput("")
 
 )
 

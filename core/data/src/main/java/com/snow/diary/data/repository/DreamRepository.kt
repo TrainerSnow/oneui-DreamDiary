@@ -9,6 +9,14 @@ interface DreamRepository {
 
     suspend fun insert(vararg dream: Dream): List<Long>
 
+    suspend fun upsertDreamPersonCrossref(dreamId: Long, personId: Long)
+
+    suspend fun upsertDreamLocationCrossref(dreamId: Long, locationId: Long)
+
+    suspend fun deleteDreamPersonCrossref(dreamId: Long, personId: Long)
+
+    suspend fun deleteDreamLocationCrossref(dreamId: Long, locationId: Long)
+
     suspend fun update(vararg dream: Dream)
 
     suspend fun deleteDream(vararg dream: Dream)
