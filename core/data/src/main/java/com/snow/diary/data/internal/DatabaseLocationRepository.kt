@@ -23,7 +23,7 @@ class DatabaseLocationRepository @Inject constructor(
         .delete(*location.map { LocationEntity(it) })
 
     override fun getAllLocations(sortConfig: SortConfig): Flow<List<Location>> = locationDao
-        .getAllLocations()
+        .getAll()
         .map { locations ->
             locations
                 .sort(sortConfig)
@@ -31,7 +31,7 @@ class DatabaseLocationRepository @Inject constructor(
         }
 
     override fun getLocationById(id: Long): Flow<Location?> = locationDao
-        .getLocationById(id)
+        .getById(id)
         .map { it?.asModel }
 }
 

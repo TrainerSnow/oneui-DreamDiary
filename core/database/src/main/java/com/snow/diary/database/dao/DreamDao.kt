@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 interface DreamDao {
     @Transaction
     @Upsert
-    fun upsert(vararg dream: DreamEntity)
+    fun upsert(vararg entity: DreamEntity)
 
     @Transaction
     @Delete
@@ -22,11 +22,11 @@ interface DreamDao {
 
     @Transaction
     @Query("SELECT * FROM dream")
-    fun getAllDreams(): Flow<List<DreamEntity>>
+    fun getAll(): Flow<List<DreamEntity>>
 
     @Transaction
-    @Query("SELECT * FROM Dream WHERE dreamId = :dreamId")
-    fun getDreamById(dreamId: Long): Flow<DreamEntity?>
+    @Query("SELECT * FROM Dream WHERE dreamId = :id")
+    fun getById(id: Long): Flow<DreamEntity?>
 
     @Transaction
     @Query("SELECT * FROM dream WHERE dreamId = :id")

@@ -35,7 +35,7 @@ class DatabaseDreamRepo @Inject constructor(
         .delete(*dream.map { DreamEntity(it) })
 
     override fun getAllDreams(sortConfig: SortConfig): Flow<List<Dream>> = dreamDao
-        .getAllDreams()
+        .getAll()
         .map { dreams ->
             dreams
                 .sort(sortConfig)
@@ -43,7 +43,7 @@ class DatabaseDreamRepo @Inject constructor(
         }
 
     override fun getDreamById(id: Long): Flow<Dream?> = dreamDao
-        .getDreamById(id)
+        .getById(id)
         .map { it?.asModel }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -58,7 +58,7 @@ class DatabaseDreamRepo @Inject constructor(
             .flatMapMerge { personEntities ->
                 val flows = personEntities.map { person ->
                     relationDao
-                        .getRelationById(person.relationId)
+                        .getById(person.relationId)
                         .map { it!! }
                 }
                 if(flows.isEmpty()) return@flatMapMerge flowOf(emptyList())
@@ -93,7 +93,7 @@ class DatabaseDreamRepo @Inject constructor(
             personsWithRelations,
             locations,
             dreamDao
-                .getDreamById(id)
+                .getById(id)
         ) { ps, ls, dream ->
             if (dream == null) null
             else DreamAggregate(
@@ -106,7 +106,7 @@ class DatabaseDreamRepo @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getAllExtendedDreams(sortConfig: SortConfig): Flow<List<DreamAggregate>> = dreamDao
-        .getAllDreams()
+        .getAll()
         .map { it.sort(sortConfig) }
         .flatMapMerge {
             combine(

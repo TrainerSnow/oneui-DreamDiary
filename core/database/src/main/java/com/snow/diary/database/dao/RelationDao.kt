@@ -13,19 +13,19 @@ import kotlinx.coroutines.flow.Flow
 interface RelationDao {
     @Transaction
     @Upsert
-    fun upsert(vararg relation: RelationEntity)
+    fun upsert(vararg entity: RelationEntity)
 
     @Transaction
     @Delete
-    fun delete(vararg relation: RelationEntity)
+    fun delete(vararg entity: RelationEntity)
 
     @Transaction
     @Query("SELECT * FROM person_relation")
-    fun getAllRelations(): Flow<List<RelationEntity>>
+    fun getAll(): Flow<List<RelationEntity>>
 
     @Transaction
     @Query("SELECT * FROM person_relation WHERE id = :id")
-    fun getRelationById(id: Long): Flow<RelationEntity?>
+    fun getById(id: Long): Flow<RelationEntity?>
 
     @Transaction
     @Query("SELECT * FROM person_relation")

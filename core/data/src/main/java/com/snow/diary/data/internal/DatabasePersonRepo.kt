@@ -24,7 +24,7 @@ class DatabasePersonRepo @Inject constructor(
         .delete(*person.map { PersonEntity(it) })
 
     override fun getAllPersons(sortConfig: SortConfig): Flow<List<Person>> = personDao
-        .getAllPersons()
+        .getAll()
         .map { persons ->
             persons
                 .sort(sortConfig)
@@ -32,14 +32,14 @@ class DatabasePersonRepo @Inject constructor(
         }
 
     override fun getPersonById(id: Long): Flow<Person?> = personDao
-        .getPersonById(id)
+        .getById(id)
         .map { it?.asModel }
 
     override fun getPersonsByRelation(
         relation: Relation,
         sortConfig: SortConfig
     ): Flow<List<Person>> = personDao
-        .getAllPersons()
+        .getAll()
         .map { persons ->
             persons
                 .filter { person ->

@@ -24,7 +24,7 @@ class DatabaseRelationRepository @Inject constructor(
         .delete(*relation.map { RelationEntity(it) })
 
     override fun getAllRelations(sortConfig: SortConfig): Flow<List<Relation>> = relationDao
-        .getAllRelations()
+        .getAll()
         .map { relations ->
             relations
                 .sort(sortConfig)
@@ -32,7 +32,7 @@ class DatabaseRelationRepository @Inject constructor(
         }
 
     override fun getRelationById(id: Long): Flow<Relation?> = relationDao
-        .getRelationById(id)
+        .getById(id)
         .map { it?.asModel }
 
     override fun getRelationByPerson(person: Person): Flow<Relation> = getRelationById(

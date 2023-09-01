@@ -13,19 +13,19 @@ import kotlinx.coroutines.flow.Flow
 interface PersonDao {
     @Transaction
     @Upsert
-    fun upsert(vararg person: PersonEntity)
+    fun upsert(vararg entity: PersonEntity)
 
     @Transaction
     @Delete
-    fun delete(vararg person: PersonEntity)
+    fun delete(vararg entity: PersonEntity)
 
     @Transaction
     @Query("SELECT * FROM person")
-    fun getAllPersons(): Flow<List<PersonEntity>>
+    fun getAll(): Flow<List<PersonEntity>>
 
     @Transaction
     @Query("SELECT * FROM person WHERE personId = :id")
-    fun getPersonById(id: Long): Flow<PersonEntity?>
+    fun getById(id: Long): Flow<PersonEntity?>
 
     @Transaction
     @Query("SELECT * FROM person WHERE personId = :id")

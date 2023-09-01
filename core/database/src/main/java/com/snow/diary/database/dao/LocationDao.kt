@@ -14,19 +14,19 @@ import kotlinx.coroutines.flow.Flow
 interface LocationDao {
     @Transaction
     @Upsert
-    fun upsert(vararg location: LocationEntity)
+    fun upsert(vararg entity: LocationEntity)
 
     @Transaction
     @Delete
-    fun delete(vararg location: LocationEntity)
+    fun delete(vararg entity: LocationEntity)
 
     @Transaction
     @Query("SELECT * FROM Location")
-    fun getAllLocations(): Flow<List<LocationEntity>>
+    fun getAll(): Flow<List<LocationEntity>>
 
     @Transaction
-    @Query("SELECT * FROM Location WHERE locationId = :locationId")
-    fun getLocationById(locationId: Long): Flow<LocationEntity?>
+    @Query("SELECT * FROM Location WHERE locationId = :id")
+    fun getById(id: Long): Flow<LocationEntity?>
 
     @Transaction
     @Query("SELECT * FROM location WHERE locationId = :id")
