@@ -7,8 +7,8 @@ plugins {
 }
 
 android {
-    namespace = "com.snow.diary.data"
-    compileSdk = 34
+    namespace = "com.snow.diary.domain"
+    compileSdk = 33
 
     defaultConfig {
         minSdk = 28
@@ -37,14 +37,17 @@ android {
 
 dependencies {
     implementation(libs.core.ktx)
-    implementation(libs.core.ktx)
 
-    implementation(libs.com.google.dagger.hilt.android)
-    kapt(libs.com.google.dagger.hilt.android.compiler)
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.activity.compose)
 
     implementation(libs.org.jetbrains.kotlinx.coroutines.core)
 
     implementation(project(":core:model"))
     implementation(project(":core:database"))
     implementation(project(":core:common"))
+
+    implementation(libs.com.google.dagger.hilt.android)
+    kapt(libs.com.google.dagger.hilt.android.compiler)
+    implementation(libs.compose.navigation.hilt)
 }

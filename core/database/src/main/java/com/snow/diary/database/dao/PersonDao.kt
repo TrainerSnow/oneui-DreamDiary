@@ -2,30 +2,36 @@ package com.snow.diary.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
-import androidx.room.Upsert
+import androidx.room.Update
 import com.snow.diary.database.model.PersonEntity
 import com.snow.diary.database.model.cross.PersonWithDreams
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PersonDao {
+
     @Transaction
-    @Upsert
-    fun upsert(vararg person: PersonEntity)
+    @Insert
+    fun insert(vararg entity: PersonEntity): List<Long>
+
+    @Transaction
+    @Update
+    fun update(vararg entity: PersonEntity)
 
     @Transaction
     @Delete
-    fun delete(vararg person: PersonEntity)
+    fun delete(vararg entity: PersonEntity)
 
     @Transaction
     @Query("SELECT * FROM person")
-    fun getAllPersons(): Flow<List<PersonEntity>>
+    fun getAll(): Flow<List<PersonEntity>>
 
     @Transaction
     @Query("SELECT * FROM person WHERE personId = :id")
-    fun getPersonById(id: Long): Flow<PersonEntity?>
+    fun getById(id: Long): Flow<PersonEntity?>
 
     @Transaction
     @Query("SELECT * FROM person WHERE personId = :id")
