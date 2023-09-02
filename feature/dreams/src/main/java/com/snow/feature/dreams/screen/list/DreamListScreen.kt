@@ -49,13 +49,11 @@ internal fun DreamListScreen(
     DreamListScreen(
         listState = listState,
         sortConfig = sortConfig,
+        onEvent = viewModel::onEvent,
         showMenu = showMenu,
         onAddClick = onAddClick,
         onSearchClick = onSearchClick,
-        onMenuClick = viewModel::onMenuClick,
         onDreamClick = onDreamClick,
-        onDreamFavouriteClick = viewModel::onDreamFavouriteClick,
-        onSortChange = viewModel::onSortChange,
         onNavigateBack = onNavigateBack,
         onExportClick = onExportClick,
         onAboutClick = onAboutClick
@@ -67,13 +65,11 @@ internal fun DreamListScreen(
 private fun DreamListScreen(
     listState: DreamFeedState,
     sortConfig: SortConfig,
+    onEvent: (DreamListEvent) -> Unit,
     showMenu: Boolean,
     onAddClick: () -> Unit,
     onSearchClick: () -> Unit,
-    onMenuClick: () -> Unit,
     onDreamClick: (Dream) -> Unit,
-    onDreamFavouriteClick: (Dream) -> Unit,
-    onSortChange: (SortConfig) -> Unit,
     onNavigateBack: () -> Unit,
     onExportClick: () -> Unit,
     onAboutClick: () -> Unit
@@ -102,9 +98,11 @@ private fun DreamListScreen(
         },
         appbarActions = {
             //TODO: When https://github.com/TrainerSnow/oneui-compose/issues/31 is fixed, place menu somewhere else
-            if(showMenu) {
+            if (showMenu) {
                 PopupMenu(
-                    onDismissRequest = onMenuClick
+                    onDismissRequest = {
+                        onEvent(DreamListEvent.MenuClick)
+                    }
                 ) {
                     MenuItem(
                         label = stringResource(R.string.dream_list_menu_export),
@@ -133,7 +131,9 @@ private fun DreamListScreen(
                 icon = Icon.Resource(
                     IconR.drawable.ic_oui_more
                 ),
-                onClick = onMenuClick
+                onClick = {
+                    onEvent(DreamListEvent.MenuClick)
+                }
             )
         }
     ) {
@@ -145,7 +145,9 @@ private fun DreamListScreen(
         ) {
             SortSection(
                 sortConfig = sortConfig,
-                onSortChange = onSortChange
+                onSortChange = {
+                    onEvent(DreamListEvent.SortChange(it))
+                }
             )
         }
         DreamList(
@@ -153,7 +155,9 @@ private fun DreamListScreen(
                 .fillMaxWidth(),
             listState = listState,
             onDreamClick = onDreamClick,
-            onDreamFavouriteClick = onDreamFavouriteClick
+            onDreamFavouriteClick = {
+                onEvent(DreamListEvent.DreamFavouriteClick(it))
+            }
         )
     }
 }
@@ -203,15 +207,13 @@ private fun DreamListScreenPreview() {
             mode = SortMode.Created,
             direction = SortDirection.Descending
         ),
+        onEvent = { },
         showMenu = true,
         onAddClick = { },
         onSearchClick = { },
-        onMenuClick = { },
         onDreamClick = { },
-        onDreamFavouriteClick = { },
-        onSortChange = { },
         onNavigateBack = { },
-        onExportClick = {  },
+        onExportClick = { },
         onAboutClick = { }
     )
 }

@@ -1,10 +1,10 @@
 package com.snow.feature.dreams.screen.list;
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.common.launchInBackground
 import com.snow.diary.domain.action.dream.AllDreams
 import com.snow.diary.domain.action.dream.UpdateDream
+import com.snow.diary.domain.viewmodel.EventViewModel
 import com.snow.diary.model.data.Dream
 import com.snow.diary.model.sort.SortConfig
 import com.snow.diary.model.sort.SortDirection
@@ -26,7 +26,7 @@ import javax.inject.Inject
 internal class DreamListViewModel @Inject constructor(
     allDreams: AllDreams,
     val updateDream: UpdateDream
-) : ViewModel() {
+) : EventViewModel<DreamListEvent>() {
 
     private val _showMenu = MutableStateFlow(false)
     val showMenu: StateFlow<Boolean> = _showMenu
@@ -48,17 +48,23 @@ internal class DreamListViewModel @Inject constructor(
         initialValue = DreamFeedState.Loading
     )
 
-    fun onMenuClick() = viewModelScope.launch {
+    override suspend fun handleEvent(event: DreamListEvent) = when (event) {
+        is DreamListEvent.DreamFavouriteClick -> handleDreamFavouriteClick(event.dream)
+        DreamListEvent.MenuClick -> handleMenuClick()
+        is DreamListEvent.SortChange -> handleSortChange(event.sortConfig)
+    }
+
+    private fun handleMenuClick() = viewModelScope.launch {
         _showMenu.emit(
             !showMenu.value
         )
     }
 
-    fun onDreamFavouriteClick(dream: Dream) = viewModelScope.launchInBackground {
+    private fun handleDreamFavouriteClick(dream: Dream) = viewModelScope.launchInBackground {
         updateDream(listOf(dream))
     }
 
-    fun onSortChange(sort: SortConfig) = viewModelScope.launch {
+    private fun handleSortChange(sort: SortConfig) = viewModelScope.launch {
         _sortConfig.emit(
             sort
         )

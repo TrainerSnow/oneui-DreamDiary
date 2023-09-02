@@ -25,6 +25,6 @@ abstract class EventViewModel <Event>: ViewModel() {
         events.emit(event)
     }
 
-    protected abstract suspend fun handleEvent(event: Event)
+    protected abstract suspend fun handleEvent(event: Event): Any
 
 }
