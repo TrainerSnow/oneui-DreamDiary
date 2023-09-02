@@ -1,9 +1,7 @@
 package com.snow.feature.dreams.screen.add;
 
-import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.Validator
 import com.snow.diary.common.launchInBackground
@@ -17,6 +15,7 @@ import com.snow.diary.domain.action.dream.DreamInformation
 import com.snow.diary.domain.action.dream.UpdateDream
 import com.snow.diary.domain.action.location.AllLocations
 import com.snow.diary.domain.action.person.AllPersons
+import com.snow.diary.domain.viewmodel.EventViewModel
 import com.snow.diary.model.combine.PersonWithRelation
 import com.snow.diary.model.data.Dream
 import com.snow.diary.model.data.Location
@@ -47,8 +46,8 @@ internal class AddDreamViewModel @Inject constructor(
     val addDreamPersonCrossref: AddDreamPersonCrossref,
     val removeDreamLocationCrossref: RemoveDreamLocationCrossref,
     val removeDreamPersonCrossref: RemoveDreamPersonCrossref,
-    @SuppressLint("StaticFieldLeak") @ApplicationContext val context: Context
-) : ViewModel() {
+    @ApplicationContext val context: Context
+) : EventViewModel<AddDreamEvent>() {
 
     private val args = AddDreamArgs(savedStateHandle)
     val isEdit = args.dreamId != null
@@ -83,12 +82,10 @@ internal class AddDreamViewModel @Inject constructor(
                     }
                 )
                 _extrasState.emit(
-                    extrasState.value.run {
-                        copy(
-                            persons = dream.persons.map(PersonWithRelation::person),
-                            locations = dream.locations
-                        )
-                    }
+                    extrasState.value.copy(
+                        persons = dream.persons.map(PersonWithRelation::person),
+                        locations = dream.locations
+                    )
                 )
             }
         }
@@ -97,7 +94,22 @@ internal class AddDreamViewModel @Inject constructor(
     private var personJob: Job? = null
     private var locationJob: Job? = null
 
-    fun changeDescription(desc: String) = viewModelScope.launch {
+    @Suppress("IMPLICIT_CAST_TO_ANY")
+    override suspend fun handleEvent(event: AddDreamEvent) = when (event) {
+        is AddDreamEvent.ChangeClearness -> changeClearness(event.clearness)
+        is AddDreamEvent.ChangeDescription -> changeDescription(event.description)
+        is AddDreamEvent.ChangeHappiness -> changeHappiness(event.happiness)
+        is AddDreamEvent.ChangeLocationQuery -> changeLocationQuery(event.query)
+        is AddDreamEvent.ChangeMarkAsFavourite -> changeMarkAsFavourite(event.markAsFavourite)
+        is AddDreamEvent.ChangeNote -> changeNote(event.note)
+        is AddDreamEvent.ChangePersonQuery -> changePersonQuery(event.query)
+        is AddDreamEvent.RemoveLocation -> removeLocation(event.location)
+        is AddDreamEvent.RemovePerson -> removePerson(event.person)
+        is AddDreamEvent.SelectLocation -> selectLocation(event.location)
+        is AddDreamEvent.SelectPerson -> selectPerson(event.person)
+    }
+
+    private fun changeDescription(desc: String) = viewModelScope.launch {
         _inputState.emit(
             inputState.value.copy(
                 description = inputState.value.description.copy(
@@ -107,7 +119,7 @@ internal class AddDreamViewModel @Inject constructor(
         )
     }
 
-    fun changeNote(note: String) = viewModelScope.launch {
+    private fun changeNote(note: String) = viewModelScope.launch {
         _inputState.emit(
             inputState.value.copy(
                 note = inputState.value.note.copy(
@@ -117,7 +129,7 @@ internal class AddDreamViewModel @Inject constructor(
         )
     }
 
-    fun changeMarkAsFavourite(markAsFavourite: Boolean) = viewModelScope.launch {
+    private fun changeMarkAsFavourite(markAsFavourite: Boolean) = viewModelScope.launch {
         _inputState.emit(
             inputState.value.copy(
                 markAsFavourite = markAsFavourite
@@ -125,7 +137,7 @@ internal class AddDreamViewModel @Inject constructor(
         )
     }
 
-    fun changeHappiness(happiness: Float) = viewModelScope.launch {
+    private fun changeHappiness(happiness: Float) = viewModelScope.launch {
         _inputState.emit(
             inputState.value.copy(
                 happiness = happiness
@@ -133,7 +145,15 @@ internal class AddDreamViewModel @Inject constructor(
         )
     }
 
-    fun changePersonQuery(personQuery: String) = with(viewModelScope) {
+    private fun changeClearness(clearness: Float) = viewModelScope.launch {
+        _inputState.emit(
+            inputState.value.copy(
+                clearness = clearness
+            )
+        )
+    }
+
+    private fun changePersonQuery(personQuery: String) = with(viewModelScope) {
         launch {
             _inputState.emit(
                 inputState.value.copy(
@@ -161,7 +181,7 @@ internal class AddDreamViewModel @Inject constructor(
         }
     }
 
-    fun changeLocationQuery(locationQuery: String) = with(viewModelScope) {
+    private fun changeLocationQuery(locationQuery: String) = with(viewModelScope) {
         launch {
             _inputState.emit(
                 inputState.value.copy(
@@ -189,7 +209,7 @@ internal class AddDreamViewModel @Inject constructor(
         }
     }
 
-    fun selectPerson(person: Person) = viewModelScope.launch {
+    private fun selectPerson(person: Person) = viewModelScope.launch {
         _extrasState.emit(
             extrasState.value.copy(
                 persons = extrasState.value.persons + person
@@ -198,7 +218,7 @@ internal class AddDreamViewModel @Inject constructor(
         togglePersonPopupVisibility(false)
     }
 
-    fun removePerson(person: Person) = viewModelScope.launch {
+    private fun removePerson(person: Person) = viewModelScope.launch {
         _extrasState.emit(
             extrasState.value.copy(
                 persons = extrasState.value.persons - person
@@ -206,7 +226,7 @@ internal class AddDreamViewModel @Inject constructor(
         )
     }
 
-    fun selectLocation(location: Location) = viewModelScope.launch {
+    private fun selectLocation(location: Location) = viewModelScope.launch {
         _extrasState.emit(
             extrasState.value.copy(
                 locations = extrasState.value.locations + location
@@ -215,7 +235,7 @@ internal class AddDreamViewModel @Inject constructor(
         toggleLocationPopupVisibility(false)
     }
 
-    fun removeLocation(location: Location) = viewModelScope.launch {
+    private fun removeLocation(location: Location) = viewModelScope.launch {
         _extrasState.emit(
             extrasState.value.copy(
                 locations = extrasState.value.locations - location
@@ -224,7 +244,7 @@ internal class AddDreamViewModel @Inject constructor(
     }
 
     //TODO: Maybe move this whole thing (atleast update logic) to usecase
-    fun addDream() {
+    private fun addDream() {
 
         var isOk = true
         //Form validation
@@ -299,7 +319,7 @@ internal class AddDreamViewModel @Inject constructor(
         }
     }
 
-    fun togglePersonPopupVisibility(
+    private fun togglePersonPopupVisibility(
         show: Boolean = _uiState.value.showPersonsPopup
     ) = viewModelScope.launch {
         _uiState.emit(
@@ -309,7 +329,7 @@ internal class AddDreamViewModel @Inject constructor(
         )
     }
 
-    fun toggleLocationPopupVisibility(
+    private fun toggleLocationPopupVisibility(
         show: Boolean = _uiState.value.showLocationsPopup
     ) = viewModelScope.launch {
         _uiState.emit(
