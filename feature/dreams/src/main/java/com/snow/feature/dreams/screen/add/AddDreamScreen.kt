@@ -241,6 +241,6 @@ private object AddDreamScreenDefaults {
 
     val columnSpacing = 12.dp
 
-    val popupMaxHeight = 100.dp
+    val popupMaxHeight = 200.dp
 
 }
