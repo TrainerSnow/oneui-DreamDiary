@@ -8,14 +8,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.snow.feature.dreams.nav.addDream
 import com.snow.feature.dreams.nav.dreamDetail
 import com.snow.feature.dreams.nav.dreamList
+import com.snow.feature.dreams.nav.goToAddDream
 import com.snow.feature.dreams.nav.goToDreamDetail
 import dagger.hilt.android.AndroidEntryPoint
 import org.oneui.compose.theme.OneUITheme
 
 @AndroidEntryPoint
-class MainActivity: ComponentActivity() {
+class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +33,10 @@ class MainActivity: ComponentActivity() {
             ) {
                 dreamList(
                     onAboutClick = { },
-                    onAddClick = { },
+                    onAddClick = {
+                        navController
+                            .goToAddDream(null)
+                    },
                     onSearchClick = { },
                     onDreamClick = { dream ->
                         navController
@@ -45,8 +50,12 @@ class MainActivity: ComponentActivity() {
                     onLocationClick = { },
                     onPersonClick = { },
                     onRelationClick = { },
-                    onEditClick = { }
+                    onEditClick = {
+                        navController
+                            .goToAddDream(it.id)
+                    }
                 )
+                addDream()
             }
         }
     }

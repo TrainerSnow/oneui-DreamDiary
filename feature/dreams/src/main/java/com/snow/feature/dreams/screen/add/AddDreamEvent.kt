@@ -1,5 +1,6 @@
 package com.snow.feature.dreams.screen.add;
 
+import com.snow.diary.model.combine.PersonWithRelation
 import com.snow.diary.model.data.Location
 import com.snow.diary.model.data.Person
 
@@ -42,11 +43,17 @@ sealed class AddDreamEvent {
     ): AddDreamEvent()
 
     data class RemovePerson(
-        val person: Person
+        val person: PersonWithRelation
     ): AddDreamEvent()
 
     data class RemoveLocation(
         val location: Location
     ): AddDreamEvent()
+
+    data object ToggleAdvancedSettings: AddDreamEvent()
+
+    data object TogglePersonPopup: AddDreamEvent()
+
+    data object ToggleLocationPopup: AddDreamEvent()
 
 }

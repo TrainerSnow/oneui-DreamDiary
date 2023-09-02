@@ -31,7 +31,7 @@ fun PersonInputListItem(
     onDeleteClick: (PersonWithRelation) -> Unit
 ) {
     val nameStyle = TextStyle(
-        fontSize = 16.sp
+        fontSize = 17.sp
     )
 
     Row (

@@ -21,6 +21,7 @@ import com.snow.diary.domain.action.person.AllPersons
 import com.snow.diary.domain.action.person.PersonWithRelationAct
 import com.snow.diary.domain.action.person.PersonsFromDream
 import com.snow.diary.domain.action.person.UpdatePerson
+import com.snow.diary.domain.action.relation.RelationById
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -121,8 +122,8 @@ object DomainModule {
     @Provides
     @Singleton
     fun providePersonWithRelationAct(
-        relationDao: RelationDao
-    ) = PersonWithRelationAct(relationDao)
+        relationById: RelationById
+    ) = PersonWithRelationAct(relationById)
 
 
     @Provides
@@ -130,6 +131,17 @@ object DomainModule {
     fun provideUpdatePerson(
         personDao: PersonDao
     ) = UpdatePerson(personDao)
+
+
+    /*
+    Relation usecases
+     */
+
+    @Provides
+    @Singleton
+    fun provideRelationById(
+        relationDao: RelationDao
+    ) = RelationById(relationDao)
 
 
     /*

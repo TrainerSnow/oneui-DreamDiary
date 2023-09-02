@@ -7,6 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.snow.feature.dreams.screen.add.AddDreamScreen
 
 private const val dreamIdArg = "dreamId"
 private const val addDreamName = "add_dream"
@@ -17,7 +18,7 @@ internal class AddDreamArgs(
     val dreamId: Long?
 ) {
     constructor(savedStateHandle: SavedStateHandle) : this(
-        dreamId = savedStateHandle[dreamIdArg]
+        dreamId = savedStateHandle.get<String>(dreamIdArg)?.toLongOrNull()
     )
 }
 
@@ -25,13 +26,12 @@ fun NavController.goToAddDream(
     dreamId: Long? = null,
     navOptions: NavOptions? = null
 ) = navigate(
-    route = dreamId?.let { id -> addDreamName.withArg(dreamIdArg, dreamId.toString()) } ?: addDreamName,
+    route = dreamId?.let { id -> addDreamName.withArg(dreamIdArg, dreamId.toString()) }
+        ?: addDreamName,
     navOptions = navOptions
 )
 
-fun NavGraphBuilder.addDream(
-
-) {
+fun NavGraphBuilder.addDream() {
     composable(
         route = addDreamName.withArg(dreamIdArg, dreamIdArg),
         arguments = listOf(
@@ -40,10 +40,10 @@ fun NavGraphBuilder.addDream(
             ) {
                 nullable = true
                 defaultValue = null
-                type = NavType.LongType
+                type = NavType.StringType
             }
         )
     ) {
-        //TODO: Call composable here
+        AddDreamScreen()
     }
 }

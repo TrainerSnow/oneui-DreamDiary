@@ -1,6 +1,7 @@
-package com.snow.feature.dreams.screen.add;
+package com.snow.feature.dreams.screen.add
 
 import com.snow.diary.TextInput
+import com.snow.diary.model.combine.PersonWithRelation
 import com.snow.diary.model.data.Location
 import com.snow.diary.model.data.Person
 
@@ -30,7 +31,7 @@ internal data class AddDreamInputState (
  */
 internal data class AddDreamExtrasState (
 
-    val persons: List<Person> = emptyList(),
+    val persons: List<PersonWithRelation> = emptyList(),
 
     val locations: List<Location> = emptyList()
 

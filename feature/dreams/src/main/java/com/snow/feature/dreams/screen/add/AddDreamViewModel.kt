@@ -15,6 +15,7 @@ import com.snow.diary.domain.action.dream.DreamInformation
 import com.snow.diary.domain.action.dream.UpdateDream
 import com.snow.diary.domain.action.location.AllLocations
 import com.snow.diary.domain.action.person.AllPersons
+import com.snow.diary.domain.action.person.PersonWithRelationAct
 import com.snow.diary.domain.viewmodel.EventViewModel
 import com.snow.diary.model.combine.PersonWithRelation
 import com.snow.diary.model.data.Dream
@@ -29,7 +30,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.last
-import kotlinx.coroutines.flow.lastOrNull
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
@@ -42,6 +43,7 @@ internal class AddDreamViewModel @Inject constructor(
     val allLocations: AllLocations,
     val updateDream: UpdateDream,
     val addDream: AddDreamAction,
+    val personWithRelation: PersonWithRelationAct,
     val addDreamLocationCrossref: AddDreamLocationCrossref,
     val addDreamPersonCrossref: AddDreamPersonCrossref,
     val removeDreamLocationCrossref: RemoveDreamLocationCrossref,
@@ -81,9 +83,10 @@ internal class AddDreamViewModel @Inject constructor(
                         )
                     }
                 )
+
                 _extrasState.emit(
                     extrasState.value.copy(
-                        persons = dream.persons.map(PersonWithRelation::person),
+                        persons = dream.persons,
                         locations = dream.locations
                     )
                 )
@@ -107,6 +110,9 @@ internal class AddDreamViewModel @Inject constructor(
         is AddDreamEvent.RemovePerson -> removePerson(event.person)
         is AddDreamEvent.SelectLocation -> selectLocation(event.location)
         is AddDreamEvent.SelectPerson -> selectPerson(event.person)
+        is AddDreamEvent.ToggleAdvancedSettings -> toggleAdvancedSettings()
+        is AddDreamEvent.ToggleLocationPopup -> toggleLocationPopupVisibility(!uiState.value.showLocationsPopup)
+        is AddDreamEvent.TogglePersonPopup -> togglePersonPopupVisibility(!uiState.value.showPersonsPopup)
     }
 
     private fun changeDescription(desc: String) = viewModelScope.launch {
@@ -166,9 +172,12 @@ internal class AddDreamViewModel @Inject constructor(
 
         personJob?.cancel()
         personJob = launchInBackground {
-            val persons = allPersons(AllPersons.Input())
-                .lastOrNull()
-                ?.filterSearch(personQuery) ?: emptyList()
+            val allPersons = allPersons(AllPersons.Input())
+                .stateIn(viewModelScope)
+                .value
+
+            val persons = allPersons
+                .filterSearch(personQuery) - extrasState.value.persons.map { it.person }.toSet()
 
             val showPopup = persons.isNotEmpty()
 
@@ -194,9 +203,12 @@ internal class AddDreamViewModel @Inject constructor(
 
         locationJob?.cancel()
         locationJob = launchInBackground {
-            val locations = allLocations(AllLocations.Input())
-                .lastOrNull()
-                ?.filterSearch(locationQuery) ?: emptyList()
+            val allLocations = allLocations(AllLocations.Input())
+                .stateIn(viewModelScope)
+                .value
+
+            val locations = allLocations
+                .filterSearch(locationQuery) - extrasState.value.locations.toSet()
 
             val showPopup = locations.isNotEmpty()
 
@@ -209,16 +221,25 @@ internal class AddDreamViewModel @Inject constructor(
         }
     }
 
-    private fun selectPerson(person: Person) = viewModelScope.launch {
+    private fun selectPerson(person: Person) = viewModelScope.launchInBackground {
+        val pwr = personWithRelation(person)
+            .first()
         _extrasState.emit(
             extrasState.value.copy(
-                persons = extrasState.value.persons + person
+                persons = extrasState.value.persons + pwr
+            )
+        )
+        _inputState.emit(
+            inputState.value.copy(
+                personQuery = inputState.value.personQuery.copy(
+                    input = ""
+                )
             )
         )
         togglePersonPopupVisibility(false)
     }
 
-    private fun removePerson(person: Person) = viewModelScope.launch {
+    private fun removePerson(person: PersonWithRelation) = viewModelScope.launch {
         _extrasState.emit(
             extrasState.value.copy(
                 persons = extrasState.value.persons - person
@@ -232,6 +253,13 @@ internal class AddDreamViewModel @Inject constructor(
                 locations = extrasState.value.locations + location
             )
         )
+        _inputState.emit(
+            inputState.value.copy(
+                locationQuery = inputState.value.locationQuery.copy(
+                    input = ""
+                )
+            )
+        )
         toggleLocationPopupVisibility(false)
     }
 
@@ -239,6 +267,14 @@ internal class AddDreamViewModel @Inject constructor(
         _extrasState.emit(
             extrasState.value.copy(
                 locations = extrasState.value.locations - location
+            )
+        )
+    }
+
+    private fun toggleAdvancedSettings() = viewModelScope.launch {
+        _uiState.emit(
+            uiState.value.copy(
+                showAdvancedSettings = !uiState.value.showAdvancedSettings
             )
         )
     }
@@ -284,7 +320,7 @@ internal class AddDreamViewModel @Inject constructor(
 
             if (!isEdit) {
                 extrasState.value.persons.forEach { person ->
-                    addDreamPersonCrossref(AddDreamPersonCrossref.Input(id, person.id!!))
+                    addDreamPersonCrossref(AddDreamPersonCrossref.Input(id, person.person.id!!))
                 }
                 extrasState.value.locations.forEach { location ->
                     addDreamLocationCrossref(AddDreamLocationCrossref.Input(id, location.id!!))
@@ -296,10 +332,12 @@ internal class AddDreamViewModel @Inject constructor(
                 val persons = dreamInfo.persons.map(PersonWithRelation::person)
                 val locations = dreamInfo.locations
 
-                val newPersons = extrasState.value.persons - persons.toSet()
+                val newPersons =
+                    extrasState.value.persons.map(PersonWithRelation::person) - persons.toSet()
                 val newLocations = extrasState.value.locations - locations.toSet()
 
-                val toRemovePersons = persons - extrasState.value.persons.toSet()
+                val toRemovePersons =
+                    persons - extrasState.value.persons.map(PersonWithRelation::person).toSet()
                 val toRemoveLocations = locations - extrasState.value.locations.toSet()
 
                 toRemovePersons.forEach {
@@ -320,7 +358,7 @@ internal class AddDreamViewModel @Inject constructor(
     }
 
     private fun togglePersonPopupVisibility(
-        show: Boolean = _uiState.value.showPersonsPopup
+        show: Boolean
     ) = viewModelScope.launch {
         _uiState.emit(
             uiState.value.copy(

@@ -26,5 +26,12 @@
 
     <string name="dream_add_person_search_hint">Search person…</string>
     <string name="dream_add_location_search_hint">Search location…</string>
+    <string name="dream_add_title">Add dream</string>
+    <string name="dream_add_title_edit">Edit dream</string>
+    <string name="dream_add_content_hint">Dream content</string>
+    <string name="dream_add_note_hint">Notes</string>
+    <string name="dream_add_expand">View more</string>
+    <string name="dream_add_shrink">View less</string>
+    <string name="dream_add_markasfavourite">Mark as favourite</string>
 
 </resources>
