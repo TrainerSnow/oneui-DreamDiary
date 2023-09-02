@@ -32,6 +32,7 @@ import com.snow.diary.ui.screen.ErrorScreen
 import com.snow.diary.ui.screen.LoadingScreen
 import com.snow.feature.dreams.R
 import com.snow.feature.dreams.screen.detail.component.ClearnessProgressBar
+import com.snow.feature.dreams.screen.detail.component.DreamDetailEvent
 import com.snow.feature.dreams.screen.detail.component.HappinessProgressBar
 import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
@@ -58,8 +59,8 @@ internal fun DreamDetailScreen(
     DreamDetailScreen(
         state = dreamState,
         tabState = tabState,
+        onEvent = viewModel::onEvent,
         onNavigateBack = onNavigateBack,
-        onTabStateChange = viewModel::changeTabState,
         personCallback = object : PersonCallback {
 
             override fun onClick(person: Person) {
@@ -71,7 +72,7 @@ internal fun DreamDetailScreen(
             }
 
             override fun onFavouriteClick(person: Person) {
-                viewModel.personFavouriteClick(person)
+                viewModel.onEvent(DreamDetailEvent.PersonFavouriteClick(person))
             }
 
         },
@@ -80,8 +81,8 @@ internal fun DreamDetailScreen(
         onDeleteClick = {
             if (dreamState is DreamDetailState.Success) {
                 onNavigateBack()
-                viewModel.deleteDream(
-                    (dreamState as DreamDetailState.Success).dream
+                viewModel.onEvent(
+                    DreamDetailEvent.DeleteDream((dreamState as DreamDetailState.Success).dream)
                 )
             }
         }
@@ -92,7 +93,7 @@ internal fun DreamDetailScreen(
 private fun DreamDetailScreen(
     state: DreamDetailState,
     tabState: DreamDetailTabState,
-    onTabStateChange: (DreamDetailTabState) -> Unit,
+    onEvent: (DreamDetailEvent) -> Unit,
     onNavigateBack: () -> Unit,
     personCallback: PersonCallback,
     onLocationClick: (Location) -> Unit,
@@ -162,9 +163,11 @@ private fun DreamDetailScreen(
                                 state = state,
                                 tabState = tabState,
                                 onSubtabChange = { subtab ->
-                                    onTabStateChange(
-                                        tabState.copy(
-                                            subtab = subtab
+                                    onEvent(
+                                        DreamDetailEvent.ChangeTabState(
+                                            tabState.copy(
+                                                subtab = subtab
+                                            )
                                         )
                                     )
                                 }
@@ -202,7 +205,15 @@ private fun DreamDetailScreen(
                 TabItem(
                     modifier = Modifier
                         .weight(1F),
-                    onClick = { onTabStateChange(tabState.copy(tab = tab)) },
+                    onClick = {
+                        onEvent(
+                            DreamDetailEvent.ChangeTabState(
+                                tabState.copy(
+                                    tab = tab
+                                )
+                            )
+                        )
+                    },
                     text = tab.localizedName(),
                     selected = tab == tabState.tab,
                     enabled = tab.enabled((state as? DreamDetailState.Success))

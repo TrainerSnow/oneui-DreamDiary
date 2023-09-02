@@ -1,15 +1,16 @@
 package com.snow.feature.dreams.screen.detail;
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.common.launchInBackground
 import com.snow.diary.domain.action.dream.DeleteDream
 import com.snow.diary.domain.action.dream.DreamInformation
 import com.snow.diary.domain.action.person.UpdatePerson
+import com.snow.diary.domain.viewmodel.EventViewModel
 import com.snow.diary.model.data.Dream
 import com.snow.diary.model.data.Person
 import com.snow.feature.dreams.nav.DreamDetailArgs
+import com.snow.feature.dreams.screen.detail.component.DreamDetailEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -25,7 +26,7 @@ internal class DreamDetailViewModel @Inject constructor(
     dreamInformation: DreamInformation,
     val updatePerson: UpdatePerson,
     val deleteDreamAct: DeleteDream
-) : ViewModel() {
+) : EventViewModel<DreamDetailEvent>() {
 
     private val args = DreamDetailArgs(savedStateHandle)
 
@@ -49,7 +50,13 @@ internal class DreamDetailViewModel @Inject constructor(
     )
     val tabState: StateFlow<DreamDetailTabState> = _tabState
 
-    fun personFavouriteClick(person: Person) = viewModelScope.launchInBackground {
+    override suspend fun handleEvent(event: DreamDetailEvent): Any = when (event) {
+        is DreamDetailEvent.ChangeTabState -> handleChangeTabState(event.tabState)
+        is DreamDetailEvent.DeleteDream -> handleDeleteDream(event.dream)
+        is DreamDetailEvent.PersonFavouriteClick -> handlePersonFavouriteClick(event.person)
+    }
+
+    private fun handlePersonFavouriteClick(person: Person) = viewModelScope.launchInBackground {
         updatePerson(
             person.copy(
                 isFavourite = !person.isFavourite
@@ -57,12 +64,12 @@ internal class DreamDetailViewModel @Inject constructor(
         )
     }
 
-    fun deleteDream(dream: Dream) = viewModelScope.launchInBackground {
+    private fun handleDeleteDream(dream: Dream) = viewModelScope.launchInBackground {
         //TODO: Give option to restore dream via global toast
         deleteDreamAct(dream)
     }
 
-    fun changeTabState(tabState: DreamDetailTabState) =
+    private fun handleChangeTabState(tabState: DreamDetailTabState) =
         viewModelScope.launch { _tabState.emit(tabState) }
 
 }
