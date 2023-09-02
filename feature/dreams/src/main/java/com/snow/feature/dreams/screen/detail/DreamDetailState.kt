@@ -1,6 +1,8 @@
 package com.snow.feature.dreams.screen.detail
 
-import com.snow.diary.model.combine.DreamAggregate
+import com.snow.diary.model.combine.PersonWithRelation
+import com.snow.diary.model.data.Dream
+import com.snow.diary.model.data.Location
 
 internal sealed class DreamDetailState {
 
@@ -12,7 +14,9 @@ internal sealed class DreamDetailState {
     ): DreamDetailState()
 
     data class Success(
-        val dream: DreamAggregate
+        val dream: Dream,
+        val locations: List<Location>,
+        val persons: List<PersonWithRelation>
     ): DreamDetailState()
 
 }

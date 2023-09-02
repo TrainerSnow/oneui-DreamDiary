@@ -2,18 +2,24 @@ package com.snow.diary.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
-import androidx.room.Upsert
+import androidx.room.Update
 import com.snow.diary.database.model.RelationEntity
 import com.snow.diary.database.model.RelationWithPersons
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RelationDao {
+
     @Transaction
-    @Upsert
-    fun upsert(vararg entity: RelationEntity)
+    @Insert
+    fun insert(vararg entity: RelationEntity): List<Long>
+
+    @Transaction
+    @Update
+    fun update(vararg entity: RelationEntity)
 
     @Transaction
     @Delete

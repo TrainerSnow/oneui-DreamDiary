@@ -3,6 +3,7 @@ package com.snow.diary.database.model
 import android.graphics.Color
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.snow.diary.IModelMappable
 import com.snow.diary.model.data.Relation
 
 @Entity(
@@ -17,7 +18,9 @@ data class RelationEntity(
 
     val color: Color
 
-) {
+): IModelMappable<Relation> {
+
+    override fun toModel() = Relation(id, name, color)
 
     constructor(relation: Relation) : this(
         relation.id,
@@ -26,6 +29,3 @@ data class RelationEntity(
     )
 
 }
-
-val RelationEntity.asModel: Relation
-    get() = Relation(id, name, color)

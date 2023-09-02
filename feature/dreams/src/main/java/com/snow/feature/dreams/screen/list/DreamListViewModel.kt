@@ -3,7 +3,8 @@ package com.snow.feature.dreams.screen.list;
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.common.launchInBackground
-import com.snow.diary.data.repository.DreamRepository
+import com.snow.diary.domain.action.dream.AllDreams
+import com.snow.diary.domain.action.dream.UpdateDream
 import com.snow.diary.model.data.Dream
 import com.snow.diary.model.sort.SortConfig
 import com.snow.diary.model.sort.SortDirection
@@ -23,7 +24,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class DreamListViewModel @Inject constructor(
-    val dreamRepo: DreamRepository
+    allDreams: AllDreams,
+    val updateDream: UpdateDream
 ) : ViewModel() {
 
     private val _showMenu = MutableStateFlow(false)
@@ -38,7 +40,7 @@ internal class DreamListViewModel @Inject constructor(
     val sortConfig: StateFlow<SortConfig> = _sortConfig
 
     val dreamListState: StateFlow<DreamFeedState> = dreamListState(
-        repo = dreamRepo,
+        allDreams = allDreams,
         sortConfig = sortConfig
     ).stateIn(
         scope = viewModelScope,
@@ -53,13 +55,7 @@ internal class DreamListViewModel @Inject constructor(
     }
 
     fun onDreamFavouriteClick(dream: Dream) = viewModelScope.launchInBackground {
-        dreamRepo
-            .upsertDream(
-                dream
-                    .copy(
-                        isFavourite = !dream.isFavourite
-                    )
-            )
+        updateDream(listOf(dream))
     }
 
     fun onSortChange(sort: SortConfig) = viewModelScope.launch {
@@ -72,20 +68,20 @@ internal class DreamListViewModel @Inject constructor(
 
 @OptIn(ExperimentalCoroutinesApi::class)
 private fun dreamListState(
-    repo: DreamRepository,
-    sortConfig: Flow<SortConfig>
+    allDreams: AllDreams,
+    sortConfig: StateFlow<SortConfig>
 ): Flow<DreamFeedState> = sortConfig
     .flatMapMerge { sort ->
-        repo
-            .getAllDreams(sort)
-            .map { Pair(sort, it) }
-    }.map { tuple ->
-        if (tuple.second.isEmpty()) DreamFeedState.Empty
+        allDreams(
+            AllDreams.Input(sort)
+        )
+    }.map { dreams ->
+        if (dreams.isEmpty()) DreamFeedState.Empty
         else DreamFeedState
             .Success(
-                dreams = tuple.second,
+                dreams = dreams,
                 temporallySort = true,
-                sortConfig = tuple.first
+                sortConfig = sortConfig.value
             )
     }
 

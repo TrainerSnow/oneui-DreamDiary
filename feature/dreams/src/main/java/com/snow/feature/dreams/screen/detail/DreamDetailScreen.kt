@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.common.time.TimeFormat.formatFullDescription
-import com.snow.diary.model.combine.DreamAggregate
 import com.snow.diary.model.data.Dream
 import com.snow.diary.model.data.Location
 import com.snow.diary.model.data.Person
@@ -77,12 +76,12 @@ internal fun DreamDetailScreen(
 
         },
         onLocationClick = onLocationClick,
-        onEditClick = { (dreamState as? DreamDetailState.Success)?.let { onEditClick(it.dream.dream) } },
+        onEditClick = { (dreamState as? DreamDetailState.Success)?.let { onEditClick(it.dream) } },
         onDeleteClick = {
             if (dreamState is DreamDetailState.Success) {
                 onNavigateBack()
                 viewModel.deleteDream(
-                    (dreamState as DreamDetailState.Success).dream.dream
+                    (dreamState as DreamDetailState.Success).dream
                 )
             }
         }
@@ -103,7 +102,7 @@ private fun DreamDetailScreen(
     val title = if (state is DreamDetailState.Success)
         stringResource(
             id = R.string.dream_detail_title,
-            state.dream.dream.created.formatFullDescription()
+            state.dream.created.formatFullDescription()
         ) else stringResource(
         id = R.string.dream_detail_title_placeholder
     )
@@ -206,22 +205,22 @@ private fun DreamDetailScreen(
                     onClick = { onTabStateChange(tabState.copy(tab = tab)) },
                     text = tab.localizedName(),
                     selected = tab == tabState.tab,
-                    enabled = tab.enabled((state as? DreamDetailState.Success)?.dream)
+                    enabled = tab.enabled((state as? DreamDetailState.Success))
                 )
             }
         }
     }
 }
 
-private fun DreamDetailTab.enabled(dream: DreamAggregate?): Boolean = when (this) {
+private fun DreamDetailTab.enabled(state: DreamDetailState.Success?): Boolean = when (this) {
     DreamDetailTab.General -> true
-    DreamDetailTab.Persons -> dream?.persons?.isNotEmpty() ?: true
-    DreamDetailTab.Locations -> dream?.locations?.isNotEmpty() ?: true
+    DreamDetailTab.Persons -> state?.persons?.isNotEmpty() ?: true
+    DreamDetailTab.Locations -> state?.locations?.isNotEmpty() ?: true
 }
 
-private fun DreamDetailSubtab.enabled(dream: DreamAggregate?): Boolean =
+private fun DreamDetailSubtab.enabled(dream: Dream?): Boolean =
     if (dream == null) true else when (this) {
-        DreamDetailSubtab.Other -> dream.dream.let { it.happiness != null || it.clearness != null }
+        DreamDetailSubtab.Other -> dream.run { happiness != null || clearness != null } ?: true
         else -> true
     }
 
@@ -234,7 +233,7 @@ private fun LocationTab(
     LocationFeed(
         modifier = modifier,
         state = LocationFeedState.Success(
-            locations = state.dream.locations
+            locations = state.locations
         ),
         onLocationClick = onLocationClick
     )
@@ -249,7 +248,7 @@ private fun PersonTab(
     PersonFeed(
         modifier = modifier,
         state = PersonFeedState.Success(
-            persons = state.dream.persons,
+            persons = state.persons,
             relationSectionSort = false,
             sortConfig = SortConfig()
         ),
@@ -267,7 +266,7 @@ private fun GeneralTab(
     Column(
         modifier = modifier
     ) {
-        val dream = state.dream.dream
+        val dream = state.dream
         Tabs(
             modifier = Modifier
                 .fillMaxWidth()
