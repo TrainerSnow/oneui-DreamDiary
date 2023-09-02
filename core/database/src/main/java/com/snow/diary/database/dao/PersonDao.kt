@@ -12,25 +12,26 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PersonDao {
+
     @Transaction
     @Insert
-    fun insert(vararg person: PersonEntity): List<Long>
+    fun insert(vararg entity: PersonEntity): List<Long>
 
     @Transaction
     @Update
-    fun update(vararg person: PersonEntity)
+    fun update(vararg entity: PersonEntity)
 
     @Transaction
     @Delete
-    fun delete(vararg person: PersonEntity)
+    fun delete(vararg entity: PersonEntity)
 
     @Transaction
     @Query("SELECT * FROM person")
-    fun getAllPersons(): Flow<List<PersonEntity>>
+    fun getAll(): Flow<List<PersonEntity>>
 
     @Transaction
     @Query("SELECT * FROM person WHERE personId = :id")
-    fun getPersonById(id: Long): Flow<PersonEntity?>
+    fun getById(id: Long): Flow<PersonEntity?>
 
     @Transaction
     @Query("SELECT * FROM person WHERE personId = :id")

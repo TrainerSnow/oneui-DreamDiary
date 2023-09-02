@@ -6,9 +6,6 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import androidx.room.Upsert
-import com.snow.diary.database.cross.DreamLocationCrossref
-import com.snow.diary.database.cross.DreamPersonCrossref
 import com.snow.diary.database.model.DreamEntity
 import com.snow.diary.database.model.cross.DreamWithLocations
 import com.snow.diary.database.model.cross.DreamWithPersons
@@ -16,29 +13,14 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DreamDao {
+
     @Transaction
     @Insert
-    fun insert(vararg dream: DreamEntity): List<Long>
-
-    @Transaction
-    @Upsert
-    fun upsertDreamPersonCrossref(vararg cross: DreamPersonCrossref)
-
-    @Transaction
-    @Upsert
-    fun upsertDreamLocationCrossref(vararg cross: DreamLocationCrossref)
-
-    @Transaction
-    @Delete
-    fun deleteDreamPersonCrossref(vararg cross: DreamPersonCrossref)
-
-    @Transaction
-    @Delete
-    fun deleteDreamLocationCrossref(vararg cross: DreamLocationCrossref)
+    fun insert(vararg entity: DreamEntity): List<Long>
 
     @Transaction
     @Update
-    fun update(vararg dream: DreamEntity)
+    fun update(vararg entity: DreamEntity)
 
     @Transaction
     @Delete
@@ -46,11 +28,11 @@ interface DreamDao {
 
     @Transaction
     @Query("SELECT * FROM dream")
-    fun getAllDreams(): Flow<List<DreamEntity>>
+    fun getAll(): Flow<List<DreamEntity>>
 
     @Transaction
-    @Query("SELECT * FROM Dream WHERE dreamId = :dreamId")
-    fun getDreamById(dreamId: Long): Flow<DreamEntity?>
+    @Query("SELECT * FROM Dream WHERE dreamId = :id")
+    fun getById(id: Long): Flow<DreamEntity?>
 
     @Transaction
     @Query("SELECT * FROM dream WHERE dreamId = :id")

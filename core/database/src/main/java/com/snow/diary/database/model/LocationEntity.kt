@@ -3,6 +3,7 @@ package com.snow.diary.database.model
 import android.graphics.PointF
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.snow.diary.IModelMappable
 import com.snow.diary.model.data.Location
 
 @Entity(
@@ -18,7 +19,9 @@ data class LocationEntity(
     val coordinates: PointF,
 
     val notes: String
-){
+): IModelMappable<Location> {
+
+    override fun toModel() = Location(locationId, name, coordinates, notes)
 
     constructor(location: Location) : this(
         location.id,
@@ -28,6 +31,3 @@ data class LocationEntity(
     )
 
 }
-
-val LocationEntity.asModel: Location
-    get() = Location(locationId, name, coordinates, notes)

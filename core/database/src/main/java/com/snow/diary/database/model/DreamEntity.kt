@@ -2,6 +2,7 @@ package com.snow.diary.database.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.snow.diary.IModelMappable
 import com.snow.diary.model.data.Dream
 import java.time.LocalDate
 
@@ -26,7 +27,11 @@ data class DreamEntity(
     val clearness: Float?,
 
     val happiness: Float?
-){
+) : IModelMappable<Dream> {
+
+    override fun toModel() = Dream(
+        dreamId, description, note, isFavourite, created, updated, clearness, happiness
+    )
 
     constructor(dream: Dream) : this(
         dream.id,
@@ -40,8 +45,3 @@ data class DreamEntity(
     )
 
 }
-
-val DreamEntity.asModel: Dream
-    get() = Dream(
-        dreamId, description, note, isFavourite, created, updated, clearness, happiness
-    )

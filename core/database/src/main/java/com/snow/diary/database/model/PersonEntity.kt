@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.snow.diary.IModelMappable
 import com.snow.diary.model.data.Person
 
 @Entity(
@@ -30,7 +31,9 @@ data class PersonEntity(
     val relationId: Long,
 
     val notes: String?
-) {
+): IModelMappable<Person> {
+
+    override fun toModel() = Person(personId, name, isFavourite, relationId, notes)
 
     constructor(person: Person) : this(
         person.id,
@@ -41,6 +44,3 @@ data class PersonEntity(
     )
 
 }
-
-val PersonEntity.asModel: Person
-    get() = Person(personId, name, isFavourite, relationId, notes)
