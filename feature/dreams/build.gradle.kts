@@ -63,9 +63,10 @@ dependencies {
     implementation(libs.activity.compose)
 
     implementation(project(":core:model"))
+    implementation(project(":core:domain"))
     implementation(project(":core:common"))
     implementation(project(":core:ui"))
-    implementation(project(":core:domain"))
+    implementation(project(":core:form"))
     implementation(libs.oneui)
     implementation(libs.oneui.icons)
 }
