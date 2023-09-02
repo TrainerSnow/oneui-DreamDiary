@@ -8,9 +8,15 @@ import androidx.lifecycle.viewModelScope
 import com.snow.diary.Validator
 import com.snow.diary.common.launchInBackground
 import com.snow.diary.common.search.Search.filterSearch
-import com.snow.diary.data.repository.DreamRepository
-import com.snow.diary.data.repository.LocationRepository
-import com.snow.diary.data.repository.PersonRepository
+import com.snow.diary.domain.action.cross.AddDreamLocationCrossref
+import com.snow.diary.domain.action.cross.AddDreamPersonCrossref
+import com.snow.diary.domain.action.cross.RemoveDreamLocationCrossref
+import com.snow.diary.domain.action.cross.RemoveDreamPersonCrossref
+import com.snow.diary.domain.action.dream.AddDreamAction
+import com.snow.diary.domain.action.dream.DreamInformation
+import com.snow.diary.domain.action.dream.UpdateDream
+import com.snow.diary.domain.action.location.AllLocations
+import com.snow.diary.domain.action.person.AllPersons
 import com.snow.diary.model.combine.PersonWithRelation
 import com.snow.diary.model.data.Dream
 import com.snow.diary.model.data.Location
@@ -23,6 +29,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -31,9 +38,15 @@ import javax.inject.Inject
 @HiltViewModel
 internal class AddDreamViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    val dreamRepo: DreamRepository,
-    val personRepo: PersonRepository,
-    val locationRepo: LocationRepository,
+    val dreamInformation: DreamInformation,
+    val allPersons: AllPersons,
+    val allLocations: AllLocations,
+    val updateDream: UpdateDream,
+    val addDream: AddDreamAction,
+    val addDreamLocationCrossref: AddDreamLocationCrossref,
+    val addDreamPersonCrossref: AddDreamPersonCrossref,
+    val removeDreamLocationCrossref: RemoveDreamLocationCrossref,
+    val removeDreamPersonCrossref: RemoveDreamPersonCrossref,
     @SuppressLint("StaticFieldLeak") @ApplicationContext val context: Context
 ) : ViewModel() {
 
@@ -55,9 +68,8 @@ internal class AddDreamViewModel @Inject constructor(
     init {
         if (isEdit) {
             viewModelScope.launchInBackground {
-                val dream = dreamRepo
-                    .getExtendedDreamById(args.dreamId!!)
-                    .lastOrNull()!!
+                val dream = dreamInformation(args.dreamId!!)
+                    .last()!!
 
                 _inputState.emit(
                     inputState.value.run {
@@ -81,7 +93,6 @@ internal class AddDreamViewModel @Inject constructor(
             }
         }
     }
-
 
     private var personJob: Job? = null
     private var locationJob: Job? = null
@@ -135,19 +146,18 @@ internal class AddDreamViewModel @Inject constructor(
 
         personJob?.cancel()
         personJob = launchInBackground {
-            val persons = personRepo
-                .getAllPersons()
+            val persons = allPersons(AllPersons.Input())
                 .lastOrNull()
                 ?.filterSearch(personQuery) ?: emptyList()
 
             val showPopup = persons.isNotEmpty()
 
-            _uiState.emit(
-                uiState.value.copy(
-                    showPersonsPopup = showPopup
+            _queryState.emit(
+                queryState.value.copy(
+                    persons = persons
                 )
             )
-            toggleLocationPopupVisibility(true)
+            togglePersonPopupVisibility(showPopup)
         }
     }
 
@@ -164,8 +174,7 @@ internal class AddDreamViewModel @Inject constructor(
 
         locationJob?.cancel()
         locationJob = launchInBackground {
-            val locations = locationRepo
-                .getAllLocations()
+            val locations = allLocations(AllLocations.Input())
                 .lastOrNull()
                 ?.filterSearch(locationQuery) ?: emptyList()
 
@@ -176,7 +185,7 @@ internal class AddDreamViewModel @Inject constructor(
                     locations = locations
                 )
             )
-            toggleLocationPopupVisibility(true)
+            toggleLocationPopupVisibility(showPopup)
         }
     }
 
@@ -214,6 +223,7 @@ internal class AddDreamViewModel @Inject constructor(
         )
     }
 
+    //TODO: Maybe move this whole thing (atleast update logic) to usecase
     fun addDream() {
 
         var isOk = true
@@ -247,28 +257,24 @@ internal class AddDreamViewModel @Inject constructor(
             }
 
             val id = if (isEdit) {
-                dreamRepo.update(dream)
+                updateDream(listOf(dream))
                 args.dreamId!!
-            } else dreamRepo
-                .insert(dream)
+            } else addDream(listOf(dream))
                 .first()
 
-            if(!isEdit) {
+            if (!isEdit) {
                 extrasState.value.persons.forEach { person ->
-                    dreamRepo
-                        .upsertDreamPersonCrossref(id, person.id!!)
+                    addDreamPersonCrossref(AddDreamPersonCrossref.Input(id, person.id!!))
                 }
                 extrasState.value.locations.forEach { location ->
-                    dreamRepo
-                        .upsertDreamLocationCrossref(id, location.id!!)
+                    addDreamLocationCrossref(AddDreamLocationCrossref.Input(id, location.id!!))
                 }
             } else {
-                val dreamAgg = dreamRepo
-                    .getExtendedDreamById(id)
+                val dreamInfo = dreamInformation(dream.id!!)
                     .first()!!
 
-                val persons = dreamAgg.persons.map(PersonWithRelation::person)
-                val locations = dreamAgg.locations
+                val persons = dreamInfo.persons.map(PersonWithRelation::person)
+                val locations = dreamInfo.locations
 
                 val newPersons = extrasState.value.persons - persons.toSet()
                 val newLocations = extrasState.value.locations - locations.toSet()
@@ -277,17 +283,17 @@ internal class AddDreamViewModel @Inject constructor(
                 val toRemoveLocations = locations - extrasState.value.locations.toSet()
 
                 toRemovePersons.forEach {
-                    dreamRepo.deleteDreamPersonCrossref(id, it.id!!)
+                    removeDreamPersonCrossref(RemoveDreamPersonCrossref.Input(id, it.id!!))
                 }
                 toRemoveLocations.forEach {
-                    dreamRepo.deleteDreamLocationCrossref(id, it.id!!)
+                    removeDreamLocationCrossref(RemoveDreamLocationCrossref.Input(id, it.id!!))
                 }
 
                 newPersons.forEach {
-                    dreamRepo.upsertDreamPersonCrossref(id, it.id!!)
+                    addDreamPersonCrossref(AddDreamPersonCrossref.Input(id, it.id!!))
                 }
                 newLocations.forEach {
-                    dreamRepo.upsertDreamLocationCrossref(id, it.id!!)
+                    addDreamLocationCrossref(AddDreamLocationCrossref.Input(id, it.id!!))
                 }
             }
         }

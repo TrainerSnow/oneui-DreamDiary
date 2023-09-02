@@ -12,7 +12,7 @@ class PersonWithRelationAct(
     val relationDao: RelationDao
 ) : FlowAction<Person, PersonWithRelation>() {
     override fun Person.createFlow(): Flow<PersonWithRelation> = relationDao
-        .getById(id)
+        .getById(id!!)
         .map { it!! }
         .mapToModel()
         .map {

@@ -12,7 +12,7 @@ class LocationsFromDream(
     val dreamDao: DreamDao
 ): FlowAction<Dream, List<Location>>() {
     override fun Dream.createFlow(): Flow<List<Location>> = dreamDao
-        .getDreamWithLocationsById(id)
+        .getDreamWithLocationsById(id!!)
         .map { it!!.locations }
         .mapToModel()
 
