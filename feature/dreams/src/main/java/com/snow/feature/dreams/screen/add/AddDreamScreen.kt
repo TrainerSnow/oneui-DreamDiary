@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -14,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.PopupProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.feature.dreams.R
@@ -29,8 +27,6 @@ import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
 import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.widgets.buttons.IconButton
 import org.oneui.compose.widgets.buttons.iconButtonColors
-import org.oneui.compose.widgets.menu.MenuItem
-import org.oneui.compose.widgets.menu.PopupMenu
 import dev.oneuiproject.oneui.R as IconR
 
 @Composable
@@ -95,65 +91,6 @@ private fun AddDreamScreen(
             )
         }
     ) {
-        if (uiState.showPersonsPopup) {
-            //TODO: Possibly move these popup-menus into the composable for InputList
-            PopupMenu(
-                modifier = Modifier
-                    .heightIn(max = AddDreamScreenDefaults.popupMaxHeight),
-                onDismissRequest = {
-                    onEvent(
-                        AddDreamEvent.TogglePersonPopup
-                    )
-                },
-                properties = PopupProperties()
-            ) {
-                Column(
-                    modifier = Modifier
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    queryState.persons.forEach { person ->
-                        MenuItem(
-                            label = person.name,
-                            onClick = {
-                                onEvent(
-                                    AddDreamEvent.SelectPerson(person)
-                                )
-                            }
-                        )
-                    }
-                }
-            }
-        }
-
-        if (uiState.showLocationsPopup) {
-            PopupMenu(
-                modifier = Modifier
-                    .heightIn(max = AddDreamScreenDefaults.popupMaxHeight),
-                onDismissRequest = {
-                    onEvent(
-                        AddDreamEvent.TogglePersonPopup
-                    )
-                },
-                properties = PopupProperties()
-            ) {
-                Column(
-                    modifier = Modifier
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    queryState.locations.forEach { location ->
-                        MenuItem(
-                            label = location.name,
-                            onClick = {
-                                onEvent(
-                                    AddDreamEvent.SelectLocation(location)
-                                )
-                            }
-                        )
-                    }
-                }
-            }
-        }
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -171,13 +108,27 @@ private fun AddDreamScreen(
             )
 
             PersonInputList(
-                persons = extrasState.persons,
-                onPersonDeleteClick = {
+                modifier = Modifier
+                    .fillMaxWidth(),
+                selectablePersons = queryState.persons,
+                selectedPersons = extrasState.persons,
+                query = inputState.personQuery.input,
+                showPopup = uiState.showPersonsPopup,
+                onPopupDismiss = {
+                    onEvent(
+                        AddDreamEvent.TogglePersonPopup
+                    )
+                },
+                onUnselectPerson = {
                     onEvent(
                         AddDreamEvent.RemovePerson(it)
                     )
                 },
-                query = inputState.personQuery.input,
+                onSelectPerson = {
+                    onEvent(
+                        AddDreamEvent.SelectPerson(it)
+                    )
+                },
                 onQueryChange = {
                     onEvent(
                         AddDreamEvent.ChangePersonQuery(it)
@@ -217,13 +168,27 @@ private fun AddDreamScreen(
                     )
 
                     LocationInputList(
-                        locations = extrasState.locations,
-                        onLocationDeleteClick = {
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        selectableLocations = queryState.locations,
+                        selectedLocations = extrasState.locations,
+                        query = inputState.locationQuery.input,
+                        showPopup = uiState.showLocationsPopup,
+                        onPopupDismiss = {
+                            onEvent(
+                                AddDreamEvent.ToggleLocationPopup
+                            )
+                        },
+                        onUnselectLocation = {
                             onEvent(
                                 AddDreamEvent.RemoveLocation(it)
                             )
                         },
-                        query = inputState.locationQuery.input,
+                        onSelectLocation = {
+                            onEvent(
+                                AddDreamEvent.RemoveLocation(it)
+                            )
+                        },
                         onQueryChange = {
                             onEvent(
                                 AddDreamEvent.ChangeLocationQuery(it)

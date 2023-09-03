@@ -1,86 +1,121 @@
 package com.snow.feature.dreams.screen.add.component
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.snow.diary.model.combine.PersonWithRelation
+import androidx.compose.ui.window.PopupProperties
 import com.snow.diary.model.data.Location
-import com.snow.diary.ui.data.PersonPreviewData
+import com.snow.diary.model.data.Person
 import com.snow.feature.dreams.R
 import org.oneui.compose.base.Icon
 import org.oneui.compose.util.ListPosition
 import org.oneui.compose.widgets.box.RoundedCornerListItem
+import org.oneui.compose.widgets.menu.MenuItem
+import org.oneui.compose.widgets.menu.PopupMenu
 import dev.oneuiproject.oneui.R as IconR
 
 //TODO: Possibly move this into the lib
+
+
 @Composable
 fun PersonInputList(
     modifier: Modifier = Modifier,
-    persons: List<PersonWithRelation>,
-    onPersonDeleteClick: (PersonWithRelation) -> Unit,
+    selectablePersons: List<Person>,
+    selectedPersons: List<Person>,
     query: String,
+    showPopup: Boolean,
+    onPopupDismiss: () -> Unit,
+    onUnselectPerson: (Person) -> Unit,
+    onSelectPerson: (Person) -> Unit,
     onQueryChange: (String) -> Unit
-) {
-    Column(
-        modifier = modifier
-            .animateContentSize()
-    ) {
-        persons.forEachIndexed { index, person ->
-            RoundedCornerListItem(
-                listPosition = if (index == 0) ListPosition.First
-                else ListPosition.Middle,
-                padding = InputListDefaults.itemPadding
-            ) {
-                PersonInputListItem(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    person = person,
-                    onDeleteClick = { onPersonDeleteClick(person) }
-                )
-            }
+) = InputList(
+    modifier = modifier,
+    popupItems = selectablePersons,
+    showPopup = showPopup,
+    onPopupDismiss = onPopupDismiss,
+    selectedItems = selectedPersons,
+    item = { person, index ->
+        RoundedCornerListItem(
+            listPosition = if (index == 0) ListPosition.First
+            else ListPosition.Middle,
+            padding = InputListDefaults.itemPadding
+        ) {
+            PersonInputListItem(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                person = person,
+                onDeleteClick = { onUnselectPerson(person) }
+            )
         }
+    },
+    popupItem = { location ->
+        MenuItem(
+            label = location.name,
+            onClick = {
+                onSelectPerson(location)
+            }
+        )
+    },
+    searchText = { locations ->
         TextInputFormField(
             modifier = Modifier
                 .fillMaxWidth(),
             input = query,
             onInputChange = onQueryChange,
             icon = Icon.Resource(IconR.drawable.ic_oui_contact_outline),
-            listPosition = if (persons.isNotEmpty()) ListPosition.Last else ListPosition.Single,
+            listPosition = if (locations.isNotEmpty()) ListPosition.Last else ListPosition.Single,
             hint = stringResource(R.string.dream_add_person_search_hint)
         )
     }
-}
+)
 
 @Composable
 fun LocationInputList(
     modifier: Modifier = Modifier,
-    locations: List<Location>,
-    onLocationDeleteClick: (Location) -> Unit,
+    selectableLocations: List<Location>,
+    selectedLocations: List<Location>,
     query: String,
+    showPopup: Boolean,
+    onPopupDismiss: () -> Unit,
+    onUnselectLocation: (Location) -> Unit,
+    onSelectLocation: (Location) -> Unit,
     onQueryChange: (String) -> Unit
-) {
-    Column(
-        modifier = modifier
-    ) {
-        locations.forEachIndexed { index, location ->
-            RoundedCornerListItem(
-                listPosition = if (index == 0) ListPosition.First
-                else ListPosition.Middle
-            ) {
-                LocationInputItem(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    location = location,
-                    onDeleteClick = { onLocationDeleteClick(location) }
-                )
-            }
+) = InputList(
+    modifier = modifier,
+    popupItems = selectableLocations,
+    showPopup = showPopup,
+    onPopupDismiss = onPopupDismiss,
+    selectedItems = selectedLocations,
+    item = { location, index ->
+        RoundedCornerListItem(
+            listPosition = if (index == 0) ListPosition.First
+            else ListPosition.Middle,
+            padding = InputListDefaults.itemPadding
+        ) {
+            LocationInputItem(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                location = location,
+                onDeleteClick = { onUnselectLocation(location) }
+            )
         }
+    },
+    popupItem = { location ->
+        MenuItem(
+            label = location.name,
+            onClick = {
+                onSelectLocation(location)
+            }
+        )
+    },
+    searchText = { locations ->
         TextInputFormField(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -91,6 +126,45 @@ fun LocationInputList(
             hint = stringResource(R.string.dream_add_location_search_hint)
         )
     }
+)
+
+@Composable
+fun <T> InputList(
+    modifier: Modifier = Modifier,
+    popupItems: List<T>,
+    showPopup: Boolean,
+    onPopupDismiss: () -> Unit,
+    selectedItems: List<T>,
+    item: @Composable (item: T, index: Int) -> Unit,
+    popupItem: @Composable (T) -> Unit,
+    searchText: @Composable (selectedItems: List<T>) -> Unit
+) {
+    Column(
+        modifier = modifier
+    ) {
+        if (showPopup) {
+            PopupMenu(
+                modifier = Modifier
+                    .heightIn(max = 200.dp),
+                onDismissRequest = onPopupDismiss,
+                properties = PopupProperties()
+            ) {
+                Column(
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    popupItems.forEach { item ->
+                        popupItem(item)
+                    }
+                }
+            }
+        }
+
+        selectedItems.forEachIndexed { index, item ->
+            item(item, index)
+        }
+        searchText(selectedItems)
+    }
 }
 
 private object InputListDefaults {
@@ -100,14 +174,4 @@ private object InputListDefaults {
         vertical = 6.dp
     )
 
-}
-
-@Preview
-@Composable
-fun PersonInputListPreview() {
-    PersonInputList(
-        persons = PersonPreviewData.personsWithRelation.take(4),
-        onPersonDeleteClick = {},
-        query = "",
-        onQueryChange = {})
 }

@@ -86,7 +86,7 @@ internal class AddDreamViewModel @Inject constructor(
 
                 _extrasState.emit(
                     extrasState.value.copy(
-                        persons = dream.persons,
+                        persons = dream.persons.map { it.person },
                         locations = dream.locations
                     )
                 )
@@ -177,7 +177,7 @@ internal class AddDreamViewModel @Inject constructor(
                 .value
 
             val persons = allPersons
-                .filterSearch(personQuery) - extrasState.value.persons.map { it.person }.toSet()
+                .filterSearch(personQuery) - extrasState.value.persons.toSet()
 
             val showPopup = persons.isNotEmpty()
 
@@ -222,11 +222,9 @@ internal class AddDreamViewModel @Inject constructor(
     }
 
     private fun selectPerson(person: Person) = viewModelScope.launchInBackground {
-        val pwr = personWithRelation(person)
-            .first()
         _extrasState.emit(
             extrasState.value.copy(
-                persons = extrasState.value.persons + pwr
+                persons = extrasState.value.persons + person
             )
         )
         _inputState.emit(
@@ -239,7 +237,7 @@ internal class AddDreamViewModel @Inject constructor(
         togglePersonPopupVisibility(false)
     }
 
-    private fun removePerson(person: PersonWithRelation) = viewModelScope.launch {
+    private fun removePerson(person: Person) = viewModelScope.launch {
         _extrasState.emit(
             extrasState.value.copy(
                 persons = extrasState.value.persons - person
@@ -320,7 +318,7 @@ internal class AddDreamViewModel @Inject constructor(
 
             if (!isEdit) {
                 extrasState.value.persons.forEach { person ->
-                    addDreamPersonCrossref(AddDreamPersonCrossref.Input(id, person.person.id!!))
+                    addDreamPersonCrossref(AddDreamPersonCrossref.Input(id, person.id!!))
                 }
                 extrasState.value.locations.forEach { location ->
                     addDreamLocationCrossref(AddDreamLocationCrossref.Input(id, location.id!!))
@@ -333,11 +331,11 @@ internal class AddDreamViewModel @Inject constructor(
                 val locations = dreamInfo.locations
 
                 val newPersons =
-                    extrasState.value.persons.map(PersonWithRelation::person) - persons.toSet()
+                    extrasState.value.persons - persons.toSet()
                 val newLocations = extrasState.value.locations - locations.toSet()
 
                 val toRemovePersons =
-                    persons - extrasState.value.persons.map(PersonWithRelation::person).toSet()
+                    persons - extrasState.value.persons.toSet()
                 val toRemoveLocations = locations - extrasState.value.locations.toSet()
 
                 toRemovePersons.forEach {
