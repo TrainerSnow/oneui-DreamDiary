@@ -1,4 +1,4 @@
-package com.snow.feature.dreams.screen.detail.component
+package com.snow.diary.ui.component
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement

@@ -31,9 +31,9 @@ import com.snow.diary.ui.feed.PersonFeedState
 import com.snow.diary.ui.screen.ErrorScreen
 import com.snow.diary.ui.screen.LoadingScreen
 import com.snow.feature.dreams.R
-import com.snow.feature.dreams.screen.detail.component.ClearnessProgressBar
+import com.snow.diary.ui.component.ClearnessProgressBar
 import com.snow.feature.dreams.screen.detail.component.DreamDetailEvent
-import com.snow.feature.dreams.screen.detail.component.HappinessProgressBar
+import com.snow.diary.ui.component.HappinessProgressBar
 import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.navigation.SubTabItem
