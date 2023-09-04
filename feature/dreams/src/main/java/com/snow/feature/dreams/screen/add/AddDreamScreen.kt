@@ -29,6 +29,7 @@ import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
 import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.widgets.HorizontalSeekbar
+import org.oneui.compose.widgets.buttons.ColoredButton
 import org.oneui.compose.widgets.buttons.IconButton
 import org.oneui.compose.widgets.buttons.TransparentButton
 import org.oneui.compose.widgets.buttons.iconButtonColors
@@ -269,12 +270,13 @@ private fun AddDreamScreen(
                     label = stringResource(R.string.dream_add_cancel),
                     onClick = dismissDream
                 )
-                TransparentButton(
+                ColoredButton(
                     label = stringResource(R.string.dream_add_save),
                     onClick = {
                         onEvent(
                             AddDreamEvent.Add
                         )
+                        dismissDream()
                     }
                 )
             }
