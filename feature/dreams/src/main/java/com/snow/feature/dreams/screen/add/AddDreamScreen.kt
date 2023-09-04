@@ -190,7 +190,7 @@ private fun AddDreamScreen(
                         },
                         onSelectLocation = {
                             onEvent(
-                                AddDreamEvent.RemoveLocation(it)
+                                AddDreamEvent.SelectLocation(it)
                             )
                         },
                         onQueryChange = {
