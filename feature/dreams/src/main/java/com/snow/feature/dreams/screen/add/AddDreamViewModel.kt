@@ -299,7 +299,7 @@ internal class AddDreamViewModel @Inject constructor(
             val dream = with(inputState.value) {
                 Dream(
                     description = description.input,
-                    note = note.input,
+                    note = note.input.ifBlank { null },
                     isFavourite = markAsFavourite,
                     created = LocalDate.now(),
                     updated = LocalDate.now(),
