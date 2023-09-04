@@ -4,7 +4,7 @@ import com.snow.diary.model.Searchable
 
 data class Person(
 
-    val id: Long,
+    val id: Long? = null,
 
     val name: String,
 

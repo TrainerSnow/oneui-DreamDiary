@@ -113,7 +113,7 @@ private fun SuccessFeed(
         if (!doTemporallySort) {
             items(
                 count = state.dreams.size,
-                key = { state.dreams[it].id },
+                key = { state.dreams[it].id ?: 0L },
                 contentType = { DreamFeedDefaults.ctypeDreamitem }
             ) {
                 DreamCard(
@@ -164,7 +164,7 @@ private fun LazyGridScope.temporallyDreamItems(
         separatorItem(separatorTitle)
         items(
             count = drms.size,
-            key = { drms[it].id },
+            key = { drms[it].id ?: 0L },
             contentType = { DreamFeedDefaults.ctypeDreamitem }
         ) {
             DreamCard(

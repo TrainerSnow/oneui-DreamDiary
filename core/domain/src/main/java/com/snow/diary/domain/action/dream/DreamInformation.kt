@@ -48,10 +48,11 @@ class DreamInformation(
 
 
     private fun List<Person>.personsWithRelationsFlow(): Flow<List<PersonWithRelation>> =
-        combine(
-            map {
-                personWithRelation(it)
-            }
-        ) { it.toList() }
+        if (isEmpty()) flowOf(emptyList()) else
+            combine(
+                map {
+                    personWithRelation(it)
+                }
+            ) { it.toList() }
 
 }

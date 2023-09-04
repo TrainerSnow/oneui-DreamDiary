@@ -72,7 +72,7 @@ private fun SuccessFeed(
     ) {
         items(
             count = state.locations.size,
-            key = { state.locations[it].id },
+            key = { state.locations[it].id ?: 0L },
             contentType = { LocationFeedDefaults.ctypeLocationItem }
         ) {
             LocationCard(

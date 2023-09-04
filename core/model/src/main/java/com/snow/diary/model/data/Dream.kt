@@ -5,7 +5,7 @@ import java.time.LocalDate
 
 data class Dream(
 
-    val id: Long,
+    val id: Long? = null,
 
     val description: String,
 

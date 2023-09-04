@@ -12,7 +12,7 @@ import java.time.LocalDate
 data class DreamEntity(
 
     @PrimaryKey(autoGenerate = true)
-    val dreamId: Long,
+    val dreamId: Long? = null,
 
     val description: String,
 

@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.snow.diary.database.cross.DreamLocationCrossref
 import com.snow.diary.database.cross.DreamPersonCrossref
+import com.snow.diary.database.dao.CrossrefDao
 import com.snow.diary.database.dao.DreamDao
 import com.snow.diary.database.dao.LocationDao
 import com.snow.diary.database.dao.PersonDao
@@ -40,9 +41,11 @@ abstract class DiaryDatabase : RoomDatabase() {
 
     abstract fun relationDao(): RelationDao
 
+    abstract fun crossrefRao(): CrossrefDao
+
     companion object {
 
-        const val DB_VERSION = 1
+        const val DB_VERSION = 2
 
         const val DB_NAME = "Diary_Database"
 

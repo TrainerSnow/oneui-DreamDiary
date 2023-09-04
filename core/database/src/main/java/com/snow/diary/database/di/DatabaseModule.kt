@@ -3,6 +3,7 @@ package com.snow.diary.database.di
 import android.content.Context
 import androidx.room.Room
 import com.snow.diary.database.base.DiaryDatabase
+import com.snow.diary.database.dao.CrossrefDao
 import com.snow.diary.database.dao.DreamDao
 import com.snow.diary.database.dao.LocationDao
 import com.snow.diary.database.dao.PersonDao
@@ -53,5 +54,11 @@ object DatabaseModule {
     fun relationDao(
         db: DiaryDatabase
     ): RelationDao = db.relationDao()
+
+    @Provides
+    @Singleton
+    fun crossrefDao(
+        db: DiaryDatabase
+    ): CrossrefDao = db.crossrefRao()
 
 }

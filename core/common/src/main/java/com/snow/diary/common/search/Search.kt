@@ -25,11 +25,9 @@ object Search {
     /**
      * Filters out non-matching objects and sorts the rest depending on their similarity.
      */
-    fun <T : Searchable> filter(
-        searchables: List<T>,
+    fun <T : Searchable> List<T>.filterSearch(
         query: String
-    ): List<T> = searchables
-        .filter {
+    ): List<T> = filter {
             it.matches(query)
         }
         .map {

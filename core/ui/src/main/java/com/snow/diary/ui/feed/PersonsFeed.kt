@@ -87,7 +87,7 @@ private fun SuccessFeed(
         if(!doRelationSort) {
             items(
                 count = state.persons.size,
-                key = { state.persons[it].person.id },
+                key = { state.persons[it].person.id ?: 0L },
                 contentType = { PersonFeedDefaults.ctypePersonitem }
             ) {
                 PersonCard(
@@ -126,7 +126,7 @@ private fun LazyGridScope.relationSortedPersonItems(
         separatorItem(relation.name)
         items(
             count = prsns.size,
-            key = { prsns[it].person.id },
+            key = { prsns[it].person.id ?: 0L },
             contentType = { PersonFeedDefaults.ctypePersonitem }
         ) { index ->
             val person = prsns[index]
