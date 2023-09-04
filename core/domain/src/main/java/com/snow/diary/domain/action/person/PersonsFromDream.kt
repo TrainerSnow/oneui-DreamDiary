@@ -13,7 +13,7 @@ class PersonsFromDream(
 ): FlowAction<Dream, List<Person>>() {
     override fun Dream.createFlow(): Flow<List<Person>> = dreamDao
         .getDreamWithPersonsById(id!!)
-        .map { it!!.persons }
+        .map { it?.persons ?: emptyList() }
         .mapToModel()
 
 }
