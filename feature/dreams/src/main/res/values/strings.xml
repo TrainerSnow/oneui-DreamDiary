@@ -30,6 +30,8 @@
     <string name="dream_add_title_edit">Edit dream</string>
     <string name="dream_add_content_hint">Dream content</string>
     <string name="dream_add_note_hint">Notes</string>
+    <string name="dream_add_clearness">Clearness</string>
+    <string name="dream_add_happiness">Happiness</string>
     <string name="dream_add_expand">View more</string>
     <string name="dream_add_shrink">View less</string>
     <string name="dream_add_markasfavourite">Mark as favourite</string>

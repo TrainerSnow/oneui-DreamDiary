@@ -143,7 +143,7 @@ internal class AddDreamViewModel @Inject constructor(
         )
     }
 
-    private fun changeHappiness(happiness: Float) = viewModelScope.launch {
+    private fun changeHappiness(happiness: Float?) = viewModelScope.launch {
         _inputState.emit(
             inputState.value.copy(
                 happiness = happiness
@@ -151,7 +151,7 @@ internal class AddDreamViewModel @Inject constructor(
         )
     }
 
-    private fun changeClearness(clearness: Float) = viewModelScope.launch {
+    private fun changeClearness(clearness: Float?) = viewModelScope.launch {
         _inputState.emit(
             inputState.value.copy(
                 clearness = clearness

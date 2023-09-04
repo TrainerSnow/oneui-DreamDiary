@@ -18,11 +18,11 @@ sealed class AddDreamEvent {
     ) : AddDreamEvent()
 
     data class ChangeHappiness(
-        val happiness: Float
+        val happiness: Float?
     ) : AddDreamEvent()
 
     data class ChangeClearness(
-        val clearness: Float
+        val clearness: Float?
     ) : AddDreamEvent()
 
     data class ChangePersonQuery(

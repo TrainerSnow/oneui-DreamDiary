@@ -10,6 +10,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -17,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.feature.dreams.R
 import com.snow.feature.dreams.screen.add.component.LocationInputList
+import com.snow.feature.dreams.screen.add.component.OptionalInput
 import com.snow.feature.dreams.screen.add.component.PersonInputList
 import com.snow.feature.dreams.screen.add.component.ShowMoreTextSeparator
 import com.snow.feature.dreams.screen.add.component.TextInputFormField
@@ -25,8 +27,10 @@ import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
 import org.oneui.compose.theme.OneUITheme
+import org.oneui.compose.widgets.HorizontalSeekbar
 import org.oneui.compose.widgets.buttons.IconButton
 import org.oneui.compose.widgets.buttons.iconButtonColors
+import org.oneui.compose.widgets.seekBarColors
 import dev.oneuiproject.oneui.R as IconR
 
 @Composable
@@ -195,6 +199,56 @@ private fun AddDreamScreen(
                             )
                         }
                     )
+
+                    OptionalInput(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        title = stringResource(R.string.dream_add_happiness),
+                        expanded = inputState.happiness != null,
+                        onExpandedChange = {
+                            onEvent(
+                                AddDreamEvent.ChangeHappiness(if(it) 0.5F else null)
+                            )
+                        }
+                    ) {
+                        HorizontalSeekbar(
+                            value = inputState.happiness!!,
+                            onValueChange = {
+                                onEvent(
+                                    AddDreamEvent.ChangeHappiness(it)
+                                )
+                            },
+                            colors = seekBarColors(
+                                color = Color(0xfffcca05) //TODO xml values for these colors
+                            )
+                        )
+                    }
+
+                    OptionalInput(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        title = stringResource(R.string.dream_add_clearness),
+                        expanded = inputState.clearness != null,
+                        onExpandedChange = {
+                            onEvent(
+                                AddDreamEvent.ChangeClearness(
+                                    if(it) 0.5F else null
+                                )
+                            )
+                        }
+                    ) {
+                        HorizontalSeekbar(
+                            value = inputState.clearness!!,
+                            onValueChange = {
+                                onEvent(
+                                    AddDreamEvent.ChangeClearness(it)
+                                )
+                            },
+                            colors = seekBarColors(
+                                color = Color(0xff63d1d2) //TODO xml values for these colors
+                            )
+                        )
+                    }
                 }
             }
         }
@@ -205,7 +259,5 @@ private fun AddDreamScreen(
 private object AddDreamScreenDefaults {
 
     val columnSpacing = 12.dp
-
-    val popupMaxHeight = 200.dp
 
 }
