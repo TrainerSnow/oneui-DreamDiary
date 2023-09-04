@@ -1,6 +1,7 @@
 package com.snow.feature.dreams.screen.add;
 
 import android.content.Context
+import android.util.Log.d
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.Validator
@@ -28,7 +29,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -65,10 +65,14 @@ internal class AddDreamViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
+        d("AddDreamNavigation", "Received dreamId = ${args.dreamId}")
+        d("AddDreamNavigation", "Is edit mode: $isEdit")
         if (isEdit) {
+            d("AddDreamNavigation", "Will launch coroutine")
             viewModelScope.launchInBackground {
                 val dream = dreamInformation(args.dreamId!!)
-                    .last()!!
+                    .stateIn(viewModelScope)
+                    .value!!
 
                 _inputState.emit(
                     inputState.value.run {
@@ -81,7 +85,6 @@ internal class AddDreamViewModel @Inject constructor(
                         )
                     }
                 )
-
                 _extrasState.emit(
                     extrasState.value.copy(
                         persons = dream.persons.map { it.person },

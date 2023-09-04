@@ -1,5 +1,6 @@
 package com.snow.feature.dreams.nav
 
+import android.util.Log.d
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -35,7 +36,7 @@ fun NavGraphBuilder.addDream(
     dismissDream: () -> Unit
 ) {
     composable(
-        route = addDreamName.withArg(dreamIdArg, dreamIdArg),
+        route = addDreamName.withArg(dreamIdArg, "{$dreamIdArg}"),
         arguments = listOf(
             navArgument(
                 name = dreamIdArg
