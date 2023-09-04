@@ -31,7 +31,9 @@ fun NavController.goToAddDream(
     navOptions = navOptions
 )
 
-fun NavGraphBuilder.addDream() {
+fun NavGraphBuilder.addDream(
+    dismissDream: () -> Unit
+) {
     composable(
         route = addDreamName.withArg(dreamIdArg, dreamIdArg),
         arguments = listOf(
@@ -44,6 +46,8 @@ fun NavGraphBuilder.addDream() {
             }
         )
     ) {
-        AddDreamScreen()
+        AddDreamScreen(
+            dismissDream = dismissDream
+        )
     }
 }

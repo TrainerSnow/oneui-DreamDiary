@@ -15,7 +15,6 @@ import com.snow.diary.domain.action.dream.DreamInformation
 import com.snow.diary.domain.action.dream.UpdateDream
 import com.snow.diary.domain.action.location.AllLocations
 import com.snow.diary.domain.action.person.AllPersons
-import com.snow.diary.domain.action.person.PersonWithRelationAct
 import com.snow.diary.domain.viewmodel.EventViewModel
 import com.snow.diary.model.combine.PersonWithRelation
 import com.snow.diary.model.data.Dream
@@ -43,7 +42,6 @@ internal class AddDreamViewModel @Inject constructor(
     val allLocations: AllLocations,
     val updateDream: UpdateDream,
     val addDream: AddDreamAction,
-    val personWithRelation: PersonWithRelationAct,
     val addDreamLocationCrossref: AddDreamLocationCrossref,
     val addDreamPersonCrossref: AddDreamPersonCrossref,
     val removeDreamLocationCrossref: RemoveDreamLocationCrossref,
@@ -113,6 +111,7 @@ internal class AddDreamViewModel @Inject constructor(
         is AddDreamEvent.ToggleAdvancedSettings -> toggleAdvancedSettings()
         is AddDreamEvent.ToggleLocationPopup -> toggleLocationPopupVisibility(!uiState.value.showLocationsPopup)
         is AddDreamEvent.TogglePersonPopup -> togglePersonPopupVisibility(!uiState.value.showPersonsPopup)
+        is AddDreamEvent.Add -> addDream()
     }
 
     private fun changeDescription(desc: String) = viewModelScope.launch {
@@ -279,7 +278,6 @@ internal class AddDreamViewModel @Inject constructor(
 
     //TODO: Maybe move this whole thing (atleast update logic) to usecase
     private fun addDream() {
-
         var isOk = true
         //Form validation
         viewModelScope.launch {
@@ -295,7 +293,7 @@ internal class AddDreamViewModel @Inject constructor(
             isOk = inputState.value.description.error == null
         }
 
-        if (isOk) return
+        if (!isOk) return
 
         viewModelScope.launchInBackground {
             val dream = with(inputState.value) {

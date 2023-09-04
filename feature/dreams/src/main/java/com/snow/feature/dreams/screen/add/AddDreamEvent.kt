@@ -55,4 +55,6 @@ sealed class AddDreamEvent {
 
     data object ToggleLocationPopup: AddDreamEvent()
 
+    data object Add: AddDreamEvent()
+
 }

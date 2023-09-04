@@ -35,5 +35,7 @@
     <string name="dream_add_expand">View more</string>
     <string name="dream_add_shrink">View less</string>
     <string name="dream_add_markasfavourite">Mark as favourite</string>
+    <string name="dream_add_save">Save</string>
+    <string name="dream_add_cancel">@android:string/cancel</string>
 
 </resources>

@@ -55,7 +55,11 @@ class MainActivity : ComponentActivity() {
                             .goToAddDream(it.id)
                     }
                 )
-                addDream()
+                addDream(
+                    dismissDream = {
+                        navController.navigateUp()
+                    }
+                )
             }
         }
     }

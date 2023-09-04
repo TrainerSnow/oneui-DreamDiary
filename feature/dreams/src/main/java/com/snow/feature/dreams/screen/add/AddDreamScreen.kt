@@ -3,6 +3,7 @@ package com.snow.feature.dreams.screen.add
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
@@ -29,13 +30,15 @@ import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
 import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.widgets.HorizontalSeekbar
 import org.oneui.compose.widgets.buttons.IconButton
+import org.oneui.compose.widgets.buttons.TransparentButton
 import org.oneui.compose.widgets.buttons.iconButtonColors
 import org.oneui.compose.widgets.seekBarColors
 import dev.oneuiproject.oneui.R as IconR
 
 @Composable
 internal fun AddDreamScreen(
-    viewModel: AddDreamViewModel = hiltViewModel()
+    viewModel: AddDreamViewModel = hiltViewModel(),
+    dismissDream: () -> Unit
 ) {
     val inputState by viewModel.inputState.collectAsStateWithLifecycle()
     val extrasState by viewModel.extrasState.collectAsStateWithLifecycle()
@@ -49,7 +52,8 @@ internal fun AddDreamScreen(
         queryState = queryState,
         uiState = uiState,
         isEdit = isEdit,
-        onEvent = viewModel::onEvent
+        onEvent = viewModel::onEvent,
+        dismissDream = dismissDream
     )
 }
 
@@ -61,7 +65,8 @@ private fun AddDreamScreen(
     queryState: AddDreamQueryState,
     uiState: AddDreamUiState,
     isEdit: Boolean,
-    onEvent: (AddDreamEvent) -> Unit
+    onEvent: (AddDreamEvent) -> Unit,
+    dismissDream: () -> Unit
 ) {
     CollapsingToolbarLayout(
         toolbarTitle = stringResource(
@@ -207,7 +212,7 @@ private fun AddDreamScreen(
                         expanded = inputState.happiness != null,
                         onExpandedChange = {
                             onEvent(
-                                AddDreamEvent.ChangeHappiness(if(it) 0.5F else null)
+                                AddDreamEvent.ChangeHappiness(if (it) 0.5F else null)
                             )
                         }
                     ) {
@@ -232,7 +237,7 @@ private fun AddDreamScreen(
                         onExpandedChange = {
                             onEvent(
                                 AddDreamEvent.ChangeClearness(
-                                    if(it) 0.5F else null
+                                    if (it) 0.5F else null
                                 )
                             )
                         }
@@ -250,6 +255,28 @@ private fun AddDreamScreen(
                         )
                     }
                 }
+            }
+
+
+
+            //TODO: These buttons are only temporary, until the lib allows for fullscreen dialogs (=PopOverActivity)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                TransparentButton(
+                    label = stringResource(R.string.dream_add_cancel),
+                    onClick = dismissDream
+                )
+                TransparentButton(
+                    label = stringResource(R.string.dream_add_save),
+                    onClick = {
+                        onEvent(
+                            AddDreamEvent.Add
+                        )
+                    }
+                )
             }
         }
     }
