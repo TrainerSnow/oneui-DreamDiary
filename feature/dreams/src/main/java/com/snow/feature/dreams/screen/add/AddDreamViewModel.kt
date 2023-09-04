@@ -28,7 +28,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -301,6 +300,7 @@ internal class AddDreamViewModel @Inject constructor(
         viewModelScope.launchInBackground {
             val dream = with(inputState.value) {
                 Dream(
+                    id = args.dreamId, //Null if edit is disabled
                     description = description.input,
                     note = note.input.ifBlank { null },
                     isFavourite = markAsFavourite,
@@ -310,12 +310,15 @@ internal class AddDreamViewModel @Inject constructor(
                     happiness = happiness
                 )
             }
+            d("AddDreamViewModel", "Created Dream from inputs = $dream")
 
             val id = if (isEdit) {
                 updateDream(listOf(dream))
                 args.dreamId!!
             } else addDream(listOf(dream))
                 .first()
+
+            d("AddDreamViewModel", "Inserted/Updated dream. Got id = $id")
 
             if (!isEdit) {
                 extrasState.value.persons.forEach { person ->
@@ -325,8 +328,11 @@ internal class AddDreamViewModel @Inject constructor(
                     addDreamLocationCrossref(AddDreamLocationCrossref.Input(id, location.id!!))
                 }
             } else {
-                val dreamInfo = dreamInformation(dream.id!!)
-                    .first()!!
+                val dreamInfo = dreamInformation(id)
+                    .stateIn(viewModelScope)
+                    .value!!
+
+                d("AddDreamViewModel", "Received dreamInfo = $dreamInfo")
 
                 val persons = dreamInfo.persons.map(PersonWithRelation::person)
                 val locations = dreamInfo.locations
