@@ -31,9 +31,16 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
 }
 
 dependencies {
     implementation(project(":core:model"))
     implementation(project(":csv"))
+
+    testImplementation(libs.mockito)
+    testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter)
 }
