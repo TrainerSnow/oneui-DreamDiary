@@ -1,7 +1,6 @@
 package com.snow.diary.ui.data
 
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
+import androidx.core.graphics.toColor
 import com.snow.diary.model.data.Relation
 
 object RelationPreviewData {
@@ -19,15 +18,13 @@ object RelationPreviewData {
         0xff4d7adf,
         0xffb093e6,
         0xffa9a9a9
-    ).map {
-        android.graphics.Color.valueOf(Color(it).toArgb())
-    }
+    )
 
     val relations = (1..20).map {
         Relation(
             id = it.toLong(),
             name = "Relation $it",
-            color = colors[(colors.size - 1) % it]
+            color = colors[(colors.size - 1) % it].toColor().toArgb()
         )
     }
 

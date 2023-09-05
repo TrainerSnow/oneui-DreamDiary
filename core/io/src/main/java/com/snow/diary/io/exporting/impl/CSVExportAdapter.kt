@@ -73,7 +73,7 @@ private fun Location.toRow(): Row = listOf(
 private fun Relation.toRow(): Row = listOf(
     id?.toString(),
     name,
-    color.toArgb().toString()
+    color.toString()
 )
 
 private fun Crossref.toRow(): Row = listOf(

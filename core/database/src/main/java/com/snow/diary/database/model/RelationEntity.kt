@@ -20,12 +20,12 @@ data class RelationEntity(
 
 ): IModelMappable<Relation> {
 
-    override fun toModel() = Relation(id, name, color)
+    override fun toModel() = Relation(id, name, color.toArgb())
 
     constructor(relation: Relation) : this(
         relation.id,
         relation.name,
-        relation.color
+        Color.valueOf(relation.color)
     )
 
 }

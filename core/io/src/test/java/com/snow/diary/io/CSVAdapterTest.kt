@@ -1,12 +1,13 @@
 package com.snow.diary.io
 
-import android.graphics.PointF
 import com.snow.diary.io.data.IOData
 import com.snow.diary.io.exporting.IExportAdapter
 import com.snow.diary.io.importing.IImportAdapter
+import com.snow.diary.model.data.Coordinates
 import com.snow.diary.model.data.Dream
 import com.snow.diary.model.data.Location
 import com.snow.diary.model.data.Person
+import com.snow.diary.model.data.Relation
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -15,8 +16,6 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.time.LocalDate
 
-//TODO: Some methods aren't mocked, that's why some stuff is commented out (we just assume that stuff would pass the test)
-//Solution would be either proper mocking or instrumented test, but I can't get either to wrok.
 @RunWith(JUnit4::class)
 class CSVAdapterTest {
 
@@ -49,18 +48,18 @@ class CSVAdapterTest {
             Location(
                 id = it.toLong(),
                 name = "Name $it",
-                coordinates = PointF(it / 10F, it / 20F),
+                coordinates = Coordinates(it / 10F, it / 20F),
                 notes = "Note $it"
             )
         },
 
-        relations = emptyList()/*(1..5).map {
+        relations = (1..5).map {
             Relation(
                 id = it.toLong(),
                 name = "Name $it",
-                color = Color.valueOf(it * 12000)
+                color = it * 12000
             )
-        }*/,
+        },
 
         dreamPersonCrossrefs = (1..5).map {
             Pair(
@@ -80,9 +79,8 @@ class CSVAdapterTest {
     private val importer = IImportAdapter.getInstance(ImportFiletype.CSV)
     private val exporter = IExportAdapter.getInstance(ExportFiletype.CSV)
 
-    @Suppress("TestFunctionName")
     @Test
-    fun Export_IMPORT_Works() {
+    fun `Export and import works as expected`() {
         val os = ByteArrayOutputStream()
 
         exporter
@@ -105,11 +103,11 @@ class CSVAdapterTest {
                         readData.persons.toTypedArray()
                 )
 
-        /*Assert
+        Assert
                 .assertArrayEquals(
                         data.locations.toTypedArray(),
                         readData.locations.toTypedArray()
-                )*/
+                )
 
         Assert
                 .assertArrayEquals(

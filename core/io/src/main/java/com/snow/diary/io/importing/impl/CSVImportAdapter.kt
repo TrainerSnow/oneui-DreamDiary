@@ -1,7 +1,5 @@
 package com.snow.diary.io.importing.impl;
 
-import android.graphics.Color
-import android.graphics.PointF
 import com.snow.diary.csv.Row
 import com.snow.diary.csv.config.csvConfig
 import com.snow.diary.csv.reader.CSVReader
@@ -9,6 +7,7 @@ import com.snow.diary.io.data.Crossref
 import com.snow.diary.io.data.IOData
 import com.snow.diary.io.exporting.impl.TYPE_SEPARATOR
 import com.snow.diary.io.importing.IImportAdapter
+import com.snow.diary.model.data.Coordinates
 import com.snow.diary.model.data.Dream
 import com.snow.diary.model.data.Location
 import com.snow.diary.model.data.Person
@@ -76,15 +75,15 @@ private fun Row.toLocation(): Location = Location(
     coordinates = this[2]?.let {
         val arr = it.split("|")
         if (arr.size != 2) null
-        else PointF(arr[0].toFloat(), arr[1].toFloat())
-    } ?: PointF(0F, 0F),
+        else Coordinates(arr[0].toFloat(), arr[1].toFloat())
+    } ?: Coordinates(0F, 0F),
     notes = this[3] ?: ""
 )
 
 private fun Row.toRelation(): Relation = Relation(
     id = this[0]!!.toLong(),
     name = this[1] ?: "",
-    color = this[2]?.let { Color.valueOf(it.toInt()) } ?: Color.valueOf(Color.TRANSPARENT)
+    color = this[2]?.toInt() ?: 0
 )
 
 private fun Row.toCrossref(): Crossref = Pair(
