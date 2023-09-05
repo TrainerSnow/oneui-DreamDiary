@@ -1,6 +1,5 @@
 package com.snow.diary.model.data
 
-import android.graphics.Color
 import com.snow.diary.model.Searchable
 
 data class Relation(
@@ -9,7 +8,7 @@ data class Relation(
 
     val name: String,
 
-    val color: Color
+    val color: Int
 
 ): Searchable {
 

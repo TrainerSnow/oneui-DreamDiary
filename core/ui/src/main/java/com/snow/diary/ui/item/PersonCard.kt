@@ -80,7 +80,7 @@ fun PersonCard(
                             .size(PersonCardDefaults.relationCircleRadius * 2)
                             .clip(CircleShape)
                             .background(
-                                color = Color(rel.color.toArgb()),
+                                color = Color(rel.color),
                                 shape = CircleShape
                             )
                             .clickable(

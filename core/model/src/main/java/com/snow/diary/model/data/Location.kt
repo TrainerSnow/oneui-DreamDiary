@@ -1,6 +1,5 @@
 package com.snow.diary.model.data
 
-import android.graphics.PointF
 import com.snow.diary.model.Searchable
 
 data class Location(
@@ -9,7 +8,7 @@ data class Location(
 
     val name: String,
 
-    val coordinates: PointF,
+    val coordinates: Coordinates,
 
     val notes: String
 
