@@ -12,7 +12,9 @@ import com.snow.diary.model.data.Person
 import com.snow.diary.model.data.Relation
 import java.io.OutputStream
 
-class CSVExportAdapter: IExportAdapter {
+internal const val TYPE_SEPARATOR = "+"
+
+class CSVExportAdapter : IExportAdapter {
 
     private lateinit var csvWriter: CSVWriter
 
@@ -25,20 +27,22 @@ class CSVExportAdapter: IExportAdapter {
 
         csvWriter.writeAndCommit {
             write(data.dreams.map(Dream::toRow))
-            write(emptyRow)
+            write(typeSeparatorRow)
             write(data.persons.map(Person::toRow))
-            write(emptyRow)
+            write(typeSeparatorRow)
             write(data.locations.map(Location::toRow))
-            write(emptyRow)
+            write(typeSeparatorRow)
+            write(data.relations.map(Relation::toRow))
+            write(typeSeparatorRow)
             write(data.dreamPersonCrossrefs.map(Crossref::toRow))
-            write(emptyRow)
+            write(typeSeparatorRow)
             write(data.dreamLocationsCrossrefs.map(Crossref::toRow))
         }
     }
 
 }
 
-private val emptyRow: Row = listOf()
+private val typeSeparatorRow: Row = listOf(TYPE_SEPARATOR)
 
 private fun Dream.toRow(): Row = listOf(
     id?.toString(),

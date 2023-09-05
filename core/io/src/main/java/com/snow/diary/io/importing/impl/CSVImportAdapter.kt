@@ -7,6 +7,7 @@ import com.snow.diary.csv.config.csvConfig
 import com.snow.diary.csv.reader.CSVReader
 import com.snow.diary.io.data.Crossref
 import com.snow.diary.io.data.IOData
+import com.snow.diary.io.exporting.impl.TYPE_SEPARATOR
 import com.snow.diary.io.importing.IImportAdapter
 import com.snow.diary.model.data.Dream
 import com.snow.diary.model.data.Location
@@ -27,23 +28,23 @@ class CSVImportAdapter : IImportAdapter {
 
         val rows = csvReader
             .readRows()
-            .splitByEmpty()
+        val splitRows = rows.splitByTypeSeparator()
 
         val typeNum = 6
-        require(rows.size == typeNum)
+        require(splitRows.size == typeNum)
 
         return IOData(
-            dreams = rows[0]
+            dreams = splitRows[0]
                 .map(Row::toDream),
-            persons = rows[1]
+            persons = splitRows[1]
                 .map(Row::toPerson),
-            locations = rows[2]
+            locations = splitRows[2]
                 .map(Row::toLocation),
-            relations = rows[3]
+            relations = splitRows[3]
                 .map(Row::toRelation),
-            dreamPersonCrossrefs = rows[4]
+            dreamPersonCrossrefs = splitRows[4]
                 .map(Row::toCrossref),
-            dreamLocationsCrossrefs = rows[5]
+            dreamLocationsCrossrefs = splitRows[5]
                 .map(Row::toCrossref)
         )
     }
@@ -91,17 +92,21 @@ private fun Row.toCrossref(): Crossref = Pair(
     second = this[1]!!.toInt()
 )
 
-private fun List<List<String?>>.splitByEmpty(): List<List<List<String?>>> {
-    val emptyIndices = mutableListOf<Int>()
+private fun List<List<String?>>.splitByTypeSeparator(): List<List<List<String?>>> {
+    val separatorIndexes = mutableListOf<Int>()
 
     forEachIndexed { index, strings ->
-        if (strings.isEmpty()) emptyIndices.add(index)
+        if (strings.size == 1) {
+            if (strings.first() == TYPE_SEPARATOR) {
+                separatorIndexes.add(index)
+            }
+        }
     }
 
     val rList = mutableListOf<List<List<String?>>>()
 
     var recentEmptyIndex = -1
-    emptyIndices.forEach { emptyIndex ->
+    separatorIndexes.forEach { emptyIndex ->
         rList.add(
             subList(
                 recentEmptyIndex + 1,
@@ -110,6 +115,12 @@ private fun List<List<String?>>.splitByEmpty(): List<List<List<String?>>> {
         )
         recentEmptyIndex = emptyIndex
     }
+    rList.add(
+        subList(
+            recentEmptyIndex + 1,
+            size
+        )
+    )
 
     return rList
 }
