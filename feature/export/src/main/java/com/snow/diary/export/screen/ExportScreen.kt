@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -24,6 +25,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.export.R
 import com.snow.diary.export.info
 import com.snow.diary.export.screen.components.ExportFiletypeButton
@@ -31,6 +34,19 @@ import com.snow.diary.export.suitableForImporting
 import com.snow.diary.io.ExportFiletype
 import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.widgets.buttons.ColoredButton
+
+@Composable
+internal fun ExportScreen(
+    viewModel: ExportViewModel = hiltViewModel(),
+    onNavigateBack: () -> Unit
+) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    ExportScreen(
+        state = state,
+        onEvent = viewModel::onEvent
+    )
+}
 
 @Composable
 private fun ExportScreen(

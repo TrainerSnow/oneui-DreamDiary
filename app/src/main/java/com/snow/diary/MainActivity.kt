@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.snow.diary.export.navigation.exportScreen
+import com.snow.diary.export.navigation.goToExport
 import com.snow.feature.dreams.nav.addDream
 import com.snow.feature.dreams.nav.dreamDetail
 import com.snow.feature.dreams.nav.dreamList
@@ -42,7 +44,7 @@ class MainActivity : ComponentActivity() {
                         navController
                             .goToDreamDetail(dream.id!!)
                     },
-                    onExportClick = { },
+                    onExportClick = navController::goToExport,
                     onNavigateBack = { }
                 )
                 dreamDetail(
@@ -56,9 +58,10 @@ class MainActivity : ComponentActivity() {
                     }
                 )
                 addDream(
-                    dismissDream = {
-                        navController.navigateUp()
-                    }
+                    dismissDream = navController::navigateUp
+                )
+                exportScreen(
+                    onNavigateBack = navController::navigateUp
                 )
             }
         }
