@@ -7,6 +7,8 @@ import com.snow.diary.database.dao.PersonDao
 import com.snow.diary.database.dao.RelationDao
 import com.snow.diary.domain.action.cross.AddDreamLocationCrossref
 import com.snow.diary.domain.action.cross.AddDreamPersonCrossref
+import com.snow.diary.domain.action.cross.AllDreamLocationCrossrefs
+import com.snow.diary.domain.action.cross.AllDreamPersonCrossrefs
 import com.snow.diary.domain.action.cross.RemoveDreamLocationCrossref
 import com.snow.diary.domain.action.cross.RemoveDreamPersonCrossref
 import com.snow.diary.domain.action.dream.AddDreamAction
@@ -21,6 +23,7 @@ import com.snow.diary.domain.action.person.AllPersons
 import com.snow.diary.domain.action.person.PersonWithRelationAct
 import com.snow.diary.domain.action.person.PersonsFromDream
 import com.snow.diary.domain.action.person.UpdatePerson
+import com.snow.diary.domain.action.relation.AllRelations
 import com.snow.diary.domain.action.relation.RelationById
 import dagger.Module
 import dagger.Provides
@@ -143,6 +146,12 @@ object DomainModule {
         relationDao: RelationDao
     ) = RelationById(relationDao)
 
+    @Provides
+    @Singleton
+    fun provideAlLRelations(
+        relationDao: RelationDao
+    ) = AllRelations(relationDao)
+
 
     /*
     Crossref usecases
@@ -175,5 +184,17 @@ object DomainModule {
     fun provideRemoveDreamPersonCrossref(
         crossrefDao: CrossrefDao
     ) = RemoveDreamPersonCrossref(crossrefDao)
+
+    @Provides
+    @Singleton
+    fun provideAllDreamPersonCrossrefs(
+        crossrefDao: CrossrefDao
+    ) = AllDreamPersonCrossrefs(crossrefDao)
+
+    @Provides
+    @Singleton
+    fun provideAllDreamLocationsCrossrefs(
+        crossrefDao: CrossrefDao
+    ) = AllDreamLocationCrossrefs(crossrefDao)
 
 }
