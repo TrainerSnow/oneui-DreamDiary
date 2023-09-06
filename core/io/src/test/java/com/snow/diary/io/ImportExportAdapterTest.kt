@@ -17,7 +17,7 @@ import java.io.ByteArrayOutputStream
 import java.time.LocalDate
 
 @RunWith(JUnit4::class)
-class CSVAdapterTest {
+class ImportExportAdapterTest {
 
     private val data = IOData(
 
@@ -76,19 +76,65 @@ class CSVAdapterTest {
         }
     )
 
-    private val importer = IImportAdapter.getInstance(ImportFiletype.CSV)
-    private val exporter = IExportAdapter.getInstance(ExportFiletype.CSV)
+    private val csvImporter = IImportAdapter.getInstance(ImportFiletype.CSV)
+    private val csvExporter = IExportAdapter.getInstance(ExportFiletype.CSV)
 
     @Test
-    fun `Export and import works as expected`() {
+    fun `CSV Export and import works as expected`() {
         val os = ByteArrayOutputStream()
 
-        exporter
+        jsonExporter
                 .export(data, os)
 
         val `is` = ByteArrayInputStream(os.toByteArray())
 
-        val readData = importer
+        val readData = jsonImporter
+            .import(`is`)
+
+        Assert
+                .assertArrayEquals(
+                        data.dreams.toTypedArray(),
+                        readData.dreams.toTypedArray()
+                )
+
+        Assert
+                .assertArrayEquals(
+                        data.persons.toTypedArray(),
+                        readData.persons.toTypedArray()
+                )
+
+        Assert
+                .assertArrayEquals(
+                        data.locations.toTypedArray(),
+                        readData.locations.toTypedArray()
+                )
+
+        Assert
+                .assertArrayEquals(
+                        data.dreamPersonCrossrefs.toTypedArray(),
+                        readData.dreamPersonCrossrefs.toTypedArray()
+                )
+
+        Assert
+                .assertArrayEquals(
+                        data.dreamLocationsCrossrefs.toTypedArray(),
+                        readData.dreamLocationsCrossrefs.toTypedArray()
+                )
+    }
+
+    private val jsonImporter = IImportAdapter.getInstance(ImportFiletype.JSON)
+    private val jsonExporter = IExportAdapter.getInstance(ExportFiletype.JSON)
+
+    @Test
+    fun `JSON Export and import works as expected`() {
+        val os = ByteArrayOutputStream()
+
+        jsonExporter
+                .export(data, os)
+
+        val `is` = ByteArrayInputStream(os.toByteArray())
+
+        val readData = jsonImporter
             .import(`is`)
 
         Assert
