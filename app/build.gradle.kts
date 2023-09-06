@@ -73,6 +73,7 @@ dependencies {
     implementation(libs.activity.compose)
 
     implementation(project(":feature:dreams"))
+    implementation(project(":feature:export"))
     implementation(project(":core:model"))
     implementation(libs.oneui)
 }
