@@ -3,6 +3,7 @@ package com.snow.diary.io.importing
 import com.snow.diary.io.ImportFiletype
 import com.snow.diary.io.data.IOData
 import com.snow.diary.io.importing.impl.CSVImportAdapter
+import com.snow.diary.io.importing.impl.JSONImportAdapter
 import java.io.InputStream
 
 interface IImportAdapter {
@@ -14,6 +15,7 @@ interface IImportAdapter {
 
         fun getInstance(type: ImportFiletype): IImportAdapter = when (type) {
             ImportFiletype.CSV -> CSVImportAdapter()
+            ImportFiletype.JSON -> JSONImportAdapter()
         }
 
     }
