@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="export_button_label">Export</string>
 
     <string name="export_filetype_json_info">Javascript Object Notation file. Useful for transferring your data to a new device.</string>
     <string name="export_filetype_csv_info">Comma Separated Value file. Useful if you want to access your data through other software, such as Excel.</string>
 
     <string name="export_warning_no_import">Warning: this filetype can not be re-imported and is solely for the purpose of sharing your data in a human-readable way.</string>
 
+    <string name="export_title">Select your desired filetype</string>
 </resources>
