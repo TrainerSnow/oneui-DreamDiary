@@ -2,6 +2,7 @@
 plugins {
     id("java-library")
     alias(libs.plugins.org.jetbrains.kotlin.jvm)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 java {
@@ -12,6 +13,8 @@ java {
 dependencies {
     implementation(project(":core:model"))
     implementation(project(":csv"))
+
+    implementation(libs.serialization.json)
 
     testImplementation(libs.junit)
 }
