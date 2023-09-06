@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -53,7 +54,7 @@ private fun ExportScreen(
     )
 
     val screenHeight = LocalConfiguration.current.screenHeightDp
-    val height = screenHeight.coerceAtMost(900).dp
+    val height = screenHeight.coerceAtMost(ExportScreenDefaults.maxHeight.value.toInt()).dp
 
     Box(
         modifier = Modifier
@@ -107,7 +108,8 @@ private fun ExportScreen(
                 Text(
                     modifier = Modifier
                         .graphicsLayer {
-                            if (state.selectedFiletype.suitableForImporting) alpha = 0F //Hide warning but still show text so layout doesnt change weirdly
+                            if (state.selectedFiletype.suitableForImporting) alpha =
+                                0F //Hide warning but still show text so layout doesnt change weirdly
                         },
                     text = stringResource(R.string.export_warning_no_import),
                     style = warningTextStyle
@@ -121,7 +123,8 @@ private fun ExportScreen(
                     onEvent(
                         ExportEvent.Export
                     )
-                }
+                },
+                padding = ExportScreenDefaults.buttonPadding
             )
         }
     }
@@ -134,6 +137,12 @@ private object ExportScreenDefaults {
     val padding = 16.dp
 
     val infoWarningSpacing = 12.dp
+
+    //TODO: Make button style in lib for bigger button ( = higher emphasis)
+    val buttonPadding = PaddingValues(
+        horizontal = 64.dp,
+        vertical = 8.dp
+    )
 
 }
 
