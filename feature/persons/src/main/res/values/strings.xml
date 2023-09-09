@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="person_list_title">Persons</string>
+    <string name="person_list_subtitle">%s total</string>
+
+</resources>
