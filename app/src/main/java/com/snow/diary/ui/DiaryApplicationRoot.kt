@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import com.snow.diary.export.navigation.exportScreen
 import com.snow.diary.export.navigation.goToExport
 import com.snow.diary.nav.TopLevelDestinations
+import com.snow.diary.persons.nav.personList
 import com.snow.feature.dreams.nav.addDream
 import com.snow.feature.dreams.nav.dreamDetail
 import com.snow.feature.dreams.nav.dreamList
@@ -96,6 +97,13 @@ private fun DiaryNavHost(
         )
         exportScreen(
             onNavigateBack = state::navigateBack
+        )
+        personList(
+            onNavigateBack = state::navigateBack,
+            onAddPerson = { },
+            onSearchPerson = { },
+            onRelationClick = { },
+            onPersonClick = { }
         )
     }
 }
