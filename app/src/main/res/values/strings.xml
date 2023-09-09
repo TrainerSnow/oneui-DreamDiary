@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">oneui-dream_diary</string>
+
+    <string name="nav_dreams">Dreams</string>
+    <string name="nav_persons">Persons</string>
+    <string name="nav_locations">Locations</string>
+    <string name="nav_stats">Statistics</string>
 </resources>
