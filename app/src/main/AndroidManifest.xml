@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Oneuidream_diary"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".RootActivity"
             android:exported="true"
             android:theme="@style/Theme.Oneuidream_diary">
             <intent-filter>
