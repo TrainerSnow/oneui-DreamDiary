@@ -6,9 +6,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.model.data.Person
 import com.snow.diary.model.data.Relation
 import com.snow.diary.model.sort.SortConfig
@@ -21,6 +24,31 @@ import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.widgets.buttons.IconButton
 import dev.oneuiproject.oneui.R as IconR
+
+
+@Composable
+internal fun PersonList(
+    viewModel: PersonListViewModel = hiltViewModel(),
+    onNavigateBack: () -> Unit,
+    onAddPerson: () -> Unit,
+    onSearchPerson: () -> Unit,
+    onRelationClick: (Relation) -> Unit,
+    onPersonClick: (Person) -> Unit
+) {
+    val sortConfig by viewModel.sortConfig.collectAsStateWithLifecycle()
+    val feedState by viewModel.feedState.collectAsStateWithLifecycle()
+
+    PersonList(
+        state = feedState,
+        sortConfig = sortConfig,
+        onEvent = viewModel::onEvent,
+        onNavigateBack = onNavigateBack,
+        onAddClick = onAddPerson,
+        onSearchClick = onSearchPerson,
+        onRelationCLick = onRelationClick,
+        onPersonClick = onPersonClick
+    )
+}
 
 @Composable
 private fun PersonList(
