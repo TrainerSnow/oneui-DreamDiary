@@ -1,6 +1,5 @@
 package com.snow.diary.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -20,7 +19,6 @@ import org.oneui.compose.base.IconView
 import org.oneui.compose.layout.drawer.DrawerDivider
 import org.oneui.compose.layout.drawer.DrawerItem
 import org.oneui.compose.layout.drawer.DrawerLayout
-import org.oneui.compose.theme.OneUITheme
 import dev.oneuiproject.oneui.R as IconR
 
 @Composable
@@ -68,8 +66,7 @@ private fun DiaryNavHost(
 
     NavHost(
         modifier = Modifier
-            .fillMaxSize()
-            .background(OneUITheme.colors.seslRoundAndBgcolor),
+            .fillMaxSize(),
         navController = navController,
         startDestination = "dream_list"
     ) {
