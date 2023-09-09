@@ -36,6 +36,8 @@ data class DiaryState(
         currentNavDest = navDest
     }
 
+    fun navigateBack() = navController.popBackStack()
+
     fun openDrawer() = scope.launch { drawerState.openAnimate() }
 
 }

@@ -85,7 +85,7 @@ private fun DiaryNavHost(
             onNavigateBack = state::openDrawer
         )
         dreamDetail(
-            onNavigateBack = navController::navigateUp,
+            onNavigateBack = state::navigateBack,
             onLocationClick = { },
             onPersonClick = { },
             onRelationClick = { },
@@ -95,10 +95,10 @@ private fun DiaryNavHost(
             }
         )
         addDream(
-            dismissDream = navController::navigateUp
+            dismissDream = state::navigateBack
         )
         exportScreen(
-            onNavigateBack = navController::navigateUp
+            onNavigateBack = state::navigateBack
         )
     }
 }
