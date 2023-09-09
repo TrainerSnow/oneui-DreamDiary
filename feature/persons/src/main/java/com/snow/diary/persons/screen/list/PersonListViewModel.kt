@@ -1,10 +1,12 @@
 package com.snow.diary.persons.screen.list;
 
 import androidx.lifecycle.viewModelScope
+import com.snow.diary.common.launchInBackground
 import com.snow.diary.domain.action.person.AllPersons
 import com.snow.diary.domain.action.person.PersonWithRelationAct
 import com.snow.diary.domain.action.person.UpdatePerson
 import com.snow.diary.domain.viewmodel.EventViewModel
+import com.snow.diary.model.data.Person
 import com.snow.diary.model.sort.SortConfig
 import com.snow.diary.model.sort.SortDirection
 import com.snow.diary.model.sort.SortMode
@@ -19,6 +21,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -48,8 +51,22 @@ internal class PersonListViewModel @Inject constructor(
     )
 
     override suspend fun handleEvent(event: PersonListEvent) = when (event) {
-        is PersonListEvent.PersonFavouriteClick -> TODO()
-        is PersonListEvent.SortChange -> TODO()
+        is PersonListEvent.PersonFavouriteClick -> handlePersonFavouriteClick(event.person)
+        is PersonListEvent.SortChange -> handleSortChange(event.sortConfig)
+    }
+
+    private fun handlePersonFavouriteClick(person: Person) = viewModelScope.launchInBackground {
+        updatePerson(
+            person.copy(
+                isFavourite = !person.isFavourite
+            )
+        )
+    }
+
+    private fun handleSortChange(sortConfig: SortConfig) = viewModelScope.launch {
+        _sortConfig.emit(
+            sortConfig
+        )
     }
 
 
