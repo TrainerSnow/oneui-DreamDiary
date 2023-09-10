@@ -8,4 +8,7 @@
     <string name="location_add_cancel">@android:string/cancel</string>
     <string name="location_add_save">Save</string>
 
+    <string name="location_list_title">Locations</string>
+    <string name="location_list_subtitle">%s total</string>
+
 </resources>
