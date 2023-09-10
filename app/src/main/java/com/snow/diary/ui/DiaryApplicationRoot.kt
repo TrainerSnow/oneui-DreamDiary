@@ -1,5 +1,8 @@
 package com.snow.diary.ui
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -72,7 +75,13 @@ private fun DiaryNavHost(
         modifier = Modifier
             .fillMaxSize(),
         navController = navController,
-        startDestination = "dream_list"
+        startDestination = "dream_list",
+        enterTransition = {
+            fadeIn(tween(0)) //0ms for no transition
+        },
+        exitTransition = {
+            fadeOut(tween(0)) //0ms for no transition
+        }
     ) {
         dreamList(
             onAboutClick = { },
