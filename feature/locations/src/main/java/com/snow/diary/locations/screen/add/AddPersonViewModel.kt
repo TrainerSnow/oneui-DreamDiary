@@ -8,7 +8,7 @@ import com.snow.diary.domain.action.location.AddLocation
 import com.snow.diary.domain.action.location.LocationById
 import com.snow.diary.domain.action.location.UpdateLocation
 import com.snow.diary.domain.viewmodel.EventViewModel
-import com.snow.diary.locations.screen.nav.AddLocationArgs
+import com.snow.diary.locations.nav.AddLocationArgs
 import com.snow.diary.model.data.Coordinates
 import com.snow.diary.model.data.Location
 import dagger.hilt.android.lifecycle.HiltViewModel

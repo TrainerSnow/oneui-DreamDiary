@@ -11,7 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import com.snow.diary.export.navigation.exportScreen
 import com.snow.diary.export.navigation.goToExport
-import com.snow.diary.locations.screen.nav.addLocation
+import com.snow.diary.locations.nav.addLocation
 import com.snow.diary.nav.TopLevelDestinations
 import com.snow.diary.persons.nav.addPerson
 import com.snow.diary.persons.nav.goToAddPerson
