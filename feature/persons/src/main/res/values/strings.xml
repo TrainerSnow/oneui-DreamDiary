@@ -4,4 +4,10 @@
     <string name="person_list_title">Persons</string>
     <string name="person_list_subtitle">%s total</string>
 
+    <string name="person_detail_note">Notes</string>
+    <string name="person_detail_error">An error occurred and the person could not be loaded.</string>
+    <string name="person_detail_loading">Loading the person for you. Stay tuned!</string>
+    <string name="person_detail_general">General</string>
+    <string name="person_detail_dreams">Dreams</string>
+
 </resources>
