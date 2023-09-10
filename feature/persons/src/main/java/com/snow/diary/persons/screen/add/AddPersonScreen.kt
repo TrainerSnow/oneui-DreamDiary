@@ -8,10 +8,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.model.data.Relation
 import com.snow.diary.persons.R
 import com.snow.diary.persons.screen.add.components.RelationInputList
@@ -26,6 +29,28 @@ import org.oneui.compose.widgets.buttons.IconButton
 import org.oneui.compose.widgets.buttons.TransparentButton
 import org.oneui.compose.widgets.buttons.iconButtonColors
 import dev.oneuiproject.oneui.R as IconR
+
+@Composable
+internal fun AddPerson(
+    viewModel: AddPersonViewModel = hiltViewModel(),
+    onNavigateBack: () -> Unit
+) {
+    val inputState by viewModel.inputState.collectAsStateWithLifecycle()
+    val selectedRelations by viewModel.selectedRelations.collectAsStateWithLifecycle()
+    val selectableRelation by viewModel.selectableRelations.collectAsStateWithLifecycle()
+    val showRelationPopup by viewModel.showPopup.collectAsStateWithLifecycle()
+    val isEdit = viewModel.isEdit
+
+    AddPerson(
+        state = inputState,
+        selectedRelations = selectedRelations,
+        selectableRelations = selectableRelation,
+        showRelationPopup = showRelationPopup,
+        isEdit = isEdit,
+        onEvent = viewModel::onEvent,
+        onNavigateBack = onNavigateBack
+    )
+}
 
 
 //TODO: When available, this screen should use a fullscreen dialog (= PopOverActivity). FOr now, it uses a simple CTL
