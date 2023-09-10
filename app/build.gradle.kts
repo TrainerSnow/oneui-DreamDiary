@@ -74,6 +74,7 @@ dependencies {
 
     implementation(project(":feature:dreams"))
     implementation(project(":feature:persons"))
+    implementation(project(":feature:locations"))
     implementation(project(":feature:export"))
     implementation(project(":core:model"))
     implementation(libs.oneui)
