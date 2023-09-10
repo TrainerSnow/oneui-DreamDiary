@@ -18,8 +18,11 @@ import com.snow.diary.domain.action.dream.DreamById
 import com.snow.diary.domain.action.dream.DreamInformation
 import com.snow.diary.domain.action.dream.DreamsFromPerson
 import com.snow.diary.domain.action.dream.UpdateDream
+import com.snow.diary.domain.action.location.AddLocation
 import com.snow.diary.domain.action.location.AllLocations
+import com.snow.diary.domain.action.location.LocationById
 import com.snow.diary.domain.action.location.LocationsFromDream
+import com.snow.diary.domain.action.location.UpdateLocation
 import com.snow.diary.domain.action.person.AddPerson
 import com.snow.diary.domain.action.person.AllPersons
 import com.snow.diary.domain.action.person.DeletePerson
@@ -113,6 +116,27 @@ object DomainModule {
     fun provideAllLocations(
         locationDao: LocationDao
     ) = AllLocations(locationDao)
+
+
+    @Provides
+    @Singleton
+    fun provideLocationById(
+        locationDao: LocationDao
+    ) = LocationById(locationDao)
+
+
+    @Provides
+    @Singleton
+    fun provideAddLocation(
+        locationDao: LocationDao
+    ) = AddLocation(locationDao)
+
+
+    @Provides
+    @Singleton
+    fun provideUpdateLocation(
+        locationDao: LocationDao
+    ) = UpdateLocation(locationDao)
 
 
 
