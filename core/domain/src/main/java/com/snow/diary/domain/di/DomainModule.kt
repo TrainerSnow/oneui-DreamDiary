@@ -16,10 +16,13 @@ import com.snow.diary.domain.action.dream.AllDreams
 import com.snow.diary.domain.action.dream.DeleteDream
 import com.snow.diary.domain.action.dream.DreamById
 import com.snow.diary.domain.action.dream.DreamInformation
+import com.snow.diary.domain.action.dream.DreamsFromPerson
 import com.snow.diary.domain.action.dream.UpdateDream
 import com.snow.diary.domain.action.location.AllLocations
 import com.snow.diary.domain.action.location.LocationsFromDream
 import com.snow.diary.domain.action.person.AllPersons
+import com.snow.diary.domain.action.person.DeletePerson
+import com.snow.diary.domain.action.person.PersonFromId
 import com.snow.diary.domain.action.person.PersonWithRelationAct
 import com.snow.diary.domain.action.person.PersonsFromDream
 import com.snow.diary.domain.action.person.UpdatePerson
@@ -84,6 +87,12 @@ object DomainModule {
         dreamById: DreamById
     ) = DreamInformation(personsFromDream, locationsFromDream, personWithRelation, dreamById)
 
+    @Provides
+    @Singleton
+    fun provideDreamsFromPerson(
+        personDao: PersonDao
+    ) = DreamsFromPerson(personDao)
+
 
     /*
     Location usecases
@@ -134,6 +143,18 @@ object DomainModule {
     fun provideUpdatePerson(
         personDao: PersonDao
     ) = UpdatePerson(personDao)
+
+    @Provides
+    @Singleton
+    fun providePersonFromId(
+        personDao: PersonDao
+    ) = PersonFromId(personDao)
+
+    @Provides
+    @Singleton
+    fun provideDeletePerson(
+        personDao: PersonDao
+    ) = DeletePerson(personDao)
 
 
     /*
