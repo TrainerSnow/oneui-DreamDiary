@@ -47,7 +47,8 @@ fun DiaryApplicationRoot(
                         )
                     },
                     label = stringResource(navDest.titleRes),
-                    onClick = { state.navigateTo(navDest) }
+                    onClick = { state.navigateTo(navDest) },
+                    selected = state.currentNavDest == navDest
                 )
             }
         },

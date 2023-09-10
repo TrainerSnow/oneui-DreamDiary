@@ -35,11 +35,14 @@ data class DiaryState(
             TopLevelDestinations.Statistics -> TODO()
         }
         currentNavDest = navDest
+        closeDrawer()
     }
 
     fun navigateBack() = navController.popBackStack()
 
     fun openDrawer() = scope.launch { drawerState.openAnimate() }
+
+    private fun closeDrawer() = scope.launch { drawerState.closeAnimate() }
 
 }
 
