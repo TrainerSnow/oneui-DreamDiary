@@ -17,12 +17,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.snow.diary.ui.component.OptionalInput
+import com.snow.diary.ui.component.TextInputFormField
 import com.snow.feature.dreams.R
 import com.snow.feature.dreams.screen.add.component.LocationInputList
-import com.snow.feature.dreams.screen.add.component.OptionalInput
 import com.snow.feature.dreams.screen.add.component.PersonInputList
 import com.snow.feature.dreams.screen.add.component.ShowMoreTextSeparator
-import com.snow.feature.dreams.screen.add.component.TextInputFormField
 import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout

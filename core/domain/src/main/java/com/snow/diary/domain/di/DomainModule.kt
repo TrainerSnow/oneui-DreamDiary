@@ -16,15 +16,21 @@ import com.snow.diary.domain.action.dream.AllDreams
 import com.snow.diary.domain.action.dream.DeleteDream
 import com.snow.diary.domain.action.dream.DreamById
 import com.snow.diary.domain.action.dream.DreamInformation
+import com.snow.diary.domain.action.dream.DreamsFromPerson
 import com.snow.diary.domain.action.dream.UpdateDream
 import com.snow.diary.domain.action.location.AllLocations
 import com.snow.diary.domain.action.location.LocationsFromDream
+import com.snow.diary.domain.action.person.AddPerson
 import com.snow.diary.domain.action.person.AllPersons
+import com.snow.diary.domain.action.person.DeletePerson
+import com.snow.diary.domain.action.person.PersonFromId
 import com.snow.diary.domain.action.person.PersonWithRelationAct
 import com.snow.diary.domain.action.person.PersonsFromDream
 import com.snow.diary.domain.action.person.UpdatePerson
+import com.snow.diary.domain.action.relation.AddRelation
 import com.snow.diary.domain.action.relation.AllRelations
 import com.snow.diary.domain.action.relation.RelationById
+import com.snow.diary.domain.action.relation.UpdateRelation
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -84,6 +90,12 @@ object DomainModule {
         dreamById: DreamById
     ) = DreamInformation(personsFromDream, locationsFromDream, personWithRelation, dreamById)
 
+    @Provides
+    @Singleton
+    fun provideDreamsFromPerson(
+        personDao: PersonDao
+    ) = DreamsFromPerson(personDao)
+
 
     /*
     Location usecases
@@ -135,6 +147,24 @@ object DomainModule {
         personDao: PersonDao
     ) = UpdatePerson(personDao)
 
+    @Provides
+    @Singleton
+    fun providePersonFromId(
+        personDao: PersonDao
+    ) = PersonFromId(personDao)
+
+    @Provides
+    @Singleton
+    fun provideDeletePerson(
+        personDao: PersonDao
+    ) = DeletePerson(personDao)
+
+    @Provides
+    @Singleton
+    fun provideAddPerson(
+        personDao: PersonDao
+    ) = AddPerson(personDao)
+
 
     /*
     Relation usecases
@@ -151,6 +181,18 @@ object DomainModule {
     fun provideAlLRelations(
         relationDao: RelationDao
     ) = AllRelations(relationDao)
+
+    @Provides
+    @Singleton
+    fun provideAddRelation(
+        relationDao: RelationDao
+    ) = AddRelation(relationDao)
+
+    @Provides
+    @Singleton
+    fun provideUpdateRelation(
+        relationDao: RelationDao
+    ) = UpdateRelation(relationDao)
 
 
     /*

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="person_list_title">Persons</string>
+    <string name="person_list_subtitle">%s total</string>
+
+    <string name="person_detail_note">Notes</string>
+    <string name="person_detail_error">An error occurred and the person could not be loaded.</string>
+    <string name="person_detail_loading">Loading the person for you. Stay tuned!</string>
+    <string name="person_detail_general">General</string>
+    <string name="person_detail_dreams">Dreams</string>
+
+    <string name="person_add_title">Add person</string>
+    <string name="person_edit_title">Edit person</string>
+    <string name="person_add_name">Name</string>
+    <string name="person_add_note">Note</string>
+    <string name="person_add_relation_list_hint">Search relation…</string>
+    <string name="person_add_cancel">@android:string/cancel</string>
+    <string name="person_add_save">Save</string>
+
+</resources>

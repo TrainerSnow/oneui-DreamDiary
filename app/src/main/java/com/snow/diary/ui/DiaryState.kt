@@ -8,6 +8,7 @@ import androidx.compose.runtime.setValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.snow.diary.nav.TopLevelDestinations
+import com.snow.diary.persons.nav.goToPersonList
 import com.snow.feature.dreams.nav.goToDreamList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -29,16 +30,19 @@ data class DiaryState(
     fun navigateTo(navDest: TopLevelDestinations) {
         when (navDest) {
             TopLevelDestinations.Dreams -> navController.goToDreamList()
-            TopLevelDestinations.Persons -> TODO()
+            TopLevelDestinations.Persons -> navController.goToPersonList()
             TopLevelDestinations.Locations -> TODO()
             TopLevelDestinations.Statistics -> TODO()
         }
         currentNavDest = navDest
+        closeDrawer()
     }
 
     fun navigateBack() = navController.popBackStack()
 
     fun openDrawer() = scope.launch { drawerState.openAnimate() }
+
+    private fun closeDrawer() = scope.launch { drawerState.closeAnimate() }
 
 }
 

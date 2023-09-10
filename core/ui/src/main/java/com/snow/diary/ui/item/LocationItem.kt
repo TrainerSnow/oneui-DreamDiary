@@ -1,5 +1,6 @@
 package com.snow.diary.ui.item
 
+/*import com.snow.diary.ui.data.LocationPreviewData*/
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,15 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.snow.diary.common.removeLineBreaks
 import com.snow.diary.model.data.Location
-import com.snow.diary.ui.data.LocationPreviewData
 import org.oneui.compose.base.Icon
 import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.util.ListPosition
-import org.oneui.compose.util.OneUIPreview
 import org.oneui.compose.widgets.box.RoundedCornerListItem
 import org.oneui.compose.widgets.buttons.IconButton
 import dev.oneuiproject.oneui.R as IconR
@@ -87,6 +85,7 @@ private object LocationItemDefaults {
 
 }
 
+/*
 @Preview
 @Composable
 fun LocationCard() = OneUIPreview(title = "LocationCard", padding = PaddingValues()) {
@@ -95,4 +94,4 @@ fun LocationCard() = OneUIPreview(title = "LocationCard", padding = PaddingValue
             .locations
             .random()
     )
-}
+}*/
