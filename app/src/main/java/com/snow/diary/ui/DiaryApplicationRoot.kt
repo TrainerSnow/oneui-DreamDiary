@@ -104,7 +104,7 @@ private fun DiaryNavHost(
             onNavigateBack = state::navigateBack
         )
         personList(
-            onNavigateBack = state::navigateBack,
+            onNavigateBack = state::openDrawer,
             onAddPerson = { },
             onSearchPerson = { },
             onRelationClick = { },

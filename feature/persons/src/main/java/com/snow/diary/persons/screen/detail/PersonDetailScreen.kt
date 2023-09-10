@@ -139,7 +139,7 @@ private fun PersonDetail(
                     },
                     text = tab.localizedName(),
                     selected = tab == tabState,
-                    enabled = !(state as? PersonDetailState.Success)?.dreams.isNullOrEmpty()
+                    enabled = tab == PersonDetailTab.General || !(state as? PersonDetailState.Success)?.dreams.isNullOrEmpty()
                 )
             }
         }
