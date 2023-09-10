@@ -12,6 +12,8 @@ import androidx.navigation.compose.NavHost
 import com.snow.diary.export.navigation.exportScreen
 import com.snow.diary.export.navigation.goToExport
 import com.snow.diary.nav.TopLevelDestinations
+import com.snow.diary.persons.nav.addPerson
+import com.snow.diary.persons.nav.goToAddPerson
 import com.snow.diary.persons.nav.goToPersonDetail
 import com.snow.diary.persons.nav.personDetail
 import com.snow.diary.persons.nav.personList
@@ -114,7 +116,9 @@ private fun DiaryNavHost(
         )
         personList(
             onNavigateBack = state::openDrawer,
-            onAddPerson = { },
+            onAddPerson = {
+                navController.goToAddPerson()
+            },
             onSearchPerson = { },
             onRelationClick = { },
             onPersonClick = {
@@ -123,10 +127,15 @@ private fun DiaryNavHost(
         )
         personDetail(
             onNavigateBack = state::navigateBack,
-            onEditClick = { },
+            onEditClick = {
+                navController.goToAddPerson(it.id)
+            },
             onDreamClick = {
                 navController.goToDreamDetail(it.id!!)
             }
+        )
+        addPerson(
+            onNavigateBack = state::navigateBack
         )
     }
 }
