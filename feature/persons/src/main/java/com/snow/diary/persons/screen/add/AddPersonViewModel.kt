@@ -113,15 +113,15 @@ internal class AddPersonViewModel @Inject constructor(
                 relationQuery = query
             )
         )
-        togglePopup(true)
         withContext(Dispatchers.IO) {
             val relations = allRelations(AllRelations.Input())
-                .first()
+                .first() - selectedRelations.value.toSet()
 
             val matching = relations
                 .filterSearch(query)
 
             _selectableRelations.emit(matching)
+            togglePopup(matching.isNotEmpty())
         }
     }
 
@@ -134,6 +134,7 @@ internal class AddPersonViewModel @Inject constructor(
             selectedRelations.value + relation
         )
         togglePopup(false)
+        changeRelationQuery("")
     }
 
     private fun unselectRelation(relation: Relation) = viewModelScope.launch {
