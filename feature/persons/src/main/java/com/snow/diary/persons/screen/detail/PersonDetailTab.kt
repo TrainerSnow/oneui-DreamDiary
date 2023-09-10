@@ -16,7 +16,7 @@ enum class PersonDetailTab {
 @Composable
 fun PersonDetailTab.localizedName() = stringResource(
     when (this) {
-        PersonDetailTab.General -> R.string.person_detail_loading
+        PersonDetailTab.General -> R.string.person_detail_general
         PersonDetailTab.Dreams -> R.string.person_detail_dreams
     }
 )
