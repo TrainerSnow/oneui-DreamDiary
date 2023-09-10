@@ -1,4 +1,4 @@
-package com.snow.feature.dreams.screen.add.component
+package com.snow.diary.ui.component
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
