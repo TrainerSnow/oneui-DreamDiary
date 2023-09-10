@@ -12,6 +12,8 @@ import androidx.navigation.compose.NavHost
 import com.snow.diary.export.navigation.exportScreen
 import com.snow.diary.export.navigation.goToExport
 import com.snow.diary.locations.nav.addLocation
+import com.snow.diary.locations.nav.goToAddLocation
+import com.snow.diary.locations.nav.locationList
 import com.snow.diary.nav.TopLevelDestinations
 import com.snow.diary.persons.nav.addPerson
 import com.snow.diary.persons.nav.goToAddPerson
@@ -143,6 +145,12 @@ private fun DiaryNavHost(
 
         addLocation(
             onNavigateBack = state::navigateBack
+        )
+        locationList(
+            onNavigateBack = state::navigateBack,
+            onAddLocation = navController::goToAddLocation,
+            onSearchLocation = { },
+            onLocationCLick = { }
         )
     }
 }

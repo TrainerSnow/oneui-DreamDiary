@@ -7,6 +7,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.snow.diary.locations.nav.goToLocationList
 import com.snow.diary.nav.TopLevelDestinations
 import com.snow.diary.persons.nav.goToPersonList
 import com.snow.feature.dreams.nav.goToDreamList
@@ -31,7 +32,7 @@ data class DiaryState(
         when (navDest) {
             TopLevelDestinations.Dreams -> navController.goToDreamList()
             TopLevelDestinations.Persons -> navController.goToPersonList()
-            TopLevelDestinations.Locations -> TODO()
+            TopLevelDestinations.Locations -> navController.goToLocationList()
             TopLevelDestinations.Statistics -> TODO()
         }
         currentNavDest = navDest
