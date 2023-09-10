@@ -12,4 +12,7 @@ internal sealed class PersonDetailEvent {
         val tab: PersonDetailTab
     ): PersonDetailEvent()
 
+
+    data object Delete: PersonDetailEvent()
+
 }

@@ -9,10 +9,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.model.data.Dream
 import com.snow.diary.model.data.Person
 import com.snow.diary.model.sort.SortConfig
@@ -32,13 +35,33 @@ import org.oneui.compose.widgets.buttons.IconButton
 import org.oneui.compose.widgets.text.TextSeparator
 import dev.oneuiproject.oneui.R as IconR
 
+
+@Composable
+internal fun PersonDetail(
+    viewModel: PersonDetailViewModel = hiltViewModel(),
+    onNavigateBack: () -> Unit,
+    onEditClick: (Person) -> Unit,
+    onDreamClick: (Dream) -> Unit
+) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val tabs by viewModel.tabs.collectAsStateWithLifecycle()
+
+    PersonDetail(
+        state = state,
+        tabState = tabs,
+        onEvent = viewModel::onEvent,
+        onNavigateBack = onNavigateBack,
+        onEditClick = onEditClick,
+        onDreamClick = onDreamClick
+    )
+}
+
 @Composable
 private fun PersonDetail(
     state: PersonDetailState,
     tabState: PersonDetailTab,
     onEvent: (PersonDetailEvent) -> Unit,
     onNavigateBack: () -> Unit,
-    onDeleteClick: (Person) -> Unit,
     onEditClick: (Person) -> Unit,
     onDreamClick: (Dream) -> Unit
 ) {
@@ -69,7 +92,10 @@ private fun PersonDetail(
                     icon = Icon.Resource(IconR.drawable.ic_oui_delete_outline),
                     enabled = state is PersonDetailState.Success,
                     onClick = {
-                        onDeleteClick((state as PersonDetailState.Success).person)
+                        onNavigateBack()
+                        onEvent(
+                            PersonDetailEvent.Delete
+                        )
                     }
                 )
             }
