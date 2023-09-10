@@ -15,5 +15,7 @@
     <string name="person_add_name">Name</string>
     <string name="person_add_note">Note</string>
     <string name="person_add_relation_list_hint">Search relation…</string>
+    <string name="person_add_cancel">@android:string/cancel</string>
+    <string name="person_add_save">Save</string>
 
 </resources>
