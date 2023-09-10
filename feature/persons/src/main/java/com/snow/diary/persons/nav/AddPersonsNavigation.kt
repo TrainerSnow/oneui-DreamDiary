@@ -7,6 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.snow.diary.persons.screen.add.AddPerson
 
 private const val personIdArg = "personId"
 private const val addPersonName = "add_person"
@@ -30,8 +31,8 @@ fun NavController.goToAddPerson(
     navOptions = navOptions
 )
 
-fun NavGraphBuilder.addperson(
-    dismissPerson: () -> Unit
+fun NavGraphBuilder.addPerson(
+    onNavigateBack: () -> Unit
 ) {
     composable(
         route = addPersonName.withArg(personIdArg, "{$personIdArg}"),
@@ -45,6 +46,8 @@ fun NavGraphBuilder.addperson(
             }
         )
     ) {
-        TODO()
+        AddPerson(
+            onNavigateBack = onNavigateBack
+        )
     }
 }
