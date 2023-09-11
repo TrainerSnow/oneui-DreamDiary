@@ -95,7 +95,7 @@ private fun AddRelation(
                 input = inputState.name.input,
                 hint = stringResource(R.string.relation_add_name),
                 onInputChange = { onEvent(AddRelationEvent.ChangeName(it)) },
-                icon = Icon.Resource(IconR.drawable.ic_oui_remove_2) //TODO: Proper icon
+                icon = Icon.Resource(IconR.drawable.ic_oui_memo_outline) //TODO: Proper icon
             )
             TextInputFormField(
                 modifier = Modifier
@@ -108,10 +108,12 @@ private fun AddRelation(
 
             RoundedCornerBox(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        onEvent(AddRelationEvent.ToggleColorPopupVisibility)
-                    }
+                    .fillMaxWidth(),
+                onClick = {
+                    onEvent(
+                        AddRelationEvent.ToggleColorPopupVisibility
+                    )
+                }
             ) {
                 Row(
                     modifier = Modifier
@@ -123,6 +125,9 @@ private fun AddRelation(
                             onColorSelected = {
                                 onEvent(
                                     AddRelationEvent.ChangeColor(it)
+                                )
+                                onEvent(
+                                    AddRelationEvent.ToggleColorPopupVisibility
                                 )
                             },
                             onDismissRequest = {
@@ -161,7 +166,7 @@ private fun AddRelation(
                     onClick = onNavigateBack
                 )
                 ColoredButton(
-                    label = stringResource(com.google.android.material.R.string.mtrl_picker_save),
+                    label = stringResource(R.string.relation_add_save),
                     onClick = {
                         onEvent(
                             AddRelationEvent.Save
@@ -179,6 +184,6 @@ private object AddRelationScreenDefaults {
 
     val columnSpacing = 12.dp
 
-    val colorInputRadius = 8.dp
+    val colorInputRadius = 24.dp
 
 }
