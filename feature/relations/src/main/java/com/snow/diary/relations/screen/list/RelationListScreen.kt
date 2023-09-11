@@ -1,4 +1,4 @@
-package com.snow.diary.persons.screen.list
+package com.snow.diary.relations.screen.list
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,13 +12,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.snow.diary.model.data.Person
 import com.snow.diary.model.data.Relation
 import com.snow.diary.model.sort.SortConfig
-import com.snow.diary.persons.R
-import com.snow.diary.ui.callback.PersonCallback
-import com.snow.diary.ui.feed.PersonFeed
-import com.snow.diary.ui.feed.PersonFeedState
+import com.snow.diary.relations.R
+import com.snow.diary.ui.feed.RelationFeed
+import com.snow.diary.ui.feed.RelationFeedState
 import com.snow.diary.ui.util.SortSection
 import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
@@ -27,54 +25,48 @@ import dev.oneuiproject.oneui.R as IconR
 
 
 @Composable
-internal fun PersonList(
-    viewModel: PersonListViewModel = hiltViewModel(),
+internal fun RelationList(
+    viewModel: RelationListViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit,
-    onAddPerson: () -> Unit,
-    onSearchPerson: () -> Unit,
-    onRelationClick: (Relation) -> Unit,
-    onPersonClick: (Person) -> Unit,
-    onGroupsClick: () -> Unit
+    onAddRelation: () -> Unit,
+    onSearchRelation: () -> Unit,
+    onRelationClick: (Relation) -> Unit
 ) {
     val sortConfig by viewModel.sortConfig.collectAsStateWithLifecycle()
     val feedState by viewModel.feedState.collectAsStateWithLifecycle()
 
-    PersonList(
+    RelationList(
         state = feedState,
         sortConfig = sortConfig,
         onEvent = viewModel::onEvent,
         onNavigateBack = onNavigateBack,
-        onAddClick = onAddPerson,
-        onSearchClick = onSearchPerson,
-        onRelationCLick = onRelationClick,
-        onPersonClick = onPersonClick,
-        onGroupsClick = onGroupsClick
+        onAddClick = onAddRelation,
+        onSearchClick = onSearchRelation,
+        onRelationClick = onRelationClick
     )
 }
 
 @Composable
-private fun PersonList(
-    state: PersonFeedState,
+private fun RelationList(
+    state: RelationFeedState,
     sortConfig: SortConfig,
-    onEvent: (PersonListEvent) -> Unit,
+    onEvent: (RelationsListEvent) -> Unit,
     onNavigateBack: () -> Unit,
     onAddClick: () -> Unit,
     onSearchClick: () -> Unit,
-    onRelationCLick: (Relation) -> Unit,
-    onPersonClick: (Person) -> Unit,
-    onGroupsClick: () -> Unit
+    onRelationClick: (Relation) -> Unit
 ) {
     CollapsingToolbarLayout(
-        toolbarTitle = stringResource(R.string.person_list_title),
-        toolbarSubtitle = (state as? PersonFeedState.Success)?.let {
+        toolbarTitle = stringResource(R.string.relation_list_title),
+        toolbarSubtitle = (state as? RelationFeedState.Success)?.let {
             stringResource(
-                R.string.person_list_subtitle,
-                state.persons.size.toString()
+                R.string.relation_list_subtitle,
+                state.relations.size.toString()
             )
         },
         appbarNavAction = {
             IconButton(
-                icon = Icon.Resource(IconR.drawable.ic_oui_drawer),
+                icon = Icon.Resource(IconR.drawable.ic_oui_back),
                 onClick = onNavigateBack
             )
         },
@@ -91,49 +83,31 @@ private fun PersonList(
                 ),
                 onClick = onSearchClick
             )
-            IconButton(
-                icon = Icon.Resource(
-                    IconR.drawable.ic_oui_community
-                ),
-                onClick = onGroupsClick
-            )
         }
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(PersonListScreenDefaults.sortSectionPadding),
+                .padding(RelationListScreenDefaults.sortSectionPadding),
             horizontalArrangement = Arrangement.End
         ) {
             SortSection(
                 sortConfig = sortConfig,
                 onSortChange = {
-                    onEvent(PersonListEvent.SortChange(it))
+                    onEvent(RelationsListEvent.SortChange(it))
                 }
             )
         }
-        PersonFeed(
+        RelationFeed(
             modifier = Modifier
                 .fillMaxWidth(),
             state = state,
-            personCallback = object : PersonCallback {
-                override fun onClick(person: Person) {
-                    onPersonClick(person)
-                }
-
-                override fun onRelationClick(relation: Relation) {
-                    onRelationCLick(relation)
-                }
-
-                override fun onFavouriteClick(person: Person) {
-                    onEvent(PersonListEvent.PersonFavouriteClick(person))
-                }
-            }
+            onRelationClick = onRelationClick
         )
     }
 }
 
-private object PersonListScreenDefaults {
+private object RelationListScreenDefaults {
 
     val sortSectionPadding = PaddingValues(
         horizontal = 12.dp

@@ -17,7 +17,8 @@ fun NavGraphBuilder.personList(
     onAddPerson: () -> Unit,
     onSearchPerson: () -> Unit,
     onRelationClick: (Relation) -> Unit,
-    onPersonClick: (Person) -> Unit
+    onPersonClick: (Person) -> Unit,
+    onGroupsCLick: () -> Unit
 ) {
     composable(
         route = personListRoute
@@ -27,7 +28,8 @@ fun NavGraphBuilder.personList(
             onAddPerson = onAddPerson,
             onSearchPerson = onSearchPerson,
             onRelationClick = onRelationClick,
-            onPersonClick = onPersonClick
+            onPersonClick = onPersonClick,
+            onGroupsClick = onGroupsCLick
         )
     }
 }

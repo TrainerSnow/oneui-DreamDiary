@@ -31,9 +31,11 @@ import com.snow.diary.domain.action.person.DeletePerson
 import com.snow.diary.domain.action.person.PersonFromId
 import com.snow.diary.domain.action.person.PersonWithRelationAct
 import com.snow.diary.domain.action.person.PersonsFromDream
+import com.snow.diary.domain.action.person.PersonsFromRelation
 import com.snow.diary.domain.action.person.UpdatePerson
 import com.snow.diary.domain.action.relation.AddRelation
 import com.snow.diary.domain.action.relation.AllRelations
+import com.snow.diary.domain.action.relation.DeleteRelation
 import com.snow.diary.domain.action.relation.RelationById
 import com.snow.diary.domain.action.relation.UpdateRelation
 import dagger.Module
@@ -204,6 +206,12 @@ object DomainModule {
         personDao: PersonDao
     ) = AddPerson(personDao)
 
+    @Provides
+    @Singleton
+    fun providePersonsFromRelation(
+        relationDao: RelationDao
+    ) = PersonsFromRelation(relationDao)
+
 
     /*
     Relation usecases
@@ -232,6 +240,12 @@ object DomainModule {
     fun provideUpdateRelation(
         relationDao: RelationDao
     ) = UpdateRelation(relationDao)
+
+    @Provides
+    @Singleton
+    fun provideDeleteRelation(
+        relationDao: RelationDao
+    ) = DeleteRelation(relationDao)
 
 
     /*
