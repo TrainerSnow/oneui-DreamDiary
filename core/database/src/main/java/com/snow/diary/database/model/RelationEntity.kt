@@ -16,16 +16,19 @@ data class RelationEntity(
 
     val name: String,
 
-    val color: Color
+    val color: Color,
+
+    val notes: String?
 
 ): IModelMappable<Relation> {
 
-    override fun toModel() = Relation(id, name, color.toArgb())
+    override fun toModel() = Relation(id, name, color.toArgb(), notes)
 
     constructor(relation: Relation) : this(
         relation.id,
         relation.name,
-        Color.valueOf(relation.color)
+        Color.valueOf(relation.color),
+        relation.notes
     )
 
 }

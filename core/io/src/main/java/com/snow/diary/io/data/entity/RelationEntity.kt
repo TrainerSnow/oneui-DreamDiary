@@ -10,14 +10,16 @@ data class RelationEntity(
 
     val name: String,
 
-    val color: Int
+    val color: Int,
+
+    val notes: String?
 
 ) {
 
-    fun toModel() = Relation(id, name, color)
+    fun toModel() = Relation(id, name, color, notes)
 
     constructor(relation: Relation) : this(
-        relation.id, relation.name, relation.color
+        relation.id, relation.name, relation.color, relation.notes
     )
 
 }

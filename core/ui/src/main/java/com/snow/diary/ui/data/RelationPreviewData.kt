@@ -24,7 +24,8 @@ object RelationPreviewData {
         Relation(
             id = it.toLong(),
             name = "Relation $it",
-            color = colors[(colors.size - 1) % it].toColor().toArgb()
+            color = colors[(colors.size - 1) % it].toColor().toArgb(),
+            notes = "Notes $it"
         )
     }
 

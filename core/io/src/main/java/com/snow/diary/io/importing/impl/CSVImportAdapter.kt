@@ -77,13 +77,14 @@ private fun Row.toLocation(): Location = Location(
         if (arr.size != 2) null
         else Coordinates(arr[0].toFloat(), arr[1].toFloat())
     } ?: Coordinates(0F, 0F),
-    notes = this[3] ?: ""
+    notes = this[3]
 )
 
 private fun Row.toRelation(): Relation = Relation(
     id = this[0]!!.toLong(),
     name = this[1] ?: "",
-    color = this[2]?.toInt() ?: 0
+    color = this[2]?.toInt() ?: 0,
+    notes = this[3]
 )
 
 private fun Row.toCrossref(): Crossref = Pair(
