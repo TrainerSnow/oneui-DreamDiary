@@ -8,12 +8,14 @@ data class Relation(
 
     val name: String,
 
-    val color: Int
+    val color: Int,
+
+    val notes: String?
 
 ): Searchable {
 
     override fun getStringFields(): List<String> = listOf(
-        name
+        name, notes ?: ""
     )
 
 }

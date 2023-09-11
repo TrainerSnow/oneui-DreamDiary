@@ -79,7 +79,7 @@ fun LocationCard(
     }
 }
 
-private object LocationItemDefaults {
+object LocationItemDefaults {
 
     const val descMaxLines = 3
 

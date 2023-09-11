@@ -10,7 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
+import com.snow.diary.common.removeLineBreaks
 import com.snow.diary.model.data.Relation
 import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.util.ListPosition
@@ -56,13 +58,12 @@ fun RelationCard(
                 )
             }
 
-            //TODO: Add note to relations
-            /*Text(
-                text = relation.note?.removeLineBreaks().orEmpty(),
+            Text(
+                text = relation.notes?.removeLineBreaks().orEmpty(),
                 style = descTextStyle,
-                maxLines = LocationItemDefaults.descMaxLines,
+                maxLines = RelationItemDefaults.descMaxLines,
                 overflow = TextOverflow.Ellipsis
-            )*/
+            )
         }
     }
 }
