@@ -27,7 +27,7 @@ import dev.oneuiproject.oneui.R as IconR
 
 @Composable
 internal fun AddLocation(
-    viewModel: AddPersonViewModel = hiltViewModel(),
+    viewModel: AddLocationViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit
 ) {
     val inputState by viewModel.inputState.collectAsStateWithLifecycle()

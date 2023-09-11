@@ -10,12 +10,12 @@ data class Location(
 
     val coordinates: Coordinates,
 
-    val notes: String
+    val notes: String?
 
 ): Searchable {
 
     override fun getStringFields(): List<String> = listOf(
-        name, notes
+        name, notes ?: ""
     )
 
 }

@@ -19,7 +19,7 @@ data class LocationEntity(
 
     val coordinates: PointF,
 
-    val notes: String
+    val notes: String?
 ) : IModelMappable<Location> {
 
     override fun toModel() =

@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class AddPersonViewModel @Inject constructor(
+internal class AddLocationViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     locationById: LocationById,
     val addLocation: AddLocation,
@@ -42,7 +42,7 @@ internal class AddPersonViewModel @Inject constructor(
                 _inputState.emit(
                     AddLocationState(
                         name = TextInput(location.name),
-                        note = TextInput(location.notes),
+                        note = TextInput(location.notes ?: ""),
                     )
                 )
             }
@@ -81,7 +81,7 @@ internal class AddPersonViewModel @Inject constructor(
         val location = Location(
             id = args.locationId,
             name = inputState.value.name.input,
-            notes = inputState.value.note.input,
+            notes = inputState.value.note.input.ifBlank { null },
             coordinates = Coordinates(0F, 0F) //TODO: Change when using google maps api
         )
 

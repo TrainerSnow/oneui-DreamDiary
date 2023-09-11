@@ -15,7 +15,7 @@ data class LocationEntity(
     @Serializable(CoordinatesSerializer::class)
     val coordinates: Coordinates,
 
-    val notes: String
+    val notes: String?
 
 ){
 

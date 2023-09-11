@@ -13,13 +13,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.locations.R
 import com.snow.diary.model.data.Dream
 import com.snow.diary.model.data.Location
-import com.snow.diary.model.data.Person
 import com.snow.diary.model.sort.SortConfig
 import com.snow.diary.model.sort.SortMode
 import com.snow.diary.ui.callback.DreamCallback
@@ -155,16 +155,26 @@ private fun GeneralSection(
         modifier = modifier
             .verticalScroll(rememberScrollState())
     ) {
-        TextSeparator(
-            text = stringResource(R.string.location_detail_note)
-        )
-        RoundedCornerBox(
-            modifier = Modifier
-                .fillMaxWidth(),
-            contentAlignment = Alignment.TopStart
-        ) {
+        if(state.location.notes != null) {
+            TextSeparator(
+                text = stringResource(R.string.location_detail_note)
+            )
+            RoundedCornerBox(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.TopStart
+            ) {
+                Text(
+                    text = state.location.notes!!
+                )
+            }
+        } else {
             Text(
-                text = state.location.notes
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(LocationDetailScreenDefaults.noInfoPadding),
+                text = stringResource(R.string.location_detail_no_further_information),
+                textAlign = TextAlign.Center
             )
         }
     }
@@ -199,6 +209,12 @@ private object LocationDetailScreenDefaults {
 
     val contentPadding = PaddingValues(
         horizontal = 16.dp
+    )
+
+    val noInfoPadding = PaddingValues(
+        end = 16.dp,
+        start = 16.dp,
+        top = 32.dp
     )
 
 }
