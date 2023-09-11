@@ -1,4 +1,4 @@
-package com.snow.diary.app.ui
+package com.snow.diary.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -7,7 +7,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.snow.diary.app.nav.TopLevelDestinations
+import com.snow.diary.nav.TopLevelDestinations
 import com.snow.diary.feature.dreams.nav.goToDreamList
 import com.snow.diary.feature.locations.nav.goToLocationList
 import com.snow.diary.feature.persons.nav.goToPersonList

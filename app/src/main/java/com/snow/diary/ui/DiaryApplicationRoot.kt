@@ -1,4 +1,4 @@
-package com.snow.diary.app.ui
+package com.snow.diary.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
-import com.snow.diary.app.nav.TopLevelDestinations
+import com.snow.diary.nav.TopLevelDestinations
 import com.snow.diary.feature.dreams.nav.addDream
 import com.snow.diary.feature.dreams.nav.dreamDetail
 import com.snow.diary.feature.dreams.nav.dreamList
