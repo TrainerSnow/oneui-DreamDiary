@@ -22,6 +22,10 @@
     <string name="locationfeed_error_label">An error occurred while getting your locations.</string>
     <string name="locationfeed_loading_label">Loading your locations. Stay tuned.</string>
 
+    <string name="relationfeed_empty_label">There are currently no relations. Start off by adding some!</string>
+    <string name="relationfeed_error_label">An error occurred while getting your relations.</string>
+    <string name="relationfeed_loading_label">Loading your relations. Stay tuned.</string>
+
     <string name="sortmode_created">Created</string>
     <string name="sortmode_updated">Updated</string>
     <string name="sortmode_alphabetically">Name</string>
