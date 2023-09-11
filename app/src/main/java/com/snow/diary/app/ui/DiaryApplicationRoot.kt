@@ -1,4 +1,4 @@
-package com.snow.diary.ui
+package com.snow.diary.app.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -6,6 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
+import com.snow.diary.app.nav.TopLevelDestinations
+import com.snow.diary.feature.dreams.nav.addDream
+import com.snow.diary.feature.dreams.nav.dreamDetail
+import com.snow.diary.feature.dreams.nav.dreamList
+import com.snow.diary.feature.dreams.nav.goToAddDream
+import com.snow.diary.feature.dreams.nav.goToDreamDetail
 import com.snow.diary.feature.export.navigation.exportScreen
 import com.snow.diary.feature.export.navigation.goToExport
 import com.snow.diary.feature.locations.nav.addLocation
@@ -13,7 +19,6 @@ import com.snow.diary.feature.locations.nav.goToAddLocation
 import com.snow.diary.feature.locations.nav.goToLocationDetail
 import com.snow.diary.feature.locations.nav.locationDetail
 import com.snow.diary.feature.locations.nav.locationList
-import com.snow.diary.nav.TopLevelDestinations
 import com.snow.diary.feature.persons.nav.addPerson
 import com.snow.diary.feature.persons.nav.goToAddPerson
 import com.snow.diary.feature.persons.nav.goToPersonDetail
@@ -25,11 +30,6 @@ import com.snow.diary.feature.relations.nav.goToRelationDetail
 import com.snow.diary.feature.relations.nav.goToRelationList
 import com.snow.diary.feature.relations.nav.relationDetail
 import com.snow.diary.feature.relations.nav.relationList
-import com.snow.diary.feature.dreams.nav.addDream
-import com.snow.diary.feature.dreams.nav.dreamDetail
-import com.snow.diary.feature.dreams.nav.dreamList
-import com.snow.diary.feature.dreams.nav.goToAddDream
-import com.snow.diary.feature.dreams.nav.goToDreamDetail
 import org.oneui.compose.base.Icon
 import org.oneui.compose.base.IconView
 import org.oneui.compose.layout.drawer.DrawerDivider

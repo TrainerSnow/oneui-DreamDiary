@@ -1,7 +1,7 @@
-package com.snow.diary.nav
+package com.snow.diary.app.nav
 
 import androidx.annotation.StringRes
-import com.snow.diary.R
+import com.snow.diary.app.R
 import org.oneui.compose.base.Icon
 import dev.oneuiproject.oneui.R as IconR
 
