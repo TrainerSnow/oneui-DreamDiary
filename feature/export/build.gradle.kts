@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.snow.diary.export"
+    namespace = "com.snow.diary.feature.export"
     compileSdk = 33
 
     defaultConfig {

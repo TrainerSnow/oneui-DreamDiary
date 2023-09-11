@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.snow.feature.dreams"
+    namespace = "com.snow.diary.feature.dreams"
     compileSdk = 34
 
     defaultConfig {

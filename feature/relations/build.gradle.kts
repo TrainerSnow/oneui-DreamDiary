@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.snow.diary.relations"
+    namespace = "com.snow.diary.feature.relations"
     compileSdk = 33
 
     defaultConfig {

@@ -1,13 +1,15 @@
 package com.snow.diary.io
 
-import com.snow.diary.io.data.IOData
-import com.snow.diary.io.exporting.IExportAdapter
-import com.snow.diary.io.importing.IImportAdapter
-import com.snow.diary.model.data.Coordinates
-import com.snow.diary.model.data.Dream
-import com.snow.diary.model.data.Location
-import com.snow.diary.model.data.Person
-import com.snow.diary.model.data.Relation
+import com.snow.diary.core.io.ExportFiletype
+import com.snow.diary.core.io.ImportFiletype
+import com.snow.diary.core.io.data.IOData
+import com.snow.diary.core.io.exporting.IExportAdapter
+import com.snow.diary.core.io.importing.IImportAdapter
+import com.snow.diary.core.model.data.Coordinates
+import com.snow.diary.core.model.data.Dream
+import com.snow.diary.core.model.data.Location
+import com.snow.diary.core.model.data.Person
+import com.snow.diary.core.model.data.Relation
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith

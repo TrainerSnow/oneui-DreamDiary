@@ -7,10 +7,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.snow.diary.locations.nav.goToLocationList
+import com.snow.diary.feature.locations.nav.goToLocationList
 import com.snow.diary.nav.TopLevelDestinations
-import com.snow.diary.persons.nav.goToPersonList
-import com.snow.feature.dreams.nav.goToDreamList
+import com.snow.diary.feature.persons.nav.goToPersonList
+import com.snow.diary.feature.dreams.nav.goToDreamList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.oneui.compose.layout.internal.SlidingDrawerState

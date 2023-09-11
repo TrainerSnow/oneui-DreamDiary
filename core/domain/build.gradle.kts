@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.snow.diary.domain"
+    namespace = "com.snow.diary.core.domain"
     compileSdk = 33
 
     defaultConfig {

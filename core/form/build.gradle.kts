@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.snow.diary.form"
+    namespace = "com.snow.diary.core.form"
     compileSdk = 33
 
     defaultConfig {
