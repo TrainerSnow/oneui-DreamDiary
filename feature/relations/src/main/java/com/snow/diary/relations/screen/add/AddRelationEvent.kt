@@ -18,4 +18,6 @@ internal sealed class AddRelationEvent {
 
     data object Save: AddRelationEvent()
 
+    data object ToggleColorPopupVisibility: AddRelationEvent()
+
 }
