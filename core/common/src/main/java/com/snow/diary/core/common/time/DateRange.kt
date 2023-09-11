@@ -56,6 +56,15 @@ sealed interface DateRange {
             override fun resolve() = FixedTimeRange(from, to)
         }
 
+
+    companion object {
+
+        val AllTime = Fixed(
+            LocalDate.MIN, LocalDate.MAX
+        )
+
+    }
+
 }
 
 data class FixedTimeRange(
