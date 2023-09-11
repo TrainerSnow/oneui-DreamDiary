@@ -61,7 +61,7 @@ fun RelationInputList(
                 .fillMaxWidth(),
             input = query,
             onInputChange = onQueryChange,
-            icon = Icon.Resource(IconR.drawable.ic_oui_minus), //TODO: Proper icon
+            icon = Icon.Resource(IconR.drawable.ic_oui_community),
             listPosition = if (locations.isNotEmpty()) ListPosition.Last else ListPosition.Single,
             hint = stringResource(R.string.person_add_relation_list_hint)
         )

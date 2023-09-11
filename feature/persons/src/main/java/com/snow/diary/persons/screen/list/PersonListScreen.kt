@@ -33,7 +33,8 @@ internal fun PersonList(
     onAddPerson: () -> Unit,
     onSearchPerson: () -> Unit,
     onRelationClick: (Relation) -> Unit,
-    onPersonClick: (Person) -> Unit
+    onPersonClick: (Person) -> Unit,
+    onGroupsClick: () -> Unit
 ) {
     val sortConfig by viewModel.sortConfig.collectAsStateWithLifecycle()
     val feedState by viewModel.feedState.collectAsStateWithLifecycle()
@@ -46,7 +47,8 @@ internal fun PersonList(
         onAddClick = onAddPerson,
         onSearchClick = onSearchPerson,
         onRelationCLick = onRelationClick,
-        onPersonClick = onPersonClick
+        onPersonClick = onPersonClick,
+        onGroupsClick = onGroupsClick
     )
 }
 
@@ -59,7 +61,8 @@ private fun PersonList(
     onAddClick: () -> Unit,
     onSearchClick: () -> Unit,
     onRelationCLick: (Relation) -> Unit,
-    onPersonClick: (Person) -> Unit
+    onPersonClick: (Person) -> Unit,
+    onGroupsClick: () -> Unit
 ) {
     CollapsingToolbarLayout(
         toolbarTitle = stringResource(R.string.person_list_title),
@@ -87,6 +90,12 @@ private fun PersonList(
                     IconR.drawable.ic_oui_search
                 ),
                 onClick = onSearchClick
+            )
+            IconButton(
+                icon = Icon.Resource(
+                    IconR.drawable.ic_oui_community
+                ),
+                onClick = onGroupsClick
             )
         }
     ) {

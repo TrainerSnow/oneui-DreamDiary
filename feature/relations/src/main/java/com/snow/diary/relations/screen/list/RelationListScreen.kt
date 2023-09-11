@@ -66,7 +66,7 @@ private fun RelationList(
         },
         appbarNavAction = {
             IconButton(
-                icon = Icon.Resource(IconR.drawable.ic_oui_drawer),
+                icon = Icon.Resource(IconR.drawable.ic_oui_back),
                 onClick = onNavigateBack
             )
         },

@@ -19,6 +19,12 @@ import com.snow.diary.persons.nav.goToAddPerson
 import com.snow.diary.persons.nav.goToPersonDetail
 import com.snow.diary.persons.nav.personDetail
 import com.snow.diary.persons.nav.personList
+import com.snow.diary.relations.nav.addRelation
+import com.snow.diary.relations.nav.goToAddRelation
+import com.snow.diary.relations.nav.goToRelationDetail
+import com.snow.diary.relations.nav.goToRelationList
+import com.snow.diary.relations.nav.relationDetail
+import com.snow.diary.relations.nav.relationList
 import com.snow.feature.dreams.nav.addDream
 import com.snow.feature.dreams.nav.dreamDetail
 import com.snow.feature.dreams.nav.dreamList
@@ -106,7 +112,9 @@ private fun DiaryNavHost(
             onPersonClick = {
                 navController.goToPersonDetail(it.id!!)
             },
-            onRelationClick = { },
+            onRelationClick = {
+                navController.goToRelationDetail(it.id!!)
+            },
             onEditClick = {
                 navController
                     .goToAddDream(it.id)
@@ -126,10 +134,13 @@ private fun DiaryNavHost(
                 navController.goToAddPerson()
             },
             onSearchPerson = { },
-            onRelationClick = { },
+            onRelationClick = {
+                navController.goToRelationDetail(it.id!!)
+            },
             onPersonClick = {
                 navController.goToPersonDetail(it.id!!)
-            }
+            },
+            onGroupsCLick = navController::goToRelationList
         )
         personDetail(
             onNavigateBack = state::navigateBack,
@@ -162,6 +173,27 @@ private fun DiaryNavHost(
             },
             onDreamClick = {
                 navController.goToDreamDetail(it.id!!)
+            }
+        )
+
+        addRelation(
+            onNavigateBack = state::navigateBack
+        )
+        relationList(
+            onNavigateBack = state::navigateBack,
+            onAddRelation = navController::goToAddRelation,
+            onSearchRelation = { },
+            onRelationClick = {
+                navController.goToRelationDetail(it.id!!)
+            }
+        )
+        relationDetail(
+            onNavigateBack = state::navigateBack,
+            onEditClick = {
+                navController.goToAddRelation(it.id!!)
+            },
+            onPersonClick = {
+                navController.goToPersonDetail(it.id!!)
             }
         )
     }
