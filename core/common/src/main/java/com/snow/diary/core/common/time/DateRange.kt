@@ -5,6 +5,10 @@ import java.time.temporal.TemporalUnit
 
 sealed interface DateRange {
 
+    operator fun contains(date: LocalDate): Boolean = resolve().let { range ->
+        date >= range.from && date <= range.to
+    }
+
     fun resolve(): FixedTimeRange
 
         data class LastN(
