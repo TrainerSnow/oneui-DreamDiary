@@ -1,4 +1,4 @@
-package com.snow.diary.locations.screen.nav
+package com.snow.diary.locations.nav
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavController
