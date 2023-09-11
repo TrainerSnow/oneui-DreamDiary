@@ -7,7 +7,6 @@ import dev.oneuiproject.oneui.R as IconR
 
 
 //Screens/parts of the app navigable from the main nav component
-//TODO: Add proper icons
 enum class TopLevelDestinations(
     val icon: Icon,
     @StringRes val titleRes: Int
