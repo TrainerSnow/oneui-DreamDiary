@@ -1,8 +1,5 @@
 package com.snow.diary.ui
 
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -11,6 +8,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import com.snow.diary.export.navigation.exportScreen
 import com.snow.diary.export.navigation.goToExport
+import com.snow.diary.locations.nav.addLocation
+import com.snow.diary.locations.nav.goToAddLocation
+import com.snow.diary.locations.nav.goToLocationDetail
+import com.snow.diary.locations.nav.locationDetail
+import com.snow.diary.locations.nav.locationList
 import com.snow.diary.nav.TopLevelDestinations
 import com.snow.diary.persons.nav.addPerson
 import com.snow.diary.persons.nav.goToAddPerson
@@ -77,13 +79,13 @@ private fun DiaryNavHost(
         modifier = Modifier
             .fillMaxSize(),
         navController = navController,
-        startDestination = "dream_list",
+        startDestination = "dream_list"/*,
         enterTransition = {
             fadeIn(tween(0)) //0ms for no transition
         },
         exitTransition = {
             fadeOut(tween(0)) //0ms for no transition
-        }
+        }*/
     ) {
         dreamList(
             onAboutClick = { },
@@ -98,7 +100,9 @@ private fun DiaryNavHost(
         )
         dreamDetail(
             onNavigateBack = state::navigateBack,
-            onLocationClick = { },
+            onLocationClick = {
+                navController.goToLocationDetail(it.id!!)
+            },
             onPersonClick = {
                 navController.goToPersonDetail(it.id!!)
             },
@@ -111,9 +115,11 @@ private fun DiaryNavHost(
         addDream(
             dismissDream = state::navigateBack
         )
+
         exportScreen(
             onNavigateBack = state::navigateBack
         )
+
         personList(
             onNavigateBack = state::openDrawer,
             onAddPerson = {
@@ -136,6 +142,27 @@ private fun DiaryNavHost(
         )
         addPerson(
             onNavigateBack = state::navigateBack
+        )
+
+        addLocation(
+            onNavigateBack = state::navigateBack
+        )
+        locationList(
+            onNavigateBack = state::openDrawer,
+            onAddLocation = navController::goToAddLocation,
+            onSearchLocation = { },
+            onLocationCLick = {
+                navController.goToLocationDetail(it.id!!)
+            }
+        )
+        locationDetail(
+            onNavigateBack = state::navigateBack,
+            onEditClick = {
+                navController.goToAddLocation(it.id)
+            },
+            onDreamClick = {
+                navController.goToDreamDetail(it.id!!)
+            }
         )
     }
 }

@@ -70,7 +70,7 @@ fun LocationCard(
             }
 
             Text(
-                text = location.notes.removeLineBreaks(),
+                text = location.notes?.removeLineBreaks().orEmpty(),
                 style = descTextStyle,
                 maxLines = LocationItemDefaults.descMaxLines,
                 overflow = TextOverflow.Ellipsis

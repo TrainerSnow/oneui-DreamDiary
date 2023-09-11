@@ -79,6 +79,12 @@ private fun AddDreamScreen(
             CollapsingToolbarCollapsedState.COLLAPSED,
             with(LocalDensity.current) { 100.dp.toPx() } //TODO Remove when lib is ready
         ),
+        appbarNavAction = {
+            IconButton(
+                icon = Icon.Resource(IconR.drawable.ic_oui_close),
+                onClick = dismissDream
+            )
+        },
         appbarActions = {
             IconButton(
                 onClick = {
@@ -257,7 +263,6 @@ private fun AddDreamScreen(
                     }
                 }
             }
-
 
 
             //TODO: These buttons are only temporary, until the lib allows for fullscreen dialogs (=PopOverActivity)

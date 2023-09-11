@@ -16,10 +16,15 @@ import com.snow.diary.domain.action.dream.AllDreams
 import com.snow.diary.domain.action.dream.DeleteDream
 import com.snow.diary.domain.action.dream.DreamById
 import com.snow.diary.domain.action.dream.DreamInformation
+import com.snow.diary.domain.action.dream.DreamsFromLocation
 import com.snow.diary.domain.action.dream.DreamsFromPerson
 import com.snow.diary.domain.action.dream.UpdateDream
+import com.snow.diary.domain.action.location.AddLocation
 import com.snow.diary.domain.action.location.AllLocations
+import com.snow.diary.domain.action.location.DeleteLocation
+import com.snow.diary.domain.action.location.LocationById
 import com.snow.diary.domain.action.location.LocationsFromDream
+import com.snow.diary.domain.action.location.UpdateLocation
 import com.snow.diary.domain.action.person.AddPerson
 import com.snow.diary.domain.action.person.AllPersons
 import com.snow.diary.domain.action.person.DeletePerson
@@ -96,6 +101,12 @@ object DomainModule {
         personDao: PersonDao
     ) = DreamsFromPerson(personDao)
 
+    @Provides
+    @Singleton
+    fun provideDreamsFromLocation(
+        locationDao: LocationDao
+    ) = DreamsFromLocation(locationDao)
+
 
     /*
     Location usecases
@@ -113,6 +124,34 @@ object DomainModule {
     fun provideAllLocations(
         locationDao: LocationDao
     ) = AllLocations(locationDao)
+
+
+    @Provides
+    @Singleton
+    fun provideLocationById(
+        locationDao: LocationDao
+    ) = LocationById(locationDao)
+
+
+    @Provides
+    @Singleton
+    fun provideAddLocation(
+        locationDao: LocationDao
+    ) = AddLocation(locationDao)
+
+
+    @Provides
+    @Singleton
+    fun provideUpdateLocation(
+        locationDao: LocationDao
+    ) = UpdateLocation(locationDao)
+
+
+    @Provides
+    @Singleton
+    fun provideDeleteLocation(
+        locationDao: LocationDao
+    ) = DeleteLocation(locationDao)
 
 
 
