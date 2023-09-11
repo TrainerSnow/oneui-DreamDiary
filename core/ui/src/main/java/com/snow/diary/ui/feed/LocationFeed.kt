@@ -78,7 +78,7 @@ private fun SuccessFeed(
             LocationCard(
                 location = state.locations[it],
                 listPosition = ListPosition.get(state.locations[it], state.locations),
-                onLocationClick = onLocationClick
+                onClick = onLocationClick
             )
         }
     }
