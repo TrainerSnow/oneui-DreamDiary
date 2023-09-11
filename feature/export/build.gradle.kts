@@ -64,6 +64,7 @@ dependencies {
 
     implementation(project(":core:io"))
     implementation(project(":core:domain"))
+    implementation(project(":core:common"))
     implementation(project(":core:model"))
     implementation(libs.oneui)
     implementation(libs.oneui.icons)
