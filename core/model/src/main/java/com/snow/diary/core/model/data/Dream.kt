@@ -1,6 +1,7 @@
 package com.snow.diary.core.model.data
 
 import com.snow.diary.core.model.Searchable
+import com.snow.diary.core.model.Timestamped
 import java.time.LocalDate
 
 data class Dream(
@@ -13,15 +14,15 @@ data class Dream(
 
     val isFavourite: Boolean,
 
-    val created: LocalDate,
+    override val created: LocalDate,
 
-    val updated: LocalDate,
+    override val updated: LocalDate,
 
     val clearness: Float?,
 
     val happiness: Float?
 
-): Searchable {
+): Searchable, Timestamped {
 
     override fun getStringFields(): List<String> = listOf(
         description, note ?: ""
