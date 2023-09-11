@@ -2,4 +2,12 @@
 <resources>
     <string name="relation_list_title">Relations</string>
     <string name="relation_list_subtitle">%s total</string>
+
+    <string name="relation_edit_title">Edit relation</string>
+    <string name="relation_add_title">Add relation</string>
+    <string name="relation_add_name">Name</string>
+    <string name="relation_add_notes">Note</string>
+    <string name="relation_add_color">Color</string>
+    <string name="relation_add_cancel">@android:string/cancel</string>
+    <string name="relation_add_save">Save</string>
 </resources>
