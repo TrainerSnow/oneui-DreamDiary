@@ -10,4 +10,7 @@
     <string name="relation_add_color">Color</string>
     <string name="relation_add_cancel">@android:string/cancel</string>
     <string name="relation_add_save">Save</string>
+
+    <string name="relation_detail_tab_general">General</string>
+    <string name="relation_detail_tab_persons">Persons</string>
 </resources>
