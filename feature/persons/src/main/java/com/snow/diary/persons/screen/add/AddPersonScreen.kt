@@ -74,6 +74,12 @@ private fun AddPerson(
             CollapsingToolbarCollapsedState.COLLAPSED,
             with(LocalDensity.current) { 100.dp.toPx() } //TODO Remove when lib is ready
         ),
+        appbarNavAction = {
+            IconButton(
+                icon = Icon.Resource(IconR.drawable.ic_oui_close),
+                onClick = onNavigateBack
+            )
+        },
         appbarActions = {
             IconButton(
                 onClick = {

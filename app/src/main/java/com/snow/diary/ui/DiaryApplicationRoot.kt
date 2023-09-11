@@ -148,7 +148,7 @@ private fun DiaryNavHost(
             onNavigateBack = state::navigateBack
         )
         locationList(
-            onNavigateBack = state::navigateBack,
+            onNavigateBack = state::openDrawer,
             onAddLocation = navController::goToAddLocation,
             onSearchLocation = { },
             onLocationCLick = {

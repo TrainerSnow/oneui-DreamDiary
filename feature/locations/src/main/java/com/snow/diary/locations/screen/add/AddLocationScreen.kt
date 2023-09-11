@@ -22,6 +22,7 @@ import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
 import org.oneui.compose.widgets.buttons.ColoredButton
+import org.oneui.compose.widgets.buttons.IconButton
 import org.oneui.compose.widgets.buttons.TransparentButton
 import dev.oneuiproject.oneui.R as IconR
 
@@ -59,7 +60,13 @@ private fun AddLocation(
         state = rememberCollapsingToolbarState(
             CollapsingToolbarCollapsedState.COLLAPSED,
             with(LocalDensity.current) { 100.dp.toPx() } //TODO Remove when lib is ready
-        )
+        ),
+        appbarNavAction = {
+            IconButton(
+                icon = Icon.Resource(IconR.drawable.ic_oui_close),
+                onClick = onNavigateBack
+            )
+        },
     ) {
         Column(
             modifier = Modifier
