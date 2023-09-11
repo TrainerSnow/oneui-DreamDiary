@@ -13,4 +13,7 @@
 
     <string name="relation_detail_tab_general">General</string>
     <string name="relation_detail_tab_persons">Persons</string>
+    <string name="relation_detail_error">An error occurred whilst loading the relation.</string>
+    <string name="relation_detail_loading">Loading the relation. Stay tuned!</string>
+    <string name="relation_detail_note">Note</string>
 </resources>
