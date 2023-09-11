@@ -11,4 +11,10 @@
     <string name="location_list_title">Locations</string>
     <string name="location_list_subtitle">%s total</string>
 
+    <string name="location_detail_tab_general">General</string>
+    <string name="location_detail_tab_dreams">Dreams</string>
+    <string name="location_detail_error">An error occurred whilst loading this location.</string>
+    <string name="location_detail_loading">Loading your location for you. Stay tuned!</string>
+    <string name="location_detail_note">Note</string>
+
 </resources>
