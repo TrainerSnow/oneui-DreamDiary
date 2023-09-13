@@ -4,24 +4,24 @@ import android.content.Context
 import android.util.Log.d
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.snow.diary.core.form.Validator
 import com.snow.diary.core.common.launchInBackground
 import com.snow.diary.core.common.search.Search.filterSearch
-import com.snow.diary.core.domain.action.cross.AddDreamLocationCrossref
-import com.snow.diary.core.domain.action.cross.AddDreamPersonCrossref
-import com.snow.diary.core.domain.action.cross.RemoveDreamLocationCrossref
-import com.snow.diary.core.domain.action.cross.RemoveDreamPersonCrossref
+import com.snow.diary.core.domain.action.cross.dream_location.AddDreamLocationCrossref
+import com.snow.diary.core.domain.action.cross.dream_location.RemoveDreamLocationCrossref
+import com.snow.diary.core.domain.action.cross.dream_person.AddDreamPersonCrossref
+import com.snow.diary.core.domain.action.cross.dream_person.RemoveDreamPersonCrossref
 import com.snow.diary.core.domain.action.dream.AddDreamAction
 import com.snow.diary.core.domain.action.dream.DreamInformation
 import com.snow.diary.core.domain.action.dream.UpdateDream
 import com.snow.diary.core.domain.action.location.AllLocations
 import com.snow.diary.core.domain.action.person.AllPersons
 import com.snow.diary.core.domain.viewmodel.EventViewModel
-import com.snow.diary.core.model.combine.PersonWithRelation
+import com.snow.diary.core.form.Validator
+import com.snow.diary.core.form.rules.Rules
+import com.snow.diary.core.model.combine.PersonWithRelations
 import com.snow.diary.core.model.data.Dream
 import com.snow.diary.core.model.data.Location
 import com.snow.diary.core.model.data.Person
-import com.snow.diary.core.form.rules.Rules
 import com.snow.diary.feature.dreams.nav.AddDreamArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -310,15 +310,12 @@ internal class AddDreamViewModel @Inject constructor(
                     happiness = happiness
                 )
             }
-            d("AddDreamViewModel", "Created Dream from inputs = $dream")
 
             val id = if (isEdit) {
                 updateDream(listOf(dream))
                 args.dreamId!!
             } else addDream(listOf(dream))
                 .first()
-
-            d("AddDreamViewModel", "Inserted/Updated dream. Got id = $id")
 
             if (!isEdit) {
                 extrasState.value.persons.forEach { person ->
@@ -332,9 +329,7 @@ internal class AddDreamViewModel @Inject constructor(
                     .stateIn(viewModelScope)
                     .value!!
 
-                d("AddDreamViewModel", "Received dreamInfo = $dreamInfo")
-
-                val persons = dreamInfo.persons.map(PersonWithRelation::person)
+                val persons = dreamInfo.persons.map(PersonWithRelations::person)
                 val locations = dreamInfo.locations
 
                 val newPersons =

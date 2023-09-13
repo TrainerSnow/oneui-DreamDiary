@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.snow.diary.core.model.data.Dream
 import com.snow.diary.core.model.data.Person
+import com.snow.diary.core.model.data.Relation
 import com.snow.diary.feature.persons.screen.detail.PersonDetail
 
 private const val personIdArg = "personId"
@@ -35,7 +36,8 @@ fun NavController.goToPersonDetail(
 fun NavGraphBuilder.personDetail(
     onNavigateBack: () -> Unit,
     onEditClick: (Person) -> Unit,
-    onDreamClick: (Dream) -> Unit
+    onDreamClick: (Dream) -> Unit,
+    onRelationClick: (Relation) -> Unit
 ) {
     composable(
         route = personDetailRoute,
@@ -50,7 +52,8 @@ fun NavGraphBuilder.personDetail(
         PersonDetail(
             onNavigateBack = onNavigateBack,
             onEditClick = onEditClick,
-            onDreamClick = onDreamClick
+            onDreamClick = onDreamClick,
+            onRelationClick = onRelationClick
         )
     }
 }

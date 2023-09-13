@@ -10,8 +10,6 @@ data class Person(
 
     val isFavourite: Boolean,
 
-    val relationId: Long,
-
     val notes: String?
 
 ): Searchable {

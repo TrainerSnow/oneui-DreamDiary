@@ -12,15 +12,13 @@ data class PersonEntity(
 
     val isFavourite: Boolean,
 
-    val relationId: Long,
-
     val notes: String?
 
 ){
-    fun toModel() = Person(id, name, isFavourite, relationId, notes)
+    fun toModel() = Person(id, name, isFavourite, notes)
 
     constructor(person: Person) : this(
-        person.id, person.name, person.isFavourite, person.relationId, person.notes
+        person.id, person.name, person.isFavourite, person.notes
     )
 
 }

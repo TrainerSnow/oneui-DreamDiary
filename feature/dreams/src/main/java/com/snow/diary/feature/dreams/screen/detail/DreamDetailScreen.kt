@@ -22,8 +22,8 @@ import com.snow.diary.core.model.data.Dream
 import com.snow.diary.core.model.data.Location
 import com.snow.diary.core.model.data.Person
 import com.snow.diary.core.model.data.Relation
-import com.snow.diary.core.model.sort.SortConfig
-import com.snow.diary.core.ui.callback.PersonCallback
+import com.snow.diary.core.ui.component.ClearnessProgressBar
+import com.snow.diary.core.ui.component.HappinessProgressBar
 import com.snow.diary.core.ui.feed.LocationFeed
 import com.snow.diary.core.ui.feed.LocationFeedState
 import com.snow.diary.core.ui.feed.PersonFeed
@@ -31,9 +31,7 @@ import com.snow.diary.core.ui.feed.PersonFeedState
 import com.snow.diary.core.ui.screen.ErrorScreen
 import com.snow.diary.core.ui.screen.LoadingScreen
 import com.snow.diary.feature.dreams.R
-import com.snow.diary.core.ui.component.ClearnessProgressBar
 import com.snow.diary.feature.dreams.screen.detail.component.DreamDetailEvent
-import com.snow.diary.core.ui.component.HappinessProgressBar
 import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.navigation.SubTabItem
@@ -259,9 +257,7 @@ private fun PersonTab(
     PersonFeed(
         modifier = modifier,
         state = PersonFeedState.Success(
-            persons = state.persons,
-            relationSectionSort = false,
-            sortConfig = SortConfig()
+            persons = state.persons
         ),
         personCallback = personCallback
     )

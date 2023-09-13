@@ -6,15 +6,15 @@ import com.snow.diary.core.model.combine.PersonWithRelations
 import com.snow.diary.core.model.data.Person
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-//TODO: Refacto so its a "RelationsFromPerson" usecase
 
-class PersonWithRelationsAct(
+class PersonsWithRelationsAct(
     val personDao: PersonDao
-) : FlowAction<Person, PersonWithRelations>() {
-    override fun Person.createFlow(): Flow<PersonWithRelations> = personDao
-        .getPersonWithRelationsById(id!!)
+) : FlowAction<Person, List<PersonWithRelations>>() {
+    override fun Person.createFlow(): Flow<List<PersonWithRelations>> = personDao
+        .getAllPersonsWithRelationsById()
         .map {
-            it!!.toModel()
+            it.map {
+                it.toModel()
+            }
         }
-
 }

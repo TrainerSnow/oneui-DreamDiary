@@ -22,17 +22,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.snow.diary.core.model.combine.PersonWithRelation
 import com.snow.diary.core.model.data.Person
 import com.snow.diary.core.model.data.Relation
-import com.snow.diary.core.model.sort.SortConfig
-import com.snow.diary.core.model.sort.SortMode
-import com.snow.diary.feature.relations.R
 import com.snow.diary.core.ui.callback.PersonCallback
 import com.snow.diary.core.ui.feed.PersonFeed
 import com.snow.diary.core.ui.feed.PersonFeedState
 import com.snow.diary.core.ui.screen.ErrorScreen
 import com.snow.diary.core.ui.screen.LoadingScreen
+import com.snow.diary.feature.relations.R
 import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.navigation.TabItem
@@ -194,14 +191,12 @@ private fun PersonsSection(
     onPersonClick: (Person) -> Unit,
     onPersonFavouriteClick: (Person) -> Unit
 ) {
-    val pwrs = state.persons.map {
-        PersonWithRelation(it, state.relation)
-    }
+    val pwrs = state.persons
 
     PersonFeed(
         modifier = modifier,
-        state = PersonFeedState.Success(pwrs, false, SortConfig(SortMode.Alphabetically)),
-        personCallback = object : com.snow.diary.core.ui.callback.PersonCallback {
+        state = PersonFeedState.Success(pwrs),
+        personCallback = object : PersonCallback {
             override fun onClick(person: Person) {
                 onPersonClick(person)
             }

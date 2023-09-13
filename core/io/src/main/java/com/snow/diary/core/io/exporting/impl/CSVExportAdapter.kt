@@ -59,7 +59,6 @@ private fun Person.toRow(): Row = listOf(
     id?.toString(),
     name,
     isFavourite.toString(),
-    relationId.toString(),
     notes
 )
 

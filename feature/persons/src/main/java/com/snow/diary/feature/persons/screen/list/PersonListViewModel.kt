@@ -3,7 +3,7 @@ package com.snow.diary.feature.persons.screen.list;
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.core.common.launchInBackground
 import com.snow.diary.core.domain.action.person.AllPersons
-import com.snow.diary.core.domain.action.person.PersonWithRelationAct
+import com.snow.diary.core.domain.action.person.PersonWithRelationsAct
 import com.snow.diary.core.domain.action.person.UpdatePerson
 import com.snow.diary.core.domain.viewmodel.EventViewModel
 import com.snow.diary.core.model.data.Person
@@ -28,7 +28,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class PersonListViewModel @Inject constructor(
     allPersons: AllPersons,
-    personWithRelationAct: PersonWithRelationAct,
+    personWithRelationsAct: PersonWithRelationsAct,
     val updatePerson: UpdatePerson
 ) : EventViewModel<PersonListEvent>() {
 
@@ -43,7 +43,7 @@ internal class PersonListViewModel @Inject constructor(
 
     val feedState = personListState(
         allPersons = allPersons,
-        personWithRelationAct = personWithRelationAct,
+        personWithRelationsAct = personWithRelationsAct,
         sortConfig = sortConfig
     ).stateIn(
         scope = viewModelScope,
@@ -76,7 +76,7 @@ internal class PersonListViewModel @Inject constructor(
 @OptIn(ExperimentalCoroutinesApi::class)
 private fun personListState(
     allPersons: AllPersons,
-    personWithRelationAct: PersonWithRelationAct,
+    personWithRelationsAct: PersonWithRelationsAct,
     sortConfig: StateFlow<SortConfig>
 ): Flow<PersonFeedState> = sortConfig
     .flatMapMerge { sort ->
@@ -84,10 +84,10 @@ private fun personListState(
             AllPersons.Input(sort)
         )
     }.flatMapMerge { persons ->
-        if(persons.isEmpty()) flowOf(emptyList())
+        if (persons.isEmpty()) flowOf(emptyList())
         else combine(
             flows = persons.map {
-                personWithRelationAct(it)
+                personWithRelationsAct(it)
             }
         ) {
             it.toList()
@@ -95,9 +95,5 @@ private fun personListState(
     }
     .map {
         if (it.isEmpty()) PersonFeedState.Empty
-        else PersonFeedState.Success(
-            it,
-            false,
-            sortConfig.value
-        )
+        else PersonFeedState.Success(it)
     }

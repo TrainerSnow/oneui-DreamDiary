@@ -1,18 +1,18 @@
-package com.snow.diary.core.domain.action.cross;
+package com.snow.diary.core.domain.action.cross.person_relation;
 
 import com.snow.diary.core.database.dao.CrossrefDao
 import com.snow.diary.core.domain.action.FlowAction
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class AllDreamPersonCrossrefs(
+class AllPersonRelationCrossrefs(
     val crossrefDao: CrossrefDao
-): com.snow.diary.core.domain.action.FlowAction<Unit, List<Pair<Long, Long>>>() {
+): FlowAction<Unit, List<Pair<Long, Long>>>() {
     override fun Unit.createFlow(): Flow<List<Pair<Long, Long>>> = crossrefDao
-        .getAllDreamPersonCrossrefs()
+        .getAllPersonRelationCrossrefs()
         .map { crossrefs ->
             crossrefs.map {
-                Pair(it.dreamId, it.personId)
+                Pair(it.personId, it.relationId)
             }
         }
 

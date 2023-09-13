@@ -15,7 +15,7 @@ internal sealed class PersonDetailState {
 
     data class Success(
         val person: Person,
-        val relation: Relation,
+        val relations: List<Relation>,
         val dreams: List<Dream>
     ): PersonDetailState()
 

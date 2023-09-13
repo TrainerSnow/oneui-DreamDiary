@@ -2,15 +2,17 @@ package com.snow.diary.feature.persons.screen.add;
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.snow.diary.core.form.TextInput
 import com.snow.diary.core.common.launchInBackground
 import com.snow.diary.core.common.search.Search.filterSearch
+import com.snow.diary.core.domain.action.cross.person_relation.AddPersonRelationCrossref
+import com.snow.diary.core.domain.action.cross.person_relation.AllPersonRelationCrossrefs
 import com.snow.diary.core.domain.action.person.AddPerson
 import com.snow.diary.core.domain.action.person.PersonFromId
+import com.snow.diary.core.domain.action.person.PersonWithRelationsAct
 import com.snow.diary.core.domain.action.person.UpdatePerson
 import com.snow.diary.core.domain.action.relation.AllRelations
-import com.snow.diary.core.domain.action.relation.RelationById
 import com.snow.diary.core.domain.viewmodel.EventViewModel
+import com.snow.diary.core.form.TextInput
 import com.snow.diary.core.model.data.Person
 import com.snow.diary.core.model.data.Relation
 import com.snow.diary.feature.persons.nav.AddPersonArgs
@@ -19,6 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -28,9 +31,12 @@ internal class AddPersonViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     val allRelations: AllRelations,
     personFromId: PersonFromId,
-    relationById: RelationById,
+    personWithRelationsAct: PersonWithRelationsAct,
     val addPerson: AddPerson,
     val updatePerson: UpdatePerson,
+    val addPersonRelationCrossref: AddPersonRelationCrossref,
+    val deletePersonRelationCrossref: AddPersonRelationCrossref,
+    val allPersonRelationCrossrefs: AllPersonRelationCrossrefs
 ) : EventViewModel<AddPersonEvent>() {
 
     private val args = AddPersonArgs(savedStateHandle)
@@ -56,8 +62,9 @@ internal class AddPersonViewModel @Inject constructor(
                 val person = personFromId(args.personId!!)
                     .first() ?: return@launchInBackground
 
-                val relation = relationById(person.relationId)
-                    .first() ?: return@launchInBackground
+                val relations = personWithRelationsAct(person)
+                    .firstOrNull()
+                    ?.relation ?: emptyList()
 
                 _inputState.emit(
                     AddPersonState(
@@ -66,7 +73,7 @@ internal class AddPersonViewModel @Inject constructor(
                         markAsFavourite = person.isFavourite
                     )
                 )
-                _selectedRelations.emit(listOf(relation))
+                _selectedRelations.emit(relations)
             }
         }
     }
@@ -130,20 +137,44 @@ internal class AddPersonViewModel @Inject constructor(
     }
 
     private fun save() = viewModelScope.launchInBackground {
-        //TODO: This only saves the **first** of the relations added.
-        val relation = selectedRelations.value.first()
+        val relations = selectedRelations.value
+
         val person = Person(
             id = args.personId,
             name = inputState.value.name.input,
             notes = inputState.value.note.input.ifBlank { null },
-            isFavourite = inputState.value.markAsFavourite,
-            relationId = relation.id!!
+            isFavourite = inputState.value.markAsFavourite
         )
 
         val id = if (isEdit) {
             updatePerson(person)
             args.personId!!
         } else addPerson(person)
+
+        val crossrefs = relations.map { relation ->
+            AddPersonRelationCrossref.Input(id, relation.id!!)
+        }
+        if(!isEdit) {
+            crossrefs.forEach { crossref ->
+                addPersonRelationCrossref(crossref)
+            }
+        } else {
+            val oldCrossrefs = allPersonRelationCrossrefs(Unit)
+                .firstOrNull()
+                ?.map {
+                    AddPersonRelationCrossref.Input(it.first, it.second)
+                } ?: emptyList()
+
+            val toRemove = oldCrossrefs - crossrefs.toSet()
+            val toAdd = crossrefs - oldCrossrefs.toSet()
+
+            toRemove.forEach {
+                deletePersonRelationCrossref(it)
+            }
+            toAdd.forEach {
+                addPersonRelationCrossref(it)
+            }
+        }
     }
 
     private fun selectRelation(relation: Relation) = viewModelScope.launch {

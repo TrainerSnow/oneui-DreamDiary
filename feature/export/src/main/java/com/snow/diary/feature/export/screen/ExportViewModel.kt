@@ -1,8 +1,8 @@
 package com.snow.diary.feature.export.screen;
 
 import androidx.lifecycle.viewModelScope
-import com.snow.diary.core.domain.action.cross.AllDreamLocationCrossrefs
-import com.snow.diary.core.domain.action.cross.AllDreamPersonCrossrefs
+import com.snow.diary.core.domain.action.cross.dream_location.AllDreamLocationCrossrefs
+import com.snow.diary.core.domain.action.cross.dream_person.AllDreamPersonCrossrefs
 import com.snow.diary.core.domain.action.dream.AllDreams
 import com.snow.diary.core.domain.action.location.AllLocations
 import com.snow.diary.core.domain.action.person.AllPersons
