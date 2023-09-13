@@ -2,9 +2,9 @@ package com.snow.diary.core.domain.action.dream;
 
 import com.snow.diary.core.domain.action.FlowAction
 import com.snow.diary.core.domain.action.location.LocationsFromDream
-import com.snow.diary.core.domain.action.person.PersonWithRelationAct
+import com.snow.diary.core.domain.action.person.PersonWithRelationsAct
 import com.snow.diary.core.domain.action.person.PersonsFromDream
-import com.snow.diary.core.model.combine.PersonWithRelation
+import com.snow.diary.core.model.combine.PersonWithRelations
 import com.snow.diary.core.model.data.Dream
 import com.snow.diary.core.model.data.Location
 import com.snow.diary.core.model.data.Person
@@ -17,15 +17,15 @@ import kotlinx.coroutines.flow.flowOf
 class DreamInformation(
     val personsFromDream: PersonsFromDream,
     val locationsFromDream: LocationsFromDream,
-    val personWithRelation: PersonWithRelationAct,
+    val personWithRelations: PersonWithRelationsAct,
     val dreamById: DreamById
-) : com.snow.diary.core.domain.action.FlowAction<Long, DreamInformation.Output?>() {
+) : FlowAction<Long, DreamInformation.Output?>() {
 
     data class Output(
 
         val dream: Dream,
 
-        val persons: List<PersonWithRelation>,
+        val persons: List<PersonWithRelations>,
 
         val locations: List<Location>
     )
@@ -47,12 +47,16 @@ class DreamInformation(
     }
 
 
-    private fun List<Person>.personsWithRelationsFlow(): Flow<List<PersonWithRelation>> =
+    private fun List<Person>.personsWithRelationsFlow(): Flow<List<PersonWithRelations>> =
         if (isEmpty()) flowOf(emptyList()) else
             combine(
                 map {
-                    personWithRelation(it)
+                    personWithRelations(it)
                 }
-            ) { it.toList() }
+            ) {
+                it
+                    .toList()
+                    .filterNotNull() //Should never occur, but there for type resolving
+            }
 
 }
