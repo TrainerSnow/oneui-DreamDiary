@@ -9,6 +9,8 @@ interface PersonCallback {
 
     fun onRelationClick(relation: Relation) { }
 
+    fun onRelationsClick(relations: List<Relation>){ }
+
     fun onFavouriteClick(person: Person) { }
 
     //For setting default param

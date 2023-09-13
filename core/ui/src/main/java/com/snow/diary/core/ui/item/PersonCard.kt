@@ -1,22 +1,17 @@
 package com.snow.diary.core.ui.item
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -42,9 +37,9 @@ import dev.oneuiproject.oneui.R as IconR
 fun PersonCard(
     modifier: Modifier = Modifier,
     person: Person,
-    relation: Relation? = null,
-    personCallback: com.snow.diary.core.ui.callback.PersonCallback = com.snow.diary.core.ui.callback.PersonCallback,
-    listPosition: ListPosition = ListPosition.Middle,
+    relations: List<Relation> = emptyList(),
+    personCallback: PersonCallback = PersonCallback,
+    listPosition: ListPosition = ListPosition.Single,
 ) {
     val titleTextStyle = TextStyle(
         color = OneUITheme.colors.seslPrimaryTextColor,
@@ -74,22 +69,10 @@ fun PersonCard(
                 horizontalArrangement = Arrangement
                     .spacedBy(PersonCardDefaults.relCircleSpacing)
             ) {
-                relation?.let { rel ->
-                    Box(
-                        modifier = Modifier
-                            .size(PersonCardDefaults.relationCircleRadius * 2)
-                            .clip(CircleShape)
-                            .background(
-                                color = Color(rel.color),
-                                shape = CircleShape
-                            )
-                            .clickable(
-                                interactionSource = remember { MutableInteractionSource() },
-                                indication = null,
-                                onClick = { personCallback.onRelationClick(rel) }
-                            )
-                    )
-                }
+                RelationsColorCircle(
+                    relations = relations,
+                    onClick = personCallback::onRelationsClick
+                )
                 Column(
                     modifier = Modifier
                         .weight(1F)
@@ -127,6 +110,33 @@ fun PersonCard(
     }
 }
 
+@Composable
+private fun RelationsColorCircle(
+    relations: List<Relation>,
+    onClick: (List<Relation>) -> Unit
+) = Canvas(
+    modifier = Modifier
+        .size(
+            size = PersonCardDefaults.relationCircleRadius * 2
+        )
+        .clickable { relations.let(onClick) }
+) {
+    require(relations.isNotEmpty())
+    var startDeg = 0F
+    val perDeg = 360F / relations.size
+
+    relations.forEach { relation ->
+        drawArc(
+            color = Color(relation.color),
+            startAngle = startDeg,
+            sweepAngle = perDeg,
+            useCenter = true
+        )
+
+        startDeg += perDeg
+    }
+}
+
 private object PersonCardDefaults {
 
     val relationCircleRadius = 12.dp
@@ -153,9 +163,8 @@ fun PersonCard() = OneUIPreview(title = "PersonCard", padding = PaddingValues())
         person = PersonPreviewData
             .persons
             .random(),
-        relation = RelationPreviewData
+        relations = RelationPreviewData
             .relations
-            .random(),
-        listPosition = ListPosition.Single
+            .take(3)
     )
 }
