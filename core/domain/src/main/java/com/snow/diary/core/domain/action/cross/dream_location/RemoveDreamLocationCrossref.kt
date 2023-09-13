@@ -1,12 +1,11 @@
-package com.snow.diary.core.domain.action.cross;
+package com.snow.diary.core.domain.action.cross.dream_location;
 
 import com.snow.diary.core.database.cross.DreamLocationCrossref
 import com.snow.diary.core.database.dao.CrossrefDao
-import com.snow.diary.core.domain.action.Action
 
-class AddDreamLocationCrossref(
+class RemoveDreamLocationCrossref(
     val crossrefDao: CrossrefDao
-): com.snow.diary.core.domain.action.Action<AddDreamLocationCrossref.Input, Unit>() {
+): com.snow.diary.core.domain.action.Action<RemoveDreamLocationCrossref.Input, Unit>() {
 
     data class Input(
 
@@ -17,7 +16,7 @@ class AddDreamLocationCrossref(
     )
 
     override suspend fun Input.compose() = crossrefDao
-        .addDreamLocationCrossref(
+        .deleteDreamLocationCrossref(
             DreamLocationCrossref(dreamId, locationId)
         )
 

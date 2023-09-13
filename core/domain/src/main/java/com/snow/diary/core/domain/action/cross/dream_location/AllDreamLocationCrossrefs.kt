@@ -1,7 +1,6 @@
-package com.snow.diary.core.domain.action.cross;
+package com.snow.diary.core.domain.action.cross.dream_location;
 
 import com.snow.diary.core.database.dao.CrossrefDao
-import com.snow.diary.core.domain.action.FlowAction
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

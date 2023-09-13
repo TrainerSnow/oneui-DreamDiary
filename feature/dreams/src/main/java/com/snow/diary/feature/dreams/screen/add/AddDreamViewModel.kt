@@ -7,10 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.snow.diary.core.form.Validator
 import com.snow.diary.core.common.launchInBackground
 import com.snow.diary.core.common.search.Search.filterSearch
-import com.snow.diary.core.domain.action.cross.AddDreamLocationCrossref
-import com.snow.diary.core.domain.action.cross.AddDreamPersonCrossref
-import com.snow.diary.core.domain.action.cross.RemoveDreamLocationCrossref
-import com.snow.diary.core.domain.action.cross.RemoveDreamPersonCrossref
+import com.snow.diary.core.domain.action.cross.dream_location.AddDreamLocationCrossref
+import com.snow.diary.core.domain.action.cross.dream_person.AddDreamPersonCrossref
+import com.snow.diary.core.domain.action.cross.dream_location.RemoveDreamLocationCrossref
+import com.snow.diary.core.domain.action.cross.dream_person.RemoveDreamPersonCrossref
 import com.snow.diary.core.domain.action.dream.AddDreamAction
 import com.snow.diary.core.domain.action.dream.DreamInformation
 import com.snow.diary.core.domain.action.dream.UpdateDream
