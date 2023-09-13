@@ -20,7 +20,7 @@ data class PersonEntity(
     val notes: String?
 ): IModelMappable<Person> {
 
-    override fun toModel() = Person(personId, name, isFavourite, /*TODO: REMOVE*/0, notes)
+    override fun toModel() = Person(personId, name, isFavourite, notes)
 
     constructor(person: Person) : this(
         person.id,

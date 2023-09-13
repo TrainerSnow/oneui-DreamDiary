@@ -1,8 +1,5 @@
 package com.snow.diary.core.io.importing.impl;
 
-import com.snow.diary.csv.Row
-import com.snow.diary.csv.config.csvConfig
-import com.snow.diary.csv.reader.CSVReader
 import com.snow.diary.core.io.data.Crossref
 import com.snow.diary.core.io.data.IOData
 import com.snow.diary.core.io.exporting.impl.TYPE_SEPARATOR
@@ -12,6 +9,9 @@ import com.snow.diary.core.model.data.Dream
 import com.snow.diary.core.model.data.Location
 import com.snow.diary.core.model.data.Person
 import com.snow.diary.core.model.data.Relation
+import com.snow.diary.csv.Row
+import com.snow.diary.csv.config.csvConfig
+import com.snow.diary.csv.reader.CSVReader
 import java.io.InputStream
 import java.time.LocalDate
 
@@ -65,8 +65,7 @@ private fun Row.toPerson(): Person = Person(
     id = this[0]!!.toLong(),
     name = this[1] ?: "",
     isFavourite = this[2]?.toBoolean() ?: false,
-    relationId = this[3]!!.toLong(),
-    notes = this[4]
+    notes = this[3]
 )
 
 private fun Row.toLocation(): Location = Location(
