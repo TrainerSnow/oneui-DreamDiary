@@ -7,7 +7,7 @@ import com.snow.diary.core.domain.action.dream.DreamsFromPerson
 import com.snow.diary.core.domain.action.dream.UpdateDream
 import com.snow.diary.core.domain.action.person.DeletePerson
 import com.snow.diary.core.domain.action.person.PersonFromId
-import com.snow.diary.core.domain.action.relation.RelationById
+import com.snow.diary.core.domain.action.person.PersonWithRelationsAct
 import com.snow.diary.core.domain.viewmodel.EventViewModel
 import com.snow.diary.core.model.data.Dream
 import com.snow.diary.feature.persons.nav.PersonDetailArgs
@@ -28,7 +28,7 @@ import javax.inject.Inject
 internal class PersonDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     personById: PersonFromId,
-    relationById: RelationById,
+    personWithRelationsAct: PersonWithRelationsAct,
     dreamsFromPerson: DreamsFromPerson,
     val updateDream: UpdateDream,
     val deletePerson: DeletePerson
@@ -36,7 +36,7 @@ internal class PersonDetailViewModel @Inject constructor(
 
     private val args = PersonDetailArgs(savedStateHandle)
 
-    val state = personDetailState(personById, args.personId, dreamsFromPerson, relationById)
+    val state = personDetailState(personById, args.personId, dreamsFromPerson, personWithRelationsAct)
         .stateIn(
             scope = viewModelScope,
             initialValue = PersonDetailState.Loading,
@@ -78,15 +78,14 @@ private fun personDetailState(
     personById: PersonFromId,
     id: Long,
     dreamsFromPerson: DreamsFromPerson,
-    relationById: RelationById
+    personWithRelationsAct: PersonWithRelationsAct
 ): Flow<PersonDetailState> = personById(id)
     .flatMapMerge { person ->
         if (person == null) flowOf(PersonDetailState.Error(id = id))
         else combine(
             flow = dreamsFromPerson(person),
-            flow2 = relationById(person.relationId)
-        ) { dreams, relation ->
-            if (relation == null) PersonDetailState.Error(id = id)
-            else PersonDetailState.Success(person, relation, dreams)
+            flow2 = personWithRelationsAct(person)
+        ) { dreams, relations ->
+            PersonDetailState.Success(person, relations.relation, dreams)
         }
     }

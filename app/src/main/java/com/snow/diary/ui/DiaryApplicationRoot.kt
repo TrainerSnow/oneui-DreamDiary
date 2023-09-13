@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
-import com.snow.diary.nav.TopLevelDestinations
 import com.snow.diary.feature.dreams.nav.addDream
 import com.snow.diary.feature.dreams.nav.dreamDetail
 import com.snow.diary.feature.dreams.nav.dreamList
@@ -30,6 +29,7 @@ import com.snow.diary.feature.relations.nav.goToRelationDetail
 import com.snow.diary.feature.relations.nav.goToRelationList
 import com.snow.diary.feature.relations.nav.relationDetail
 import com.snow.diary.feature.relations.nav.relationList
+import com.snow.diary.nav.TopLevelDestinations
 import org.oneui.compose.base.Icon
 import org.oneui.compose.base.IconView
 import org.oneui.compose.layout.drawer.DrawerDivider
@@ -149,6 +149,9 @@ private fun DiaryNavHost(
             },
             onDreamClick = {
                 navController.goToDreamDetail(it.id!!)
+            },
+            onRelationClick = {
+                navController.goToRelationDetail(it.id!!)
             }
         )
         addPerson(
