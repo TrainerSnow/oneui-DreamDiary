@@ -6,6 +6,7 @@ import com.snow.diary.core.model.combine.PersonWithRelations
 import com.snow.diary.core.model.data.Person
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+//TODO: Refacto so its a "RelationsFromPerson" usecase
 
 class PersonWithRelationsAct(
     val personDao: PersonDao
