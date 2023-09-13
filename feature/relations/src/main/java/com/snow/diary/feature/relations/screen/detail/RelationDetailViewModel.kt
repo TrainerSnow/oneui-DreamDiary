@@ -8,6 +8,7 @@ import com.snow.diary.core.domain.action.person.UpdatePerson
 import com.snow.diary.core.domain.action.relation.DeleteRelation
 import com.snow.diary.core.domain.action.relation.RelationById
 import com.snow.diary.core.domain.viewmodel.EventViewModel
+import com.snow.diary.core.model.combine.PersonWithRelations
 import com.snow.diary.core.model.data.Person
 import com.snow.diary.feature.relations.nav.RelationDetailArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -80,7 +81,10 @@ private fun relationDetailState(
         else personsFromRelation(relation).map { persons ->
             RelationDetailState.Success(
                 relation,
-                persons.orEmpty()
+                persons
+                    ?.map {
+                        PersonWithRelations(it, listOf(relation)) //We act like the currently shown relation is the only one.
+                    }.orEmpty()
             )
         }
     }

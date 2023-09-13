@@ -34,7 +34,6 @@ fun List<Person>.sortWith(
     sortConfig: SortConfig
 ): List<Person> = when (sortConfig.mode) {
     SortMode.Alphabetically -> sortedBy { it.name }
-    SortMode.Relation -> sortedBy { it.relationId }
     SortMode.Length -> sortedBy { it.notes }
     else -> this
 }
