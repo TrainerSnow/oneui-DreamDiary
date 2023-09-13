@@ -7,7 +7,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.snow.diary.core.database.model.RelationEntity
-import com.snow.diary.core.database.model.RelationWithPersons
+import com.snow.diary.core.database.model.cross.RelationWithPersons
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -30,7 +30,7 @@ interface RelationDao {
     fun getAll(): Flow<List<RelationEntity>>
 
     @Transaction
-    @Query("SELECT * FROM person_relation WHERE id = :id")
+    @Query("SELECT * FROM person_relation WHERE relationId = :id")
     fun getById(id: Long): Flow<RelationEntity?>
 
     @Transaction
@@ -38,6 +38,6 @@ interface RelationDao {
     fun getAllRelationsWithPersons(): Flow<List<RelationWithPersons>>
 
     @Transaction
-    @Query("SELECT * FROM person_relation WHERE id = :id")
+    @Query("SELECT * FROM person_relation WHERE relationId = :id")
     fun getRelationWithPersonsById(id: Long): Flow<RelationWithPersons>
 }

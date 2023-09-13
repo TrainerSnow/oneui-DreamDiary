@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.snow.diary.core.database.cross.DreamLocationCrossref
 import com.snow.diary.core.database.cross.DreamPersonCrossref
+import com.snow.diary.core.database.cross.PersonRelationCrossref
 import com.snow.diary.core.database.dao.CrossrefDao
 import com.snow.diary.core.database.dao.DreamDao
 import com.snow.diary.core.database.dao.LocationDao
@@ -25,7 +26,8 @@ import com.snow.diary.core.database.type.PointFConverters
         PersonEntity::class,
         RelationEntity::class,
         DreamPersonCrossref::class,
-        DreamLocationCrossref::class
+        DreamLocationCrossref::class,
+        PersonRelationCrossref::class
     ],
     version = DiaryDatabase.DB_VERSION
 )
@@ -45,7 +47,7 @@ abstract class DiaryDatabase : RoomDatabase() {
 
     companion object {
 
-        const val DB_VERSION = 4
+        const val DB_VERSION = 5
 
         const val DB_NAME = "Diary_Database"
 

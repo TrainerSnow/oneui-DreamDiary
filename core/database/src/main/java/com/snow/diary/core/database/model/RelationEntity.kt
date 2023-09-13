@@ -12,7 +12,7 @@ import com.snow.diary.core.model.data.Relation
 data class RelationEntity(
 
     @PrimaryKey(autoGenerate = true)
-    val id: Long? = null,
+    val relationId: Long? = null,
 
     val name: String,
 
@@ -22,7 +22,7 @@ data class RelationEntity(
 
 ): IModelMappable<Relation> {
 
-    override fun toModel() = Relation(id, name, color.toArgb(), notes)
+    override fun toModel() = Relation(relationId, name, color.toArgb(), notes)
 
     constructor(relation: Relation) : this(
         relation.id,
