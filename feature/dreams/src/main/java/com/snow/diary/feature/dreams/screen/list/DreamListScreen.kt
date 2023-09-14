@@ -73,7 +73,6 @@ private fun DreamListScreen(
     onExportClick: () -> Unit,
     onAboutClick: () -> Unit
 ) {
-    //TODO: When issue resolved, also show subtitle when collapsed
     //TODO: Possibly adapt nav icon to tablet mode
     CollapsingToolbarLayout(
         modifier = Modifier
