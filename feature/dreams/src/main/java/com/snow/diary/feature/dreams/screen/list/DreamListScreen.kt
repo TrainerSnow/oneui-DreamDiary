@@ -18,7 +18,6 @@ import com.snow.diary.core.model.data.Dream
 import com.snow.diary.core.model.sort.SortConfig
 import com.snow.diary.core.model.sort.SortDirection
 import com.snow.diary.core.model.sort.SortMode
-import com.snow.diary.core.ui.callback.DreamCallback
 import com.snow.diary.core.ui.data.DreamPreviewData
 import com.snow.diary.core.ui.feed.DreamFeed
 import com.snow.diary.core.ui.feed.DreamFeedState
@@ -97,24 +96,6 @@ private fun DreamListScreen(
             )
         },
         appbarActions = {
-            //TODO: When https://github.com/TrainerSnow/oneui-compose/issues/31 is fixed, place menu somewhere else
-            if (showMenu) {
-                PopupMenu(
-                    onDismissRequest = {
-                        onEvent(DreamListEvent.MenuClick)
-                    }
-                ) {
-                    MenuItem(
-                        label = stringResource(R.string.dream_list_menu_export),
-                        onClick = onExportClick
-                    )
-                    MenuItem(
-                        label = stringResource(R.string.dream_list_menu_about),
-                        onClick = onAboutClick
-                    )
-                }
-            }
-
             IconButton(
                 icon = Icon.Resource(
                     IconR.drawable.ic_oui_add
@@ -135,6 +116,24 @@ private fun DreamListScreen(
                     onEvent(DreamListEvent.MenuClick)
                 }
             )
+        },
+        menu = {
+            if (showMenu) {
+                PopupMenu(
+                    onDismissRequest = {
+                        onEvent(DreamListEvent.MenuClick)
+                    }
+                ) {
+                    MenuItem(
+                        label = stringResource(R.string.dream_list_menu_export),
+                        onClick = onExportClick
+                    )
+                    MenuItem(
+                        label = stringResource(R.string.dream_list_menu_about),
+                        onClick = onAboutClick
+                    )
+                }
+            }
         }
     ) {
         Row(
