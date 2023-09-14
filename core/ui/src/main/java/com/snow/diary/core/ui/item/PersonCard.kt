@@ -121,13 +121,17 @@ private fun RelationsColorCircle(
         )
         .clickable { relations.let(onClick) }
 ) {
-    require(relations.isNotEmpty())
-    var startDeg = 0F
-    val perDeg = 360F / relations.size
+    val colors = if(relations.isEmpty())
+        listOf(Color.Transparent)
+    else
+        relations.map { Color(it.color) }
 
-    relations.forEach { relation ->
+    var startDeg = 0F
+    val perDeg = 360F / colors.size
+
+    colors.forEach { color ->
         drawArc(
-            color = Color(relation.color),
+            color = color,
             startAngle = startDeg,
             sweepAngle = perDeg,
             useCenter = true
