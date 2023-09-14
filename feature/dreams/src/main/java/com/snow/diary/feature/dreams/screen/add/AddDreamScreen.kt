@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -77,8 +76,7 @@ private fun AddDreamScreen(
         ),
         expandable = false,
         state = rememberCollapsingToolbarState(
-            CollapsingToolbarCollapsedState.COLLAPSED,
-            with(LocalDensity.current) { 100.dp.toPx() } //TODO Remove when lib is ready
+            CollapsingToolbarCollapsedState.COLLAPSED
         ),
         appbarNavAction = {
             IconButton(

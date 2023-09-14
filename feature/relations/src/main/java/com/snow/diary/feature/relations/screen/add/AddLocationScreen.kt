@@ -73,8 +73,7 @@ private fun AddRelation(
         ),
         expandable = false,
         state = rememberCollapsingToolbarState(
-            CollapsingToolbarCollapsedState.COLLAPSED,
-            with(LocalDensity.current) { 100.dp.toPx() } //TODO Remove when lib is ready
+            CollapsingToolbarCollapsedState.COLLAPSED
         ),
         appbarNavAction = {
             IconButton(
