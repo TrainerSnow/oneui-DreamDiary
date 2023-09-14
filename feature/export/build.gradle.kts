@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.snow.diary.feature.export"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 26
