@@ -100,7 +100,6 @@ internal class AddRelationViewModel @Inject constructor(
     }
 
     private fun save() = viewModelScope.launchInBackground {
-        //TODO: This only saves the **first** of the relations added.
         val relation = Relation(
             id = args.relationId,
             name = inputState.value.name.input,

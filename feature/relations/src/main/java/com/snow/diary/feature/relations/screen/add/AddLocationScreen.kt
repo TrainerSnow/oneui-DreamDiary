@@ -19,7 +19,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -95,7 +94,7 @@ private fun AddRelation(
                 input = inputState.name.input,
                 hint = stringResource(R.string.relation_add_name),
                 onInputChange = { onEvent(AddRelationEvent.ChangeName(it)) },
-                icon = Icon.Resource(IconR.drawable.ic_oui_memo_outline) //TODO: Proper icon
+                icon = Icon.Resource(IconR.drawable.ic_oui_community)
             )
             TextInputFormField(
                 modifier = Modifier

@@ -43,7 +43,6 @@ fun DiaryApplicationRoot(
 ) {
     val drawerState = state.drawerState
 
-    //TODO: In lib, disable swiping to open drawer
     //TODO: When available, use nav rail not drawer on tablets
     DrawerLayout(
         state = drawerState,

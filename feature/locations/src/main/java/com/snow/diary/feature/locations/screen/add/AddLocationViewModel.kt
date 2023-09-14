@@ -77,7 +77,6 @@ internal class AddLocationViewModel @Inject constructor(
     }
 
     private fun save() = viewModelScope.launchInBackground {
-        //TODO: This only saves the **first** of the relations added.
         val location = Location(
             id = args.locationId,
             name = inputState.value.name.input,
