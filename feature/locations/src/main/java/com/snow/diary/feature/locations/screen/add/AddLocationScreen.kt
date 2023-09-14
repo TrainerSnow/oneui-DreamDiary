@@ -15,15 +15,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.snow.diary.feature.locations.R
 import com.snow.diary.core.ui.component.TextInputFormField
+import com.snow.diary.feature.locations.R
 import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
-import org.oneui.compose.widgets.buttons.ColoredButton
+import org.oneui.compose.widgets.buttons.Button
 import org.oneui.compose.widgets.buttons.IconButton
-import org.oneui.compose.widgets.buttons.TransparentButton
+import org.oneui.compose.widgets.buttons.coloredButtonColors
+import org.oneui.compose.widgets.buttons.transparentButtonColors
 import dev.oneuiproject.oneui.R as IconR
 
 @Composable
@@ -99,18 +100,20 @@ private fun AddLocation(
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-                TransparentButton(
+                Button(
                     label = stringResource(R.string.location_add_cancel),
-                    onClick = onNavigateBack
+                    onClick = onNavigateBack,
+                    colors = transparentButtonColors()
                 )
-                ColoredButton(
+                Button(
                     label = stringResource(R.string.location_add_save),
                     onClick = {
                         onEvent(
                             AddLocationEvent.Save
                         )
                         onNavigateBack()
-                    }
+                    },
+                    colors = coloredButtonColors()
                 )
             }
         }
