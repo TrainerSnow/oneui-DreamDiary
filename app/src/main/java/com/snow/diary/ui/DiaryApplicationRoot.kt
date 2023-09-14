@@ -43,7 +43,6 @@ fun DiaryApplicationRoot(
 ) {
     val drawerState = state.drawerState
 
-    //TODO: In lib, disable swiping to open drawer
     //TODO: When available, use nav rail not drawer on tablets
     DrawerLayout(
         state = drawerState,
@@ -67,9 +66,12 @@ fun DiaryApplicationRoot(
                 )
             }
         },
-        //TODO: In lib make headerIcon be a composable
-        headerIcon = Icon.Resource(IconR.drawable.ic_oui_settings_outline),
-        onHeaderIconClick = { TODO("Navigate to settings") }
+        headerIcon = {
+            org.oneui.compose.widgets.buttons.IconButton(
+                onClick = { TODO("Navigate to settings") },
+                icon = Icon.Resource(IconR.drawable.ic_oui_settings_outline)
+            )
+        }
     ) {
         DiaryNavHost(state)
     }

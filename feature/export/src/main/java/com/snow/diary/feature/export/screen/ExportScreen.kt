@@ -27,13 +27,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.snow.diary.core.io.ExportFiletype
 import com.snow.diary.feature.export.R
 import com.snow.diary.feature.export.info
 import com.snow.diary.feature.export.screen.components.ExportFiletypeButton
 import com.snow.diary.feature.export.suitableForImporting
-import com.snow.diary.core.io.ExportFiletype
+import org.oneui.compose.progress.CircularProgressIndicatorSize
+import org.oneui.compose.progress.ProgressIndicator
+import org.oneui.compose.progress.ProgressIndicatorType
 import org.oneui.compose.theme.OneUITheme
-import org.oneui.compose.widgets.buttons.ColoredButton
+import org.oneui.compose.widgets.buttons.Button
+import org.oneui.compose.widgets.buttons.coloredButtonColors
 
 @Composable
 internal fun ExportScreen(
@@ -132,15 +136,27 @@ private fun ExportScreen(
                 )
             }
 
-            //TODO: When lib allows, make this button show progress indicator when ExportState#isExporting
-            ColoredButton(
-                label = stringResource(R.string.export_button_label),
+            Button(
+                label = {
+                    if (state.isExporting) {
+                        ProgressIndicator(
+                            type = ProgressIndicatorType.CircularIndeterminate(
+                                CircularProgressIndicatorSize.Companion.Small
+                            )
+                        )
+                    } else {
+                        Text(
+                            text = stringResource(R.string.export_button_label)
+                        )
+                    }
+                },
                 onClick = {
                     onEvent(
                         ExportEvent.Export
                     )
                 },
-                padding = ExportScreenDefaults.buttonPadding
+                padding = ExportScreenDefaults.buttonPadding,
+                colors = coloredButtonColors()
             )
         }
     }

@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -29,10 +28,11 @@ import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
 import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.widgets.HorizontalSeekbar
-import org.oneui.compose.widgets.buttons.ColoredButton
+import org.oneui.compose.widgets.buttons.Button
 import org.oneui.compose.widgets.buttons.IconButton
-import org.oneui.compose.widgets.buttons.TransparentButton
+import org.oneui.compose.widgets.buttons.coloredButtonColors
 import org.oneui.compose.widgets.buttons.iconButtonColors
+import org.oneui.compose.widgets.buttons.transparentButtonColors
 import org.oneui.compose.widgets.seekBarColors
 import dev.oneuiproject.oneui.R as IconR
 
@@ -76,8 +76,7 @@ private fun AddDreamScreen(
         ),
         expandable = false,
         state = rememberCollapsingToolbarState(
-            CollapsingToolbarCollapsedState.COLLAPSED,
-            with(LocalDensity.current) { 100.dp.toPx() } //TODO Remove when lib is ready
+            CollapsingToolbarCollapsedState.COLLAPSED
         ),
         appbarNavAction = {
             IconButton(
@@ -271,18 +270,20 @@ private fun AddDreamScreen(
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-                TransparentButton(
+                Button(
                     label = stringResource(R.string.dream_add_cancel),
-                    onClick = dismissDream
+                    onClick = dismissDream,
+                    colors = transparentButtonColors()
                 )
-                ColoredButton(
+                Button(
                     label = stringResource(R.string.dream_add_save),
                     onClick = {
                         onEvent(
                             AddDreamEvent.Add
                         )
                         dismissDream()
-                    }
+                    },
+                    colors = coloredButtonColors()
                 )
             }
         }

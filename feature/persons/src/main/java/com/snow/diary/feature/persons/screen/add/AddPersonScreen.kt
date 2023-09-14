@@ -16,18 +16,19 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.core.model.data.Relation
+import com.snow.diary.core.ui.component.TextInputFormField
 import com.snow.diary.feature.persons.R
 import com.snow.diary.feature.persons.screen.add.components.RelationInputList
-import com.snow.diary.core.ui.component.TextInputFormField
 import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
 import org.oneui.compose.theme.OneUITheme
-import org.oneui.compose.widgets.buttons.ColoredButton
+import org.oneui.compose.widgets.buttons.Button
 import org.oneui.compose.widgets.buttons.IconButton
-import org.oneui.compose.widgets.buttons.TransparentButton
+import org.oneui.compose.widgets.buttons.coloredButtonColors
 import org.oneui.compose.widgets.buttons.iconButtonColors
+import org.oneui.compose.widgets.buttons.transparentButtonColors
 import dev.oneuiproject.oneui.R as IconR
 
 @Composable
@@ -71,8 +72,7 @@ private fun AddPerson(
         ),
         expandable = false,
         state = rememberCollapsingToolbarState(
-            CollapsingToolbarCollapsedState.COLLAPSED,
-            with(LocalDensity.current) { 100.dp.toPx() } //TODO Remove when lib is ready
+            CollapsingToolbarCollapsedState.COLLAPSED
         ),
         appbarNavAction = {
             IconButton(
@@ -160,18 +160,20 @@ private fun AddPerson(
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-                TransparentButton(
+                Button(
                     label = stringResource(R.string.person_add_cancel),
-                    onClick = onNavigateBack
+                    onClick = onNavigateBack,
+                    colors = transparentButtonColors()
                 )
-                ColoredButton(
+                Button(
                     label = stringResource(R.string.person_add_save),
                     onClick = {
                         onEvent(
                             AddPersonEvent.Save
                         )
                         onNavigateBack()
-                    }
+                    },
+                    colors = coloredButtonColors()
                 )
             }
         }

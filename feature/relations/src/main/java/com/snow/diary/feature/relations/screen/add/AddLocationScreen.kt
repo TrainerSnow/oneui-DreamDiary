@@ -19,22 +19,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.snow.diary.feature.relations.R
 import com.snow.diary.core.ui.component.TextInputFormField
+import com.snow.diary.feature.relations.R
 import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
 import org.oneui.compose.picker.color.SimpleColorPickerPopup
 import org.oneui.compose.widgets.box.RoundedCornerBox
-import org.oneui.compose.widgets.buttons.ColoredButton
+import org.oneui.compose.widgets.buttons.Button
 import org.oneui.compose.widgets.buttons.IconButton
-import org.oneui.compose.widgets.buttons.TransparentButton
+import org.oneui.compose.widgets.buttons.coloredButtonColors
+import org.oneui.compose.widgets.buttons.transparentButtonColors
 import dev.oneuiproject.oneui.R as IconR
 
 @Composable
@@ -72,8 +72,7 @@ private fun AddRelation(
         ),
         expandable = false,
         state = rememberCollapsingToolbarState(
-            CollapsingToolbarCollapsedState.COLLAPSED,
-            with(LocalDensity.current) { 100.dp.toPx() } //TODO Remove when lib is ready
+            CollapsingToolbarCollapsedState.COLLAPSED
         ),
         appbarNavAction = {
             IconButton(
@@ -95,7 +94,7 @@ private fun AddRelation(
                 input = inputState.name.input,
                 hint = stringResource(R.string.relation_add_name),
                 onInputChange = { onEvent(AddRelationEvent.ChangeName(it)) },
-                icon = Icon.Resource(IconR.drawable.ic_oui_memo_outline) //TODO: Proper icon
+                icon = Icon.Resource(IconR.drawable.ic_oui_community)
             )
             TextInputFormField(
                 modifier = Modifier
@@ -161,18 +160,20 @@ private fun AddRelation(
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-                TransparentButton(
+                Button(
                     label = stringResource(R.string.relation_add_cancel),
-                    onClick = onNavigateBack
+                    onClick = onNavigateBack,
+                    colors = transparentButtonColors()
                 )
-                ColoredButton(
+                Button(
                     label = stringResource(R.string.relation_add_save),
                     onClick = {
                         onEvent(
                             AddRelationEvent.Save
                         )
                         onNavigateBack()
-                    }
+                    },
+                    colors = coloredButtonColors()
                 )
             }
         }
