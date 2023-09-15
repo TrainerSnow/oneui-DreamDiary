@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preferences_main_title">Settings</string>
+    <string name="preferences_main_section_visuals">Visuals</string>
+    <string name="preferences_main_section_privacy">Privacy</string>
+    <string name="preferences_main_colormode">Color theme</string>
+    <string name="preferences_main_securitymode">Lock methods</string>
+    <string name="preferences_main_securitymode_desc">Methods to protect this app from unauthorized access.</string>
+    <string name="preferences_main_obfuscation">Preview mode</string>
+    <string name="preferences_main_obfuscation_desc">Obfuscate information such as e.g. anmes and notes to showcase the app.</string>
+
+    <string name="colormode_light">Light</string>
+    <string name="colormode_dark">Dark</string>
+    <string name="colormode_system">System</string>
+
+    <string name="securitymode_biometric">Biometric</string>
+    <string name="securitymode_default">Default</string>
+    <string name="securitymode_none">None</string>
+</resources>
