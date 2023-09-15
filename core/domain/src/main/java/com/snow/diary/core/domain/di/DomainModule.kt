@@ -5,6 +5,7 @@ import com.snow.diary.core.database.dao.DreamDao
 import com.snow.diary.core.database.dao.LocationDao
 import com.snow.diary.core.database.dao.PersonDao
 import com.snow.diary.core.database.dao.RelationDao
+import com.snow.diary.core.datastore.data.PreferencesDataSource
 import com.snow.diary.core.domain.action.cross.dream_location.AddDreamLocationCrossref
 import com.snow.diary.core.domain.action.cross.dream_location.AllDreamLocationCrossrefs
 import com.snow.diary.core.domain.action.cross.dream_location.RemoveDreamLocationCrossref
@@ -37,6 +38,10 @@ import com.snow.diary.core.domain.action.person.PersonsFromDream
 import com.snow.diary.core.domain.action.person.PersonsFromRelation
 import com.snow.diary.core.domain.action.person.PersonsWithRelationsAct
 import com.snow.diary.core.domain.action.person.UpdatePerson
+import com.snow.diary.core.domain.action.preferences.GetPreferences
+import com.snow.diary.core.domain.action.preferences.UpdateColorMode
+import com.snow.diary.core.domain.action.preferences.UpdateObfuscationPreferences
+import com.snow.diary.core.domain.action.preferences.UpdateSecurityMode
 import com.snow.diary.core.domain.action.relation.AddRelation
 import com.snow.diary.core.domain.action.relation.AllRelations
 import com.snow.diary.core.domain.action.relation.DeleteRelation
@@ -336,5 +341,34 @@ object DomainModule {
     fun provideAllPersonRelationCrossrefs(
         crossrefDao: CrossrefDao
     ) = AllPersonRelationCrossrefs(crossrefDao)
+
+
+    /*
+    Preferences usecases
+     */
+
+    @Provides
+    @Singleton
+    fun provideGetPreferences(
+        prefsDataSource: PreferencesDataSource
+    ) = GetPreferences(prefsDataSource)
+
+    @Provides
+    @Singleton
+    fun provideUpdateColorMode(
+        prefsDataSource: PreferencesDataSource
+    ) = UpdateColorMode(prefsDataSource)
+
+    @Provides
+    @Singleton
+    fun provideUpdateSecurityMode(
+        prefsDataSource: PreferencesDataSource
+    ) = UpdateSecurityMode(prefsDataSource)
+
+    @Provides
+    @Singleton
+    fun provideUpdateObfuscationPreferences(
+        prefsDataSource: PreferencesDataSource
+    ) = UpdateObfuscationPreferences(prefsDataSource)
 
 }
