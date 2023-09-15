@@ -34,11 +34,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
     buildFeatures {
         compose = true
@@ -76,6 +76,7 @@ dependencies {
     implementation(project(":feature:persons"))
     implementation(project(":feature:locations"))
     implementation(project(":feature:relations"))
+    implementation(project(":feature:preferences"))
     implementation(project(":feature:export"))
     implementation(project(":core:model"))
     implementation(libs.oneui)
