@@ -2,9 +2,12 @@ package com.snow.diary.feature.preferences.screen.main;
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.core.model.preferences.ColorMode
 import com.snow.diary.core.model.preferences.UserPreferences
 import com.snow.diary.feature.preferences.R
@@ -21,13 +24,31 @@ import org.oneui.compose.widgets.buttons.IconButton
 import org.oneui.compose.widgets.text.TextSeparator
 import dev.oneuiproject.oneui.R as IconR
 
+
+@Composable
+internal fun MainPreferencesScreen(
+    viewModel: MainPreferencesViewModel = hiltViewModel(),
+    onNavigateToObfuscationPreferences: () -> Unit,
+    onNavigateBack: () -> Unit
+) {
+    val prefs by viewModel.preferences.collectAsStateWithLifecycle()
+
+    MainPreferencesScreen(
+        prefs = prefs,
+        onEvent = viewModel::onEvent,
+        onNavigateToObfuscationPreferences = onNavigateToObfuscationPreferences,
+        onNavigateBack = onNavigateBack
+    )
+}
+
 @Composable
 private fun MainPreferencesScreen(
-    prefs: UserPreferences,
+    prefs: UserPreferences?,
     onEvent: (MainPreferencesEvent) -> Unit,
     onNavigateToObfuscationPreferences: () -> Unit,
     onNavigateBack: () -> Unit
 ) {
+    if(prefs == null) return //Simply blank screen. IDK if this is good
     CollapsingToolbarLayout(
         toolbarTitle = stringResource(R.string.preferences_main_title),
         state = rememberCollapsingToolbarState(CollapsingToolbarCollapsedState.COLLAPSED),
