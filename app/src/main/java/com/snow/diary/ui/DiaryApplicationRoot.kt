@@ -24,7 +24,9 @@ import com.snow.diary.feature.persons.nav.goToPersonDetail
 import com.snow.diary.feature.persons.nav.personDetail
 import com.snow.diary.feature.persons.nav.personList
 import com.snow.diary.feature.preferences.nav.goToMainPreferences
+import com.snow.diary.feature.preferences.nav.goToObfuscatePreferences
 import com.snow.diary.feature.preferences.nav.mainPreferences
+import com.snow.diary.feature.preferences.nav.obfuscatePreferences
 import com.snow.diary.feature.relations.nav.addRelation
 import com.snow.diary.feature.relations.nav.goToAddRelation
 import com.snow.diary.feature.relations.nav.goToRelationDetail
@@ -203,7 +205,10 @@ private fun DiaryNavHost(
 
         mainPreferences(
             onNavigateBack = state::navigateBack,
-            onNavigateToObfuscationPreferences = { }
+            onNavigateToObfuscationPreferences = navController::goToObfuscatePreferences
+        )
+        obfuscatePreferences(
+            onNavigateBack = state::navigateBack
         )
     }
 }
