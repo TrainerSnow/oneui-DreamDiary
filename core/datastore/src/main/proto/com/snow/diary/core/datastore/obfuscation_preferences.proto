@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_package = "com.snow.diary.core.datastore";
+option java_multiple_files = true;
+
+message ObfuscationPreferencesProto {
+
+  bool obfuscation_enabled = 1;
+
+  bool obfuscate_dreams = 2;
+
+  bool obfuscate_persons = 3;
+
+  bool obfuscate_locations = 4;
+
+  bool obfuscate_relations = 5;
+
+}

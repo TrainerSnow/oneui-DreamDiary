@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_package = "com.snow.diary.core.datastore";
+option java_multiple_files = true;
+
+enum SecurityModeProto {
+
+  SECURITY_MODE_BIOMETRIC = 0;
+
+  SECURITY_MODE_DEFAULT = 1;
+
+  SECURITY_MODE_NONE = 2;
+
+  SECURITY_MODE_UNSPECIFIED = 3;
+
+}

@@ -43,7 +43,7 @@ data class DiaryState(
 
     fun openDrawer() = scope.launch { drawerState.openAnimate() }
 
-    private fun closeDrawer() = scope.launch { drawerState.closeAnimate() }
+    fun closeDrawer() = scope.launch { drawerState.closeAnimate() }
 
 }
 
