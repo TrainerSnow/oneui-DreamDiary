@@ -46,7 +46,5 @@ dependencies {
 
     implementation(libs.org.jetbrains.kotlinx.coroutines.core)
 
-    implementation(libs.androidx.workmanager)
-
     implementation(project(":core:model"))
 }
