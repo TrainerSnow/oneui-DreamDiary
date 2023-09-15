@@ -25,6 +25,8 @@ mockito = "5.5.0"
 junit_jupiter = "5.10.0"
 json_serialization = "1.5.1"
 datastore = "1.1.0-alpha05"
+protobuf = "3.24.0"
+protobufPlugin = "0.9.4"
 
 [libraries]
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
@@ -44,6 +46,8 @@ compose-navigation-hilt = { group = "androidx.hilt", name = "hilt-navigation-com
 compose-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "compose_lifecycle" }
 
 datastore-proto = { group = "androidx.datastore", name = "datastore", version.ref = "datastore" }
+protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
+protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -72,4 +76,5 @@ com-android-library = { id = "com.android.library", version.ref = "agp" }
 com-google-dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "dagger_hilt" }
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version = "1.9.10" }
+protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 

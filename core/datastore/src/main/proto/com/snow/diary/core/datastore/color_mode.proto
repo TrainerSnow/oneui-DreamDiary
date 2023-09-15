@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_package = "com.snow.diary.core.datastore";
+option java_multiple_files = true;
+
+enum ColorModeProto {
+
+  COLOR_MODE_DARK = 0;
+
+  COLOR_MODE_LIGHT = 1;
+
+  COLOR_MODE_SYSTEM = 2;
+
+  COLOR_MODE_UNSPECIFIED = 3;
+
+}

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_package = "com.snow.diary.core.datastore";
+option java_multiple_files = true;
+
+import "com/snow/diary/core/datastore/color_mode.proto";
+import "com/snow/diary/core/datastore/security_mode.proto";
+import "com/snow/diary/core/datastore/obfuscation_preferences.proto";
+
+message UserPreferences {
+
+  ColorModeProto colorMode = 1;
+
+  SecurityModeProto securityMode = 2;
+
+  ObfuscationPreferencesProto obfuscationPreferences = 3;
+
+}
