@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.protobuf)
+    id("kotlin-kapt")
+    alias(libs.plugins.com.google.dagger.hilt.android)
 }
 
 android {
@@ -58,4 +60,7 @@ dependencies {
 
     implementation(libs.datastore.proto)
     implementation(libs.protobuf.kotlin.lite)
+
+    implementation(libs.com.google.dagger.hilt.android)
+    kapt(libs.com.google.dagger.hilt.android.compiler)
 }
