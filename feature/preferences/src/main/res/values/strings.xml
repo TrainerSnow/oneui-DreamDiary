@@ -10,8 +10,7 @@
     <string name="preferences_main_obfuscation_desc">Obfuscate information such as e.g. names and notes to showcase the app.</string>
 
     <string name="preferences_obfuscate_title">Showcase mode</string>
-    <string name="preferences_obfuscate_info_disabled">Enable showcase mode to hide information from people that you want to show a part of the app.</string>
-    <string name="preferences_obfuscate_info_enabled">Filter out what kind of information should be obfuscated and what part of the app can be shown openly.</string>
+    <string name="preferences_obfuscate_info">If you want to show you data to other people, filter out what kind of information should be obfuscated and what part of the app can be shown openly.</string>
     <string name="preferences_obfuscate_dreams">Obfuscate dreams</string>
     <string name="preferences_obfuscate_persons">Obfuscate persons</string>
     <string name="preferences_obfuscate_locations">Obfuscate locations</string>

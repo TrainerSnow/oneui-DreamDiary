@@ -2,6 +2,7 @@ package com.snow.diary.feature.preferences.screen.obfuscation
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -58,7 +59,7 @@ private fun ObfuscationPreferencesScreen(
         },
         toolbarTitle = stringResource(R.string.preferences_obfuscate_title)
     ) {
-        val childrenEnabled = !prefs.obfuscationEnabled
+        val childrenEnabled = prefs.obfuscationEnabled
 
         SwitchBar(
             modifier = Modifier
@@ -74,14 +75,12 @@ private fun ObfuscationPreferencesScreen(
         Text(
             modifier = Modifier
                 .padding(
-                    horizontal = 16.dp
-                ),
-            text = stringResource(
-                if (prefs.obfuscationEnabled)
-                    R.string.preferences_obfuscate_info_enabled
-                else
-                    R.string.preferences_obfuscate_info_disabled
-            )
+                    start = 16.dp,
+                    end = 16.dp,
+                    top = 16.dp
+                )
+                .height(75.dp),
+            text = stringResource(R.string.preferences_obfuscate_info)
         )
 
         PreferencesCategory(
