@@ -29,6 +29,8 @@ import com.snow.diary.core.domain.action.location.DeleteLocation
 import com.snow.diary.core.domain.action.location.LocationById
 import com.snow.diary.core.domain.action.location.LocationsFromDream
 import com.snow.diary.core.domain.action.location.UpdateLocation
+import com.snow.diary.core.domain.action.obfuscation.Deobfuscate
+import com.snow.diary.core.domain.action.obfuscation.Obfuscate
 import com.snow.diary.core.domain.action.person.AddPerson
 import com.snow.diary.core.domain.action.person.AllPersons
 import com.snow.diary.core.domain.action.person.DeletePerson
@@ -49,6 +51,7 @@ import com.snow.diary.core.domain.action.relation.RelationById
 import com.snow.diary.core.domain.action.relation.RelationWithPersonsAct
 import com.snow.diary.core.domain.action.relation.RelationsWithPersonsAct
 import com.snow.diary.core.domain.action.relation.UpdateRelation
+import com.snow.diary.core.obfuscation.db.dao.ObfuscationInfoDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -165,7 +168,6 @@ object DomainModule {
     fun provideDeleteLocation(
         locationDao: LocationDao
     ) = DeleteLocation(locationDao)
-
 
 
     /*
@@ -370,5 +372,30 @@ object DomainModule {
     fun provideUpdateObfuscationPreferences(
         prefsDataSource: PreferencesDataSource
     ) = UpdateObfuscationPreferences(prefsDataSource)
+
+
+    /*
+    Obfuscation
+     */
+
+    @Provides
+    @Singleton
+    fun provideObfuscate(
+        obfuscationDao: ObfuscationInfoDao,
+        dreamDao: DreamDao,
+        personDao: PersonDao,
+        locationDao: LocationDao,
+        relationDao: RelationDao
+    ) = Obfuscate(obfuscationDao, dreamDao, personDao, locationDao, relationDao)
+
+    @Provides
+    @Singleton
+    fun provideDeOfuscate(
+        obfuscationDao: ObfuscationInfoDao,
+        dreamDao: DreamDao,
+        personDao: PersonDao,
+        locationDao: LocationDao,
+        relationDao: RelationDao
+    ) = Deobfuscate(obfuscationDao, dreamDao, personDao, locationDao, relationDao)
 
 }
