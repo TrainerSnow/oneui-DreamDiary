@@ -23,6 +23,10 @@ import com.snow.diary.feature.persons.nav.goToAddPerson
 import com.snow.diary.feature.persons.nav.goToPersonDetail
 import com.snow.diary.feature.persons.nav.personDetail
 import com.snow.diary.feature.persons.nav.personList
+import com.snow.diary.feature.preferences.nav.goToMainPreferences
+import com.snow.diary.feature.preferences.nav.goToObfuscatePreferences
+import com.snow.diary.feature.preferences.nav.mainPreferences
+import com.snow.diary.feature.preferences.nav.obfuscatePreferences
 import com.snow.diary.feature.relations.nav.addRelation
 import com.snow.diary.feature.relations.nav.goToAddRelation
 import com.snow.diary.feature.relations.nav.goToRelationDetail
@@ -68,7 +72,10 @@ fun DiaryApplicationRoot(
         },
         headerIcon = {
             org.oneui.compose.widgets.buttons.IconButton(
-                onClick = { TODO("Navigate to settings") },
+                onClick = {
+                    state.navController.goToMainPreferences()
+                    state.closeDrawer()
+                },
                 icon = Icon.Resource(IconR.drawable.ic_oui_settings_outline)
             )
         }
@@ -87,13 +94,7 @@ private fun DiaryNavHost(
         modifier = Modifier
             .fillMaxSize(),
         navController = navController,
-        startDestination = "dream_list"/*,
-        enterTransition = {
-            fadeIn(tween(0)) //0ms for no transition
-        },
-        exitTransition = {
-            fadeOut(tween(0)) //0ms for no transition
-        }*/
+        startDestination = "dream_list"
     ) {
         dreamList(
             onAboutClick = { },
@@ -200,6 +201,14 @@ private fun DiaryNavHost(
             onPersonClick = {
                 navController.goToPersonDetail(it.id!!)
             }
+        )
+
+        mainPreferences(
+            onNavigateBack = state::navigateBack,
+            onNavigateToObfuscationPreferences = navController::goToObfuscatePreferences
+        )
+        obfuscatePreferences(
+            onNavigateBack = state::navigateBack
         )
     }
 }
