@@ -41,7 +41,6 @@ class ImportExportAdapterTest {
                 id = it.toLong(),
                 name = "Name $it",
                 isFavourite = it % 2 == 0,
-                relationId = it.toLong(),
                 notes = if (it % 2 == 0) "Note $it" else null
             )
         },
@@ -59,6 +58,7 @@ class ImportExportAdapterTest {
             Relation(
                 id = it.toLong(),
                 name = "Name $it",
+                notes = "Notes $it",
                 color = it * 12000
             )
         },
