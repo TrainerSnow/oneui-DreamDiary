@@ -6,8 +6,16 @@
     <string name="preferences_main_colormode">Color theme</string>
     <string name="preferences_main_securitymode">Lock methods</string>
     <string name="preferences_main_securitymode_desc">Methods to protect this app from unauthorized access.</string>
-    <string name="preferences_main_obfuscation">Preview mode</string>
-    <string name="preferences_main_obfuscation_desc">Obfuscate information such as e.g. anmes and notes to showcase the app.</string>
+    <string name="preferences_main_obfuscation">Showcase mode</string>
+    <string name="preferences_main_obfuscation_desc">Obfuscate information such as e.g. names and notes to showcase the app.</string>
+
+    <string name="preferences_obfuscate_title">Showcase mode</string>
+    <string name="preferences_obfuscate_info_disabled">Enable showcase mode to hide information from people that you want to show a part of the app.</string>
+    <string name="preferences_obfuscate_info_enabled">Filter out what kind of information should be obfuscated and what part of the app can be shown openly.</string>
+    <string name="preferences_obfuscate_dreams">Obfuscate dreams</string>
+    <string name="preferences_obfuscate_persons">Obfuscate persons</string>
+    <string name="preferences_obfuscate_locations">Obfuscate locations</string>
+    <string name="preferences_obfuscate_relations">Obfuscate relations</string>
 
     <string name="colormode_light">Light</string>
     <string name="colormode_dark">Dark</string>
