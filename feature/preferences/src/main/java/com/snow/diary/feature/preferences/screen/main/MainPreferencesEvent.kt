@@ -13,8 +13,4 @@ sealed class MainPreferencesEvent {
         val mode: SecurityMode
     ): MainPreferencesEvent()
 
-    data class ChangeObfuscationEnabled(
-        val enabled: Boolean
-    ): MainPreferencesEvent()
-
 }
