@@ -81,5 +81,6 @@ dependencies {
     implementation(project(":feature:export"))
     implementation(project(":core:model"))
     implementation(project(":core:domain"))
+    implementation(project(":core:ui"))
     implementation(libs.oneui)
 }
