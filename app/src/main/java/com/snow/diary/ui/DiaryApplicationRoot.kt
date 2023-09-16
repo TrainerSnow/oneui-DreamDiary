@@ -236,7 +236,7 @@ private fun DiaryNavHost(
             onNavigateBack = state::navigateBack,
             onAddRelation = {
                 obfuscationBlocked {
-                    navController.goToAddLocation()
+                    navController.goToAddRelation()
                 }
             },
             onSearchRelation = { },
