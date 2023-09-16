@@ -1,11 +1,17 @@
 package com.snow.diary.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
+import com.snow.diary.R
 import com.snow.diary.feature.dreams.nav.addDream
 import com.snow.diary.feature.dreams.nav.dreamDetail
 import com.snow.diary.feature.dreams.nav.dreamList
@@ -34,6 +40,7 @@ import com.snow.diary.feature.relations.nav.goToRelationList
 import com.snow.diary.feature.relations.nav.relationDetail
 import com.snow.diary.feature.relations.nav.relationList
 import com.snow.diary.nav.TopLevelDestinations
+import kotlinx.coroutines.flow.collectLatest
 import org.oneui.compose.base.Icon
 import org.oneui.compose.base.IconView
 import org.oneui.compose.layout.drawer.DrawerDivider
@@ -43,9 +50,18 @@ import dev.oneuiproject.oneui.R as IconR
 
 @Composable
 fun DiaryApplicationRoot(
-    state: DiaryState = rememberDiaryState()
+    state: DiaryState
 ) {
     val drawerState = state.drawerState
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        state.toast.collectLatest { toastMsg ->
+            Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    val obfuscationEnabled by state.obfuscationEnabled.collectAsStateWithLifecycle()
 
     //TODO: When available, use nav rail not drawer on tablets
     DrawerLayout(
@@ -80,15 +96,30 @@ fun DiaryApplicationRoot(
             )
         }
     ) {
-        DiaryNavHost(state)
+        DiaryNavHost(state, obfuscationEnabled)
     }
 }
 
 @Composable
 private fun DiaryNavHost(
-    state: DiaryState
+    state: DiaryState,
+    obfuscationEnabled: Boolean?
 ) {
     val navController = state.navController
+
+    val obfuscationBlockedMessage = stringResource(R.string.blocked_by_obfuscation)
+
+    val empty = {} //needed so the parentheses from if don' clash with lambda parentheses
+
+    fun obfuscationBlocked(block: () -> Unit) {
+        if(obfuscationEnabled != null) {
+            if(obfuscationEnabled) {
+                state.showToast(obfuscationBlockedMessage)
+            }else {
+                block()
+            }
+        }
+    }
 
     NavHost(
         modifier = Modifier
@@ -98,7 +129,11 @@ private fun DiaryNavHost(
     ) {
         dreamList(
             onAboutClick = { },
-            onAddClick = navController::goToAddDream,
+            onAddClick = {
+                obfuscationBlocked {
+                    navController.goToAddDream()
+                }
+            },
             onSearchClick = { },
             onDreamClick = { dream ->
                 navController
@@ -119,8 +154,10 @@ private fun DiaryNavHost(
                 navController.goToRelationDetail(it.id!!)
             },
             onEditClick = {
-                navController
-                    .goToAddDream(it.id)
+                obfuscationBlocked {
+                    navController
+                        .goToAddDream(it.id)
+                }
             }
         )
         addDream(
@@ -134,7 +171,9 @@ private fun DiaryNavHost(
         personList(
             onNavigateBack = state::openDrawer,
             onAddPerson = {
-                navController.goToAddPerson()
+                obfuscationBlocked {
+                    navController.goToAddPerson()
+                }
             },
             onSearchPerson = { },
             onRelationClick = {
@@ -148,7 +187,9 @@ private fun DiaryNavHost(
         personDetail(
             onNavigateBack = state::navigateBack,
             onEditClick = {
-                navController.goToAddPerson(it.id)
+                obfuscationBlocked {
+                    navController.goToAddPerson(it.id)
+                }
             },
             onDreamClick = {
                 navController.goToDreamDetail(it.id!!)
@@ -166,7 +207,11 @@ private fun DiaryNavHost(
         )
         locationList(
             onNavigateBack = state::openDrawer,
-            onAddLocation = navController::goToAddLocation,
+            onAddLocation = {
+                obfuscationBlocked {
+                    navController.goToAddLocation()
+                }
+            },
             onSearchLocation = { },
             onLocationCLick = {
                 navController.goToLocationDetail(it.id!!)
@@ -175,7 +220,9 @@ private fun DiaryNavHost(
         locationDetail(
             onNavigateBack = state::navigateBack,
             onEditClick = {
-                navController.goToAddLocation(it.id)
+                obfuscationBlocked {
+                    navController.goToAddLocation(it.id)
+                }
             },
             onDreamClick = {
                 navController.goToDreamDetail(it.id!!)
@@ -187,7 +234,11 @@ private fun DiaryNavHost(
         )
         relationList(
             onNavigateBack = state::navigateBack,
-            onAddRelation = navController::goToAddRelation,
+            onAddRelation = {
+                obfuscationBlocked {
+                    navController.goToAddLocation()
+                }
+            },
             onSearchRelation = { },
             onRelationClick = {
                 navController.goToRelationDetail(it.id!!)
@@ -196,7 +247,9 @@ private fun DiaryNavHost(
         relationDetail(
             onNavigateBack = state::navigateBack,
             onEditClick = {
-                navController.goToAddRelation(it.id!!)
+                obfuscationBlocked {
+                    navController.goToAddRelation(it.id!!)
+                }
             },
             onPersonClick = {
                 navController.goToPersonDetail(it.id!!)
