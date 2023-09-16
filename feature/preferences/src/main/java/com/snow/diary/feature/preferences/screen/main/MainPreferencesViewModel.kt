@@ -31,18 +31,7 @@ class MainPreferencesViewModel @Inject constructor(
     override suspend fun handleEvent(event: MainPreferencesEvent) = withContext(Dispatchers.IO) {
         when (event) {
             is MainPreferencesEvent.ChangeColorMode -> updateColorMode(event.mode)
-            is MainPreferencesEvent.ChangeObfuscationEnabled -> updateObfuscationEnabled(event.enabled)
             is MainPreferencesEvent.ChangeSecurityMode -> updateSecurityMode(event.mode)
-        }
-    }
-
-    private suspend fun updateObfuscationEnabled(enabled: Boolean) {
-        preferences.value?.obfuscationPreferences?.let {
-            updateObfuscationPreferences(
-                it.copy(
-                    obfuscationEnabled = enabled
-                )
-            )
         }
     }
 }

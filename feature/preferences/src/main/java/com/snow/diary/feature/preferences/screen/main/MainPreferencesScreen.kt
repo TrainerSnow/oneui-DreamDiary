@@ -1,6 +1,7 @@
 package com.snow.diary.feature.preferences.screen.main;
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -18,9 +19,9 @@ import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
+import org.oneui.compose.preference.BasePreference
 import org.oneui.compose.preference.DropdownPreference
 import org.oneui.compose.preference.SingleSelectPreference
-import org.oneui.compose.preference.SwitchPreferenceScreen
 import org.oneui.compose.widgets.buttons.IconButton
 import org.oneui.compose.widgets.text.TextSeparator
 import dev.oneuiproject.oneui.R as IconR
@@ -104,16 +105,24 @@ private fun MainPreferencesScreen(
                     )
                 },
                 {
-                    SwitchPreferenceScreen(
+                    BasePreference(
                         onClick = onNavigateToObfuscationPreferences,
-                        title = stringResource(R.string.preferences_main_obfuscation),
-                        summary = stringResource(R.string.preferences_main_obfuscation_desc),
+                        title = {
+                                Text(
+                                    text = stringResource(R.string.preferences_main_obfuscation)
+                                )
+                        },
+                        summary = {
+                            Text(
+                                text = stringResource(R.string.preferences_main_obfuscation_desc)
+                            )
+                        }/*,
                         onSwitch = {
                             onEvent(
                                 MainPreferencesEvent.ChangeObfuscationEnabled(it)
                             )
                         },
-                        switched = prefs.obfuscationPreferences.obfuscationEnabled
+                        switched = prefs.obfuscationPreferences.obfuscationEnabled*/
                     )
                 }
             )
