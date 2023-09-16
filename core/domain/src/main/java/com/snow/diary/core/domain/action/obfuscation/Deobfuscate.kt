@@ -5,7 +5,6 @@ import com.snow.diary.core.database.dao.LocationDao
 import com.snow.diary.core.database.dao.PersonDao
 import com.snow.diary.core.database.dao.RelationDao
 import com.snow.diary.core.domain.action.Action
-import com.snow.diary.core.model.preferences.ObfuscationPreferences
 import com.snow.diary.core.obfuscation.db.dao.ObfuscationInfoDao
 import kotlinx.coroutines.flow.firstOrNull
 
@@ -15,8 +14,8 @@ class Deobfuscate(
     val personDao: PersonDao,
     val locationDao: LocationDao,
     val relationDao: RelationDao
-) : Action<ObfuscationPreferences, Boolean>() {
-    override suspend fun ObfuscationPreferences.compose(): Boolean {
+) : Action<Unit, Boolean>() {
+    override suspend fun Unit.compose(): Boolean {
         val dreamInfos = obfuscationDao.getAllDreamInfos()
         val personInfos = obfuscationDao.getAllPersonInfos()
         val locationInfos = obfuscationDao.getAllLocationInfos()
