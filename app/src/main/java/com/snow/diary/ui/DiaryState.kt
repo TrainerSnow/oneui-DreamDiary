@@ -1,5 +1,7 @@
 package com.snow.diary.ui
 
+import android.util.Log.d
+import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,11 +9,18 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.snow.diary.nav.TopLevelDestinations
+import com.snow.diary.core.domain.action.preferences.GetPreferences
 import com.snow.diary.feature.dreams.nav.goToDreamList
 import com.snow.diary.feature.locations.nav.goToLocationList
 import com.snow.diary.feature.persons.nav.goToPersonList
+import com.snow.diary.nav.TopLevelDestinations
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.oneui.compose.layout.internal.SlidingDrawerState
 import org.oneui.compose.layout.internal.rememberSlidingDrawerState
@@ -22,7 +31,9 @@ data class DiaryState(
 
     val drawerState: SlidingDrawerState,
 
-    val scope: CoroutineScope
+    val scope: CoroutineScope,
+
+    val getPreferences: GetPreferences
 
 ) {
 
@@ -39,11 +50,30 @@ data class DiaryState(
         closeDrawer()
     }
 
+    val obfuscationEnabled = getPreferences(Unit)
+        .onEach {
+            d("DiaryState", "Collected $it from getPreferences")
+        }
+        .map { it.obfuscationPreferences.obfuscationEnabled }
+        .onEach {
+            d("DiaryState", "Collected $it from obfuscationEnabled")
+        }
+        .stateIn(
+            scope = scope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = null
+        )
+
+    private val _toasts = MutableSharedFlow<String>()
+    val toast = _toasts.asSharedFlow()
+
     fun navigateBack() = navController.popBackStack()
 
     fun openDrawer() = scope.launch { drawerState.openAnimate() }
 
     fun closeDrawer() = scope.launch { drawerState.closeAnimate() }
+
+    fun showToast(string: String) = scope.launch { _toasts.emit(string) }
 
 }
 
@@ -51,5 +81,6 @@ data class DiaryState(
 fun rememberDiaryState(
     navController: NavHostController = rememberNavController(),
     drawerState: SlidingDrawerState = rememberSlidingDrawerState(),
-    scope: CoroutineScope = rememberCoroutineScope()
-) = DiaryState(navController, drawerState, scope)
+    scope: CoroutineScope = rememberCoroutineScope(),
+    getPreferences: GetPreferences
+) = DiaryState(navController, drawerState, scope, getPreferences)

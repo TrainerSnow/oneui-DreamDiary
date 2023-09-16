@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.snow.diary.core.domain"
-    compileSdk = 34
+    namespace = "com.snow.diary.core.obfuscation"
+    compileSdk = 33
 
     defaultConfig {
-        minSdk = 28
+        minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -36,20 +36,15 @@ android {
 }
 
 dependencies {
-    implementation(libs.core.ktx)
+    implementation(libs.com.google.dagger.hilt.android)
+    kapt(libs.com.google.dagger.hilt.android.compiler)
 
-    implementation(libs.lifecycle.runtime.ktx)
-    implementation(libs.activity.compose)
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
 
     implementation(libs.org.jetbrains.kotlinx.coroutines.core)
 
     implementation(project(":core:model"))
-    implementation(project(":core:database"))
-    implementation(project(":core:common"))
-    implementation(project(":core:datastore"))
-    implementation(project(":core:obfuscation"))
-
-    implementation(libs.com.google.dagger.hilt.android)
-    kapt(libs.com.google.dagger.hilt.android.compiler)
-    implementation(libs.compose.navigation.hilt)
 }
