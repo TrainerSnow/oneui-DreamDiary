@@ -85,8 +85,9 @@ object DomainModule {
     @Provides
     @Singleton
     fun provideDeleteDream(
-        dreamDao: DreamDao
-    ) = DeleteDream(dreamDao)
+        dreamDao: DreamDao,
+        obfuscationDao: ObfuscationInfoDao
+    ) = DeleteDream(dreamDao, obfuscationDao)
 
 
     @Provides
@@ -166,8 +167,9 @@ object DomainModule {
     @Provides
     @Singleton
     fun provideDeleteLocation(
-        locationDao: LocationDao
-    ) = DeleteLocation(locationDao)
+        locationDao: LocationDao,
+        obfuscationDao: ObfuscationInfoDao
+    ) = DeleteLocation(locationDao, obfuscationDao)
 
 
     /*
@@ -217,8 +219,9 @@ object DomainModule {
     @Provides
     @Singleton
     fun provideDeletePerson(
-        personDao: PersonDao
-    ) = DeletePerson(personDao)
+        personDao: PersonDao,
+        obfuscationDao: ObfuscationInfoDao
+    ) = DeletePerson(personDao, obfuscationDao)
 
     @Provides
     @Singleton
@@ -264,8 +267,9 @@ object DomainModule {
     @Provides
     @Singleton
     fun provideDeleteRelation(
-        relationDao: RelationDao
-    ) = DeleteRelation(relationDao)
+        relationDao: RelationDao,
+        obfuscationDao: ObfuscationInfoDao
+    ) = DeleteRelation(relationDao, obfuscationDao)
 
     @Provides
     @Singleton

@@ -6,6 +6,7 @@ import com.snow.diary.core.common.launchInBackground
 import com.snow.diary.core.common.search.Search.filterSearch
 import com.snow.diary.core.domain.action.cross.person_relation.AddPersonRelationCrossref
 import com.snow.diary.core.domain.action.cross.person_relation.AllPersonRelationCrossrefs
+import com.snow.diary.core.domain.action.cross.person_relation.RemovePersonRelationCrossref
 import com.snow.diary.core.domain.action.person.AddPerson
 import com.snow.diary.core.domain.action.person.PersonFromId
 import com.snow.diary.core.domain.action.person.PersonWithRelationsAct
@@ -35,7 +36,7 @@ internal class AddPersonViewModel @Inject constructor(
     val addPerson: AddPerson,
     val updatePerson: UpdatePerson,
     val addPersonRelationCrossref: AddPersonRelationCrossref,
-    val deletePersonRelationCrossref: AddPersonRelationCrossref,
+    val deletePersonRelationCrossref: RemovePersonRelationCrossref,
     val allPersonRelationCrossrefs: AllPersonRelationCrossrefs
 ) : EventViewModel<AddPersonEvent>() {
 
@@ -152,27 +153,27 @@ internal class AddPersonViewModel @Inject constructor(
         } else addPerson(person)
 
         val crossrefs = relations.map { relation ->
-            AddPersonRelationCrossref.Input(id, relation.id!!)
+            Pair(id, relation.id!!)
         }
         if(!isEdit) {
             crossrefs.forEach { crossref ->
-                addPersonRelationCrossref(crossref)
+                addPersonRelationCrossref(crossref.toAddInput())
             }
         } else {
             val oldCrossrefs = allPersonRelationCrossrefs(Unit)
                 .firstOrNull()
-                ?.map {
-                    AddPersonRelationCrossref.Input(it.first, it.second)
+                ?.filter {
+                    it.first == id
                 } ?: emptyList()
 
             val toRemove = oldCrossrefs - crossrefs.toSet()
             val toAdd = crossrefs - oldCrossrefs.toSet()
 
             toRemove.forEach {
-                deletePersonRelationCrossref(it)
+                deletePersonRelationCrossref(it.toRemoveInput())
             }
             toAdd.forEach {
-                addPersonRelationCrossref(it)
+                addPersonRelationCrossref(it.toAddInput())
             }
         }
     }
@@ -198,3 +199,8 @@ internal class AddPersonViewModel @Inject constructor(
     }
 
 }
+
+private fun Pair<Long, Long>.toRemoveInput() = RemovePersonRelationCrossref.Input(first, second)
+
+
+private fun Pair<Long, Long>.toAddInput() = AddPersonRelationCrossref.Input(first, second)

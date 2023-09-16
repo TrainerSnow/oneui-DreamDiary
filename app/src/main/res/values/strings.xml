@@ -5,4 +5,6 @@
     <string name="nav_persons">Persons</string>
     <string name="nav_locations">Locations</string>
     <string name="nav_stats">Statistics</string>
+
+    <string name="blocked_by_obfuscation">This action is not available in showcase mode</string>
 </resources>

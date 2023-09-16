@@ -71,6 +71,7 @@ dependencies {
 
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
+    implementation(libs.compose.lifecycle.runtime)
 
     implementation(project(":feature:dreams"))
     implementation(project(":feature:persons"))
@@ -79,5 +80,6 @@ dependencies {
     implementation(project(":feature:preferences"))
     implementation(project(":feature:export"))
     implementation(project(":core:model"))
+    implementation(project(":core:domain"))
     implementation(libs.oneui)
 }

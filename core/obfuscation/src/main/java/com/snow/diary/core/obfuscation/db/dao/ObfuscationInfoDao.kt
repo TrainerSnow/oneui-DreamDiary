@@ -53,4 +53,18 @@ interface ObfuscationInfoDao {
     @Query("DELETE FROM relation_obfuscation_info")
     fun deleteAllRelationInfos()
 
+
+
+    @Query("DELETE FROM dream_obfuscation_info WHERE dreamId = :id")
+    fun deleteDreamInfoById(id: Long)
+
+    @Query("DELETE FROM person_obfuscation_info WHERE personId = :id")
+    fun deletePersonInfoById(id: Long)
+
+    @Query("DELETE FROM location_obfuscation_info WHERE locationId = :id")
+    fun deleteLocationInfoById(id: Long)
+
+    @Query("DELETE FROM relation_obfuscation_info WHERE relationId = :id")
+    fun deleteRelationInfoById(id: Long)
+
 }
