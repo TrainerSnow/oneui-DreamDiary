@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.getValue
@@ -16,12 +17,15 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.snow.diary.core.domain.action.preferences.GetPreferences
+import com.snow.diary.core.model.preferences.ColorMode
 import com.snow.diary.ui.DiaryApplicationRoot
 import com.snow.diary.ui.rememberDiaryState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import org.oneui.compose.theme.OneUITheme
+import org.oneui.compose.theme.color.OneUIColorTheme
 import javax.inject.Inject
 
 
@@ -56,16 +60,32 @@ class RootActivity : ComponentActivity() {
                 getPreferences = getPreferences
             )
 
+            val isDarkMode = isDarkMode(
+                system = isSystemInDarkTheme(),
+                pref = (rootState as? RootState.Success)?.preferences?.colorMode ?: ColorMode.System
+            )
+
             WindowCompat.setDecorFitsSystemWindows(window, false)
 
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
+            OneUITheme(
+                colorTheme = OneUIColorTheme.getTheme(dark = isDarkMode)
             ) {
-                DiaryApplicationRoot(diaryState)
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    DiaryApplicationRoot(diaryState)
+                }
             }
         }
     }
+}
 
-
+private fun isDarkMode(
+    system: Boolean,
+    pref: ColorMode
+): Boolean = when (pref) {
+    ColorMode.Light -> false
+    ColorMode.Dark -> true
+    ColorMode.System -> system
 }
