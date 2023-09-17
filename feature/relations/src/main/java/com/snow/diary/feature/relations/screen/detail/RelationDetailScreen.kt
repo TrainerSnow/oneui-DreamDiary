@@ -161,6 +161,7 @@ private fun GeneralSection(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(RelationDetailScreenDefaults.contentPadding)
                 .height(RelationDetailScreenDefaults.colorBoxHeight)
                 .background(Color(state.relation.color), CircleShape)
                 .clip(CircleShape)

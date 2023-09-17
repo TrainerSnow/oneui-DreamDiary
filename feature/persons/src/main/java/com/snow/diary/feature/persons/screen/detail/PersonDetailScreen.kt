@@ -171,7 +171,8 @@ private fun GeneralSection(
     ) {
         RelationsBar(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(PersonDetailScreenDefaults.contentPadding),
             relations = state.relations,
             onClick = onRelationClick
         )
