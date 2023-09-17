@@ -7,4 +7,7 @@
     <string name="nav_stats">Statistics</string>
 
     <string name="blocked_by_obfuscation">This action is not available in showcase mode</string>
+
+    <string name="auth_title">Verify your identity</string>
+    <string name="auth_desc">Accessing this app requires you to verify your identity</string>
 </resources>

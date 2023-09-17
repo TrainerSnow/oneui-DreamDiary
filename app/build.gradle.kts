@@ -61,6 +61,7 @@ dependencies {
     implementation(platform(libs.compose.bom))
 
     implementation(libs.androidx.splashscreen)
+    implementation(libs.androidx.biometric)
 
     implementation(libs.compose.material3)
     implementation(libs.compose.material)
