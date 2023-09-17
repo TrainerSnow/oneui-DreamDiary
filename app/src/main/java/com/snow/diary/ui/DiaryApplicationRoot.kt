@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -45,7 +44,7 @@ import com.snow.diary.feature.relations.nav.goToRelationList
 import com.snow.diary.feature.relations.nav.relationDetail
 import com.snow.diary.feature.relations.nav.relationList
 import com.snow.diary.nav.TopLevelDestinations
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.oneui.compose.base.Icon
 import org.oneui.compose.base.IconView
 import org.oneui.compose.layout.drawer.DrawerDefaults
@@ -61,9 +60,9 @@ fun DiaryApplicationRoot(
     val drawerState = state.drawerState
     val context = LocalContext.current
 
-    LaunchedEffect(Unit) {
-        state.toast.collectLatest { toastMsg ->
-            Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show()
+    fun showToast(msg: String) {
+        state.scope.launch {
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -106,14 +105,15 @@ fun DiaryApplicationRoot(
             )
         }
     ) {
-        DiaryNavHost(state, obfuscationEnabled)
+        DiaryNavHost(state, obfuscationEnabled, ::showToast)
     }
 }
 
 @Composable
 private fun DiaryNavHost(
     state: DiaryState,
-    obfuscationEnabled: Boolean?
+    obfuscationEnabled: Boolean?,
+    showToast: (String) -> Unit
 ) {
     val navController = state.navController
 
@@ -124,7 +124,7 @@ private fun DiaryNavHost(
     fun obfuscationBlocked(block: () -> Unit) {
         if (obfuscationEnabled != null) {
             if (obfuscationEnabled) {
-                state.showToast(obfuscationBlockedMessage)
+                showToast(obfuscationBlockedMessage)
             } else {
                 block()
             }

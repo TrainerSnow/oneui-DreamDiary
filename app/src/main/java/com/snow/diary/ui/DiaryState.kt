@@ -64,16 +64,11 @@ data class DiaryState(
             initialValue = null
         )
 
-    private val _toasts = MutableSharedFlow<String>()
-    val toast = _toasts.asSharedFlow()
-
     fun navigateBack() = navController.popBackStack()
 
     fun openDrawer() = scope.launch { drawerState.openAnimate() }
 
     fun closeDrawer() = scope.launch { drawerState.closeAnimate() }
-
-    fun showToast(string: String) = scope.launch { _toasts.emit(string) }
 
 }
 
