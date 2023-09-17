@@ -1,8 +1,12 @@
 package com.snow.diary.ui
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -12,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import com.snow.diary.R
+import com.snow.diary.core.ui.util.plus
 import com.snow.diary.feature.dreams.nav.addDream
 import com.snow.diary.feature.dreams.nav.dreamDetail
 import com.snow.diary.feature.dreams.nav.dreamList
@@ -43,6 +48,7 @@ import com.snow.diary.nav.TopLevelDestinations
 import kotlinx.coroutines.flow.collectLatest
 import org.oneui.compose.base.Icon
 import org.oneui.compose.base.IconView
+import org.oneui.compose.layout.drawer.DrawerDefaults
 import org.oneui.compose.layout.drawer.DrawerDivider
 import org.oneui.compose.layout.drawer.DrawerItem
 import org.oneui.compose.layout.drawer.DrawerLayout
@@ -66,6 +72,10 @@ fun DiaryApplicationRoot(
     //TODO: When available, use nav rail not drawer on tablets
     DrawerLayout(
         state = drawerState,
+        layoutPadding = DrawerDefaults
+            .layoutPadding +
+                WindowInsets.navigationBars.asPaddingValues() +
+                WindowInsets.statusBars.asPaddingValues(), //TODO: Move this inset logic into the lib
         drawerContent = {
             TopLevelDestinations.values().forEach { navDest ->
                 if (navDest == TopLevelDestinations.Statistics) {
@@ -112,10 +122,10 @@ private fun DiaryNavHost(
     val empty = {} //needed so the parentheses from if don' clash with lambda parentheses
 
     fun obfuscationBlocked(block: () -> Unit) {
-        if(obfuscationEnabled != null) {
-            if(obfuscationEnabled) {
+        if (obfuscationEnabled != null) {
+            if (obfuscationEnabled) {
                 state.showToast(obfuscationBlockedMessage)
-            }else {
+            } else {
                 block()
             }
         }

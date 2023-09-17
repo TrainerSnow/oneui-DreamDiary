@@ -60,6 +60,8 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(platform(libs.compose.bom))
 
+    implementation(libs.androidx.splashscreen)
+
     implementation(libs.compose.material3)
     implementation(libs.compose.material)
     implementation(libs.compose.foundation)
@@ -81,5 +83,6 @@ dependencies {
     implementation(project(":feature:export"))
     implementation(project(":core:model"))
     implementation(project(":core:domain"))
+    implementation(project(":core:ui"))
     implementation(libs.oneui)
 }
