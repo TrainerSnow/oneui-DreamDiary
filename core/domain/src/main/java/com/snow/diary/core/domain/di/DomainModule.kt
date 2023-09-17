@@ -43,7 +43,7 @@ import com.snow.diary.core.domain.action.person.UpdatePerson
 import com.snow.diary.core.domain.action.preferences.GetPreferences
 import com.snow.diary.core.domain.action.preferences.UpdateColorMode
 import com.snow.diary.core.domain.action.preferences.UpdateObfuscationPreferences
-import com.snow.diary.core.domain.action.preferences.UpdateSecurityMode
+import com.snow.diary.core.domain.action.preferences.UpdateRequireAuth
 import com.snow.diary.core.domain.action.relation.AddRelation
 import com.snow.diary.core.domain.action.relation.AllRelations
 import com.snow.diary.core.domain.action.relation.DeleteRelation
@@ -369,7 +369,7 @@ object DomainModule {
     @Singleton
     fun provideUpdateSecurityMode(
         prefsDataSource: PreferencesDataSource
-    ) = UpdateSecurityMode(prefsDataSource)
+    ) = UpdateRequireAuth(prefsDataSource)
 
     @Provides
     @Singleton

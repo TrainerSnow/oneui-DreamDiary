@@ -1,7 +1,6 @@
 package com.snow.diary.feature.preferences.screen.main
 
 import com.snow.diary.core.model.preferences.ColorMode
-import com.snow.diary.core.model.preferences.SecurityMode
 
 sealed class MainPreferencesEvent {
 
@@ -9,8 +8,8 @@ sealed class MainPreferencesEvent {
         val mode: ColorMode
     ): MainPreferencesEvent()
 
-    data class ChangeSecurityMode(
-        val mode: SecurityMode
+    data class ChangeRequireAuth(
+        val requireAuth: Boolean
     ): MainPreferencesEvent()
 
 }

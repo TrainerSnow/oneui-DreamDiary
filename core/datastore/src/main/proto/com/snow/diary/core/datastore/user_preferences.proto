@@ -11,7 +11,7 @@ message UserPreferences {
 
   ColorModeProto colorMode = 1;
 
-  SecurityModeProto securityMode = 2;
+  bool requireAuth = 2;
 
   ObfuscationPreferencesProto obfuscationPreferences = 3;
 
