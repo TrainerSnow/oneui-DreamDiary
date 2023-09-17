@@ -4,7 +4,7 @@ data class UserPreferences(
 
     val colorMode: ColorMode,
 
-    val securityMode: SecurityMode,
+    val requireAuth: Boolean,
 
     val obfuscationPreferences: ObfuscationPreferences
 

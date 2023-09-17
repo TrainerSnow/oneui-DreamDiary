@@ -10,7 +10,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.core.model.preferences.ColorMode
-import com.snow.diary.core.model.preferences.SecurityMode
 import com.snow.diary.core.model.preferences.UserPreferences
 import com.snow.diary.core.ui.preferences.PreferencesCategory
 import com.snow.diary.feature.preferences.R
@@ -21,7 +20,7 @@ import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
 import org.oneui.compose.preference.BasePreference
 import org.oneui.compose.preference.DropdownPreference
-import org.oneui.compose.preference.SingleSelectPreference
+import org.oneui.compose.preference.SwitchPreference
 import org.oneui.compose.widgets.buttons.IconButton
 import org.oneui.compose.widgets.text.TextSeparator
 import dev.oneuiproject.oneui.R as IconR
@@ -94,35 +93,30 @@ private fun MainPreferencesScreen(
             },
             preferences = listOf(
                 {
-                    SingleSelectPreference(
-                        title = stringResource(R.string.preferences_main_securitymode),
-                        value = prefs.securityMode,
-                        values = SecurityMode.entries,
-                        nameFor = {
-                            ctx.getString(it.localizedName)
-                        },
-                        onValueChange = { onEvent(MainPreferencesEvent.ChangeSecurityMode(it)) }
+                    SwitchPreference(
+                        title = stringResource(R.string.preferences_main_requireauth),
+                        summary = stringResource(R.string.preferences_main_requireauth_desc),
+                        switched = prefs.requireAuth,
+                        onSwitchedChange = {
+                            onEvent(
+                                MainPreferencesEvent.ChangeRequireAuth(it)
+                            )
+                        }
                     )
                 },
                 {
                     BasePreference(
                         onClick = onNavigateToObfuscationPreferences,
                         title = {
-                                Text(
-                                    text = stringResource(R.string.preferences_main_obfuscation)
-                                )
+                            Text(
+                                text = stringResource(R.string.preferences_main_obfuscation)
+                            )
                         },
                         summary = {
                             Text(
                                 text = stringResource(R.string.preferences_main_obfuscation_desc)
                             )
-                        }/*,
-                        onSwitch = {
-                            onEvent(
-                                MainPreferencesEvent.ChangeObfuscationEnabled(it)
-                            )
-                        },
-                        switched = prefs.obfuscationPreferences.obfuscationEnabled*/
+                        }
                     )
                 }
             )
