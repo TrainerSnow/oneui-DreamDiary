@@ -67,6 +67,9 @@ fun DiaryApplicationRoot(
     }
 
     val obfuscationEnabled by state.obfuscationEnabled.collectAsStateWithLifecycle()
+    val locationNum by state.locationsAmountNum.collectAsStateWithLifecycle()
+    val dreamsNum by state.dreamsAmountState.collectAsStateWithLifecycle()
+    val personsNum by state.personsAmountState.collectAsStateWithLifecycle()
 
     //TODO: When available, use nav rail not drawer on tablets
     DrawerLayout(
@@ -90,6 +93,12 @@ fun DiaryApplicationRoot(
                         )
                     },
                     label = stringResource(navDest.titleRes),
+                    labelEnd = when (navDest) {
+                        TopLevelDestinations.Dreams -> dreamsNum?.toString() ?: ""
+                        TopLevelDestinations.Persons -> personsNum?.toString() ?: ""
+                        TopLevelDestinations.Locations -> locationNum?.toString() ?: ""
+                        else -> ""
+                    },
                     onClick = { state.navigateTo(navDest) },
                     selected = state.currentNavDest == navDest
                 )
