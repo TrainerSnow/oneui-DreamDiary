@@ -1,7 +1,5 @@
 package com.snow.diary.ui
 
-import android.util.Log.d
-import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,11 +13,8 @@ import com.snow.diary.feature.locations.nav.goToLocationList
 import com.snow.diary.feature.persons.nav.goToPersonList
 import com.snow.diary.nav.TopLevelDestinations
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.oneui.compose.layout.internal.SlidingDrawerState
@@ -51,13 +46,7 @@ data class DiaryState(
     }
 
     val obfuscationEnabled = getPreferences(Unit)
-        .onEach {
-            d("DiaryState", "Collected $it from getPreferences")
-        }
         .map { it.obfuscationPreferences.obfuscationEnabled }
-        .onEach {
-            d("DiaryState", "Collected $it from obfuscationEnabled")
-        }
         .stateIn(
             scope = scope,
             started = SharingStarted.WhileSubscribed(5000),
