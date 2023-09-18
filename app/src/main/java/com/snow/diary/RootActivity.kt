@@ -24,6 +24,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.snow.diary.core.domain.action.dream.AllDreams
+import com.snow.diary.core.domain.action.location.AllLocations
+import com.snow.diary.core.domain.action.person.AllPersons
 import com.snow.diary.core.domain.action.preferences.GetPreferences
 import com.snow.diary.core.model.preferences.ColorMode
 import com.snow.diary.ui.DiaryApplicationRoot
@@ -42,6 +45,15 @@ class RootActivity : FragmentActivity() {
 
     @Inject
     lateinit var getPreferences: GetPreferences
+
+    @Inject
+    lateinit var allPersons: AllPersons
+
+    @Inject
+    lateinit var allDreams: AllDreams
+
+    @Inject
+    lateinit var allLocations: AllLocations
 
     private val viewModel: RootActivityViewModel by viewModels()
 
@@ -90,7 +102,10 @@ class RootActivity : FragmentActivity() {
             )
 
             val diaryState = rememberDiaryState(
-                getPreferences = getPreferences
+                getPreferences = getPreferences,
+                allPersons = allPersons,
+                allDreams = allDreams,
+                allLocations = allLocations
             )
 
             if (canProceed) {
