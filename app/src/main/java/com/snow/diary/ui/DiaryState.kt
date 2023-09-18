@@ -7,6 +7,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.snow.diary.core.domain.action.dream.AllDreams
+import com.snow.diary.core.domain.action.location.AllLocations
+import com.snow.diary.core.domain.action.person.AllPersons
 import com.snow.diary.core.domain.action.preferences.GetPreferences
 import com.snow.diary.feature.dreams.nav.goToDreamList
 import com.snow.diary.feature.locations.nav.goToLocationList
@@ -28,7 +31,13 @@ data class DiaryState(
 
     val scope: CoroutineScope,
 
-    val getPreferences: GetPreferences
+    val getPreferences: GetPreferences,
+
+    val allDreams: AllDreams,
+
+    val allPersons: AllPersons,
+
+    val allLocations: AllLocations
 
 ) {
 
@@ -53,6 +62,18 @@ data class DiaryState(
             initialValue = null
         )
 
+    val dreamsAmountState = allDreams(AllDreams.Input())
+        .map { it.size }
+        .stateIn(scope, SharingStarted.WhileSubscribed(5000), null)
+
+    val personsAmountState = allPersons(AllPersons.Input())
+        .map { it.size }
+        .stateIn(scope, SharingStarted.WhileSubscribed(5000), null)
+
+    val locationsAmountNum = allLocations(AllLocations.Input())
+        .map { it.size }
+        .stateIn(scope, SharingStarted.WhileSubscribed(5000), null)
+
     fun navigateBack() = navController.popBackStack()
 
     fun openDrawer() = scope.launch { drawerState.openAnimate() }
@@ -66,5 +87,16 @@ fun rememberDiaryState(
     navController: NavHostController = rememberNavController(),
     drawerState: SlidingDrawerState = rememberSlidingDrawerState(),
     scope: CoroutineScope = rememberCoroutineScope(),
-    getPreferences: GetPreferences
-) = DiaryState(navController, drawerState, scope, getPreferences)
+    getPreferences: GetPreferences,
+    allDreams: AllDreams,
+    allPersons: AllPersons,
+    allLocations: AllLocations
+) = DiaryState(
+    navController,
+    drawerState,
+    scope,
+    getPreferences,
+    allDreams,
+    allPersons,
+    allLocations
+)
