@@ -4,4 +4,10 @@
     <string name="stats_dreams_amount_amount">Total dreams: %s</string>
     <string name="stats_dreams_amount_avg">Monthly average: %s</string>
 
+    <string name="stats_dreams_metric_title">Happiness / Clearness average</string>
+    <string name="stats_dreams_metric_happiness">Happiness: %s</string>
+    <string name="stats_dreams_metric_clearnesss">Clearness: %s</string>
+
+    <string name="no_data_available">Not enough data was found to </string>
+
 </resources>
