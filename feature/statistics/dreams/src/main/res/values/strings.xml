@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="stats_dreams_amount_amount">Total dreams: %s</string>
+    <string name="stats_dreams_amount_avg">Monthly average: %s</string>
+
+</resources>
