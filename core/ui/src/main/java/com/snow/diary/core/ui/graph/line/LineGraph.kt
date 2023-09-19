@@ -15,7 +15,8 @@ import org.oneui.compose.util.OneUIPreview
 @Composable
 fun LineGraph(
     modifier: Modifier = Modifier,
-    values: List<Float>
+    values: List<Float>,
+    lineColor: Color
 ) {
     require(values.size >= 3) { "The values must be at least 3" }
 
@@ -66,7 +67,7 @@ fun LineGraph(
                 )
         }
 
-        drawPath(path, Color.Red, style = Stroke(width = 5F))
+        drawPath(path, lineColor, style = Stroke(width = 5F))
     }
 }
 
@@ -76,6 +77,7 @@ private fun LineGraphPreview() = OneUIPreview(title = "LineGraph") {
     LineGraph(
         modifier = Modifier
             .size(300.dp),
-        values = listOf(1F, 4F, 6F, 2F, 3F, 9F, 2F, 4F)
+        values = listOf(1F, 4F, 6F, 2F, 3F, 9F, 2F, 4F),
+        lineColor = Color.Red
     )
 }
