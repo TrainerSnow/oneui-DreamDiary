@@ -28,7 +28,6 @@ sealed interface AxisLabelFitting {
         allowLabelsOutside: Boolean
     ): List<PositionedLabel>
 
-
     data object All : AxisLabelFitting {
         override fun DrawScope.resolve(
             measurer: TextMeasurer,
@@ -55,7 +54,6 @@ sealed interface AxisLabelFitting {
 
             return labelposes
         }
-
     }
 
     data class Fitting(
@@ -322,5 +320,4 @@ data class PositionedLabel(
         }
 
     }
-
 }

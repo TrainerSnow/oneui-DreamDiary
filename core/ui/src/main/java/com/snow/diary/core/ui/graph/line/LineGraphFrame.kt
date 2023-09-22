@@ -196,7 +196,6 @@ private fun LineOverlay(
                     yLabelPositions.size - 1 -> 0F
                     else -> labelPos.rect.center.y
                 }
-
                 drawLine(
                     color = config.color,
                     strokeWidth = config.strokeWidth,
@@ -221,7 +220,6 @@ private fun LineOverlay(
                     xLabelPositions.size - 1 -> size.width
                     else -> labelPos.rect.center.x
                 }
-
                 drawLine(
                     color = config.color,
                     strokeWidth = config.strokeWidth,
@@ -261,5 +259,4 @@ private fun LineGraphFramePreview() = LineGraphFrame(
         strokeWidth = 1F
     )
 ) {
-
 }
