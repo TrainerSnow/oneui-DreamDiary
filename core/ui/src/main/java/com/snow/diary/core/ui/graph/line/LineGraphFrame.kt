@@ -127,13 +127,11 @@ private fun XSection(
             resolve(measurer, labels, textStyle, true, allowLabelsOutside)
         }
         labelPoses.forEach { labelPos ->
-            val result = measurer.measure(labelPos.second, textStyle)
             drawText(
-                result,
-                topLeft = Offset(
-                    x = labelPos.first,
-                    y = (size.height / 2) - (result.size.height / 2)
-                )
+                text = labelPos.label,
+                textMeasurer = measurer,
+                topLeft = labelPos.rect.topLeft,
+                softWrap = false
             )
         }
     }
@@ -157,13 +155,10 @@ fun YSection(
             resolve(measurer, labels, textStyle, false, allowLabelsOutside)
         }
         labelPoses.forEach { labelPos ->
-            val result = measurer.measure(labelPos.second, textStyle)
             drawText(
-                result,
-                topLeft = Offset(
-                    x = (size.width / 2) - (result.size.width / 2),
-                    y = size.height - labelPos.first
-                )
+                text = labelPos.label,
+                textMeasurer = measurer,
+                topLeft = labelPos.rect.topLeft
             )
         }
     }
@@ -196,12 +191,10 @@ private fun LineOverlay(
 
         yAxisLineConfig?.let { config ->
             yLabelPositions.forEachIndexed { index, labelPos ->
-                val result = measurer.measure(labelPos.second)
-
                 val lineY = when (index) {
-                    0 -> 0F
-                    xLabelPositions.size -> size.height
-                    else -> labelPos.first - result.size.height / 2
+                    0 -> size.height
+                    yLabelPositions.size - 1 -> 0F
+                    else -> labelPos.rect.center.y
                 }
                 drawLine(
                     color = config.color,
@@ -222,12 +215,10 @@ private fun LineOverlay(
 
         xAxisLineConfig?.let { config ->
             xLabelPositions.forEachIndexed { index, labelPos ->
-                val result = measurer.measure(labelPos.second)
-
                 val lineX = when (index) {
                     0 -> 0F
-                    xLabelPositions.size -> size.width
-                    else -> labelPos.first + result.size.width / 2
+                    xLabelPositions.size - 1 -> size.width
+                    else -> labelPos.rect.center.x
                 }
                 drawLine(
                     color = config.color,
@@ -250,31 +241,22 @@ private fun LineOverlay(
 
 @Preview(widthDp = 900, heightDp = 500)
 @Composable
-private fun LineGraphFramePreview() {
-    LineGraphFrame(
-        modifier = Modifier
-            .padding(30.dp)
-            .height(400.dp)
-            .fillMaxWidth(),
-        xLabels = (1..12).map { "1.$it.2023" },
-        yLabels = listOf(
-            "One",
-            "Two",
-            "Three",
-            "Four"
-        ),
-        xFitting = AxisLabelFitting.Fitting(),
-        yFitting = AxisLabelFitting.Fitting(),
-        allowLabelsOutside = true,
-        xAxisLineConfig = AxisLineConfig(
-            color = Color.Red,
-            strokeWidth = 1F
-        ),
-        yAxisLineConfig = AxisLineConfig(
-            color = Color.Green,
-            strokeWidth = 1F
-        )
-    ) {
-
-    }
+private fun LineGraphFramePreview() = LineGraphFrame(
+    modifier = Modifier
+        .height(400.dp)
+        .fillMaxWidth(),
+    xLabels = (1..12).map { "1.$it." },
+    yLabels = (1..12).map { "2.$it." },
+    xFitting = AxisLabelFitting.All,
+    yFitting = AxisLabelFitting.All,
+    allowLabelsOutside = false,
+    xAxisLineConfig = AxisLineConfig(
+        color = Color.Red,
+        strokeWidth = 1F
+    ),
+    yAxisLineConfig = AxisLineConfig(
+        color = Color.Green,
+        strokeWidth = 1F
+    )
+) {
 }
