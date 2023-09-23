@@ -19,4 +19,6 @@
     <string name="stats_dreams_no_data_available">Not enough data was found to display the statistics</string>
     <string name="stats_dreams_loading">Loading the statistics…</string>
 
+    <string name="stats_dreams_main_title">Dream statistics</string>
+
 </resources>
