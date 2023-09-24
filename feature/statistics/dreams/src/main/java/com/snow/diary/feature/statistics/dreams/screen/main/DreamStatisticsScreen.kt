@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.feature.statistics.dreams.DateRangeDialog
 import com.snow.diary.feature.statistics.dreams.R
@@ -37,7 +38,7 @@ import dev.oneuiproject.oneui.R as IconR
 
 @Composable
 internal fun DreamStatistics(
-    viewModel: DreamStatisticsViewModel,
+    viewModel: DreamStatisticsViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit
 ) {
     val amountState by viewModel.amountState.collectAsStateWithLifecycle()
