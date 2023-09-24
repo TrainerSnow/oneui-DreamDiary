@@ -20,5 +20,12 @@
     <string name="stats_dreams_loading">Loading the statistics…</string>
 
     <string name="stats_dreams_main_title">Dream statistics</string>
+    <string name="stats_dreams_main_range_title">Select range</string>
+
+    <string name="stats_dreams_range_month">Last month</string>
+    <string name="stats_dreams_range_halfyear">Last half year</string>
+    <string name="stats_dreams_range_year">Last year</string>
+    <string name="stats_dreams_range_fiveyear">Last five years</string>
+    <string name="stats_dreams_range_alltime">All time</string>
 
 </resources>

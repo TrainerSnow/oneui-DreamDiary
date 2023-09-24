@@ -6,11 +6,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.snow.diary.feature.statistics.dreams.DateRangeDialog
 import com.snow.diary.feature.statistics.dreams.R
+import com.snow.diary.feature.statistics.dreams.StatisticsDateRanges
 import com.snow.diary.feature.statistics.dreams.screen.components.DreamAmount
 import com.snow.diary.feature.statistics.dreams.screen.components.DreamAmountGraph
 import com.snow.diary.feature.statistics.dreams.screen.components.DreamAmountGraphPeriod
@@ -21,12 +25,42 @@ import com.snow.diary.feature.statistics.dreams.screen.components.DreamMetricSta
 import com.snow.diary.feature.statistics.dreams.screen.components.DreamWeekday
 import com.snow.diary.feature.statistics.dreams.screen.components.DreamWeekdayInformation
 import com.snow.diary.feature.statistics.dreams.screen.components.DreamWeekdayState
+import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.drawer.DrawerLayout
 import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
+import org.oneui.compose.widgets.buttons.IconButton
 import java.time.DayOfWeek
 import java.time.LocalDate
+import dev.oneuiproject.oneui.R as IconR
+
+@Composable
+internal fun DreamStatistics(
+    viewModel: DreamStatisticsViewModel,
+    onNavigateBack: () -> Unit
+) {
+    val amountState by viewModel.amountState.collectAsStateWithLifecycle()
+    val amountGraphState by viewModel.amountGraphState.collectAsStateWithLifecycle()
+    val graphPeriod by viewModel.period.collectAsStateWithLifecycle()
+    val metricState by viewModel.metricState.collectAsStateWithLifecycle()
+    val weekdayState by viewModel.weekdayState.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val range by viewModel.range.collectAsStateWithLifecycle()
+
+    DreamStatistics(
+        amountState = amountState,
+        amountGraphState = amountGraphState,
+        graphPeriod = graphPeriod,
+        metricState = metricState,
+        weekdayState = weekdayState,
+        uiState = uiState,
+        range = range,
+        onEvent = viewModel::onEvent,
+        onNavigateBack = onNavigateBack
+    )
+}
+
 
 @Composable
 private fun DreamStatistics(
@@ -35,15 +69,47 @@ private fun DreamStatistics(
     graphPeriod: DreamAmountGraphPeriod,
     metricState: DreamMetricState,
     weekdayState: DreamWeekdayState,
+    uiState: DreamStatisticsUiState,
+    range: StatisticsDateRanges,
     onEvent: (DreamStatisticsEvent) -> Unit,
     onNavigateBack: () -> Unit
 ) {
+    if (uiState.showRangeDialog) {
+        DateRangeDialog(
+            onDismissRequest = {
+                onEvent(DreamStatisticsEvent.ToggleRangeDialog)
+            },
+            selected = range,
+            onRangeSelect = {
+                onEvent(
+                    DreamStatisticsEvent.ChangeDateRange(it)
+                )
+            }
+        )
+    }
+
     CollapsingToolbarLayout(
         modifier = Modifier
             .fillMaxSize(),
         state = rememberCollapsingToolbarState(CollapsingToolbarCollapsedState.COLLAPSED),
         expandable = false,
-        toolbarTitle = stringResource(R.string.stats_dreams_main_title)
+        toolbarTitle = stringResource(R.string.stats_dreams_main_title),
+        appbarNavAction = {
+            IconButton(
+                icon = Icon.Resource(IconR.drawable.ic_oui_drawer),
+                onClick = onNavigateBack
+            )
+        },
+        appbarActions = {
+            IconButton(
+                icon = Icon.Resource(IconR.drawable.ic_oui_calendar_month),
+                onClick = {
+                    onEvent(
+                        DreamStatisticsEvent.ToggleRangeDialog
+                    )
+                }
+            )
+        }
     ) {
         LazyVerticalGrid(
             modifier = Modifier
@@ -152,6 +218,8 @@ private fun DreamStatisticsPreview() {
                 ),
                 mostDreamsOn = DayOfWeek.SATURDAY
             ),
+            range = StatisticsDateRanges.AllTime,
+            uiState = DreamStatisticsUiState(),
             onEvent = { },
             onNavigateBack = { }
         )

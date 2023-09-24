@@ -35,6 +35,7 @@ import org.oneui.compose.progress.ProgressIndicatorType
 import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.widgets.box.RoundedCornerBox
 import java.time.LocalDate
+import java.time.Period
 
 
 internal sealed class DreamAmountGraphState {
@@ -51,14 +52,15 @@ internal sealed class DreamAmountGraphState {
 }
 
 internal enum class DreamAmountGraphPeriod(
-    @StringRes val displayName: Int
+    @StringRes val displayName: Int,
+    val period: Period
 ) {
 
-    Week(R.string.stats_dreams_graph_period_week),
+    Week(R.string.stats_dreams_graph_period_week, Period.ofWeeks(1)),
 
-    Month(R.string.stats_dreams_graph_period_month),
+    Month(R.string.stats_dreams_graph_period_month, Period.ofMonths(1)),
 
-    Year(R.string.stats_dreams_graph_period_year)
+    Year(R.string.stats_dreams_graph_period_year, Period.ofYears(1))
 
 }
 
@@ -147,12 +149,14 @@ internal fun DreamAmountGraph(
                             )
                         }
                     }
+
                     DreamAmountGraphState.NoData -> {
                         Text(
                             text = stringResource(R.string.stats_dreams_no_data_available),
                             style = errorTextStyle
                         )
                     }
+
                     is DreamAmountGraphState.Success -> {
                         LineGraphFrame(
                             modifier = Modifier
