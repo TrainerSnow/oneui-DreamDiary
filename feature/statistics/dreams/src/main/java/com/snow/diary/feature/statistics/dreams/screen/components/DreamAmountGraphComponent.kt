@@ -73,11 +73,13 @@ internal fun DreamAmountGraph(
 ) {
     val titleStyle = TextStyle(
         fontSize = 21.sp,
-        fontWeight = FontWeight.SemiBold
+        fontWeight = FontWeight.SemiBold,
+        color = OneUITheme.colors.seslPrimaryTextColor
     )
     val periodStyle = TextStyle(
         fontSize = 16.sp,
         fontWeight = FontWeight.Medium,
+        color = OneUITheme.colors.seslPrimaryTextColor
     )
     val axisLabelTextStyle = TextStyle(
         fontSize = 13.sp,
@@ -85,7 +87,8 @@ internal fun DreamAmountGraph(
         color = OneUITheme.colors.seslSecondaryTextColor
     )
     val errorTextStyle = TextStyle(
-        fontSize = 13.sp
+        fontSize = 13.sp,
+        color = OneUITheme.colors.seslPrimaryTextColor
     )
 
     RoundedCornerBox(

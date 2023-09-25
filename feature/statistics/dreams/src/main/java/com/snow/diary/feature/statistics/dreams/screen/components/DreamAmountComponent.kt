@@ -18,6 +18,7 @@ import com.snow.diary.feature.statistics.dreams.R
 import org.oneui.compose.progress.CircularProgressIndicatorSize
 import org.oneui.compose.progress.ProgressIndicator
 import org.oneui.compose.progress.ProgressIndicatorType
+import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.widgets.box.RoundedCornerBox
 
 internal sealed class DreamAmountState {
@@ -39,11 +40,13 @@ internal fun DreamAmount(
 ) {
     val amountStyle = TextStyle(
         fontSize = 26.sp,
-        fontWeight = FontWeight.SemiBold
+        fontWeight = FontWeight.SemiBold,
+        color = OneUITheme.colors.seslPrimaryTextColor
     )
     val averageStyle = TextStyle(
         fontSize = 12.sp,
-        fontWeight = FontWeight.Medium
+        fontWeight = FontWeight.Medium,
+        color = OneUITheme.colors.seslPrimaryTextColor
     )
     val decimalFormat = DecimalFormat("#.##")
 

@@ -21,6 +21,7 @@ import org.oneui.compose.preference.misc.PreferenceListDivider
 import org.oneui.compose.progress.CircularProgressIndicatorSize
 import org.oneui.compose.progress.ProgressIndicator
 import org.oneui.compose.progress.ProgressIndicatorType
+import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.widgets.box.RoundedCornerBox
 import java.time.DayOfWeek
 
@@ -52,20 +53,25 @@ internal fun DreamWeekday(
 ) {
     val titleStyle = TextStyle(
         fontSize = 21.sp,
-        fontWeight = FontWeight.SemiBold
+        fontWeight = FontWeight.SemiBold,
+        color = OneUITheme.colors.seslPrimaryTextColor
     )
     val mostDreamsStyle = TextStyle(
         fontSize = 24.sp,
-        fontWeight = FontWeight.SemiBold
+        fontWeight = FontWeight.SemiBold,
+        color = OneUITheme.colors.seslPrimaryTextColor
     )
     val listDayStyle = TextStyle(
-        fontSize = 19.sp
+        fontSize = 19.sp,
+        color = OneUITheme.colors.seslPrimaryTextColor
     )
     val listPercentageStyle = TextStyle(
-        fontSize = 19.sp, fontWeight = FontWeight.SemiBold
+        fontSize = 19.sp, fontWeight = FontWeight.SemiBold,
+        color = OneUITheme.colors.seslPrimaryTextColor
     )
     val errorTextStyle = TextStyle(
-        fontSize = 13.sp
+        fontSize = 13.sp,
+        color = OneUITheme.colors.seslPrimaryTextColor
     )
 
     RoundedCornerBox(
