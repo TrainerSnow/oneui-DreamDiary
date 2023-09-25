@@ -63,6 +63,7 @@ private fun MainStatistics(
         ) {
             StatisticsDestinations.entries.forEach { dest ->
                 BottomNavigationBarItem(
+                    modifier = Modifier.weight(1F),
                     onClick = { onDestinationChange(dest) },
                     label = stringResource(dest.title),
                     icon = dest.icon
