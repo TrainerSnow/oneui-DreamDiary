@@ -15,27 +15,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.snow.diary.feature.statistics.R
-import org.oneui.compose.progress.CircularProgressIndicatorSize
-import org.oneui.compose.progress.ProgressIndicator
-import org.oneui.compose.progress.ProgressIndicatorType
+import com.snow.diary.feature.statistics.screen.components.StatisticsComponent
+import com.snow.diary.feature.statistics.screen.components.StatisticsState
 import org.oneui.compose.theme.OneUITheme
-import org.oneui.compose.widgets.box.RoundedCornerBox
 
-internal sealed class DreamAmountState {
+data class DreamAmountData(
 
-    data class Success(
-        val amount: Int,
-        val monthlyAverage: Float
-    ) : DreamAmountState()
+    val amount: Int,
 
-    data object Loading : DreamAmountState()
+    val average: Float
 
-}
+)
 
 @Composable
 internal fun DreamAmount(
     modifier: Modifier = Modifier,
-    state: DreamAmountState,
+    state: StatisticsState<DreamAmountData>,
     onClick: (() -> Unit)? = null
 ) {
     val amountStyle = TextStyle(
@@ -50,42 +45,33 @@ internal fun DreamAmount(
     )
     val decimalFormat = DecimalFormat("#.##")
 
-    RoundedCornerBox(
+    StatisticsComponent(
         modifier = modifier,
-        onClick = onClick
-    ) {
-        when (state) {
-            DreamAmountState.Loading -> {
-                ProgressIndicator(
-                    type = ProgressIndicatorType.CircularIndeterminate(
-                        size = CircularProgressIndicatorSize.Companion.Medium
-                    )
-                )
-            }
-            is DreamAmountState.Success -> {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    verticalArrangement = Arrangement
-                        .spacedBy(8.dp)
-                ) {
-                    Text(
-                        text = stringResource(
-                            R.string.stats_dreams_amount_amount,
-                            state.amount.toString()
-                        ),
-                        style = amountStyle
-                    )
+        title = stringResource(R.string.stats_dreams_amount_title),
+        state = state,
+        onClick = onClick,
+    ) { data ->
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement
+                .spacedBy(8.dp)
+        ) {
+            Text(
+                text = stringResource(
+                    R.string.stats_dreams_amount_amount,
+                    data.amount.toString()
+                ),
+                style = amountStyle
+            )
 
-                    Text(
-                        text = stringResource(
-                            R.string.stats_dreams_amount_avg,
-                            decimalFormat.format(state.monthlyAverage)
-                        ),
-                        style = averageStyle
-                    )
-                }
-            }
+            Text(
+                text = stringResource(
+                    R.string.stats_dreams_amount_avg,
+                    decimalFormat.format(data.average)
+                ),
+                style = averageStyle
+            )
         }
     }
 }
@@ -95,8 +81,10 @@ internal fun DreamAmount(
 private fun DreamAmountPreview() = DreamAmount(
     modifier = Modifier
         .width(360.dp),
-    state = DreamAmountState.Success(
-        amount = 278,
-        monthlyAverage = 0.25381932F
+    state = StatisticsState.Success(
+        DreamAmountData(
+            amount = 278,
+            average = 0.25381932F
+        )
     )
 )

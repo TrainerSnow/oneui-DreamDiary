@@ -5,6 +5,7 @@
     <string name="stats_nav_persons">Persons</string>
     <string name="stats_nav_locations">Persons</string>
 
+    <string name="stats_dreams_amount_title">Dream number</string>
     <string name="stats_dreams_amount_amount">Total dreams: %s</string>
     <string name="stats_dreams_amount_avg">Monthly average: %s</string>
 

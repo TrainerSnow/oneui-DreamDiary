@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -20,161 +19,91 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.snow.diary.feature.statistics.R
-import org.oneui.compose.progress.CircularProgressIndicatorSize
-import org.oneui.compose.progress.ProgressIndicator
-import org.oneui.compose.progress.ProgressIndicatorType
+import com.snow.diary.feature.statistics.screen.components.StatisticsComponent
+import com.snow.diary.feature.statistics.screen.components.StatisticsState
 import org.oneui.compose.theme.OneUITheme
-import org.oneui.compose.widgets.box.RoundedCornerBox
 
 
-internal sealed class DreamMetricState {
+internal data class DreamMetricData(
 
-    data object Loading : DreamMetricState()
+    val happinessAverage: Float,
 
-    data object NoDate : DreamMetricState()
+    val clearnessAverage: Float
 
-    data class Success(
-
-        val happinessAverage: Float,
-
-        val clearnessAverage: Float
-
-    ) : DreamMetricState()
-
-}
+)
 
 @Composable
 internal fun DreamMetricComponent(
     modifier: Modifier = Modifier,
-    state: DreamMetricState,
+    state: StatisticsState<DreamMetricData>,
     onClick: (() -> Unit)? = null
 ) {
     val labelStyle = TextStyle(
         fontSize = 19.sp,
         color = OneUITheme.colors.seslPrimaryTextColor
     )
-    val titleStyle = TextStyle(
-        fontSize = 21.sp,
-        fontWeight = FontWeight.SemiBold,
-        color = OneUITheme.colors.seslPrimaryTextColor
-    )
-    val errorTextStyle = TextStyle(
-        fontSize = 13.sp,
-        color = OneUITheme.colors.seslPrimaryTextColor
-    )
     val decimalFormat = DecimalFormat("#.##")
     val happinessColor = Color(0xfffcca05)
     val clearnessColor = Color(0xff63d1d2)
 
-    RoundedCornerBox(
+    StatisticsComponent(
         modifier = modifier,
-        onClick = onClick
-    ) {
-        Column(
-            modifier = modifier
-                .fillMaxWidth()
-        ) {
-            Text(
-                text = stringResource(R.string.stats_dreams_metric_title),
-                style = titleStyle
-            )
-            Spacer(
-                Modifier.height(12.dp)
-            )
-
-            when (state) {
-                DreamMetricState.Loading -> {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement
-                            .spacedBy(8.dp)
-                    ) {
-                        ProgressIndicator(
-                            type = ProgressIndicatorType.CircularIndeterminate(
-                                size = CircularProgressIndicatorSize.Companion.Medium
-                            )
+        onClick = onClick,
+        title = stringResource(R.string.stats_dreams_metric_title),
+        state = state
+    ) { data ->
+        Column {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement
+                    .spacedBy(6.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .height(
+                            with(LocalDensity.current) { labelStyle.fontSize.toDp() }
                         )
-                        Text(
-                            text = stringResource(R.string.stats_dreams_loading),
-                            style = errorTextStyle
+                        .width(12.dp)
+                        .clip(CircleShape)
+                        .background(happinessColor, CircleShape)
+                )
+                Text(
+                    text = stringResource(
+                        R.string.stats_dreams_metric_happiness,
+                        decimalFormat.format(data.happinessAverage)
+                    ),
+                    style = labelStyle
+                )
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement
+                    .spacedBy(6.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .height(
+                            with(LocalDensity.current) { labelStyle.fontSize.toDp() }
                         )
-                    }
-                }
-                DreamMetricState.NoDate -> {
-                    Text(
-                        text = stringResource(R.string.stats_dreams_no_data_available),
-                        style = errorTextStyle
-                    )
-                }
-                is DreamMetricState.Success -> {
-                    Column {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement
-                                .spacedBy(6.dp)
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .height(
-                                        with(LocalDensity.current) { labelStyle.fontSize.toDp() }
-                                    )
-                                    .width(12.dp)
-                                    .clip(CircleShape)
-                                    .background(happinessColor, CircleShape)
-                            )
-                            Text(
-                                text = stringResource(
-                                    R.string.stats_dreams_metric_happiness,
-                                    decimalFormat.format(state.happinessAverage)
-                                ),
-                                style = labelStyle
-                            )
-                        }
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement
-                                .spacedBy(6.dp)
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .height(
-                                        with(LocalDensity.current) { labelStyle.fontSize.toDp() }
-                                    )
-                                    .width(12.dp)
-                                    .clip(CircleShape)
-                                    .background(clearnessColor, CircleShape)
-                            )
-                            Text(
-                                text = stringResource(
-                                    R.string.stats_dreams_metric_clearnesss,
-                                    decimalFormat.format(state.clearnessAverage)
-                                ),
-                                style = labelStyle
-                            )
-                        }
-                    }
-                }
+                        .width(12.dp)
+                        .clip(CircleShape)
+                        .background(clearnessColor, CircleShape)
+                )
+                Text(
+                    text = stringResource(
+                        R.string.stats_dreams_metric_clearnesss,
+                        decimalFormat.format(data.clearnessAverage)
+                    ),
+                    style = labelStyle
+                )
             }
         }
     }
 }
-
-@Preview
-@Composable
-private fun DreamMetricComponentPreview() = DreamMetricComponent(
-    modifier = Modifier
-        .width(350.dp),
-    state = DreamMetricState.Success(
-        happinessAverage = 0.1809528F,
-        clearnessAverage = 0.9186238F
-    )
-)

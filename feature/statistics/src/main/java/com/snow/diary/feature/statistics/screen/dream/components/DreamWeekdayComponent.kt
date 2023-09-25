@@ -12,30 +12,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.snow.diary.core.common.time.TimeFormat.formatFullName
 import com.snow.diary.feature.statistics.R
+import com.snow.diary.feature.statistics.screen.components.StatisticsComponent
+import com.snow.diary.feature.statistics.screen.components.StatisticsState
 import org.oneui.compose.preference.misc.PreferenceListDivider
-import org.oneui.compose.progress.CircularProgressIndicatorSize
-import org.oneui.compose.progress.ProgressIndicator
-import org.oneui.compose.progress.ProgressIndicatorType
 import org.oneui.compose.theme.OneUITheme
-import org.oneui.compose.widgets.box.RoundedCornerBox
 import java.time.DayOfWeek
 
-internal sealed class DreamWeekdayState {
+internal data class DreamWeekdayData(
 
-    data object Loading : DreamWeekdayState()
+    val weekdays: List<DreamWeekdayInformation>,
 
-    data object NoData : DreamWeekdayState()
+    val mostDreamsOn: DayOfWeek
 
-    data class Success(
-        val weekdays: List<DreamWeekdayInformation>, val mostDreamsOn: DayOfWeek
-    ) : DreamWeekdayState()
-
-}
+)
 
 internal data class DreamWeekdayInformation(
 
@@ -49,13 +42,9 @@ internal data class DreamWeekdayInformation(
 
 @Composable
 internal fun DreamWeekday(
-    modifier: Modifier = Modifier, state: DreamWeekdayState
+    modifier: Modifier = Modifier,
+    state: StatisticsState<DreamWeekdayData>
 ) {
-    val titleStyle = TextStyle(
-        fontSize = 21.sp,
-        fontWeight = FontWeight.SemiBold,
-        color = OneUITheme.colors.seslPrimaryTextColor
-    )
     val mostDreamsStyle = TextStyle(
         fontSize = 24.sp,
         fontWeight = FontWeight.SemiBold,
@@ -69,89 +58,49 @@ internal fun DreamWeekday(
         fontSize = 19.sp, fontWeight = FontWeight.SemiBold,
         color = OneUITheme.colors.seslPrimaryTextColor
     )
-    val errorTextStyle = TextStyle(
-        fontSize = 13.sp,
-        color = OneUITheme.colors.seslPrimaryTextColor
-    )
 
-    RoundedCornerBox(
-        modifier = modifier
-    ) {
+    StatisticsComponent(
+        modifier = modifier,
+        title = stringResource(R.string.stats_dreams_weekday_title),
+        state = state
+    ) { data ->
         Column(
-            modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            modifier = Modifier
+                .fillMaxWidth()
         ) {
             Text(
-                text = stringResource(R.string.stats_dreams_weekday_title), style = titleStyle
+                modifier = Modifier
+                    .fillMaxWidth(),
+                text = stringResource(
+                    R.string.stats_dreams_weekday_most,
+                    data.mostDreamsOn.formatFullName()
+                ),
+                style = mostDreamsStyle
             )
 
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                when (state) {
-                    DreamWeekdayState.Loading -> {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement
-                                .spacedBy(8.dp)
-                        ) {
-                            ProgressIndicator(
-                                type = ProgressIndicatorType.CircularIndeterminate(
-                                    size = CircularProgressIndicatorSize.Companion.Medium
-                                )
-                            )
-                            Text(
-                                text = stringResource(R.string.stats_dreams_loading),
-                                style = errorTextStyle
-                            )
-                        }
-                    }
+            PreferenceListDivider(
+                Modifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
 
-                    DreamWeekdayState.NoData -> {
+            data.weekdays.sortedByDescending { it.percentage }
+                .take(DreamWeekdayDefaults.showTopNWeekdays).forEach { info ->
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         Text(
-                            text = stringResource(R.string.stats_dreams_no_data_available),
-                            style = errorTextStyle
+                            text = info.weekday.formatFullName() + ":",
+                            style = listDayStyle
                         )
-                    }
-
-                    is DreamWeekdayState.Success -> {
                         Text(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            text = stringResource(
-                                R.string.stats_dreams_weekday_most,
-                                state.mostDreamsOn.formatFullName()
-                            ),
-                            style = mostDreamsStyle
+                            text = (info.percentage * 100).toInt().toString() + "%",
+                            style = listPercentageStyle
                         )
-
-                        PreferenceListDivider(
-                            Modifier
-                                .fillMaxWidth()
-                                .height(1.dp)
-                        )
-
-                        state.weekdays.sortedByDescending { it.percentage }
-                            .take(DreamWeekdayDefaults.showTopNWeekdays).forEach { info ->
-                                Row(
-                                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Text(
-                                        text = info.weekday.formatFullName() + ":",
-                                        style = listDayStyle
-                                    )
-                                    Text(
-                                        text = (info.percentage * 100).toInt().toString() + "%",
-                                        style = listPercentageStyle
-                                    )
-                                }
-                            }
                     }
                 }
-            }
         }
     }
 }
@@ -160,48 +109,6 @@ private object DreamWeekdayDefaults {
 
     const val showTopNWeekdays = 3
 
-}
-
-@Preview
-@Composable
-private fun DreamWeekdayPreviewSuccess() {
-    DreamWeekday(
-        state = DreamWeekdayState.Success(
-            weekdays = listOf(
-                DreamWeekdayInformation(
-                    weekday = DayOfWeek.MONDAY, totalAmount = 74, percentage = 1 / 11F
-                ), DreamWeekdayInformation(
-                    weekday = DayOfWeek.TUESDAY, totalAmount = 120, percentage = 1 / 6F
-                ), DreamWeekdayInformation(
-                    weekday = DayOfWeek.WEDNESDAY, totalAmount = 23, percentage = 1 / 15F
-                ), DreamWeekdayInformation(
-                    weekday = DayOfWeek.THURSDAY, totalAmount = 78, percentage = 1 / 12F
-                ), DreamWeekdayInformation(
-                    weekday = DayOfWeek.FRIDAY, totalAmount = 12, percentage = 1 / 24F
-                ), DreamWeekdayInformation(
-                    weekday = DayOfWeek.SATURDAY, totalAmount = 274, percentage = 1 / 3F
-                ), DreamWeekdayInformation(
-                    weekday = DayOfWeek.SUNDAY, totalAmount = 213, percentage = 1 / 4F
-                )
-            ), mostDreamsOn = DayOfWeek.SATURDAY
-        )
-    )
-}
-
-@Preview
-@Composable
-private fun DreamWeekdayPreviewLoading() {
-    DreamWeekday(
-        state = DreamWeekdayState.Loading
-    )
-}
-
-@Preview
-@Composable
-private fun DreamWeekdayPreviewNoData() {
-    DreamWeekday(
-        state = DreamWeekdayState.NoData
-    )
 }
 
 
