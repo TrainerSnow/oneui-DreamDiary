@@ -1,4 +1,4 @@
-package com.snow.diary.feature.statistics.dreams.screen.main;
+package com.snow.diary.feature.statistics.screen.dream;
 
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.core.domain.action.dream.AllDreams
@@ -7,13 +7,13 @@ import com.snow.diary.core.domain.action.statistics.DreamAmountAverage
 import com.snow.diary.core.domain.action.statistics.DreamAmounts
 import com.snow.diary.core.domain.action.statistics.HappinessAverage
 import com.snow.diary.core.domain.viewmodel.EventViewModel
-import com.snow.diary.feature.statistics.dreams.StatisticsDateRanges
-import com.snow.diary.feature.statistics.dreams.screen.components.DreamAmountGraphPeriod
-import com.snow.diary.feature.statistics.dreams.screen.components.DreamAmountGraphState
-import com.snow.diary.feature.statistics.dreams.screen.components.DreamAmountState
-import com.snow.diary.feature.statistics.dreams.screen.components.DreamMetricState
-import com.snow.diary.feature.statistics.dreams.screen.components.DreamWeekdayInformation
-import com.snow.diary.feature.statistics.dreams.screen.components.DreamWeekdayState
+import com.snow.diary.feature.statistics.StatisticsDateRanges
+import com.snow.diary.feature.statistics.screen.dream.components.DreamAmountGraphPeriod
+import com.snow.diary.feature.statistics.screen.dream.components.DreamAmountGraphState
+import com.snow.diary.feature.statistics.screen.dream.components.DreamAmountState
+import com.snow.diary.feature.statistics.screen.dream.components.DreamMetricState
+import com.snow.diary.feature.statistics.screen.dream.components.DreamWeekdayInformation
+import com.snow.diary.feature.statistics.screen.dream.components.DreamWeekdayState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

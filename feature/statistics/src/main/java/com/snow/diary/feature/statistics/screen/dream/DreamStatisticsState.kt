@@ -1,4 +1,4 @@
-package com.snow.diary.feature.statistics.dreams.screen.main
+package com.snow.diary.feature.statistics.screen.dream
 
 internal data class DreamStatisticsUiState(
 

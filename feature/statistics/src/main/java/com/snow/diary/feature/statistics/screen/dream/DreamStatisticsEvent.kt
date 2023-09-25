@@ -1,7 +1,7 @@
-package com.snow.diary.feature.statistics.dreams.screen.main;
+package com.snow.diary.feature.statistics.screen.dream;
 
-import com.snow.diary.feature.statistics.dreams.StatisticsDateRanges
-import com.snow.diary.feature.statistics.dreams.screen.components.DreamAmountGraphPeriod
+import com.snow.diary.feature.statistics.StatisticsDateRanges
+import com.snow.diary.feature.statistics.screen.dream.components.DreamAmountGraphPeriod
 
 internal sealed class DreamStatisticsEvent {
 

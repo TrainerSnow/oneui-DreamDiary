@@ -66,7 +66,6 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:ui"))
     implementation(project(":core:form"))
-    implementation(project(":feature:statistics:dreams"))
     implementation(libs.oneui)
     implementation(libs.oneui.icons)
 }

@@ -1,4 +1,4 @@
-package com.snow.diary.feature.statistics.dreams
+package com.snow.diary.feature.statistics
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth

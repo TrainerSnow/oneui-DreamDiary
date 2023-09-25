@@ -1,4 +1,4 @@
-package com.snow.diary.feature.statistics.dreams.screen.components
+package com.snow.diary.feature.statistics.screen.dream.components
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
@@ -28,7 +28,7 @@ import com.snow.diary.core.ui.graph.line.AxisLabelFitting
 import com.snow.diary.core.ui.graph.line.AxisLineConfig
 import com.snow.diary.core.ui.graph.line.LineGraph
 import com.snow.diary.core.ui.graph.line.LineGraphFrame
-import com.snow.diary.feature.statistics.dreams.R
+import com.snow.diary.feature.statistics.R
 import org.oneui.compose.progress.CircularProgressIndicatorSize
 import org.oneui.compose.progress.ProgressIndicator
 import org.oneui.compose.progress.ProgressIndicatorType

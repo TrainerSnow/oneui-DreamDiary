@@ -9,9 +9,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.snow.diary.feature.statistics.dreams.nav.dreamNavigation
-import com.snow.diary.feature.statistics.dreams.nav.goToDreamStatistics
 import com.snow.diary.feature.statistics.nav.StatisticsDestinations
+import com.snow.diary.feature.statistics.nav.dreamNavigation
+import com.snow.diary.feature.statistics.nav.goToDreamStatistics
 import org.oneui.compose.navigation.BottomNavigationBar
 import org.oneui.compose.navigation.BottomNavigationBarItem
 
