@@ -23,6 +23,7 @@ class DreamAmounts(
         val totalEnd: LocalDate
     )
 
+    @Suppress("UNNECESSARY_NOT_NULL_ASSERTION")
     override fun Input.createFlow(): Flow<List<Pair<LocalDate, Int>>> = combine(
         flow = allDreams(
             AllDreams.Input(
@@ -35,7 +36,7 @@ class DreamAmounts(
         ),
         flow2 = firstDreamDate(Unit)
     ) { dreams, firstDate ->
-        if (dreams.isEmpty() || firstDate == null) emptyList<Int>()
+        if (dreams.isEmpty() || firstDate == null) return@combine emptyList<Pair<LocalDate, Int>>()
 
         val amounts = mutableListOf<Pair<LocalDate, Int>>()
         var start = firstDate!! //Inclusive
@@ -59,7 +60,7 @@ class DreamAmounts(
 
         amounts.add(start to lastAmount)
 
-        amounts
+        return@combine amounts
     }
 
 

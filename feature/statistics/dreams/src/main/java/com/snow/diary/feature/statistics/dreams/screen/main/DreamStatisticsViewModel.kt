@@ -69,9 +69,9 @@ internal class DreamStatisticsViewModel @Inject constructor(
             totalEnd = LocalDate.now()
         )
     ).map {
-        if (it.size < 3) DreamAmountGraphState.NoData
+        if (it.size < 3) return@map DreamAmountGraphState.NoData
 
-        DreamAmountGraphState.Success(
+        return@map DreamAmountGraphState.Success(
             dreamAmounts = it.map { it.second },
             timeStamps = it.map { it.first }
         )
@@ -96,9 +96,13 @@ internal class DreamStatisticsViewModel @Inject constructor(
     val weekdayState = allDreams(
         AllDreams.Input(dateRange = range.value.range)
     ).map {
+        println("asdjasddsa 1")
         val mappedAmounts = mutableMapOf<DayOfWeek, Int>()
+        println("asdjasddsa 2")
         val total = it.size
+        println("asdjasddsa 3")
         var max: Pair<DayOfWeek, Int>? = null
+        println("asdjasddsa 4")
         it.forEach { dream ->
             val dow = dream.created.dayOfWeek
             mappedAmounts[dow] =
@@ -106,10 +110,12 @@ internal class DreamStatisticsViewModel @Inject constructor(
                 else 1
             if (mappedAmounts[dow]!! > (max?.second ?: 0)) max = dow to mappedAmounts[dow]!!
         }
+        println("asdjasddsa 5")
 
-        if (max == null) DreamWeekdayState.NoData
+        if (max == null) return@map DreamWeekdayState.NoData
+        println("asdjasddsa 6")
 
-        DreamWeekdayState.Success(
+        return@map DreamWeekdayState.Success(
             weekdays = mappedAmounts.map {
                 DreamWeekdayInformation(
                     it.key,

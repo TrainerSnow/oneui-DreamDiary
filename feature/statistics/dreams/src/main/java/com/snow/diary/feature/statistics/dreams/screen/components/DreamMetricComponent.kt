@@ -25,6 +25,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.snow.diary.feature.statistics.dreams.R
+import org.oneui.compose.progress.CircularProgressIndicatorSize
+import org.oneui.compose.progress.ProgressIndicator
+import org.oneui.compose.progress.ProgressIndicatorType
 import org.oneui.compose.widgets.box.RoundedCornerBox
 
 
@@ -57,6 +60,9 @@ internal fun DreamMetricComponent(
         fontSize = 21.sp,
         fontWeight = FontWeight.SemiBold
     )
+    val errorTextStyle = TextStyle(
+        fontSize = 13.sp
+    )
     val decimalFormat = DecimalFormat("#.##")
     val happinessColor = Color(0xfffcca05)
     val clearnessColor = Color(0xff63d1d2)
@@ -78,8 +84,29 @@ internal fun DreamMetricComponent(
             )
 
             when (state) {
-                DreamMetricState.Loading -> TODO()
-                DreamMetricState.NoDate -> TODO()
+                DreamMetricState.Loading -> {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement
+                            .spacedBy(8.dp)
+                    ) {
+                        ProgressIndicator(
+                            type = ProgressIndicatorType.CircularIndeterminate(
+                                size = CircularProgressIndicatorSize.Companion.Medium
+                            )
+                        )
+                        Text(
+                            text = stringResource(R.string.stats_dreams_loading),
+                            style = errorTextStyle
+                        )
+                    }
+                }
+                DreamMetricState.NoDate -> {
+                    Text(
+                        text = stringResource(R.string.stats_dreams_no_data_available),
+                        style = errorTextStyle
+                    )
+                }
                 is DreamMetricState.Success -> {
                     Column {
                         Row(
