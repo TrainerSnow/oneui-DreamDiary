@@ -3,10 +3,11 @@ package com.snow.diary.feature.statistics.screen.dream.components
 import android.icu.text.DecimalFormat
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -33,14 +34,14 @@ internal fun DreamAmount(
     state: StatisticsState<DreamAmountData>,
     onClick: (() -> Unit)? = null
 ) {
-    val amountStyle = TextStyle(
-        fontSize = 26.sp,
-        fontWeight = FontWeight.SemiBold,
-        color = OneUITheme.colors.seslPrimaryTextColor
+    val numberStyle = TextStyle(
+        fontSize = 15.sp,
+        fontWeight = FontWeight.Bold,
+        color = OneUITheme.colors.seslPrimaryColor
     )
-    val averageStyle = TextStyle(
-        fontSize = 12.sp,
-        fontWeight = FontWeight.Medium,
+    val labelStyle = TextStyle(
+        fontSize = 15.sp,
+        fontWeight = FontWeight.SemiBold,
         color = OneUITheme.colors.seslPrimaryTextColor
     )
     val decimalFormat = DecimalFormat("#.##")
@@ -51,27 +52,35 @@ internal fun DreamAmount(
         state = state,
         onClick = onClick,
     ) { data ->
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement
-                .spacedBy(8.dp)
-        ) {
-            Text(
-                text = stringResource(
-                    R.string.stats_dreams_amount_amount,
-                    data.amount.toString()
-                ),
-                style = amountStyle
-            )
-
-            Text(
-                text = stringResource(
-                    R.string.stats_dreams_amount_avg,
-                    decimalFormat.format(data.average)
-                ),
-                style = averageStyle
-            )
+        Column {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement
+                    .spacedBy(4.dp)
+            ) {
+                Text(
+                    style = labelStyle,
+                    text = stringResource(R.string.stats_dreams_amount_amount)
+                )
+                Text(
+                    style = numberStyle,
+                    text = data.amount.toString()
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement
+                    .spacedBy(4.dp)
+            ) {
+                Text(
+                    style = labelStyle,
+                    text = stringResource(R.string.stats_dreams_amount_avg)
+                )
+                Text(
+                    style = numberStyle,
+                    text = decimalFormat.format(data.average)
+                )
+            }
         }
     }
 }

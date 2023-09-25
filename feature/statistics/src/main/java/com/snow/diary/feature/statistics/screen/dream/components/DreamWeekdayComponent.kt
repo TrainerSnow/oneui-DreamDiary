@@ -45,18 +45,15 @@ internal fun DreamWeekday(
     modifier: Modifier = Modifier,
     state: StatisticsState<DreamWeekdayData>
 ) {
-    val mostDreamsStyle = TextStyle(
-        fontSize = 24.sp,
+    val labelStyle = TextStyle(
+        fontSize = 15.sp,
         fontWeight = FontWeight.SemiBold,
         color = OneUITheme.colors.seslPrimaryTextColor
     )
-    val listDayStyle = TextStyle(
-        fontSize = 19.sp,
-        color = OneUITheme.colors.seslPrimaryTextColor
-    )
-    val listPercentageStyle = TextStyle(
-        fontSize = 19.sp, fontWeight = FontWeight.SemiBold,
-        color = OneUITheme.colors.seslPrimaryTextColor
+    val valueStyle = TextStyle(
+        fontSize = 15.sp,
+        fontWeight = FontWeight.Bold,
+        color = OneUITheme.colors.seslPrimaryColor
     )
 
     StatisticsComponent(
@@ -66,17 +63,26 @@ internal fun DreamWeekday(
     ) { data ->
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement
+                .spacedBy(8.dp)
         ) {
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                text = stringResource(
-                    R.string.stats_dreams_weekday_most,
-                    data.mostDreamsOn.formatFullName()
-                ),
-                style = mostDreamsStyle
-            )
+            Row(
+                horizontalArrangement = Arrangement
+                    .spacedBy(4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(
+                        R.string.stats_dreams_weekday_most
+                    ),
+                    style = labelStyle
+                )
+                Text(
+                    text = data.mostDreamsOn.formatFullName(),
+                    style = valueStyle
+                )
+            }
 
             PreferenceListDivider(
                 Modifier
@@ -93,11 +99,11 @@ internal fun DreamWeekday(
                     ) {
                         Text(
                             text = info.weekday.formatFullName() + ":",
-                            style = listDayStyle
+                            style = labelStyle
                         )
                         Text(
                             text = (info.percentage * 100).toInt().toString() + "%",
-                            style = listPercentageStyle
+                            style = valueStyle
                         )
                     }
                 }

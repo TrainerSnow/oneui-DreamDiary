@@ -6,8 +6,8 @@
     <string name="stats_nav_locations">Persons</string>
 
     <string name="stats_dreams_amount_title">Dream number</string>
-    <string name="stats_dreams_amount_amount">Total dreams: %s</string>
-    <string name="stats_dreams_amount_avg">Monthly average: %s</string>
+    <string name="stats_dreams_amount_amount">Total dreams:</string>
+    <string name="stats_dreams_amount_avg">Monthly average:</string>
 
     <string name="stats_dreams_metric_title">Dream metrics</string>
     <string name="stats_dreams_metric_happiness">Happiness: %s</string>
@@ -18,8 +18,8 @@
     <string name="stats_dreams_graph_period_year">Year</string>
     <string name="stats_dreams_graph_title">Dream amount over time</string>
 
-    <string name="stats_dreams_weekday_title">Dream frequency on weekdays</string>
-    <string name="stats_dreams_weekday_most">Most dreams on: %s</string>
+    <string name="stats_dreams_weekday_title">Dreams on weekdays</string>
+    <string name="stats_dreams_weekday_most">Most dreams on:</string>
 
     <string name="stats_dreams_no_data_available">Not enough data was found to display the statistics</string>
     <string name="stats_dreams_loading">Loading the statistics…</string>

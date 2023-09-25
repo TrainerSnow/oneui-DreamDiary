@@ -19,6 +19,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.snow.diary.feature.statistics.R
@@ -42,7 +44,8 @@ internal fun DreamMetricComponent(
     onClick: (() -> Unit)? = null
 ) {
     val labelStyle = TextStyle(
-        fontSize = 19.sp,
+        fontSize = 15.sp,
+        fontWeight = FontWeight.SemiBold,
         color = OneUITheme.colors.seslPrimaryTextColor
     )
     val decimalFormat = DecimalFormat("#.##")
@@ -55,7 +58,10 @@ internal fun DreamMetricComponent(
         title = stringResource(R.string.stats_dreams_metric_title),
         state = state
     ) { data ->
-        Column {
+        Column(
+            verticalArrangement = Arrangement
+                .spacedBy(8.dp)
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -106,4 +112,17 @@ internal fun DreamMetricComponent(
             }
         }
     }
+}
+
+@Preview
+@Composable
+private fun DreamMetricPreview() {
+    DreamMetricComponent(
+        state = StatisticsState.from(
+            DreamMetricData(
+                happinessAverage = 0.6836F,
+                clearnessAverage = 0.25937F
+            )
+        )
+    )
 }
