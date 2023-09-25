@@ -51,6 +51,11 @@ import com.snow.diary.core.domain.action.relation.RelationById
 import com.snow.diary.core.domain.action.relation.RelationWithPersonsAct
 import com.snow.diary.core.domain.action.relation.RelationsWithPersonsAct
 import com.snow.diary.core.domain.action.relation.UpdateRelation
+import com.snow.diary.core.domain.action.statistics.ClearnessAverage
+import com.snow.diary.core.domain.action.statistics.DreamAmountAverage
+import com.snow.diary.core.domain.action.statistics.DreamAmounts
+import com.snow.diary.core.domain.action.statistics.HappinessAverage
+import com.snow.diary.core.domain.action.time.FirstDreamDate
 import com.snow.diary.core.obfuscation.db.dao.ObfuscationInfoDao
 import dagger.Module
 import dagger.Provides
@@ -401,5 +406,43 @@ object DomainModule {
         locationDao: LocationDao,
         relationDao: RelationDao
     ) = Deobfuscate(obfuscationDao, dreamDao, personDao, locationDao, relationDao)
+
+
+    /*
+    Time usecases
+     */
+    @Provides
+    @Singleton
+    fun provideFirstDreamDate(
+        allDreams: AllDreams
+    ) = FirstDreamDate(allDreams)
+
+    /*
+    Statistics usecases
+     */
+    @Provides
+    @Singleton
+    fun provideDreamAmounts(
+        allDreams: AllDreams,
+        firstDreamDate: FirstDreamDate
+    ) = DreamAmounts(allDreams, firstDreamDate)
+
+    @Provides
+    @Singleton
+    fun provideDreamAmountAverage(
+        allDreams: AllDreams
+    ) = DreamAmountAverage(allDreams)
+
+    @Provides
+    @Singleton
+    fun provideHappinessAverage(
+        allDreams: AllDreams
+    ) = HappinessAverage(allDreams)
+
+    @Provides
+    @Singleton
+    fun provideClearnessAverage(
+        allDreams: AllDreams
+    ) = ClearnessAverage(allDreams)
 
 }

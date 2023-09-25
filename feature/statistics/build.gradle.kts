@@ -8,10 +8,10 @@ plugins {
 
 android {
     namespace = "com.snow.diary.feature.statistics"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
-        minSdk = 26
+        minSdk = 28
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -32,6 +32,12 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
 }
 
@@ -60,6 +66,7 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:ui"))
     implementation(project(":core:form"))
+    implementation(project(":feature:statistics:dreams"))
     implementation(libs.oneui)
     implementation(libs.oneui.icons)
 }

@@ -14,6 +14,7 @@ import com.snow.diary.core.domain.action.preferences.GetPreferences
 import com.snow.diary.feature.dreams.nav.goToDreamList
 import com.snow.diary.feature.locations.nav.goToLocationList
 import com.snow.diary.feature.persons.nav.goToPersonList
+import com.snow.diary.feature.statistics.nav.goToStatistics
 import com.snow.diary.nav.TopLevelDestinations
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
@@ -48,7 +49,7 @@ data class DiaryState(
             TopLevelDestinations.Dreams -> navController.goToDreamList()
             TopLevelDestinations.Persons -> navController.goToPersonList()
             TopLevelDestinations.Locations -> navController.goToLocationList()
-            TopLevelDestinations.Statistics -> TODO()
+            TopLevelDestinations.Statistics -> navController.goToStatistics()
         }
         currentNavDest = navDest
         closeDrawer()

@@ -1,4 +1,4 @@
-@Suppress("DSL_SCOPE_VIOLATION")
+@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.kotlinAndroid)
@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.snow.diary.feature.persons"
+    namespace = "com.snow.diary.feature.statistics.dreams"
     compileSdk = 34
 
     defaultConfig {
@@ -42,7 +42,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.com.google.dagger.hilt.android)
     kapt(libs.com.google.dagger.hilt.android.compiler)
     implementation(libs.compose.navigation.hilt)
