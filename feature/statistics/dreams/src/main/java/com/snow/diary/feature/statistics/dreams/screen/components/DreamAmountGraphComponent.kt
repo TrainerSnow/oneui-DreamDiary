@@ -118,7 +118,7 @@ internal fun DreamAmountGraph(
                                 DreamAmountGraphPeriod
                                     .entries
                                     .run {
-                                        getOrNull(indexOf(period)) ?: first()
+                                        getOrNull(indexOf(period) + 1) ?: first()
                                     }
                             )
                         }

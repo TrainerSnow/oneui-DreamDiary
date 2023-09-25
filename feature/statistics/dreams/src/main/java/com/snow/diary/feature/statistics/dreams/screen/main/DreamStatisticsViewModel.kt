@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -96,13 +97,9 @@ internal class DreamStatisticsViewModel @Inject constructor(
     val weekdayState = allDreams(
         AllDreams.Input(dateRange = range.value.range)
     ).map {
-        println("asdjasddsa 1")
         val mappedAmounts = mutableMapOf<DayOfWeek, Int>()
-        println("asdjasddsa 2")
         val total = it.size
-        println("asdjasddsa 3")
         var max: Pair<DayOfWeek, Int>? = null
-        println("asdjasddsa 4")
         it.forEach { dream ->
             val dow = dream.created.dayOfWeek
             mappedAmounts[dow] =
@@ -110,10 +107,8 @@ internal class DreamStatisticsViewModel @Inject constructor(
                 else 1
             if (mappedAmounts[dow]!! > (max?.second ?: 0)) max = dow to mappedAmounts[dow]!!
         }
-        println("asdjasddsa 5")
 
         if (max == null) return@map DreamWeekdayState.NoData
-        println("asdjasddsa 6")
 
         return@map DreamWeekdayState.Success(
             weekdays = mappedAmounts.map {
@@ -131,14 +126,19 @@ internal class DreamStatisticsViewModel @Inject constructor(
         initialValue = DreamWeekdayState.Loading
     )
 
+    @Suppress("IMPLICIT_CAST_TO_ANY")
     override suspend fun handleEvent(event: DreamStatisticsEvent) = when (event) {
-        is DreamStatisticsEvent.ChangeGraphPeriod -> TODO()
-        DreamStatisticsEvent.ToggleRangeDialog -> TODO()
-        is DreamStatisticsEvent.ChangeDateRange -> TODO()
+        is DreamStatisticsEvent.ChangeGraphPeriod -> _period.emit(event.period)
+        DreamStatisticsEvent.ToggleRangeDialog -> updateShowRangeDialog()
+        is DreamStatisticsEvent.ChangeDateRange -> _range.emit(event.ranges)
     }
 
-    private fun updatePeriod(period: DreamAmountGraphPeriod) = viewModelScope.launch {
-        _period.emit(period)
+    private fun updateShowRangeDialog() = viewModelScope.launch {
+        _uiState.update {
+            it.copy(
+                showRangeDialog = !it.showRangeDialog
+            )
+        }
     }
 
 }
