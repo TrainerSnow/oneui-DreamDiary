@@ -33,6 +33,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
 }
 
 dependencies {
@@ -60,6 +66,7 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:ui"))
     implementation(project(":core:form"))
+    implementation(project(":feature:statistics:dreams"))
     implementation(libs.oneui)
     implementation(libs.oneui.icons)
 }
