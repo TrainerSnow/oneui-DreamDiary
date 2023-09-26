@@ -121,7 +121,7 @@ private fun NoData(
     ) {
         Text(
             style = infoStyle,
-            text = stringResource(R.string.stats_dreams_no_data_available)
+            text = stringResource(R.string.stats_no_data_available)
         )
     }
 }
@@ -148,7 +148,7 @@ private fun Loading(
         )
         Text(
             style = infoStyle,
-            text = stringResource(R.string.stats_dreams_no_data_available)
+            text = stringResource(R.string.stats_loading)
         )
     }
 }
