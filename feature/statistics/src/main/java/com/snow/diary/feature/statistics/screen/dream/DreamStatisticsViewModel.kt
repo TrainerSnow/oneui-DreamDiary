@@ -1,4 +1,4 @@
-package com.snow.diary.feature.statistics.dreams.screen.main;
+package com.snow.diary.feature.statistics.screen.dream;
 
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.core.domain.action.dream.AllDreams
@@ -7,13 +7,14 @@ import com.snow.diary.core.domain.action.statistics.DreamAmountAverage
 import com.snow.diary.core.domain.action.statistics.DreamAmounts
 import com.snow.diary.core.domain.action.statistics.HappinessAverage
 import com.snow.diary.core.domain.viewmodel.EventViewModel
-import com.snow.diary.feature.statistics.dreams.StatisticsDateRanges
-import com.snow.diary.feature.statistics.dreams.screen.components.DreamAmountGraphPeriod
-import com.snow.diary.feature.statistics.dreams.screen.components.DreamAmountGraphState
-import com.snow.diary.feature.statistics.dreams.screen.components.DreamAmountState
-import com.snow.diary.feature.statistics.dreams.screen.components.DreamMetricState
-import com.snow.diary.feature.statistics.dreams.screen.components.DreamWeekdayInformation
-import com.snow.diary.feature.statistics.dreams.screen.components.DreamWeekdayState
+import com.snow.diary.feature.statistics.StatisticsDateRanges
+import com.snow.diary.feature.statistics.screen.components.StatisticsState
+import com.snow.diary.feature.statistics.screen.dream.components.DreamAmountData
+import com.snow.diary.feature.statistics.screen.dream.components.DreamAmountGraphPeriod
+import com.snow.diary.feature.statistics.screen.dream.components.DreamGraphData
+import com.snow.diary.feature.statistics.screen.dream.components.DreamMetricData
+import com.snow.diary.feature.statistics.screen.dream.components.DreamWeekdayData
+import com.snow.diary.feature.statistics.screen.dream.components.DreamWeekdayInformation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -45,7 +46,7 @@ internal class DreamStatisticsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(DreamStatisticsUiState())
     val uiState: StateFlow<DreamStatisticsUiState> = _uiState
 
-    val amountState = combine(
+    val amountState: StateFlow<StatisticsState<DreamAmountData>> = combine(
         flow = allDreams(
             AllDreams.Input(
                 dateRange = range.value.range
@@ -53,14 +54,16 @@ internal class DreamStatisticsViewModel @Inject constructor(
         ),
         flow2 = dreamAmountAverage(range.value.range)
     ) { dreams, avg ->
-        DreamAmountState.Success(
-            amount = dreams.size,
-            monthlyAverage = avg
+        StatisticsState.from(
+            DreamAmountData(
+                amount = dreams.size,
+                average = avg
+            )
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = DreamAmountState.Loading
+        initialValue = StatisticsState.Loading()
     )
 
     val amountGraphState = dreamAmounts(
@@ -70,28 +73,32 @@ internal class DreamStatisticsViewModel @Inject constructor(
             totalEnd = LocalDate.now()
         )
     ).map {
-        if (it.size < 3) return@map DreamAmountGraphState.NoData
+        if (it.size < 3) return@map StatisticsState.NoData()
 
-        return@map DreamAmountGraphState.Success(
-            dreamAmounts = it.map { it.second },
-            timeStamps = it.map { it.first }
+        return@map StatisticsState.from(
+            DreamGraphData(
+                dreamAmounts = it.map { it.second },
+                timeStamps = it.map { it.first }
+            )
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = DreamAmountGraphState.Loading
+        initialValue = StatisticsState.Loading()
     )
 
     val metricState = combine(
         flow = clearnessAverage(range.value.range),
         flow2 = happinessAverage(range.value.range)
     ) { clearness, happiness ->
-        if (clearness == null || happiness == null) DreamMetricState.NoDate
-        else DreamMetricState.Success(happiness, clearness)
+        if (clearness == null || happiness == null) StatisticsState.NoData()
+        else StatisticsState.from(
+            DreamMetricData(happiness, clearness)
+        )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = DreamMetricState.Loading
+        initialValue = StatisticsState.Loading()
     )
 
     val weekdayState = allDreams(
@@ -108,22 +115,24 @@ internal class DreamStatisticsViewModel @Inject constructor(
             if (mappedAmounts[dow]!! > (max?.second ?: 0)) max = dow to mappedAmounts[dow]!!
         }
 
-        if (max == null) return@map DreamWeekdayState.NoData
+        if (max == null) return@map StatisticsState.NoData()
 
-        return@map DreamWeekdayState.Success(
-            weekdays = mappedAmounts.map {
-                DreamWeekdayInformation(
-                    it.key,
-                    it.value,
-                    it.value.toFloat() / total.toFloat()
-                )
-            },
-            mostDreamsOn = max!!.first
+        return@map StatisticsState.from(
+            DreamWeekdayData(
+                weekdays = mappedAmounts.map {
+                    DreamWeekdayInformation(
+                        it.key,
+                        it.value,
+                        it.value.toFloat() / total.toFloat()
+                    )
+                },
+                mostDreamsOn = max!!.first
+            )
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = DreamWeekdayState.Loading
+        initialValue = StatisticsState.Loading()
     )
 
     @Suppress("IMPLICIT_CAST_TO_ANY")
