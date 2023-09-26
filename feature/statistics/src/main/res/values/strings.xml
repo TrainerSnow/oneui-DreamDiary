@@ -35,4 +35,11 @@
     <string name="stats_dreams_range_fiveyear">Last five years</string>
     <string name="stats_dreams_range_alltime">All time</string>
 
+    <!--Person strings-->
+    <string name="stats_persons_amount_title">Person numbers</string>
+    <string name="stats_persons_amount_total">Total persons:</string>
+    <string name="stats_persons_amount_used">Used persons:</string>
+    <string name="stats_persons_amount_unused">Unused persons:</string>
+    <string name="stats_persons_amount_most_amount">%s times</string>
+
 </resources>
