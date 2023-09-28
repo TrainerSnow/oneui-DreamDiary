@@ -53,8 +53,8 @@ internal class PersonsStatisticsViewModel @Inject constructor(
     )
 
     override suspend fun handleEvent(event: PersonsStatisticsEvent) = when (event) {
-        is PersonsStatisticsEvent.ChangeRange -> TODO()
-        PersonsStatisticsEvent.ToggleRangeDialog -> TODO()
+        is PersonsStatisticsEvent.ChangeRange -> updateRange(event.range)
+        PersonsStatisticsEvent.ToggleRangeDialog -> toggleRangeDialog()
     }
 
     private fun updateRange(range: StatisticsDateRanges) = viewModelScope.launch {
