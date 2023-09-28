@@ -42,4 +42,6 @@
     <string name="stats_persons_amount_unused">Unused persons:</string>
     <string name="stats_persons_amount_most_amount">%s times</string>
 
+    <string name="stats_persons_main_title">Persons statistics</string>
+
 </resources>
