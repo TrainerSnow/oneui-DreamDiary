@@ -44,7 +44,7 @@ internal class ExportViewModel @Inject constructor(
         val locations = async { allLocations(AllLocations.Input()).stateIn(this).value }
         val relations = async { allRelations(AllRelations.Input()).stateIn(this).value }
         val dreamPersonCrossrefs = async { allDreamPersonCrossrefs(AllDreamPersonCrossrefs.Input()).stateIn(this).value }
-        val dreamLocationsCrossrefs = async { allDreamLocationCrossrefs(Unit).stateIn(this).value }
+        val dreamLocationsCrossrefs = async { allDreamLocationCrossrefs(AllDreamLocationCrossrefs.Input()).stateIn(this).value }
 
         return@withContext IOData(
             dreams = dreams.await(),

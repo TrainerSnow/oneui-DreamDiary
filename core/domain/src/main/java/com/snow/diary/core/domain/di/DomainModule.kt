@@ -55,6 +55,7 @@ import com.snow.diary.core.domain.action.statistics.ClearnessAverage
 import com.snow.diary.core.domain.action.statistics.DreamAmountAverage
 import com.snow.diary.core.domain.action.statistics.DreamAmounts
 import com.snow.diary.core.domain.action.statistics.HappinessAverage
+import com.snow.diary.core.domain.action.statistics.LocationsWithAmount
 import com.snow.diary.core.domain.action.statistics.PersonsWithAmount
 import com.snow.diary.core.domain.action.time.FirstDreamDate
 import com.snow.diary.core.obfuscation.db.dao.ObfuscationInfoDao
@@ -346,8 +347,9 @@ object DomainModule {
     @Provides
     @Singleton
     fun provideAllDreamLocationsCrossrefs(
-        crossrefDao: CrossrefDao
-    ) = AllDreamLocationCrossrefs(crossrefDao)
+        crossrefDao: CrossrefDao,
+        allDreams: AllDreams
+    ) = AllDreamLocationCrossrefs(crossrefDao, allDreams)
 
     @Provides
     @Singleton
@@ -454,5 +456,13 @@ object DomainModule {
         allDreamPersonCrossrefs: AllDreamPersonCrossrefs,
         personById: PersonFromId
     ) = PersonsWithAmount(allPersons, allDreamPersonCrossrefs, personById)
+
+    @Provides
+    @Singleton
+    fun provideLocationsWithAmount(
+        allLocations: AllLocations,
+        allDreamLocationCrossrefs: AllDreamLocationCrossrefs,
+        locationById: LocationById
+    ) = LocationsWithAmount(allLocations, allDreamLocationCrossrefs, locationById)
 
 }
