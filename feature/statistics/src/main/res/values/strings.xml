@@ -44,4 +44,13 @@
 
     <string name="stats_persons_main_title">Persons statistics</string>
 
+    <!--Location strings-->
+    <string name="stats_locations_amount_title">Location numbers</string>
+    <string name="stats_locations_amount_total">Total locations:</string>
+    <string name="stats_locations_amount_used">Used locations:</string>
+    <string name="stats_locations_amount_unused">Unused locations:</string>
+    <string name="stats_locations_amount_most_amount">%s times</string>
+
+    <string name="stats_locations_main_title">Locations statistics</string>
+
 </resources>
