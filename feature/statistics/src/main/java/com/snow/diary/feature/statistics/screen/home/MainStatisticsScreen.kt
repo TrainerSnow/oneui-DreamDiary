@@ -12,6 +12,8 @@ import androidx.navigation.compose.rememberNavController
 import com.snow.diary.feature.statistics.nav.StatisticsDestinations
 import com.snow.diary.feature.statistics.nav.dreamNavigation
 import com.snow.diary.feature.statistics.nav.goToDreamStatistics
+import com.snow.diary.feature.statistics.nav.goToPersonsStatistics
+import com.snow.diary.feature.statistics.nav.personsStatistics
 import org.oneui.compose.navigation.BottomNavigationBar
 import org.oneui.compose.navigation.BottomNavigationBarItem
 
@@ -25,7 +27,7 @@ internal fun MainStatistics(
         onDestinationChange = {
             when (it) {
                 StatisticsDestinations.Dreams -> navController.goToDreamStatistics()
-                StatisticsDestinations.Persons -> TODO()
+                StatisticsDestinations.Persons -> navController.goToPersonsStatistics()
                 StatisticsDestinations.Locations -> TODO()
             }
         },
@@ -52,9 +54,8 @@ private fun MainStatistics(
             navController = navController,
             startDestination = "dream_statistics"
         ) {
-            dreamNavigation(
-                onNavigateBack = onNavigateBack
-            )
+            dreamNavigation(onNavigateBack)
+            personsStatistics(onNavigateBack)
         }
 
         BottomNavigationBar(

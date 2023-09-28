@@ -55,6 +55,7 @@ import com.snow.diary.core.domain.action.statistics.ClearnessAverage
 import com.snow.diary.core.domain.action.statistics.DreamAmountAverage
 import com.snow.diary.core.domain.action.statistics.DreamAmounts
 import com.snow.diary.core.domain.action.statistics.HappinessAverage
+import com.snow.diary.core.domain.action.statistics.PersonsWithAmount
 import com.snow.diary.core.domain.action.time.FirstDreamDate
 import com.snow.diary.core.obfuscation.db.dao.ObfuscationInfoDao
 import dagger.Module
@@ -338,8 +339,9 @@ object DomainModule {
     @Provides
     @Singleton
     fun provideAllDreamPersonCrossrefs(
-        crossrefDao: CrossrefDao
-    ) = AllDreamPersonCrossrefs(crossrefDao)
+        crossrefDao: CrossrefDao,
+        allDreams: AllDreams
+    ) = AllDreamPersonCrossrefs(crossrefDao, allDreams)
 
     @Provides
     @Singleton
@@ -444,5 +446,13 @@ object DomainModule {
     fun provideClearnessAverage(
         allDreams: AllDreams
     ) = ClearnessAverage(allDreams)
+
+    @Provides
+    @Singleton
+    fun provideUsedPersons(
+        allPersons: AllPersons,
+        allDreamPersonCrossrefs: AllDreamPersonCrossrefs,
+        personById: PersonFromId
+    ) = PersonsWithAmount(allPersons, allDreamPersonCrossrefs, personById)
 
 }
