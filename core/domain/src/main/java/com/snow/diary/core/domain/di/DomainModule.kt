@@ -450,9 +450,9 @@ object DomainModule {
     @Provides
     @Singleton
     fun provideUsedPersons(
-        allDreams: AllDreams,
-        crossrefDao: CrossrefDao,
+        allPersons: AllPersons,
+        allDreamPersonCrossrefs: AllDreamPersonCrossrefs,
         personById: PersonFromId
-    ) = PersonsWithAmount(allDreams, crossrefDao, personById)
+    ) = PersonsWithAmount(allPersons, allDreamPersonCrossrefs, personById)
 
 }

@@ -1,19 +1,20 @@
 package com.snow.diary.core.domain.action.statistics;
 
 import com.snow.diary.core.common.time.DateRange
-import com.snow.diary.core.database.dao.CrossrefDao
 import com.snow.diary.core.domain.action.FlowAction
-import com.snow.diary.core.domain.action.dream.AllDreams
+import com.snow.diary.core.domain.action.cross.dream_person.AllDreamPersonCrossrefs
+import com.snow.diary.core.domain.action.person.AllPersons
 import com.snow.diary.core.domain.action.person.PersonFromId
 import com.snow.diary.core.model.data.Person
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flowOf
 
 class PersonsWithAmount(
-    private val allDreams: AllDreams,
-    private val crossrefDao: CrossrefDao,
+    private val allPersons: AllPersons,
+    private val allDreamPersonCrossrefs: AllDreamPersonCrossrefs,
     private val personFromId: PersonFromId
 ) : FlowAction<DateRange, List<PersonsWithAmount.PersonWithAmount>>() {
 
@@ -27,16 +28,17 @@ class PersonsWithAmount(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun DateRange.createFlow(): Flow<List<PersonWithAmount>> = combine(
-        flow = allDreams(
-            AllDreams.Input(dateRange = this)
+        flow = allPersons(
+            AllPersons.Input()
         ),
-        flow2 = crossrefDao.getAllDreamPersonCrossrefs()
-    ) { dreams, crossrefs ->
+        flow2 = allDreamPersonCrossrefs(AllDreamPersonCrossrefs.Input(this))
+    ) { persons, crossrefs ->
         val idNums = mutableMapOf<Long, Int>()
+        persons.map(Person::id).forEach {  idNums[it!!] = 0 }
 
         crossrefs.forEach {
-            if (it.personId in idNums.keys) idNums[it.personId] = idNums[it.personId]!! + 1
-            else idNums[it.personId] = 1
+            if (it.second in idNums.keys) idNums[it.second] = idNums[it.second]!! + 1
+            else idNums[it.second] = 1
         }
 
         idNums
@@ -44,6 +46,7 @@ class PersonsWithAmount(
         val persons = idNums.map {
             personFromId(it.key)
         }
+        if (persons.isEmpty()) return@flatMapMerge flowOf(emptyList())
 
         combine(persons) {
             val filtered = it
