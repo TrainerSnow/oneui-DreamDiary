@@ -346,8 +346,9 @@ object DomainModule {
     @Provides
     @Singleton
     fun provideAllDreamLocationsCrossrefs(
-        crossrefDao: CrossrefDao
-    ) = AllDreamLocationCrossrefs(crossrefDao)
+        crossrefDao: CrossrefDao,
+        allDreams: AllDreams
+    ) = AllDreamLocationCrossrefs(crossrefDao, allDreams)
 
     @Provides
     @Singleton
