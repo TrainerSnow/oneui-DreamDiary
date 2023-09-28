@@ -43,6 +43,7 @@ import com.snow.diary.feature.relations.nav.goToRelationDetail
 import com.snow.diary.feature.relations.nav.goToRelationList
 import com.snow.diary.feature.relations.nav.relationDetail
 import com.snow.diary.feature.relations.nav.relationList
+import com.snow.diary.feature.statistics.nav.statistics
 import com.snow.diary.nav.TopLevelDestinations
 import kotlinx.coroutines.launch
 import org.oneui.compose.base.Icon
@@ -79,7 +80,7 @@ fun DiaryApplicationRoot(
                 WindowInsets.navigationBars.asPaddingValues() +
                 WindowInsets.statusBars.asPaddingValues(), //TODO: Move this inset logic into the lib
         drawerContent = {
-            TopLevelDestinations.values().forEach { navDest ->
+            TopLevelDestinations.entries.forEach { navDest ->
                 if (navDest == TopLevelDestinations.Statistics) {
                     DrawerDivider(
                         modifier = Modifier
@@ -127,8 +128,6 @@ private fun DiaryNavHost(
     val navController = state.navController
 
     val obfuscationBlockedMessage = stringResource(R.string.blocked_by_obfuscation)
-
-    val empty = {} //needed so the parentheses from if don' clash with lambda parentheses
 
     fun obfuscationBlocked(block: () -> Unit) {
         if (obfuscationEnabled != null) {
@@ -281,6 +280,10 @@ private fun DiaryNavHost(
         )
         obfuscatePreferences(
             onNavigateBack = state::navigateBack
+        )
+
+        statistics(
+            onNavigateBack = state::openDrawer
         )
     }
 }

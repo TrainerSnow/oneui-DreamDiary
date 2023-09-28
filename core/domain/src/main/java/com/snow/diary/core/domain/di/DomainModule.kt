@@ -51,6 +51,13 @@ import com.snow.diary.core.domain.action.relation.RelationById
 import com.snow.diary.core.domain.action.relation.RelationWithPersonsAct
 import com.snow.diary.core.domain.action.relation.RelationsWithPersonsAct
 import com.snow.diary.core.domain.action.relation.UpdateRelation
+import com.snow.diary.core.domain.action.statistics.ClearnessAverage
+import com.snow.diary.core.domain.action.statistics.DreamAmountAverage
+import com.snow.diary.core.domain.action.statistics.DreamAmounts
+import com.snow.diary.core.domain.action.statistics.HappinessAverage
+import com.snow.diary.core.domain.action.statistics.LocationsWithAmount
+import com.snow.diary.core.domain.action.statistics.PersonsWithAmount
+import com.snow.diary.core.domain.action.time.FirstDreamDate
 import com.snow.diary.core.obfuscation.db.dao.ObfuscationInfoDao
 import dagger.Module
 import dagger.Provides
@@ -333,14 +340,16 @@ object DomainModule {
     @Provides
     @Singleton
     fun provideAllDreamPersonCrossrefs(
-        crossrefDao: CrossrefDao
-    ) = AllDreamPersonCrossrefs(crossrefDao)
+        crossrefDao: CrossrefDao,
+        allDreams: AllDreams
+    ) = AllDreamPersonCrossrefs(crossrefDao, allDreams)
 
     @Provides
     @Singleton
     fun provideAllDreamLocationsCrossrefs(
-        crossrefDao: CrossrefDao
-    ) = AllDreamLocationCrossrefs(crossrefDao)
+        crossrefDao: CrossrefDao,
+        allDreams: AllDreams
+    ) = AllDreamLocationCrossrefs(crossrefDao, allDreams)
 
     @Provides
     @Singleton
@@ -401,5 +410,59 @@ object DomainModule {
         locationDao: LocationDao,
         relationDao: RelationDao
     ) = Deobfuscate(obfuscationDao, dreamDao, personDao, locationDao, relationDao)
+
+
+    /*
+    Time usecases
+     */
+    @Provides
+    @Singleton
+    fun provideFirstDreamDate(
+        allDreams: AllDreams
+    ) = FirstDreamDate(allDreams)
+
+    /*
+    Statistics usecases
+     */
+    @Provides
+    @Singleton
+    fun provideDreamAmounts(
+        allDreams: AllDreams,
+        firstDreamDate: FirstDreamDate
+    ) = DreamAmounts(allDreams, firstDreamDate)
+
+    @Provides
+    @Singleton
+    fun provideDreamAmountAverage(
+        allDreams: AllDreams
+    ) = DreamAmountAverage(allDreams)
+
+    @Provides
+    @Singleton
+    fun provideHappinessAverage(
+        allDreams: AllDreams
+    ) = HappinessAverage(allDreams)
+
+    @Provides
+    @Singleton
+    fun provideClearnessAverage(
+        allDreams: AllDreams
+    ) = ClearnessAverage(allDreams)
+
+    @Provides
+    @Singleton
+    fun provideUsedPersons(
+        allPersons: AllPersons,
+        allDreamPersonCrossrefs: AllDreamPersonCrossrefs,
+        personById: PersonFromId
+    ) = PersonsWithAmount(allPersons, allDreamPersonCrossrefs, personById)
+
+    @Provides
+    @Singleton
+    fun provideLocationsWithAmount(
+        allLocations: AllLocations,
+        allDreamLocationCrossrefs: AllDreamLocationCrossrefs,
+        locationById: LocationById
+    ) = LocationsWithAmount(allLocations, allDreamLocationCrossrefs, locationById)
 
 }

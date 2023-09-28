@@ -41,6 +41,8 @@ dependencies {
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
 
+    implementation(libs.junit)
+
     implementation(libs.org.jetbrains.kotlinx.coroutines.core)
 
     implementation(project(":core:model"))

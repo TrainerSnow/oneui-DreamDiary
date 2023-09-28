@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Main strings-->
+    <string name="stats_nav_dreams">Dreams</string>
+    <string name="stats_nav_persons">Persons</string>
+    <string name="stats_nav_locations">Persons</string>
+
+    <string name="stats_no_data_available">No data available for this statistics. Use this app more to see insights.</string>
+    <string name="stats_loading">Loading…</string>
+
+    <!--Dream strings-->
+    <string name="stats_dreams_amount_title">Dream number</string>
+    <string name="stats_dreams_amount_amount">Total dreams:</string>
+    <string name="stats_dreams_amount_avg">Monthly average:</string>
+
+    <string name="stats_dreams_metric_title">Dream metrics</string>
+    <string name="stats_dreams_metric_happiness">Happiness: %s</string>
+    <string name="stats_dreams_metric_clearnesss">Clearness: %s</string>
+
+    <string name="stats_dreams_graph_period_week">Week</string>
+    <string name="stats_dreams_graph_period_month">Month</string>
+    <string name="stats_dreams_graph_period_year">Year</string>
+    <string name="stats_dreams_graph_title">Dream amount over time</string>
+
+    <string name="stats_dreams_weekday_title">Dreams on weekdays</string>
+    <string name="stats_dreams_weekday_most">Most dreams on:</string>
+
+    <string name="stats_dreams_main_title">Dream statistics</string>
+    <string name="stats_dreams_main_range_title">Select range</string>
+
+    <string name="stats_dreams_range_month">Last month</string>
+    <string name="stats_dreams_range_halfyear">Last half year</string>
+    <string name="stats_dreams_range_year">Last year</string>
+    <string name="stats_dreams_range_fiveyear">Last five years</string>
+    <string name="stats_dreams_range_alltime">All time</string>
+
+    <!--Person strings-->
+    <string name="stats_persons_amount_title">Person numbers</string>
+    <string name="stats_persons_amount_total">Total persons:</string>
+    <string name="stats_persons_amount_used">Used persons:</string>
+    <string name="stats_persons_amount_unused">Unused persons:</string>
+    <string name="stats_persons_amount_most_amount">%s times</string>
+
+    <string name="stats_persons_main_title">Persons statistics</string>
+
+    <!--Location strings-->
+    <string name="stats_locations_amount_title">Location numbers</string>
+    <string name="stats_locations_amount_total">Total locations:</string>
+    <string name="stats_locations_amount_used">Used locations:</string>
+    <string name="stats_locations_amount_unused">Unused locations:</string>
+    <string name="stats_locations_amount_most_amount">%s times</string>
+
+    <string name="stats_locations_main_title">Locations statistics</string>
+
+</resources>
