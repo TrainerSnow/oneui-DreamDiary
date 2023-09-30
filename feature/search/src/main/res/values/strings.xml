@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_dreams">Dreams</string>
+    <string name="search_dreams_hint">Search dreams…</string>
+    <string name="search_persons">Persons</string>
+    <string name="search_persons_hint">Search persons…</string>
+    <string name="search_locations">Locations</string>
+    <string name="search_locations_hint">Search locations…</string>
+
+    <string name="search_no_query">Enter a search query in the search bar to find the matching %s.</string>
+    <string name="search_no_results">No results have been found for the search query. Check your spelling.</string>
+    <string name="search_searching">Searching…</string>
+</resources>
