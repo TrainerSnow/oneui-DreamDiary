@@ -229,7 +229,7 @@ private fun DreamDetailTab.enabled(state: DreamDetailState.Success?): Boolean = 
 
 private fun DreamDetailSubtab.enabled(dream: Dream?): Boolean =
     if (dream == null) true else when (this) {
-        DreamDetailSubtab.Other -> dream.run { happiness != null || clearness != null } ?: true
+        DreamDetailSubtab.Other -> dream.run { happiness != null || clearness != null }
         else -> true
     }
 

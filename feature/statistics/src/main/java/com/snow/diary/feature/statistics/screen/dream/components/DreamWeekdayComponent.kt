@@ -2,6 +2,7 @@ package com.snow.diary.feature.statistics.screen.dream.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,8 +19,8 @@ import com.snow.diary.core.common.time.TimeFormat.formatFullName
 import com.snow.diary.feature.statistics.R
 import com.snow.diary.feature.statistics.screen.components.StatisticsComponent
 import com.snow.diary.feature.statistics.screen.components.StatisticsState
-import org.oneui.compose.preference.misc.PreferenceListDivider
 import org.oneui.compose.theme.OneUITheme
+import org.oneui.compose.widgets.Divider
 import java.time.DayOfWeek
 
 internal data class DreamWeekdayData(
@@ -84,11 +85,11 @@ internal fun DreamWeekday(
                 )
             }
 
-            PreferenceListDivider(
+            Divider(
                 Modifier
                     .fillMaxWidth()
-                    .height(1.dp)
-                    .align(Alignment.CenterHorizontally)
+                    .height(1.dp),
+                padding = PaddingValues()
             )
 
             data.weekdays.sortedByDescending { it.percentage }
