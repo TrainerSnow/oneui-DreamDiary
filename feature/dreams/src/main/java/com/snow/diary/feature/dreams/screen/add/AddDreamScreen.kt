@@ -87,7 +87,8 @@ private fun AddDreamScreen(
                 if(isEdit) R.string.dream_add_title_edit
                 else R.string.dream_add_title
             ),
-            state = rememberCollapsingToolbarState(CollapsingToolbarCollapsedState.COLLAPSED)
+            state = rememberCollapsingToolbarState(CollapsingToolbarCollapsedState.COLLAPSED),
+            expandable = false
         ) {
             Column(
                 modifier = Modifier

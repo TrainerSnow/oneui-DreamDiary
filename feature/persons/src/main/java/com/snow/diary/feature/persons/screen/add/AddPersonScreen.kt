@@ -84,7 +84,8 @@ private fun AddPerson(
             ),
             state = rememberCollapsingToolbarState(
                 CollapsingToolbarCollapsedState.COLLAPSED
-            )
+            ),
+            expandable = false
         ) {
             Column(
                 modifier = Modifier

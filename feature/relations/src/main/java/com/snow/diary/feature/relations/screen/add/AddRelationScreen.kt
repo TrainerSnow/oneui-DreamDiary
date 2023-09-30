@@ -88,7 +88,8 @@ private fun AddRelation(
             ),
             state = rememberCollapsingToolbarState(
                 CollapsingToolbarCollapsedState.COLLAPSED
-            )
+            ),
+            expandable = false
         ) {
             Column(
                 modifier = Modifier

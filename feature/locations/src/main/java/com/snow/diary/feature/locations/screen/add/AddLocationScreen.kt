@@ -74,6 +74,7 @@ private fun AddLocation(
             state = rememberCollapsingToolbarState(
                 CollapsingToolbarCollapsedState.COLLAPSED
             ),
+            expandable = false
         ) {
             Column(
                 modifier = Modifier
