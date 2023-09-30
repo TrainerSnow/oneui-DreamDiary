@@ -181,8 +181,6 @@ private fun GeneralSection(
             }
         }
     }
-
-    //TODO: Show some fancy google maps map here
 }
 
 @Composable
