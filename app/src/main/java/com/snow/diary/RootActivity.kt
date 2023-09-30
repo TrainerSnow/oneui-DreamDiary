@@ -14,6 +14,8 @@ import androidx.biometric.BiometricPrompt.PromptInfo
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -63,6 +65,7 @@ class RootActivity : FragmentActivity() {
 
     private lateinit var authManager: BiometricManager
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         val splash = installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -102,6 +105,7 @@ class RootActivity : FragmentActivity() {
             )
 
             val diaryState = rememberDiaryState(
+                windowSizeClass = calculateWindowSizeClass(this),
                 getPreferences = getPreferences,
                 allPersons = allPersons,
                 allDreams = allDreams,

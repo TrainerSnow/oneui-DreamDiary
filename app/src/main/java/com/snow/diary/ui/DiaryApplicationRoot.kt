@@ -1,5 +1,6 @@
 package com.snow.diary.ui
 
+import android.util.Log.d
 import android.widget.Toast
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -54,6 +55,7 @@ import dev.oneuiproject.oneui.R as IconR
 fun DiaryApplicationRoot(
     state: DiaryState
 ) {
+    d("DiaryApplicationRoot", "SizeClass: ${state.screenSizeClass}")
     val drawerState = state.drawerState
     val context = LocalContext.current
 
@@ -142,7 +144,9 @@ private fun DiaryNavHost(
             onAboutClick = { },
             onAddClick = {
                 obfuscationBlocked {
-                    navController.goToAddDream()
+                    navController.goToAddDream(
+                        dialog = state.fullscreenDialogFloating
+                    )
                 }
             },
             onSearchClick = { },
@@ -167,7 +171,10 @@ private fun DiaryNavHost(
             onEditClick = {
                 obfuscationBlocked {
                     navController
-                        .goToAddDream(it.id)
+                        .goToAddDream(
+                            it.id,
+                            dialog = state.fullscreenDialogFloating
+                        )
                 }
             }
         )
@@ -183,7 +190,9 @@ private fun DiaryNavHost(
             onNavigateBack = state::openDrawer,
             onAddPerson = {
                 obfuscationBlocked {
-                    navController.goToAddPerson()
+                    navController.goToAddPerson(
+                        dialog = state.fullscreenDialogFloating
+                    )
                 }
             },
             onSearchPerson = { },
@@ -199,7 +208,10 @@ private fun DiaryNavHost(
             onNavigateBack = state::navigateBack,
             onEditClick = {
                 obfuscationBlocked {
-                    navController.goToAddPerson(it.id)
+                    navController.goToAddPerson(
+                        it.id,
+                        dialog = state.fullscreenDialogFloating
+                    )
                 }
             },
             onDreamClick = {
@@ -220,7 +232,9 @@ private fun DiaryNavHost(
             onNavigateBack = state::openDrawer,
             onAddLocation = {
                 obfuscationBlocked {
-                    navController.goToAddLocation()
+                    navController.goToAddLocation(
+                        dialog = state.fullscreenDialogFloating
+                    )
                 }
             },
             onSearchLocation = { },
@@ -232,7 +246,10 @@ private fun DiaryNavHost(
             onNavigateBack = state::navigateBack,
             onEditClick = {
                 obfuscationBlocked {
-                    navController.goToAddLocation(it.id)
+                    navController.goToAddLocation(
+                        it.id,
+                        dialog = state.fullscreenDialogFloating
+                    )
                 }
             },
             onDreamClick = {
@@ -247,7 +264,9 @@ private fun DiaryNavHost(
             onNavigateBack = state::navigateBack,
             onAddRelation = {
                 obfuscationBlocked {
-                    navController.goToAddRelation()
+                    navController.goToAddRelation(
+                        dialog = state.fullscreenDialogFloating
+                    )
                 }
             },
             onSearchRelation = { },
@@ -259,7 +278,10 @@ private fun DiaryNavHost(
             onNavigateBack = state::navigateBack,
             onEditClick = {
                 obfuscationBlocked {
-                    navController.goToAddRelation(it.id!!)
+                    navController.goToAddRelation(
+                        it.id!!,
+                        dialog = state.fullscreenDialogFloating
+                    )
                 }
             },
             onPersonClick = {

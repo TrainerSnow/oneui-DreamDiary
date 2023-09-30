@@ -28,9 +28,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.core.ui.component.TextInputFormField
+import com.snow.diary.core.ui.util.windowSizeClass
 import com.snow.diary.feature.relations.R
 import org.oneui.compose.base.Icon
 import org.oneui.compose.dialog.FullscreenDialogContent
+import org.oneui.compose.dialog.FullscreenDialogLayout
 import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
@@ -68,6 +70,7 @@ private fun AddRelation(
     FullscreenDialogContent(
         modifier = Modifier
             .padding(WindowInsets.ime.asPaddingValues()),
+        layout = FullscreenDialogLayout.fromSizeClass(windowSizeClass),
         positiveLabel = stringResource(R.string.relation_add_save),
         onPositiveClick = {
             onEvent(

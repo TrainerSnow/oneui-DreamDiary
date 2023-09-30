@@ -19,10 +19,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.core.model.data.Relation
 import com.snow.diary.core.ui.component.TextInputFormField
+import com.snow.diary.core.ui.util.windowSizeClass
 import com.snow.diary.feature.persons.R
 import com.snow.diary.feature.persons.screen.add.components.RelationInputList
 import org.oneui.compose.base.Icon
 import org.oneui.compose.dialog.FullscreenDialogContent
+import org.oneui.compose.dialog.FullscreenDialogLayout
 import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
@@ -64,6 +66,7 @@ private fun AddPerson(
     FullscreenDialogContent(
         modifier = Modifier
             .padding(WindowInsets.ime.asPaddingValues()),
+        layout = FullscreenDialogLayout.fromSizeClass(windowSizeClass),
         positiveLabel = stringResource(R.string.person_add_save),
         onPositiveClick = {
             onEvent(

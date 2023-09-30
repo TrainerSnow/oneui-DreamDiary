@@ -21,12 +21,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.core.ui.component.OptionalInput
 import com.snow.diary.core.ui.component.TextInputFormField
+import com.snow.diary.core.ui.util.windowSizeClass
 import com.snow.diary.feature.dreams.R
 import com.snow.diary.feature.dreams.screen.add.component.LocationInputList
 import com.snow.diary.feature.dreams.screen.add.component.PersonInputList
 import com.snow.diary.feature.dreams.screen.add.component.ShowMoreTextSeparator
 import org.oneui.compose.base.Icon
 import org.oneui.compose.dialog.FullscreenDialogContent
+import org.oneui.compose.dialog.FullscreenDialogLayout
 import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
@@ -69,6 +71,7 @@ private fun AddDreamScreen(
     FullscreenDialogContent(
         modifier = Modifier
             .padding(WindowInsets.ime.asPaddingValues()),
+        layout = FullscreenDialogLayout.fromSizeClass(windowSizeClass),
         positiveLabel = stringResource(R.string.dream_add_save),
         onPositiveClick = {
             onEvent(
