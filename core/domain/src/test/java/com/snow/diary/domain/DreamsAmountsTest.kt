@@ -40,21 +40,21 @@ class DreamsAmountsTest {
         )
 
         dreamDao = object : DreamDao {
-            override fun insert(vararg entity: DreamEntity) = TODO()
+            override fun insert(vararg entity: DreamEntity) = throw NotImplementedError()
 
-            override fun update(vararg entity: DreamEntity) = TODO()
+            override fun update(vararg entity: DreamEntity) = throw NotImplementedError()
 
-            override fun delete(vararg dream: DreamEntity) = TODO()
+            override fun delete(vararg dream: DreamEntity) = throw NotImplementedError()
 
-            override fun getById(id: Long): Flow<DreamEntity?> = TODO()
+            override fun getById(id: Long): Flow<DreamEntity?> = throw NotImplementedError()
 
-            override fun getDreamWithPersonsById(id: Long) = TODO()
+            override fun getDreamWithPersonsById(id: Long) = throw NotImplementedError()
 
-            override fun getAllDreamsWithPersons() = TODO()
+            override fun getAllDreamsWithPersons() = throw NotImplementedError()
 
-            override fun getDreamWithLocationsById(id: Long) = TODO()
+            override fun getDreamWithLocationsById(id: Long) = throw NotImplementedError()
 
-            override fun getAllDreamsWithLocations() = TODO()
+            override fun getAllDreamsWithLocations() = throw NotImplementedError()
 
             override fun getAll(): Flow<List<DreamEntity>> = flowOf(
                 listOf(

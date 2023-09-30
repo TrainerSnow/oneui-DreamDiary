@@ -28,7 +28,6 @@ import org.oneui.compose.widgets.box.RoundedCornerListItem
 import org.oneui.compose.widgets.buttons.IconButton
 import org.oneui.compose.widgets.buttons.iconButtonColors
 
-//TODO: Possibly move this into the lib
 @Composable
 fun TextInputFormField(
     modifier: Modifier = Modifier,

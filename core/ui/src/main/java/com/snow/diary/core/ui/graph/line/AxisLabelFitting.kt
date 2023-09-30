@@ -8,7 +8,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 
-//TODO: This file is terribly, doesn't follow any conventions and barely, with luck, does what it needs to do. Should be refactored.
 sealed interface AxisLabelFitting {
 
     /**
