@@ -2,6 +2,7 @@ package com.snow.diary.feature.statistics.screen.locations.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,8 +21,8 @@ import com.snow.diary.core.model.data.Location
 import com.snow.diary.feature.statistics.R
 import com.snow.diary.feature.statistics.screen.components.StatisticsComponent
 import com.snow.diary.feature.statistics.screen.components.StatisticsState
-import org.oneui.compose.preference.misc.PreferenceListDivider
 import org.oneui.compose.theme.OneUITheme
+import org.oneui.compose.widgets.Divider
 
 data class LocationsAmountData(
 
@@ -97,11 +98,11 @@ internal fun LocationsAmount(
                 )
             }
 
-            PreferenceListDivider(
+            Divider(
                 Modifier
                     .fillMaxWidth()
-                    .height(1.dp)
-                    .align(Alignment.CenterHorizontally)
+                    .height(1.dp),
+                padding = PaddingValues()
             )
 
             Column(

@@ -2,6 +2,7 @@ package com.snow.diary
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
@@ -13,12 +14,13 @@ import androidx.biometric.BiometricPrompt.PromptInfo
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -63,6 +65,7 @@ class RootActivity : FragmentActivity() {
 
     private lateinit var authManager: BiometricManager
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         val splash = installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -81,7 +84,7 @@ class RootActivity : FragmentActivity() {
 
         setupAuth()
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        enableEdgeToEdge()
 
         setContent {
             if (rootState == RootState.Loading) return@setContent
@@ -102,6 +105,7 @@ class RootActivity : FragmentActivity() {
             )
 
             val diaryState = rememberDiaryState(
+                windowSizeClass = calculateWindowSizeClass(this),
                 getPreferences = getPreferences,
                 allPersons = allPersons,
                 allDreams = allDreams,

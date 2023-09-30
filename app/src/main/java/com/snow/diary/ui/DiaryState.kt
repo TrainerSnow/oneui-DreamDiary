@@ -1,5 +1,6 @@
 package com.snow.diary.ui
 
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,6 +22,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import org.oneui.compose.dialog.FullscreenDialogLayout
 import org.oneui.compose.layout.internal.SlidingDrawerState
 import org.oneui.compose.layout.internal.rememberSlidingDrawerState
 
@@ -31,6 +33,8 @@ data class DiaryState(
     val drawerState: SlidingDrawerState,
 
     val scope: CoroutineScope,
+
+    val screenSizeClass: WindowSizeClass,
 
     val getPreferences: GetPreferences,
 
@@ -43,6 +47,9 @@ data class DiaryState(
 ) {
 
     var currentNavDest by mutableStateOf(TopLevelDestinations.Dreams)
+
+    val fullscreenDialogLayout = FullscreenDialogLayout.fromSizeClass(screenSizeClass)
+    val fullscreenDialogFloating = fullscreenDialogLayout == FullscreenDialogLayout.Floating
 
     fun navigateTo(navDest: TopLevelDestinations) {
         when (navDest) {
@@ -88,6 +95,7 @@ fun rememberDiaryState(
     navController: NavHostController = rememberNavController(),
     drawerState: SlidingDrawerState = rememberSlidingDrawerState(),
     scope: CoroutineScope = rememberCoroutineScope(),
+    windowSizeClass: WindowSizeClass,
     getPreferences: GetPreferences,
     allDreams: AllDreams,
     allPersons: AllPersons,
@@ -96,6 +104,7 @@ fun rememberDiaryState(
     navController,
     drawerState,
     scope,
+    windowSizeClass,
     getPreferences,
     allDreams,
     allPersons,

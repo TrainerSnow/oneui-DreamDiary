@@ -2,29 +2,30 @@ package com.snow.diary.feature.locations.screen.add
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.core.ui.component.TextInputFormField
+import com.snow.diary.core.ui.util.windowSizeClass
 import com.snow.diary.feature.locations.R
 import org.oneui.compose.base.Icon
+import org.oneui.compose.dialog.FullscreenDialogContent
+import org.oneui.compose.dialog.FullscreenDialogLayout
 import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
-import org.oneui.compose.widgets.buttons.Button
-import org.oneui.compose.widgets.buttons.IconButton
-import org.oneui.compose.widgets.buttons.coloredButtonColors
-import org.oneui.compose.widgets.buttons.transparentButtonColors
 import dev.oneuiproject.oneui.R as IconR
 
 @Composable
@@ -44,7 +45,6 @@ internal fun AddLocation(
 }
 
 
-//TODO: When available, this screen should use a fullscreen dialog (= PopOverActivity). FOr now, it uses a simple CTL
 @Composable
 private fun AddLocation(
     state: AddLocationState,
@@ -52,67 +52,52 @@ private fun AddLocation(
     onEvent: (AddLocationEvent) -> Unit,
     onNavigateBack: () -> Unit
 ) {
-    CollapsingToolbarLayout(
-        toolbarTitle = stringResource(
-            if (isEdit) R.string.location_edit_title
-            else R.string.location_add_title
-        ),
-        expandable = false,
-        state = rememberCollapsingToolbarState(
-            CollapsingToolbarCollapsedState.COLLAPSED
-        ),
-        appbarNavAction = {
-            IconButton(
-                icon = Icon.Resource(IconR.drawable.ic_oui_close),
-                onClick = onNavigateBack
+    FullscreenDialogContent(
+        modifier = Modifier
+            .padding(WindowInsets.ime.asPaddingValues()),
+        layout = FullscreenDialogLayout.fromSizeClass(windowSizeClass),
+        positiveLabel = stringResource(R.string.location_add_save),
+        onPositiveClick = {
+            onEvent(
+                AddLocationEvent.Save
             )
+            onNavigateBack()
         },
+        negativeLabel = stringResource(R.string.location_add_cancel),
+        onNegativeClick = onNavigateBack
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement
-                .spacedBy(AddLocationScreenDefaults.columnSpacing)
+        CollapsingToolbarLayout(
+            toolbarTitle = stringResource(
+                if (isEdit) R.string.location_edit_title
+                else R.string.location_add_title
+            ),
+            state = rememberCollapsingToolbarState(
+                CollapsingToolbarCollapsedState.COLLAPSED
+            ),
+            expandable = false
         ) {
-            TextInputFormField(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth(),
-                input = state.name.input,
-                hint = stringResource(R.string.location_add_name),
-                onInputChange = { onEvent(AddLocationEvent.ChangeName(it)) },
-                icon = Icon.Resource(IconR.drawable.ic_oui_location_outline)
-            )
-            TextInputFormField(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                input = state.note.input,
-                hint = stringResource(R.string.location_add_note),
-                onInputChange = { onEvent(AddLocationEvent.ChangeNote(it)) },
-                icon = Icon.Resource(IconR.drawable.ic_oui_memo_outline)
-            )
-
-            //TODO: Do something fancy with maybe google maps api location picker here!
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement
+                    .spacedBy(AddLocationScreenDefaults.columnSpacing)
             ) {
-                Button(
-                    label = stringResource(R.string.location_add_cancel),
-                    onClick = onNavigateBack,
-                    colors = transparentButtonColors()
+                TextInputFormField(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    input = state.name.input,
+                    hint = stringResource(R.string.location_add_name),
+                    onInputChange = { onEvent(AddLocationEvent.ChangeName(it)) },
+                    icon = Icon.Resource(IconR.drawable.ic_oui_location_outline)
                 )
-                Button(
-                    label = stringResource(R.string.location_add_save),
-                    onClick = {
-                        onEvent(
-                            AddLocationEvent.Save
-                        )
-                        onNavigateBack()
-                    },
-                    colors = coloredButtonColors()
+                TextInputFormField(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    input = state.note.input,
+                    hint = stringResource(R.string.location_add_note),
+                    onInputChange = { onEvent(AddLocationEvent.ChangeNote(it)) },
+                    icon = Icon.Resource(IconR.drawable.ic_oui_memo_outline)
                 )
             }
         }
