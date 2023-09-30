@@ -12,9 +12,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.snow.diary.feature.statistics.DateRangeDialog
+import com.snow.diary.core.ui.component.DateRangeDialog
 import com.snow.diary.feature.statistics.R
-import com.snow.diary.feature.statistics.StatisticsDateRanges
+import com.snow.diary.core.ui.component.StatisticsDateRanges
 import com.snow.diary.feature.statistics.screen.components.StatisticsState
 import com.snow.diary.feature.statistics.screen.persons.components.PersonsAmount
 import com.snow.diary.feature.statistics.screen.persons.components.PersonsAmountData

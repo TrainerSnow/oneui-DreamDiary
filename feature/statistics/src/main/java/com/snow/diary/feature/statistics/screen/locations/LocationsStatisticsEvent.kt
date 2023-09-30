@@ -1,6 +1,6 @@
 package com.snow.diary.feature.statistics.screen.locations;
 
-import com.snow.diary.feature.statistics.StatisticsDateRanges
+import com.snow.diary.core.ui.component.StatisticsDateRanges
 
 internal sealed class LocationsStatisticsEvent {
 

@@ -1,4 +1,4 @@
-package com.snow.diary.feature.statistics
+package com.snow.diary.core.ui.component
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.snow.diary.core.common.time.DateRange
+import com.snow.diary.core.ui.R
 import org.oneui.compose.dialog.AlertDialog
 import org.oneui.compose.widgets.buttons.radio.ListRadioButton
 import org.oneui.compose.widgets.buttons.radio.VerticalRadioGroup
@@ -20,7 +21,7 @@ enum class StatisticsDateRanges(
 
     AllTime(
         DateRange.AllTime,
-        R.string.stats_dreams_range_alltime
+        R.string.range_alltime
     ),
 
     RecentMonth(
@@ -28,7 +29,7 @@ enum class StatisticsDateRanges(
             n = 1,
             unit = ChronoUnit.MONTHS
         ),
-        R.string.stats_dreams_range_month
+        R.string.range_month
     ),
 
     RecentHalfYear(
@@ -36,7 +37,7 @@ enum class StatisticsDateRanges(
             n = 6,
             unit = ChronoUnit.MONTHS
         ),
-        R.string.stats_dreams_range_halfyear
+        R.string.range_halfyear
     ),
 
     RecentYear(
@@ -44,7 +45,7 @@ enum class StatisticsDateRanges(
             n = 1,
             unit = ChronoUnit.YEARS
         ),
-        R.string.stats_dreams_range_year
+        R.string.range_year
     ),
 
     RecentFiveYears(
@@ -52,13 +53,13 @@ enum class StatisticsDateRanges(
             n = 5,
             unit = ChronoUnit.YEARS
         ),
-        R.string.stats_dreams_range_fiveyear
+        R.string.range_fiveyear
     )
 
 }
 
 @Composable
-internal fun DateRangeDialog(
+fun DateRangeDialog(
     onDismissRequest: () -> Unit,
     selected: StatisticsDateRanges,
     onRangeSelect: (StatisticsDateRanges) -> Unit
@@ -67,7 +68,7 @@ internal fun DateRangeDialog(
         onDismissRequest = onDismissRequest,
         title = {
             Text(
-                text = stringResource(R.string.stats_dreams_main_title)
+                text = stringResource(R.string.range_dialog_title)
             )
         },
         negativeButtonLabel = stringResource(org.oneui.compose.R.string.sesl_dialog_button_negative),
