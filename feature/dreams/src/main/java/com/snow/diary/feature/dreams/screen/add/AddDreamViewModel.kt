@@ -278,7 +278,6 @@ internal class AddDreamViewModel @Inject constructor(
         )
     }
 
-    //TODO: Maybe move this whole thing (atleast update logic) to usecase
     private fun addDream() {
         var isOk = true
         //Form validation

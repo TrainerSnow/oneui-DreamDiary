@@ -170,7 +170,6 @@ private object ExportScreenDefaults {
 
     val infoWarningSpacing = 12.dp
 
-    //TODO: Make button style in lib for bigger button ( = higher emphasis)
     val buttonPadding = PaddingValues(
         horizontal = 64.dp,
         vertical = 8.dp
