@@ -39,4 +39,11 @@
     <string name="sortdirection_descending">Descending</string>
     <string name="sortdirection_none">None</string>
 
+    <string name="range_month">Last month</string>
+    <string name="range_halfyear">Last half year</string>
+    <string name="range_year">Last year</string>
+    <string name="range_fiveyear">Last five years</string>
+    <string name="range_alltime">All time</string>
+    <string name="range_dialog_title">Select date range</string>
+
 </resources>

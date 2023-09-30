@@ -41,6 +41,9 @@ import com.snow.diary.feature.relations.nav.goToRelationDetail
 import com.snow.diary.feature.relations.nav.goToRelationList
 import com.snow.diary.feature.relations.nav.relationDetail
 import com.snow.diary.feature.relations.nav.relationList
+import com.snow.diary.feature.search.nav.goToSearch
+import com.snow.diary.feature.search.nav.search
+import com.snow.diary.feature.search.screen.SearchTabs
 import com.snow.diary.feature.statistics.nav.statistics
 import com.snow.diary.nav.TopLevelDestinations
 import kotlinx.coroutines.launch
@@ -149,7 +152,9 @@ private fun DiaryNavHost(
                     )
                 }
             },
-            onSearchClick = { },
+            onSearchClick = {
+                            navController.goToSearch(SearchTabs.Dreams)
+            },
             onDreamClick = { dream ->
                 navController
                     .goToDreamDetail(dream.id!!)
@@ -195,7 +200,9 @@ private fun DiaryNavHost(
                     )
                 }
             },
-            onSearchPerson = { },
+            onSearchPerson = {
+                navController.goToSearch(SearchTabs.Persons)
+            },
             onRelationClick = {
                 navController.goToRelationDetail(it.id!!)
             },
@@ -237,7 +244,9 @@ private fun DiaryNavHost(
                     )
                 }
             },
-            onSearchLocation = { },
+            onSearchLocation = {
+                navController.goToSearch(SearchTabs.Locations)
+            },
             onLocationCLick = {
                 navController.goToLocationDetail(it.id!!)
             }
@@ -269,7 +278,9 @@ private fun DiaryNavHost(
                     )
                 }
             },
-            onSearchRelation = { },
+            onSearchRelation = {
+                navController.goToSearch(SearchTabs.Persons)
+            },
             onRelationClick = {
                 navController.goToRelationDetail(it.id!!)
             }
@@ -299,6 +310,18 @@ private fun DiaryNavHost(
 
         statistics(
             onNavigateBack = state::openDrawer
+        )
+        search(
+            onNavigateBack = state::navigateBack,
+            onDreamClick = {
+                navController.goToDreamDetail(it.id!!)
+            },
+            onPersonClick = {
+                navController.goToPersonDetail(it.id!!)
+            },
+            onLocationClick = {
+                navController.goToLocationDetail(it.id!!)
+            }
         )
     }
 }

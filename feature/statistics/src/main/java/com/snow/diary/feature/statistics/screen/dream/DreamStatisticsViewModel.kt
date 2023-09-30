@@ -7,7 +7,7 @@ import com.snow.diary.core.domain.action.statistics.DreamAmountAverage
 import com.snow.diary.core.domain.action.statistics.DreamAmounts
 import com.snow.diary.core.domain.action.statistics.HappinessAverage
 import com.snow.diary.core.domain.viewmodel.EventViewModel
-import com.snow.diary.feature.statistics.StatisticsDateRanges
+import com.snow.diary.core.ui.component.StatisticsDateRanges
 import com.snow.diary.feature.statistics.screen.components.StatisticsState
 import com.snow.diary.feature.statistics.screen.dream.components.DreamAmountData
 import com.snow.diary.feature.statistics.screen.dream.components.DreamAmountGraphPeriod

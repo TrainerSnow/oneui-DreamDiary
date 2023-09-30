@@ -1,6 +1,6 @@
 package com.snow.diary.feature.statistics.screen.persons;
 
-import com.snow.diary.feature.statistics.StatisticsDateRanges
+import com.snow.diary.core.ui.component.StatisticsDateRanges
 
 internal sealed class PersonsStatisticsEvent {
 

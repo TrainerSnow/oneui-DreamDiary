@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.snow.diary.core.domain.action.location.AllLocations
 import com.snow.diary.core.domain.action.statistics.LocationsWithAmount
 import com.snow.diary.core.domain.viewmodel.EventViewModel
-import com.snow.diary.feature.statistics.StatisticsDateRanges
+import com.snow.diary.core.ui.component.StatisticsDateRanges
 import com.snow.diary.feature.statistics.screen.components.StatisticsState
 import com.snow.diary.feature.statistics.screen.locations.components.LocationsAmountData
 import dagger.hilt.android.lifecycle.HiltViewModel
