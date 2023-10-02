@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import com.snow.diary.feature.locations.screen.list.LocationList
 import com.snow.diary.core.model.data.Location
 
-private const val locationListRoute = "location_list"
+const val locationListRoute = "location_list"
 
 fun NavController.goToLocationList(navOptions: NavOptions? = null) = navigate(locationListRoute, navOptions)
 

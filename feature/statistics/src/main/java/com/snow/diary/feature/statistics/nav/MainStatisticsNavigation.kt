@@ -6,7 +6,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.snow.diary.feature.statistics.screen.home.MainStatistics
 
-private const val statisticsRoute = "statistics"
+const val statisticsRoute = "statistics"
 
 fun NavController.goToStatistics(navOptions: NavOptions? = null) =
     navigate(statisticsRoute, navOptions)

@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import com.snow.diary.core.model.data.Dream
 import com.snow.diary.feature.dreams.screen.list.DreamListScreen
 
-private const val dream_list_rote = "dream_list"
+const val dream_list_rote = "dream_list"
 
 fun NavController.goToDreamList(navOptions: NavOptions? = null) =
     navigate(dream_list_rote, navOptions)
