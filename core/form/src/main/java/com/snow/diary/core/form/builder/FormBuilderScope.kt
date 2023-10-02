@@ -1,4 +1,4 @@
-package com.snow.diary.core.form.builder;
+package com.snow.diary.core.form.builder
 
 import com.snow.diary.core.form.field.FormRule
 import com.snow.diary.core.form.field.Rule

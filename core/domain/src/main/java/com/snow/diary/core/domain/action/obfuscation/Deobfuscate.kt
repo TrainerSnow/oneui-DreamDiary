@@ -1,4 +1,4 @@
-package com.snow.diary.core.domain.action.obfuscation;
+package com.snow.diary.core.domain.action.obfuscation
 
 import com.snow.diary.core.database.dao.DreamDao
 import com.snow.diary.core.database.dao.LocationDao

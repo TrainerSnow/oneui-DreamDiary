@@ -1,4 +1,4 @@
-package com.snow.diary.core.io.importing.impl;
+package com.snow.diary.core.io.importing.impl
 
 import com.snow.diary.core.io.data.Crossref
 import com.snow.diary.core.io.data.IOData

@@ -1,4 +1,4 @@
-package com.snow.diary.feature.preferences.screen.main;
+package com.snow.diary.feature.preferences.screen.main
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text

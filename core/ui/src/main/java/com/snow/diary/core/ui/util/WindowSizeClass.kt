@@ -2,6 +2,7 @@ package com.snow.diary.core.ui.util
 
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.DpSize
@@ -15,3 +16,9 @@ val windowSizeClass: WindowSizeClass
             height = LocalConfiguration.current.screenHeightDp.dp
         )
     )
+
+val WindowSizeClass.useNavigationRail
+    get() = widthSizeClass in listOf(WindowWidthSizeClass.Expanded, WindowWidthSizeClass.Medium)
+
+val WindowSizeClass.useNavigationDrawer
+    get() = widthSizeClass == WindowWidthSizeClass.Compact

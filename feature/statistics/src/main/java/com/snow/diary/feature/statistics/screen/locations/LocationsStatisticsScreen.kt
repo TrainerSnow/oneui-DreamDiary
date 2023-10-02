@@ -15,6 +15,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.core.ui.component.DateRangeDialog
 import com.snow.diary.feature.statistics.R
 import com.snow.diary.core.ui.component.StatisticsDateRanges
+import com.snow.diary.core.ui.util.useNavigationDrawer
+import com.snow.diary.core.ui.util.windowSizeClass
 import com.snow.diary.feature.statistics.screen.components.StatisticsState
 import com.snow.diary.feature.statistics.screen.locations.components.LocationsAmount
 import com.snow.diary.feature.statistics.screen.locations.components.LocationsAmountData
@@ -71,10 +73,14 @@ private fun LocationsStatistics(
         state = rememberCollapsingToolbarState(CollapsingToolbarCollapsedState.COLLAPSED),
         toolbarTitle = stringResource(R.string.stats_locations_main_title),
         appbarNavAction = {
-            IconButton(
-                icon = Icon.Resource(dev.oneuiproject.oneui.R.drawable.ic_oui_drawer),
-                onClick = onNavigateBack
-            )
+            if(windowSizeClass.useNavigationDrawer) {
+                IconButton(
+                    icon = Icon.Resource(
+                        dev.oneuiproject.oneui.R.drawable.ic_oui_drawer
+                    ),
+                    onClick = onNavigateBack
+                )
+            }
         },
         appbarActions = {
             IconButton(

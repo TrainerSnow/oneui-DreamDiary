@@ -1,4 +1,4 @@
-package com.snow.diary.core.database.base;
+package com.snow.diary.core.database.base
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

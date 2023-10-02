@@ -1,4 +1,4 @@
-package com.snow.diary.core.form.field;
+package com.snow.diary.core.form.field
 
 class FormRule {
 

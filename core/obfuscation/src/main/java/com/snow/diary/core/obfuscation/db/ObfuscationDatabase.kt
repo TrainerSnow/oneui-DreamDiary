@@ -1,4 +1,4 @@
-package com.snow.diary.core.obfuscation.db;
+package com.snow.diary.core.obfuscation.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

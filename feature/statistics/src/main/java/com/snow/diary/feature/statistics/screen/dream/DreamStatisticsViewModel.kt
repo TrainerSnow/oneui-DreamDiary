@@ -1,4 +1,4 @@
-package com.snow.diary.feature.statistics.screen.dream;
+package com.snow.diary.feature.statistics.screen.dream
 
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.core.domain.action.dream.AllDreams

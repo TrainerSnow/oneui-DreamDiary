@@ -1,4 +1,4 @@
-package com.snow.diary.core.domain.action.location;
+package com.snow.diary.core.domain.action.location
 
 import com.snow.diary.core.database.dao.LocationDao
 import com.snow.diary.core.domain.pure.mapToModel

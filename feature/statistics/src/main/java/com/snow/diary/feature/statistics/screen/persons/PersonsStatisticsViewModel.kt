@@ -1,4 +1,4 @@
-package com.snow.diary.feature.statistics.screen.persons;
+package com.snow.diary.feature.statistics.screen.persons
 
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.core.domain.action.person.AllPersons

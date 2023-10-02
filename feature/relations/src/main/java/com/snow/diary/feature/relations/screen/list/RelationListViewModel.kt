@@ -1,4 +1,4 @@
-package com.snow.diary.feature.relations.screen.list;
+package com.snow.diary.feature.relations.screen.list
 
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.core.domain.action.relation.AllRelations

@@ -1,4 +1,4 @@
-package com.snow.diary.core.datastore.data;
+package com.snow.diary.core.datastore.data
 
 import androidx.datastore.core.DataStore
 import com.snow.diary.core.datastore.ColorModeProto

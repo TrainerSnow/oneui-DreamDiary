@@ -1,4 +1,4 @@
-package com.snow.diary.feature.locations.screen.add;
+package com.snow.diary.feature.locations.screen.add
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope

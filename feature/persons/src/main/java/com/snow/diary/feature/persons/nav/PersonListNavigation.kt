@@ -8,7 +8,7 @@ import com.snow.diary.core.model.data.Person
 import com.snow.diary.core.model.data.Relation
 import com.snow.diary.feature.persons.screen.list.PersonList
 
-private const val personListRoute = "person_list"
+const val personListRoute = "person_list"
 
 fun NavController.goToPersonList(navOptions: NavOptions? = null) = navigate(personListRoute, navOptions)
 

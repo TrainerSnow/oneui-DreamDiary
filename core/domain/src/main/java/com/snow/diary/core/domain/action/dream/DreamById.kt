@@ -1,4 +1,4 @@
-package com.snow.diary.core.domain.action.dream;
+package com.snow.diary.core.domain.action.dream
 
 import com.snow.diary.core.database.dao.DreamDao
 import com.snow.diary.core.domain.action.FlowAction
@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.map
 
 class DreamById(
     val dreamDao: DreamDao
-) : com.snow.diary.core.domain.action.FlowAction<Long, Dream?>() {
+) : FlowAction<Long, Dream?>() {
     override fun Long.createFlow(): Flow<Dream?> = dreamDao
         .getById(this)
         .map { it?.toModel() }

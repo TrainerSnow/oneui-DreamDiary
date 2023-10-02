@@ -1,4 +1,4 @@
-package com.snow.diary.feature.persons.screen.list;
+package com.snow.diary.feature.persons.screen.list
 
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.core.common.launchInBackground

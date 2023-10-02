@@ -14,6 +14,6 @@ interface PersonCallback {
     fun onFavouriteClick(person: Person) { }
 
     //For setting default param
-    companion object : com.snow.diary.core.ui.callback.PersonCallback
+    companion object : PersonCallback
 
 }

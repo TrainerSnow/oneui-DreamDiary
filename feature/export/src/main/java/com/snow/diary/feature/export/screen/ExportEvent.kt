@@ -1,4 +1,4 @@
-package com.snow.diary.feature.export.screen;
+package com.snow.diary.feature.export.screen
 
 import com.snow.diary.core.io.ExportFiletype
 

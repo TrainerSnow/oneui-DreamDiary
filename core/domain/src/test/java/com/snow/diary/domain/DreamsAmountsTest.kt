@@ -1,4 +1,4 @@
-package com.snow.diary.domain;
+package com.snow.diary.domain
 
 import com.snow.diary.core.database.dao.DreamDao
 import com.snow.diary.core.database.model.DreamEntity

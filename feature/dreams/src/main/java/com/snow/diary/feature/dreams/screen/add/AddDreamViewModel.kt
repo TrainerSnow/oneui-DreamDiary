@@ -1,4 +1,4 @@
-package com.snow.diary.feature.dreams.screen.add;
+package com.snow.diary.feature.dreams.screen.add
 
 import android.content.Context
 import android.util.Log.d

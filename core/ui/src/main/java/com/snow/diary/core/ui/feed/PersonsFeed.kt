@@ -1,8 +1,10 @@
 package com.snow.diary.core.ui.feed
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -16,6 +18,7 @@ import com.snow.diary.core.ui.item.PersonCard
 import com.snow.diary.core.ui.screen.EmptyScreen
 import com.snow.diary.core.ui.screen.ErrorScreen
 import com.snow.diary.core.ui.screen.LoadingScreen
+import com.snow.diary.core.ui.util.windowSizeClass
 import org.oneui.compose.util.ListPosition
 import org.oneui.compose.util.OneUIPreview
 
@@ -68,22 +71,30 @@ private fun SuccessFeed(
     state: PersonFeedState.Success,
     personCallback: PersonCallback
 ) {
+    val doListPositions = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
+
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Adaptive(
             minSize = PersonFeedDefaults.personItemMinWidth
-        )
+        ),
+        horizontalArrangement = if(doListPositions) Arrangement.Start
+        else Arrangement.spacedBy(4.dp),
+        verticalArrangement = if(doListPositions) Arrangement.Top else Arrangement.spacedBy(4.dp)
     ) {
         items(
             count = state.persons.size,
             key = { state.persons[it].person.id ?: 0L },
             contentType = { PersonFeedDefaults.ctypePersonitem }
         ) {
+            val pos = if (doListPositions) ListPosition.get(state.persons[it], state.persons)
+            else ListPosition.Single
+
             PersonCard(
                 person = state.persons[it].person,
                 relations = state.persons[it].relation,
                 personCallback = personCallback,
-                listPosition = ListPosition.get(state.persons[it], state.persons)
+                listPosition = pos
             )
         }
         return@LazyVerticalGrid

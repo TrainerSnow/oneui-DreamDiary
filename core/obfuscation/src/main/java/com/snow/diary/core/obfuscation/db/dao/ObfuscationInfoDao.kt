@@ -1,4 +1,4 @@
-package com.snow.diary.core.obfuscation.db.dao;
+package com.snow.diary.core.obfuscation.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert

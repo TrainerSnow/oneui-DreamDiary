@@ -18,6 +18,8 @@ import com.snow.diary.core.model.sort.SortConfig
 import com.snow.diary.core.ui.feed.LocationFeed
 import com.snow.diary.core.ui.feed.LocationFeedState
 import com.snow.diary.core.ui.util.SortSection
+import com.snow.diary.core.ui.util.useNavigationDrawer
+import com.snow.diary.core.ui.util.windowSizeClass
 import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.widgets.buttons.IconButton
@@ -65,10 +67,14 @@ private fun LocationList(
             )
         },
         appbarNavAction = {
-            IconButton(
-                icon = Icon.Resource(IconR.drawable.ic_oui_drawer),
-                onClick = onNavigateBack
-            )
+            if(windowSizeClass.useNavigationDrawer) {
+                IconButton(
+                    icon = Icon.Resource(
+                        IconR.drawable.ic_oui_drawer
+                    ),
+                    onClick = onNavigateBack
+                )
+            }
         },
         appbarActions = {
             IconButton(

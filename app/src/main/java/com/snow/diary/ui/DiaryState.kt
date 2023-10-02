@@ -2,20 +2,23 @@ package com.snow.diary.ui
 
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.snow.diary.core.domain.action.dream.AllDreams
 import com.snow.diary.core.domain.action.location.AllLocations
 import com.snow.diary.core.domain.action.person.AllPersons
 import com.snow.diary.core.domain.action.preferences.GetPreferences
+import com.snow.diary.feature.dreams.nav.dream_list_rote
 import com.snow.diary.feature.dreams.nav.goToDreamList
 import com.snow.diary.feature.locations.nav.goToLocationList
+import com.snow.diary.feature.locations.nav.locationListRoute
 import com.snow.diary.feature.persons.nav.goToPersonList
+import com.snow.diary.feature.persons.nav.personListRoute
 import com.snow.diary.feature.statistics.nav.goToStatistics
+import com.snow.diary.feature.statistics.nav.statisticsRoute
 import com.snow.diary.nav.TopLevelDestinations
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
@@ -23,14 +26,14 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.oneui.compose.dialog.FullscreenDialogLayout
-import org.oneui.compose.layout.internal.SlidingDrawerState
+import org.oneui.compose.layout.internal.DrawerState
 import org.oneui.compose.layout.internal.rememberSlidingDrawerState
 
 data class DiaryState(
 
     val navController: NavHostController,
 
-    val drawerState: SlidingDrawerState,
+    val drawerState: DrawerState,
 
     val scope: CoroutineScope,
 
@@ -46,9 +49,20 @@ data class DiaryState(
 
 ) {
 
-    var currentNavDest by mutableStateOf(TopLevelDestinations.Dreams)
+    private val currentDestination: NavDestination?
+        @Composable get() = navController
+            .currentBackStackEntryAsState().value?.destination
 
-    val fullscreenDialogLayout = FullscreenDialogLayout.fromSizeClass(screenSizeClass)
+    val currentNavDest: TopLevelDestinations?
+        @Composable get() = when (currentDestination?.route) {
+            dream_list_rote -> TopLevelDestinations.Dreams
+            personListRoute -> TopLevelDestinations.Persons
+            locationListRoute -> TopLevelDestinations.Locations
+            statisticsRoute -> TopLevelDestinations.Statistics
+            else -> null
+        }
+
+    private val fullscreenDialogLayout = FullscreenDialogLayout.fromSizeClass(screenSizeClass)
     val fullscreenDialogFloating = fullscreenDialogLayout == FullscreenDialogLayout.Floating
 
     fun navigateTo(navDest: TopLevelDestinations) {
@@ -58,7 +72,6 @@ data class DiaryState(
             TopLevelDestinations.Locations -> navController.goToLocationList()
             TopLevelDestinations.Statistics -> navController.goToStatistics()
         }
-        currentNavDest = navDest
         closeDrawer()
     }
 
@@ -93,7 +106,7 @@ data class DiaryState(
 @Composable
 fun rememberDiaryState(
     navController: NavHostController = rememberNavController(),
-    drawerState: SlidingDrawerState = rememberSlidingDrawerState(),
+    drawerState: DrawerState = rememberSlidingDrawerState(),
     scope: CoroutineScope = rememberCoroutineScope(),
     windowSizeClass: WindowSizeClass,
     getPreferences: GetPreferences,

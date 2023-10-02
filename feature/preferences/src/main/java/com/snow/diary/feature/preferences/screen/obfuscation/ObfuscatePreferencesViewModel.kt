@@ -1,4 +1,4 @@
-package com.snow.diary.feature.preferences.screen.obfuscation;
+package com.snow.diary.feature.preferences.screen.obfuscation
 
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.core.domain.action.obfuscation.Deobfuscate

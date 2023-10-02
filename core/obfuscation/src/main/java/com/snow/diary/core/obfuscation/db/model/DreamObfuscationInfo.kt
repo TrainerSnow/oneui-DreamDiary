@@ -1,4 +1,4 @@
-package com.snow.diary.core.obfuscation.db.model;
+package com.snow.diary.core.obfuscation.db.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

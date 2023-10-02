@@ -1,4 +1,4 @@
-package com.snow.diary.core.domain.action.location;
+package com.snow.diary.core.domain.action.location
 
 import com.snow.diary.core.database.dao.LocationDao
 import com.snow.diary.core.domain.action.FlowAction
@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.map
 
 class LocationById(
     private val locationDao: LocationDao
-): com.snow.diary.core.domain.action.FlowAction<Long, Location?>() {
+): FlowAction<Long, Location?>() {
     override fun Long.createFlow(): Flow<Location?> = locationDao
         .getById(this)
         .map {

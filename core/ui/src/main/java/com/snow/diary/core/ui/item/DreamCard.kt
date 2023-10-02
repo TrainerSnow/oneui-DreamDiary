@@ -41,7 +41,7 @@ fun DreamCard(
     modifier: Modifier = Modifier,
     dream: Dream,
     listPosition: ListPosition = ListPosition.Middle,
-    dreamCallback: com.snow.diary.core.ui.callback.DreamCallback = com.snow.diary.core.ui.callback.DreamCallback
+    dreamCallback: DreamCallback = DreamCallback
 ) {
     val titleTextStyle = TextStyle(
         color = OneUITheme.colors.seslPrimaryTextColor,

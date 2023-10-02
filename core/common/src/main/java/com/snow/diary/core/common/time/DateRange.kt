@@ -1,4 +1,4 @@
-package com.snow.diary.core.common.time;
+package com.snow.diary.core.common.time
 
 import java.time.LocalDate
 import java.time.temporal.TemporalUnit

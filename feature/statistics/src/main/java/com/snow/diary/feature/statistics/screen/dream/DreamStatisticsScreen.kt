@@ -13,8 +13,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.core.ui.component.DateRangeDialog
-import com.snow.diary.feature.statistics.R
 import com.snow.diary.core.ui.component.StatisticsDateRanges
+import com.snow.diary.core.ui.util.useNavigationDrawer
+import com.snow.diary.core.ui.util.windowSizeClass
+import com.snow.diary.feature.statistics.R
 import com.snow.diary.feature.statistics.screen.components.StatisticsState
 import com.snow.diary.feature.statistics.screen.dream.components.DreamAmount
 import com.snow.diary.feature.statistics.screen.dream.components.DreamAmountData
@@ -92,10 +94,14 @@ private fun DreamStatistics(
         expandable = false,
         toolbarTitle = stringResource(R.string.stats_dreams_main_title),
         appbarNavAction = {
-            IconButton(
-                icon = Icon.Resource(IconR.drawable.ic_oui_drawer),
-                onClick = onNavigateBack
-            )
+            if(windowSizeClass.useNavigationDrawer) {
+                IconButton(
+                    icon = Icon.Resource(
+                        IconR.drawable.ic_oui_drawer
+                    ),
+                    onClick = onNavigateBack
+                )
+            }
         },
         appbarActions = {
             IconButton(

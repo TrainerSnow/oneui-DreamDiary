@@ -1,4 +1,4 @@
-package com.snow.diary.csv.writer;
+package com.snow.diary.csv.writer
 
 import com.snow.diary.csv.Row
 import com.snow.diary.csv.Rows

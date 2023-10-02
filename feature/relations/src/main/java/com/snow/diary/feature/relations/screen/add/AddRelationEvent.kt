@@ -1,4 +1,4 @@
-package com.snow.diary.feature.relations.screen.add;
+package com.snow.diary.feature.relations.screen.add
 
 import androidx.compose.ui.graphics.Color
 

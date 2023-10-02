@@ -1,4 +1,4 @@
-package com.snow.diary.core.domain.action.time;
+package com.snow.diary.core.domain.action.time
 
 import com.snow.diary.core.domain.action.FlowAction
 import com.snow.diary.core.domain.action.dream.AllDreams

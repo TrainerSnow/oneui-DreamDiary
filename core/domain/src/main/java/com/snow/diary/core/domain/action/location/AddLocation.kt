@@ -1,4 +1,4 @@
-package com.snow.diary.core.domain.action.location;
+package com.snow.diary.core.domain.action.location
 
 import com.snow.diary.core.database.dao.LocationDao
 import com.snow.diary.core.database.model.LocationEntity
@@ -7,7 +7,7 @@ import com.snow.diary.core.model.data.Location
 
 class AddLocation(
     private val locationDao: LocationDao
-): com.snow.diary.core.domain.action.Action<Location, Long>() {
+): Action<Location, Long>() {
     override suspend fun Location.compose(): Long = locationDao
         .insert(LocationEntity(this))
         .first()

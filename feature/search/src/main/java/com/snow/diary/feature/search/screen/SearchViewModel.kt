@@ -1,4 +1,4 @@
-package com.snow.diary.feature.search.screen;
+package com.snow.diary.feature.search.screen
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope

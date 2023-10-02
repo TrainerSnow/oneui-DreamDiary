@@ -1,4 +1,4 @@
-package com.snow.diary.feature.locations.screen.add;
+package com.snow.diary.feature.locations.screen.add
 
 internal sealed class AddLocationEvent {
 

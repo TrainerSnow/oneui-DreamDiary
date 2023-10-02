@@ -1,4 +1,4 @@
-package com.snow.diary.core.domain.action.cross.dream_location;
+package com.snow.diary.core.domain.action.cross.dream_location
 
 import com.snow.diary.core.common.time.DateRange
 import com.snow.diary.core.database.dao.CrossrefDao
