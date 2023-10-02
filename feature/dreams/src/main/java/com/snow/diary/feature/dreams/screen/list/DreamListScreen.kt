@@ -22,6 +22,8 @@ import com.snow.diary.core.ui.data.DreamPreviewData
 import com.snow.diary.core.ui.feed.DreamFeed
 import com.snow.diary.core.ui.feed.DreamFeedState
 import com.snow.diary.core.ui.util.SortSection
+import com.snow.diary.core.ui.util.useNavigationDrawer
+import com.snow.diary.core.ui.util.windowSizeClass
 import com.snow.diary.feature.dreams.R
 import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
@@ -87,12 +89,14 @@ private fun DreamListScreen(
             )
         },
         appbarNavAction = {
-            IconButton(
-                icon = Icon.Resource(
-                    IconR.drawable.ic_oui_drawer
-                ),
-                onClick = onNavigateBack
-            )
+            if(windowSizeClass.useNavigationDrawer) {
+                IconButton(
+                    icon = Icon.Resource(
+                        IconR.drawable.ic_oui_drawer
+                    ),
+                    onClick = onNavigateBack
+                )
+            }
         },
         appbarActions = {
             IconButton(

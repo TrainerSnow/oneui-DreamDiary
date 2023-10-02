@@ -20,6 +20,8 @@ import com.snow.diary.core.ui.callback.PersonCallback
 import com.snow.diary.core.ui.feed.PersonFeed
 import com.snow.diary.core.ui.feed.PersonFeedState
 import com.snow.diary.core.ui.util.SortSection
+import com.snow.diary.core.ui.util.useNavigationDrawer
+import com.snow.diary.core.ui.util.windowSizeClass
 import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.widgets.buttons.IconButton
@@ -73,10 +75,14 @@ private fun PersonList(
             )
         },
         appbarNavAction = {
-            IconButton(
-                icon = Icon.Resource(IconR.drawable.ic_oui_drawer),
-                onClick = onNavigateBack
-            )
+            if(windowSizeClass.useNavigationDrawer) {
+                IconButton(
+                    icon = Icon.Resource(
+                        IconR.drawable.ic_oui_drawer
+                    ),
+                    onClick = onNavigateBack
+                )
+            }
         },
         appbarActions = {
             IconButton(
