@@ -65,7 +65,7 @@ internal class RelationDetailViewModel @Inject constructor(
     private fun delete() = viewModelScope.launchInBackground {
         (state.value as? RelationDetailState.Success)?.let {
             deleteRelation(it.relation)
-        } //TODO: Figure out how this should be handled when persons depend on this relation. Solution: Persons have list of relations!! !important
+        }
     }
 
 }

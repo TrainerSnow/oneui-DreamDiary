@@ -41,7 +41,7 @@ internal class SearchViewModel @Inject constructor(
     val updatePerson: UpdatePerson
 ) : EventViewModel<SearchEvent>() {
 
-    private val args: SearchArgs = SearchArgs(savedStateHandle) //TODO: Implement
+    private val args: SearchArgs = SearchArgs(savedStateHandle)
 
     private val _uiState = MutableStateFlow(
         SearchUiState(

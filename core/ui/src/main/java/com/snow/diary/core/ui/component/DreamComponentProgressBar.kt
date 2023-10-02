@@ -19,9 +19,11 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.snow.diary.core.ui.R
 import org.oneui.compose.base.Icon
 import org.oneui.compose.base.IconView
 import org.oneui.compose.theme.OneUITheme
+import org.oneui.compose.util.color
 import org.oneui.compose.widgets.box.RoundedCornerBox
 import dev.oneuiproject.oneui.R as IconR
 
@@ -89,7 +91,7 @@ fun ClearnessProgressBar(
 ) {
     DreamComponentProgressBar(
         modifier = modifier,
-        color = Color(0xff63d1d2),
+        color = color(R.color.dream_happiness),
         icon = Icon.Resource(IconR.drawable.ic_oui_receiving_message_from_keywords),
         progress = clearness,
         onProgressChange = onClearnessChange
@@ -104,7 +106,7 @@ fun HappinessProgressBar(
 ) {
     DreamComponentProgressBar(
         modifier = modifier,
-        color = Color(0xfffcca05),
+        color = color(R.color.dream_happiness),
         icon = Icon.Resource(IconR.drawable.ic_oui_emoji_2),
         progress = happiness,
         onProgressChange = onHappinessChange

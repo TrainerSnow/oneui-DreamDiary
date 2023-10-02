@@ -32,6 +32,7 @@ import org.oneui.compose.dialog.FullscreenDialogLayout
 import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
+import org.oneui.compose.util.color
 import org.oneui.compose.widgets.HorizontalSeekbar
 import org.oneui.compose.widgets.seekBarColors
 import dev.oneuiproject.oneui.R as IconR
@@ -214,7 +215,7 @@ private fun AddDreamScreen(
                                     )
                                 },
                                 colors = seekBarColors(
-                                    color = Color(0xfffcca05) //TODO xml values for these colors
+                                    color = color(com.snow.diary.core.ui.R.color.dream_happiness)
                                 )
                             )
                         }
@@ -240,7 +241,7 @@ private fun AddDreamScreen(
                                     )
                                 },
                                 colors = seekBarColors(
-                                    color = Color(0xff63d1d2) //TODO xml values for these colors
+                                    color = color(com.snow.diary.core.ui.R.color.dream_clearness)
                                 )
                             )
                         }
