@@ -49,9 +49,9 @@ import com.snow.diary.nav.TopLevelDestinations
 import kotlinx.coroutines.launch
 import org.oneui.compose.base.Icon
 import org.oneui.compose.base.IconView
-import org.oneui.compose.layout.drawer.DrawerDivider
-import org.oneui.compose.layout.drawer.DrawerItem
-import org.oneui.compose.layout.drawer.DrawerLayout
+import org.oneui.compose.navigation.drawer.DrawerDivider
+import org.oneui.compose.navigation.drawer.DrawerItem
+import org.oneui.compose.navigation.drawer.NavigationDrawer
 import dev.oneuiproject.oneui.R as IconR
 
 @Composable
@@ -74,7 +74,7 @@ fun DiaryApplicationRoot(
     val personsNum by state.personsAmountState.collectAsStateWithLifecycle()
 
     //TODO: When available, use nav rail not drawer on tablets
-    DrawerLayout(
+    NavigationDrawer(
         state = drawerState,
         windowInsets = WindowInsets.systemBars,
         drawerContent = {
