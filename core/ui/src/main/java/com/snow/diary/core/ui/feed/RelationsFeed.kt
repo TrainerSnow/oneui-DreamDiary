@@ -1,7 +1,9 @@
 package com.snow.diary.core.ui.feed
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -12,6 +14,7 @@ import com.snow.diary.core.ui.item.RelationCard
 import com.snow.diary.core.ui.screen.EmptyScreen
 import com.snow.diary.core.ui.screen.ErrorScreen
 import com.snow.diary.core.ui.screen.LoadingScreen
+import com.snow.diary.core.ui.util.windowSizeClass
 import org.oneui.compose.util.ListPosition
 
 
@@ -64,20 +67,28 @@ private fun SuccessFeed(
     state: RelationFeedState.Success,
     onRelationClick: (Relation) -> Unit
 ) {
+    val doListPositions = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
+
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Adaptive(
             minSize = RelationFeedDefaults.relationItemMinWidth
-        )
+        ),
+        horizontalArrangement = if (doListPositions) Arrangement.Start
+        else Arrangement.spacedBy(4.dp),
+        verticalArrangement = if (doListPositions) Arrangement.Top else Arrangement.spacedBy(4.dp)
     ) {
         items(
             count = state.relations.size,
             key = { state.relations[it].id ?: 0L },
             contentType = { RelationFeedDefaults.ctypeRelationItem }
         ) {
+            val pos = if (doListPositions) ListPosition.get(state.relations[it], state.relations)
+            else ListPosition.Single
+
             RelationCard(
                 relation = state.relations[it],
-                listPosition = ListPosition.get(state.relations[it], state.relations),
+                listPosition = pos,
                 onClick = onRelationClick
             )
         }

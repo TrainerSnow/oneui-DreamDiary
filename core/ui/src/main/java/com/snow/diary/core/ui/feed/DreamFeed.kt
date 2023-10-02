@@ -1,10 +1,12 @@
 package com.snow.diary.core.ui.feed
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -20,6 +22,7 @@ import com.snow.diary.core.ui.item.DreamCard
 import com.snow.diary.core.ui.screen.EmptyScreen
 import com.snow.diary.core.ui.screen.ErrorScreen
 import com.snow.diary.core.ui.screen.LoadingScreen
+import com.snow.diary.core.ui.util.windowSizeClass
 import org.oneui.compose.util.ListPosition
 import org.oneui.compose.util.OneUIPreview
 import org.oneui.compose.widgets.text.TextSeparator
@@ -74,7 +77,7 @@ private fun SuccessFeed(
     state: DreamFeedState.Success,
     dreamCallback: DreamCallback
 ) {
-
+    val doListPositions = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
     val today = LocalDate.now()
     val yesterday = today.minusDays(1)
     val weekBegin = today.with(DayOfWeek.MONDAY)
@@ -106,9 +109,14 @@ private fun SuccessFeed(
         modifier = modifier,
         columns = GridCells.Adaptive(
             minSize = DreamFeedDefaults.dreamItemMinSize
-        )
+        ),
+        horizontalArrangement = if(doListPositions) Arrangement.Start
+        else Arrangement.spacedBy(4.dp),
+        verticalArrangement = if(doListPositions) Arrangement.Top else Arrangement.spacedBy(4.dp)
     ) {
-        val doTemporallySort = state.temporallySort && state.sortConfig.mode.let { it == SortMode.Created || it == SortMode.Updated }
+        val doTemporallySort =
+            state.temporallySort && state.sortConfig.mode.let { it == SortMode.Created || it == SortMode.Updated }
+
 
         if (!doTemporallySort) {
             items(
@@ -118,7 +126,10 @@ private fun SuccessFeed(
             ) {
                 DreamCard(
                     dream = state.dreams[it],
-                    listPosition = ListPosition.get(state.dreams[it], state.dreams),
+                    listPosition = if (doListPositions) ListPosition.get(
+                            state.dreams[it],
+                    state.dreams
+                ) else ListPosition.Single,
                     dreamCallback = dreamCallback
                 )
             }
@@ -139,7 +150,8 @@ private fun SuccessFeed(
                 dreamCallback = dreamCallback,
                 separatorTitle = title,
                 dateFrom = from,
-                dateTo = to
+                dateTo = to,
+                doListPositions = doListPositions
             )
 
             fromIndex += res + 1
@@ -153,7 +165,8 @@ private fun LazyGridScope.temporallyDreamItems(
     dreamCallback: DreamCallback,
     separatorTitle: String,
     dateFrom: LocalDate, //Inclusive
-    dateTo: LocalDate //Exclusive
+    dateTo: LocalDate, //Exclusive
+    doListPositions: Boolean
 ): Int {
     val drms = dreams.takeWhile {
         date(it).isEqual(dateFrom) || date(it).isAfter(dateFrom) &&
@@ -167,10 +180,12 @@ private fun LazyGridScope.temporallyDreamItems(
             key = { drms[it].id ?: 0L },
             contentType = { DreamFeedDefaults.ctypeDreamitem }
         ) {
+            val pos = if(doListPositions) ListPosition.get(drms[it], drms)
+            else ListPosition.Single
             DreamCard(
                 dream = drms[it],
                 dreamCallback = dreamCallback,
-                listPosition = ListPosition.get(drms[it], drms)
+                listPosition = pos
             )
         }
 
