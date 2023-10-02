@@ -23,14 +23,14 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.oneui.compose.dialog.FullscreenDialogLayout
-import org.oneui.compose.layout.internal.SlidingDrawerState
+import org.oneui.compose.layout.internal.DrawerState
 import org.oneui.compose.layout.internal.rememberSlidingDrawerState
 
 data class DiaryState(
 
     val navController: NavHostController,
 
-    val drawerState: SlidingDrawerState,
+    val drawerState: DrawerState,
 
     val scope: CoroutineScope,
 
@@ -93,7 +93,7 @@ data class DiaryState(
 @Composable
 fun rememberDiaryState(
     navController: NavHostController = rememberNavController(),
-    drawerState: SlidingDrawerState = rememberSlidingDrawerState(),
+    drawerState: DrawerState = rememberSlidingDrawerState(),
     scope: CoroutineScope = rememberCoroutineScope(),
     windowSizeClass: WindowSizeClass,
     getPreferences: GetPreferences,
