@@ -1,4 +1,4 @@
-package com.snow.diary
+package com.snow.diary;
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

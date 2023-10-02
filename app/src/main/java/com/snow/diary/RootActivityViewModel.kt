@@ -1,4 +1,4 @@
-package com.snow.diary
+package com.snow.diary;
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
