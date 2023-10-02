@@ -1,4 +1,4 @@
-package com.snow.diary.core.model.sort;
+package com.snow.diary.core.model.sort
 
 enum class SortMode {
 

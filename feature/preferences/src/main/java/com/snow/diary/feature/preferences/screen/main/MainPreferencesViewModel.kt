@@ -1,4 +1,4 @@
-package com.snow.diary.feature.preferences.screen.main;
+package com.snow.diary.feature.preferences.screen.main
 
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.core.domain.action.preferences.GetPreferences

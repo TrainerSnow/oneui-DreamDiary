@@ -1,4 +1,4 @@
-package com.snow.diary.core.domain.action.relation;
+package com.snow.diary.core.domain.action.relation
 
 import com.snow.diary.core.database.dao.RelationDao
 import com.snow.diary.core.domain.action.FlowAction
@@ -13,6 +13,6 @@ class RelationWithPersonsAct(
     override fun Relation.createFlow() = relationDao
         .getRelationWithPersonsById(id!!)
         .map {
-            it?.toModel()
+            it.toModel()
         }
 }

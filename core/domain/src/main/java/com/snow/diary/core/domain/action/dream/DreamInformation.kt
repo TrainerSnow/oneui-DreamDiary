@@ -1,4 +1,4 @@
-package com.snow.diary.core.domain.action.dream;
+package com.snow.diary.core.domain.action.dream
 
 import com.snow.diary.core.domain.action.FlowAction
 import com.snow.diary.core.domain.action.location.LocationsFromDream

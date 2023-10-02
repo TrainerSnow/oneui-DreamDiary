@@ -1,4 +1,4 @@
-package com.snow.diary.core.domain.action.person;
+package com.snow.diary.core.domain.action.person
 
 import com.snow.diary.core.database.dao.RelationDao
 import com.snow.diary.core.domain.action.FlowAction
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 
 class PersonsFromRelation(
     val relationDao: RelationDao
-) : com.snow.diary.core.domain.action.FlowAction<Relation, List<Person>?>() {
+) : FlowAction<Relation, List<Person>?>() {
 
     override fun Relation.createFlow(): Flow<List<Person>?> = relationDao
         .getRelationWithPersonsById(id!!)

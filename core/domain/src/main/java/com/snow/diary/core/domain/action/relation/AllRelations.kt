@@ -1,4 +1,4 @@
-package com.snow.diary.core.domain.action.relation;
+package com.snow.diary.core.domain.action.relation
 
 import com.snow.diary.core.database.dao.RelationDao
 import com.snow.diary.core.domain.pure.mapToModel

@@ -1,4 +1,4 @@
-package com.snow.diary.feature.search.screen;
+package com.snow.diary.feature.search.screen
 
 import androidx.annotation.StringRes
 import com.snow.diary.core.model.combine.PersonWithRelations

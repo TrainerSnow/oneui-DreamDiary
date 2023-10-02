@@ -1,4 +1,4 @@
-package com.snow.diary.core.domain.action.cross.person_relation;
+package com.snow.diary.core.domain.action.cross.person_relation
 
 import com.snow.diary.core.database.dao.CrossrefDao
 import com.snow.diary.core.domain.action.FlowAction

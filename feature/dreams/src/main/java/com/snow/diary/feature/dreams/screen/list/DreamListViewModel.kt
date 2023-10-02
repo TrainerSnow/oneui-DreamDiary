@@ -1,4 +1,4 @@
-package com.snow.diary.feature.dreams.screen.list;
+package com.snow.diary.feature.dreams.screen.list
 
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.core.common.launchInBackground

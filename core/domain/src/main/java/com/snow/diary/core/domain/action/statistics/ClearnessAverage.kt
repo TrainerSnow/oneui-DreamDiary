@@ -1,4 +1,4 @@
-package com.snow.diary.core.domain.action.statistics;
+package com.snow.diary.core.domain.action.statistics
 
 import com.snow.diary.core.common.time.DateRange
 import com.snow.diary.core.domain.action.FlowAction

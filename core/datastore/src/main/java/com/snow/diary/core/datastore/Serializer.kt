@@ -1,4 +1,4 @@
-package com.snow.diary.core.datastore;
+package com.snow.diary.core.datastore
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer

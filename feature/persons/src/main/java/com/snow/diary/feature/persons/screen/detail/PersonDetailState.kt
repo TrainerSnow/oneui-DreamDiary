@@ -1,4 +1,4 @@
-package com.snow.diary.feature.persons.screen.detail;
+package com.snow.diary.feature.persons.screen.detail
 
 import com.snow.diary.core.model.data.Dream
 import com.snow.diary.core.model.data.Person

@@ -1,4 +1,4 @@
-package com.snow.diary.core.io.data.serialization;
+package com.snow.diary.core.io.data.serialization
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException

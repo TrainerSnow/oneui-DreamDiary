@@ -1,4 +1,4 @@
-package com.snow.diary.core.model.preferences;
+package com.snow.diary.core.model.preferences
 
 data class UserPreferences(
 

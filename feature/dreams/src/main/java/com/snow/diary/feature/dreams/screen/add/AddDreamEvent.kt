@@ -1,4 +1,4 @@
-package com.snow.diary.feature.dreams.screen.add;
+package com.snow.diary.feature.dreams.screen.add
 
 import com.snow.diary.core.model.data.Location
 import com.snow.diary.core.model.data.Person

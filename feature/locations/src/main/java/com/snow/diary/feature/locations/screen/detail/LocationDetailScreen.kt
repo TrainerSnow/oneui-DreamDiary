@@ -192,7 +192,7 @@ private fun DreamsSection(
     DreamFeed(
         modifier = modifier,
         state = DreamFeedState.Success(state.dreams, true, SortConfig(SortMode.Created)),
-        dreamCallback = object : com.snow.diary.core.ui.callback.DreamCallback {
+        dreamCallback = object : DreamCallback {
 
             override fun onClick(dream: Dream) {
                 onDreamClick(dream)

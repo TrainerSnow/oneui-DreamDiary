@@ -36,7 +36,7 @@ internal sealed class StatisticsState<Data> {
 
     companion object {
 
-        fun <Data> from(data: Data): StatisticsState<Data> = StatisticsState.Success(data)
+        fun <Data> from(data: Data): StatisticsState<Data> = Success(data)
 
     }
 

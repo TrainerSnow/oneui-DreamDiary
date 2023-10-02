@@ -1,4 +1,4 @@
-package com.snow.diary.core.ui.graph.line;
+package com.snow.diary.core.ui.graph.line
 
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.drawscope.DrawScope

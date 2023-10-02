@@ -1,4 +1,4 @@
-package com.snow.diary.feature.statistics.screen.dream;
+package com.snow.diary.feature.statistics.screen.dream
 
 import com.snow.diary.core.ui.component.StatisticsDateRanges
 import com.snow.diary.feature.statistics.screen.dream.components.DreamAmountGraphPeriod

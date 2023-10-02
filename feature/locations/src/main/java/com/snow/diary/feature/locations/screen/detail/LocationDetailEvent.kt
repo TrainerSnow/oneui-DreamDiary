@@ -1,4 +1,4 @@
-package com.snow.diary.feature.locations.screen.detail;
+package com.snow.diary.feature.locations.screen.detail
 
 import com.snow.diary.core.model.data.Dream
 

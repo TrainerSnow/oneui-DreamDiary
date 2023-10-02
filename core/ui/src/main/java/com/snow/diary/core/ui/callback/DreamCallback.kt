@@ -9,6 +9,6 @@ interface DreamCallback {
     fun onFavouriteClick(dream: Dream) { }
 
     //For setting default param
-    companion object : com.snow.diary.core.ui.callback.DreamCallback
+    companion object : DreamCallback
 
 }

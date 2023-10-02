@@ -1,4 +1,4 @@
-package com.snow.diary.core.io.exporting.impl;
+package com.snow.diary.core.io.exporting.impl
 
 import com.snow.diary.csv.Row
 import com.snow.diary.csv.config.csvConfig

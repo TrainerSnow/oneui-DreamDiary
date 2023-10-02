@@ -1,4 +1,4 @@
-package com.snow.diary.core.database.type;
+package com.snow.diary.core.database.type
 
 import android.graphics.PointF
 import androidx.room.TypeConverter

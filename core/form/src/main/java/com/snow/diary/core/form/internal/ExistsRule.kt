@@ -1,4 +1,4 @@
-package com.snow.diary.core.form.internal;
+package com.snow.diary.core.form.internal
 
 import android.content.Context
 import com.snow.diary.core.form.R

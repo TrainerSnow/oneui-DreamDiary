@@ -1,4 +1,4 @@
-package com.snow.diary.core.domain.action;
+package com.snow.diary.core.domain.action
 
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock

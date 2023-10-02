@@ -1,4 +1,4 @@
-package com.snow.diary.feature.statistics.screen.dream.components;
+package com.snow.diary.feature.statistics.screen.dream.components
 
 import android.icu.text.DecimalFormat
 import androidx.compose.foundation.background

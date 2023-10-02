@@ -116,7 +116,7 @@ private fun PersonList(
             modifier = Modifier
                 .fillMaxWidth(),
             state = state,
-            personCallback = object : com.snow.diary.core.ui.callback.PersonCallback {
+            personCallback = object : PersonCallback {
                 override fun onClick(person: Person) {
                     onPersonClick(person)
                 }

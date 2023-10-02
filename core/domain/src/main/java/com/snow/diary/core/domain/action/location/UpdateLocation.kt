@@ -7,7 +7,7 @@ import com.snow.diary.core.model.data.Location
 
 class UpdateLocation(
     private val locationDao: LocationDao
-): com.snow.diary.core.domain.action.Action<Location, Unit>() {
+): Action<Location, Unit>() {
     override suspend fun Location.compose() = locationDao
         .update(LocationEntity(this))
 }

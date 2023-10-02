@@ -1,4 +1,4 @@
-package com.snow.diary.feature.persons.screen.add;
+package com.snow.diary.feature.persons.screen.add
 
 import com.snow.diary.core.model.data.Relation
 

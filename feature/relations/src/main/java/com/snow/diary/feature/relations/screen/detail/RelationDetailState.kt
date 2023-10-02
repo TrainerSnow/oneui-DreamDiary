@@ -1,4 +1,4 @@
-package com.snow.diary.feature.relations.screen.detail;
+package com.snow.diary.feature.relations.screen.detail
 
 import com.snow.diary.core.model.combine.PersonWithRelations
 import com.snow.diary.core.model.data.Relation

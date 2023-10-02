@@ -1,4 +1,4 @@
-package com.snow.diary.core.domain.action.person;
+package com.snow.diary.core.domain.action.person
 
 import com.snow.diary.core.database.dao.PersonDao
 import com.snow.diary.core.domain.action.FlowAction

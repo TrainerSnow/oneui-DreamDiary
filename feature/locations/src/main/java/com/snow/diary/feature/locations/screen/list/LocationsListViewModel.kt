@@ -1,4 +1,4 @@
-package com.snow.diary.feature.locations.screen.list;
+package com.snow.diary.feature.locations.screen.list
 
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.core.domain.action.location.AllLocations

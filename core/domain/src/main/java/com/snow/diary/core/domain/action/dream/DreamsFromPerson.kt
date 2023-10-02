@@ -1,4 +1,4 @@
-package com.snow.diary.core.domain.action.dream;
+package com.snow.diary.core.domain.action.dream
 
 import com.snow.diary.core.database.dao.PersonDao
 import com.snow.diary.core.domain.action.FlowAction
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 
 class DreamsFromPerson(
     val personDao: PersonDao
-): com.snow.diary.core.domain.action.FlowAction<Person, List<Dream>>() {
+): FlowAction<Person, List<Dream>>() {
     override fun Person.createFlow(): Flow<List<Dream>> = personDao
         .getPersonWithDreamsById(id!!)
         .map {

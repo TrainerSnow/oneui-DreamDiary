@@ -1,4 +1,4 @@
-package com.snow.diary.core.ui.data;
+package com.snow.diary.core.ui.data
 
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import com.snow.diary.core.model.data.Dream

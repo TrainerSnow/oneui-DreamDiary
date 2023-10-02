@@ -1,4 +1,4 @@
-package com.snow.diary.feature.persons.screen.detail;
+package com.snow.diary.feature.persons.screen.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope

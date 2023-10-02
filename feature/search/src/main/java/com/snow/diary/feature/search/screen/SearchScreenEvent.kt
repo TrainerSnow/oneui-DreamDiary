@@ -1,4 +1,4 @@
-package com.snow.diary.feature.search.screen;
+package com.snow.diary.feature.search.screen
 
 import com.snow.diary.core.model.data.Dream
 import com.snow.diary.core.model.data.Person
