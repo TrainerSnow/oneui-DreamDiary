@@ -63,66 +63,27 @@ class ImportExportAdapterTest {
             )
         },
 
-        dreamPersonCrossrefs = (1..5).map {
+        dreamPersonCrossrefs = (1L..5L).map {
             Pair(
                 first = it,
                 second = it * 10
             )
         },
 
-        dreamLocationsCrossrefs = (1..5).map {
+        dreamLocationsCrossrefs = (1L..5L).map {
+            Pair(
+                first = it,
+                second = it * 10
+            )
+        },
+
+        personRelationCrossrefs = (1L..5L).map {
             Pair(
                 first = it,
                 second = it * 10
             )
         }
     )
-
-    private val csvImporter = IImportAdapter.getInstance(ImportFiletype.CSV)
-    private val csvExporter = IExportAdapter.getInstance(ExportFiletype.CSV)
-
-    @Test
-    fun `CSV Export and import works as expected`() {
-        val os = ByteArrayOutputStream()
-
-        jsonExporter
-                .export(data, os)
-
-        val `is` = ByteArrayInputStream(os.toByteArray())
-
-        val readData = jsonImporter
-            .import(`is`)
-
-        Assert
-                .assertArrayEquals(
-                        data.dreams.toTypedArray(),
-                        readData.dreams.toTypedArray()
-                )
-
-        Assert
-                .assertArrayEquals(
-                        data.persons.toTypedArray(),
-                        readData.persons.toTypedArray()
-                )
-
-        Assert
-                .assertArrayEquals(
-                        data.locations.toTypedArray(),
-                        readData.locations.toTypedArray()
-                )
-
-        Assert
-                .assertArrayEquals(
-                        data.dreamPersonCrossrefs.toTypedArray(),
-                        readData.dreamPersonCrossrefs.toTypedArray()
-                )
-
-        Assert
-                .assertArrayEquals(
-                        data.dreamLocationsCrossrefs.toTypedArray(),
-                        readData.dreamLocationsCrossrefs.toTypedArray()
-                )
-    }
 
     private val jsonImporter = IImportAdapter.getInstance(ImportFiletype.JSON)
     private val jsonExporter = IExportAdapter.getInstance(ExportFiletype.JSON)
