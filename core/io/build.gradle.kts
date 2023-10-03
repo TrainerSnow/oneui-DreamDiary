@@ -12,7 +12,6 @@ java {
 
 dependencies {
     implementation(project(":core:model"))
-    implementation(project(":csv"))
 
     implementation(libs.serialization.json)
 
