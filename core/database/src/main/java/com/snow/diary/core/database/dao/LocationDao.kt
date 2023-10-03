@@ -41,4 +41,8 @@ interface LocationDao {
     @Transaction
     @Query("SELECT * FROM location")
     fun getAllLocationsWithDreams(): Flow<List<LocationWithDreams>>
+
+    @Transaction
+    @Query("DELETE FROM location")
+    fun deleteAll()
 }

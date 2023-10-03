@@ -49,4 +49,16 @@ interface CrossrefDao {
     @Query("SELECT * FROM person_relation_crossref")
     fun getAllPersonRelationCrossrefs(): Flow<List<PersonRelationCrossref>>
 
+    @Transaction
+    @Query("DELETE FROM dream_location_crossref")
+    fun deleteAllDreamLocationCrossrefs()
+
+    @Transaction
+    @Query("DELETE FROM dream_person_crossref")
+    fun deleteAllDreamPersonCrossrefs()
+
+    @Transaction
+    @Query("DELETE FROM person_relation_crossref")
+    fun deleteAllPersonRelationCrossrefs()
+
 }

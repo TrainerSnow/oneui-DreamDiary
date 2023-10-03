@@ -50,5 +50,9 @@ interface PersonDao {
     @Query("SELECT * FROM person")
     fun getAllPersonsWithRelationsById(): Flow<List<PersonWithRelations>>
 
+    @Transaction
+    @Query("DELETE FROM person")
+    fun deleteAll()
+
 
 }

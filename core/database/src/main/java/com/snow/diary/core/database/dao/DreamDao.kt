@@ -50,4 +50,8 @@ interface DreamDao {
     @Query("SELECT * FROM dream")
     fun getAllDreamsWithLocations(): Flow<List<DreamWithLocations>>
 
+    @Transaction
+    @Query("DELETE FROM dream")
+    fun deleteAll()
+
 }

@@ -40,4 +40,8 @@ interface RelationDao {
     @Transaction
     @Query("SELECT * FROM person_relation WHERE relationId = :id")
     fun getRelationWithPersonsById(id: Long): Flow<RelationWithPersons>
+
+    @Transaction
+    @Query("DELETE FROM person_relation")
+    fun deleteAll()
 }
