@@ -1,6 +1,8 @@
 package com.snow.diary.feature.export.screen
 
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.snow.diary.core.common.time.TimeFormat.formatFullDescription
 import com.snow.diary.core.io.ExportFiletype
 import com.snow.diary.feature.export.R
 import com.snow.diary.feature.export.info
@@ -42,6 +45,7 @@ import org.oneui.compose.progress.ProgressIndicatorType
 import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.widgets.buttons.Button
 import org.oneui.compose.widgets.buttons.coloredButtonColors
+import java.time.LocalDate
 
 @Composable
 internal fun ExportScreen(
@@ -50,15 +54,35 @@ internal fun ExportScreen(
 ) {
     val context = LocalContext.current
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.CreateDocument(mimeType = state.selectedFiletype.mimeType)
+    ) {
+        viewModel.onEvent(ExportEvent.FileCreated(it))
+    }
 
     LaunchedEffect(Unit) {
         viewModel.uiEvent.collectLatest { event ->
-            onNavigateBack()
-            val msg = when (event) {
-                ExportUiEvent.ReturnFailure -> R.string.export_failure
-                ExportUiEvent.ReturnSuccess -> R.string.export_success
+            fun toast(str: String) = Toast.makeText(context, str, Toast.LENGTH_SHORT).show()
+            when (event) {
+                ExportUiEvent.ReturnFailure -> {
+                    toast(context.resources.getString(R.string.export_failure))
+                    onNavigateBack()
+                }
+
+                ExportUiEvent.ReturnSuccess -> {
+                    toast(context.resources.getString(R.string.export_success))
+                    onNavigateBack()
+                }
+
+                ExportUiEvent.OpenFilePicker -> {
+                    val fileName =
+                        context.resources.getString(
+                            R.string.export_file_name,
+                            LocalDate.now().formatFullDescription()
+                        ) + state.selectedFiletype.fileExtension
+                    launcher.launch(fileName)
+                }
             }
-            Toast.makeText(context, context.resources.getString(msg), Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -2,16 +2,13 @@ package com.snow.diary.feature.export.screen
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.viewModelScope
-import com.anggrayudi.storage.file.DocumentFileCompat
-import com.anggrayudi.storage.media.FileDescription
 import com.snow.diary.core.common.launchInBackground
-import com.snow.diary.core.common.time.TimeFormat.formatFullDescription
 import com.snow.diary.core.domain.action.io.GetIOData
 import com.snow.diary.core.domain.viewmodel.EventViewModel
 import com.snow.diary.core.io.ExportFiletype
 import com.snow.diary.core.io.exporting.IExportAdapter
-import com.snow.diary.feature.export.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,7 +17,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 import javax.inject.Inject
 
 @SuppressLint("StaticFieldLeak")
@@ -37,26 +33,18 @@ internal class ExportViewModel @Inject constructor(
     val uiEvent = _uiEvent.asSharedFlow()
 
     override suspend fun handleEvent(event: ExportEvent) = when (event) {
-        ExportEvent.Export -> handleExport()
+        ExportEvent.Export -> _uiEvent.emit(ExportUiEvent.OpenFilePicker)
         is ExportEvent.SelectFiletype -> handleFiletypeChange(event.filetype)
+        is ExportEvent.FileCreated -> handleExport(event.uri)
     }
 
-    private fun handleExport() = viewModelScope.launchInBackground {
+    private fun handleExport(uri: Uri?) = viewModelScope.launchInBackground {
+        if (uri == null) return@launchInBackground
+
         val data = getIOData(Unit).stateIn(viewModelScope).value
-        val now = LocalDate.now()
         val type = state.value.selectedFiletype
 
-        val desc = FileDescription(
-            context.resources.getString(R.string.export_file_name, now.formatFullDescription()),
-            subFolder = "",
-            mimeType = type.mimeType
-        )
-        val file = DocumentFileCompat.createDownloadWithMediaStoreFallback(context, desc)
-        if (file == null) {
-            _uiEvent.emit(ExportUiEvent.ReturnFailure)
-            return@launchInBackground
-        }
-        val os = context.contentResolver.openOutputStream(file.uri)
+        val os = context.contentResolver.openOutputStream(uri)
         if (os == null) {
             _uiEvent.emit(ExportUiEvent.ReturnFailure)
             return@launchInBackground
