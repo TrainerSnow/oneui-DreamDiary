@@ -10,4 +10,7 @@
     <string name="export_title">Select your desired filetype</string>
 
     <string name="export_file_name">Data-Export-%s</string>
+
+    <string name="export_success">An export file of your data has been created in your downloads folder.</string>
+    <string name="export_failure">An Error occurred while trying to export your data.</string>
 </resources>

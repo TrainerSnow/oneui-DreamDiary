@@ -14,8 +14,10 @@ import com.snow.diary.core.io.exporting.IExportAdapter
 import com.snow.diary.feature.export.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -30,6 +32,9 @@ internal class ExportViewModel @Inject constructor(
 
     private val _state = MutableStateFlow(ExportState())
     val state: StateFlow<ExportState> = _state
+
+    private val _uiEvent = MutableSharedFlow<ExportUiEvent>()
+    val uiEvent = _uiEvent.asSharedFlow()
 
     override suspend fun handleEvent(event: ExportEvent) = when (event) {
         ExportEvent.Export -> handleExport()
@@ -47,12 +52,20 @@ internal class ExportViewModel @Inject constructor(
             mimeType = type.mimeType
         )
         val file = DocumentFileCompat.createDownloadWithMediaStoreFallback(context, desc)
-            ?: return@launchInBackground
-        val uri = file.uri
-        val os = context.contentResolver.openOutputStream(uri) ?: return@launchInBackground
+        if (file == null) {
+            _uiEvent.emit(ExportUiEvent.ReturnFailure)
+            return@launchInBackground
+        }
+        val os = context.contentResolver.openOutputStream(file.uri)
+        if (os == null) {
+            _uiEvent.emit(ExportUiEvent.ReturnFailure)
+            return@launchInBackground
+        }
+
         IExportAdapter.getInstance(type)
             .export(data, os)
         os.close()
+        _uiEvent.emit(ExportUiEvent.ReturnSuccess)
     }
 
     private fun handleFiletypeChange(type: ExportFiletype) = viewModelScope.launch {

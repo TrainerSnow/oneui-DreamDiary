@@ -1,5 +1,6 @@
 package com.snow.diary.feature.export.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,11 +14,13 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -32,6 +35,7 @@ import com.snow.diary.feature.export.R
 import com.snow.diary.feature.export.info
 import com.snow.diary.feature.export.screen.components.ExportFiletypeButton
 import com.snow.diary.feature.export.suitableForImporting
+import kotlinx.coroutines.flow.collectLatest
 import org.oneui.compose.progress.CircularProgressIndicatorSize
 import org.oneui.compose.progress.ProgressIndicator
 import org.oneui.compose.progress.ProgressIndicatorType
@@ -44,7 +48,19 @@ internal fun ExportScreen(
     viewModel: ExportViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit
 ) {
+    val context = LocalContext.current
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEvent.collectLatest { event ->
+            onNavigateBack()
+            val msg = when (event) {
+                ExportUiEvent.ReturnFailure -> R.string.export_failure
+                ExportUiEvent.ReturnSuccess -> R.string.export_success
+            }
+            Toast.makeText(context, context.resources.getString(msg), Toast.LENGTH_SHORT).show()
+        }
+    }
 
     ExportScreen(
         state = state,

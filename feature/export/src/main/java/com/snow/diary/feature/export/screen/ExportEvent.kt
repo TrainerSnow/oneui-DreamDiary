@@ -11,3 +11,11 @@ sealed class ExportEvent {
     data object Export: ExportEvent()
 
 }
+
+sealed class ExportUiEvent {
+
+    data object ReturnSuccess: ExportUiEvent()
+
+    data object ReturnFailure: ExportUiEvent()
+
+}
