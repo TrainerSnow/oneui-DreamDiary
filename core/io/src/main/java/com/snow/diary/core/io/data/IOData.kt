@@ -5,7 +5,7 @@ import com.snow.diary.core.model.data.Location
 import com.snow.diary.core.model.data.Person
 import com.snow.diary.core.model.data.Relation
 
-typealias Crossref = Pair<Int, Int>
+typealias Crossref = Pair<Long, Long>
 
 data class IOData (
 
@@ -19,6 +19,8 @@ data class IOData (
 
     val dreamPersonCrossrefs: List<Crossref>,
 
-    val dreamLocationsCrossrefs: List<Crossref>
+    val dreamLocationsCrossrefs: List<Crossref>,
+
+    val personRelationCrossrefs: List<Crossref>
 
 )

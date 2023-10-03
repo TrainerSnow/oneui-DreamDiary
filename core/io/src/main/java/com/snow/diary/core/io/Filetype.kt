@@ -1,8 +1,10 @@
 package com.snow.diary.core.io
 
-enum class ExportFiletype {
+enum class ExportFiletype(
+    val mimeType: String
+) {
 
-    JSON
+    JSON("application/json")
 
 }
 

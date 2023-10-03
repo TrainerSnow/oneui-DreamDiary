@@ -21,5 +21,6 @@ private fun JSONIOData.toIOData(): IOData = IOData(
     locations = locations.map { it.toModel() },
     relations = relations.map { it.toModel() },
     dreamPersonCrossrefs = dreamPersonCrossref,
-    dreamLocationsCrossrefs = dreamLocationCrossref
+    dreamLocationsCrossrefs = dreamLocationCrossref,
+    personRelationCrossrefs = personRelationCrossrefs
 )

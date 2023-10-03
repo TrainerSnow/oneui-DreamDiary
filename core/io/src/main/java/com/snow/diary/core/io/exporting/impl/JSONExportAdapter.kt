@@ -36,7 +36,9 @@ internal data class JSONIOData(
 
     val dreamPersonCrossref: List<Crossref>,
 
-    val dreamLocationCrossref: List<Crossref>
+    val dreamLocationCrossref: List<Crossref>,
+
+    val personRelationCrossrefs: List<Crossref>
 
 ){
 
@@ -46,7 +48,8 @@ internal data class JSONIOData(
         locations = data.locations.map { LocationEntity(it) },
         relations = data.relations.map { RelationEntity(it) },
         dreamPersonCrossref = data.dreamPersonCrossrefs,
-        dreamLocationCrossref = data.dreamLocationsCrossrefs
+        dreamLocationCrossref = data.dreamLocationsCrossrefs,
+        personRelationCrossrefs = data.personRelationCrossrefs
     )
 
 }
