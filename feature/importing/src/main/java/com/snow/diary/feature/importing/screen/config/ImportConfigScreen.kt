@@ -25,7 +25,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.core.io.ImportFiletype
 import com.snow.diary.feature.importing.R
 import com.snow.diary.feature.importing.screen.component.ImportFiletypeButton
+import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
+import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
 import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.widgets.buttons.Button
 import org.oneui.compose.widgets.buttons.coloredButtonColors
@@ -65,7 +67,9 @@ private fun ImportConfigScreen(
     )
 
     CollapsingToolbarLayout(
-        toolbarTitle = stringResource(R.string.import_config_title)
+        toolbarTitle = stringResource(R.string.import_config_title),
+        state = rememberCollapsingToolbarState(CollapsingToolbarCollapsedState.COLLAPSED),
+        expandable = false
     ) {
         Column(
             modifier = Modifier
