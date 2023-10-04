@@ -1,15 +1,12 @@
-package com.snow.diary.feature.importing.screen
+package com.snow.diary.feature.importing.screen.result
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -19,6 +16,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.core.domain.action.io.ImportIOData
 import com.snow.diary.feature.importing.R
 import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
@@ -34,34 +33,46 @@ import org.oneui.compose.widgets.buttons.coloredButtonColors
 import org.oneui.compose.widgets.buttons.transparentButtonColors
 
 @Composable
-private fun ImportScreen(
-    state: ImportState,
-    onEvent: (ImportEvent) -> Unit
+internal fun ImportResultScreen(
+    viewModel: ImportResultViewModel = hiltViewModel(),
+    onNavigateBack: () -> Unit
+) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
+
+    ImportResultScreen(
+        state = state,
+        onNavigateBack = onNavigateBack
+    )
+}
+
+@Composable
+private fun ImportResultScreen(
+    state: ImportResultState,
+    onNavigateBack: () -> Unit
 ) {
     CollapsingToolbarLayout(
         modifier = Modifier
             .fillMaxSize(),
         toolbarTitle = stringResource(state.titleRes),
-        toolbarSubtitle = (state as? ImportState.ImportFailed)?.problems?.size?.toString(),
+        toolbarSubtitle = (state as? ImportResultState.ImportFailed)?.problems?.size?.toString(),
         state = rememberCollapsingToolbarState(CollapsingToolbarCollapsedState.COLLAPSED)
     ) {
         when (state) {
-            is ImportState.ImportFailed -> ErrorScreen(
+            is ImportResultState.ImportFailed -> ErrorScreen(
                 modifier = Modifier
                     .fillMaxSize(),
                 state = state,
-                onCancelClick = { onEvent(ImportEvent.Return) },
-                onReImportClick = { onEvent(ImportEvent.OpenFilePicker) }
+                onCancelClick = onNavigateBack
             )
 
-            is ImportState.ImportSuccess -> SuccessScreen(
+            is ImportResultState.ImportSuccess -> SuccessScreen(
                 modifier = Modifier
                     .fillMaxSize(),
                 state = state,
-                onContinueClick = { onEvent(ImportEvent.Return) }
+                onContinueClick = onNavigateBack
             )
 
-            ImportState.Importing -> ImportingScreen(
+            ImportResultState.Importing -> ImportingScreen(
                 modifier = Modifier
                     .fillMaxSize(),
             )
@@ -100,7 +111,7 @@ private fun ImportingScreen(
 @Composable
 private fun SuccessScreen(
     modifier: Modifier = Modifier,
-    state: ImportState.ImportSuccess,
+    state: ImportResultState.ImportSuccess,
     onContinueClick: () -> Unit
 ) {
     Column(
@@ -170,9 +181,8 @@ private fun SuccessScreen(
 @Composable
 private fun ErrorScreen(
     modifier: Modifier = Modifier,
-    state: ImportState.ImportFailed,
-    onCancelClick: () -> Unit,
-    onReImportClick: () -> Unit
+    state: ImportResultState.ImportFailed,
+    onCancelClick: () -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -217,33 +227,19 @@ private fun ErrorScreen(
             text = stringResource(R.string.import_failed_info_help)
         )
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .widthIn(max = 500.dp)
-                .padding(horizontal = 32.dp),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Button(
-                label = stringResource(R.string.import_problem_cancel),
-                colors = transparentButtonColors(),
-                onClick = onCancelClick
-            )
-            Button(
-                label = stringResource(R.string.import_problem_reimport),
-                colors = coloredButtonColors(),
-                onClick = onReImportClick
-            )
-        }
+        Button(
+            label = stringResource(R.string.import_problem_cancel),
+            colors = transparentButtonColors(),
+            onClick = onCancelClick
+        )
     }
 }
 
-private val ImportState.titleRes: Int
+private val ImportResultState.titleRes: Int
     @StringRes get() = when (this) {
-        is ImportState.ImportFailed -> R.string.import_title_failed
-        ImportState.Importing -> R.string.import_title
-        is ImportState.ImportSuccess -> R.string.import_title_success
+        is ImportResultState.ImportFailed -> R.string.import_title_failed
+        ImportResultState.Importing -> R.string.import_title
+        is ImportResultState.ImportSuccess -> R.string.import_title_success
     }
 
 private val ImportIOData.ImportProblem.descriptionRed: Int
@@ -256,14 +252,14 @@ private val ImportIOData.ImportProblem.descriptionRed: Int
 @Composable
 private fun ImportScreenErrorPreview() {
     OneUIPreview(title = "ImportScreenErrorPreview") {
-        ImportScreen(
-            state = ImportState.ImportFailed(
+        ImportResultScreen(
+            state = ImportResultState.ImportFailed(
                 listOf(
                     ImportIOData.ImportProblem.NonUniqueIds,
                     ImportIOData.ImportProblem.InvalidCrossrefReference
                 )
             ),
-            onEvent = { }
+            onNavigateBack = { }
         )
     }
 }
@@ -272,9 +268,9 @@ private fun ImportScreenErrorPreview() {
 @Composable
 private fun ImportScreenSuccessPreview() {
     OneUIPreview(title = "ImportScreenErrorPreview") {
-        ImportScreen(
-            state = ImportState.ImportSuccess(153, 34, 12, 6),
-            onEvent = { }
+        ImportResultScreen(
+            state = ImportResultState.ImportSuccess(153, 34, 12, 6),
+            onNavigateBack = { }
         )
     }
 }
