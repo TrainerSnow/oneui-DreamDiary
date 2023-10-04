@@ -7,7 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.snow.diary.feature.importing.screen.config.ImportConfigScreen
 
-private const val importConfigRoute = "import_config"
+internal const val importConfigRoute = "import_config"
 
 internal fun NavController.goToImportConfig(
     navOptions: NavOptions? = null
