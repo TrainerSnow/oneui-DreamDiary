@@ -22,4 +22,8 @@
     <string name="import_success_info_relationsnum">- %s relations</string>
     <string name="import_success_info_continue">Continue</string>
 
+    <string name="import_config_title">Import configuration</string>
+    <string name="import_config_filetype_prompt">Select the filetype you want to import:</string>
+    <string name="import_config_button_label">Import</string>
+
 </resources>
