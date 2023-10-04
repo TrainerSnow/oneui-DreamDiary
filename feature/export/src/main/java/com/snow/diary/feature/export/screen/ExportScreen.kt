@@ -5,7 +5,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,6 +38,9 @@ import com.snow.diary.feature.export.info
 import com.snow.diary.feature.export.screen.components.ExportFiletypeButton
 import com.snow.diary.feature.export.suitableForImporting
 import kotlinx.coroutines.flow.collectLatest
+import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
+import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
+import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
 import org.oneui.compose.progress.CircularProgressIndicatorSize
 import org.oneui.compose.progress.ProgressIndicator
 import org.oneui.compose.progress.ProgressIndicatorType
@@ -100,7 +102,8 @@ private fun ExportScreen(
     val titleStyle = TextStyle(
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Center,
+        color = OneUITheme.colors.seslPrimaryTextColor
     )
     val infoTextStyle = TextStyle(
         fontSize = 14.sp,
@@ -116,11 +119,15 @@ private fun ExportScreen(
     val screenHeight = LocalConfiguration.current.screenHeightDp
     val height = screenHeight.coerceAtMost(ExportScreenDefaults.maxHeight.value.toInt()).dp
 
-    Box(
+
+    CollapsingToolbarLayout(
         modifier = Modifier
             .fillMaxSize()
             .background(OneUITheme.colors.seslBackgroundColor)
-            .padding(ExportScreenDefaults.padding)
+            .padding(ExportScreenDefaults.padding),
+        toolbarTitle = stringResource(R.string.export_title),
+        state = rememberCollapsingToolbarState(CollapsingToolbarCollapsedState.COLLAPSED),
+        expandable = false
     ) {
         Column(
             modifier = Modifier
@@ -130,7 +137,7 @@ private fun ExportScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = stringResource(R.string.export_title),
+                text = stringResource(R.string.export_info),
                 style = titleStyle
             )
 

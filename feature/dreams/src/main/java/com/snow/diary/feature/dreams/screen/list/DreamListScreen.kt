@@ -134,13 +134,13 @@ private fun DreamListScreen(
                         label = stringResource(R.string.dream_list_menu_export),
                         onClick = onExportClick
                     )
-                    MenuItem(
-                        label = stringResource(R.string.dream_list_menu_about),
-                        onClick = onAboutClick
-                    )
                     MenuItem (
                         label = stringResource(R.string.dream_list_menu_import),
                         onClick = onImportClick
+                    )
+                    MenuItem(
+                        label = stringResource(R.string.dream_list_menu_about),
+                        onClick = onAboutClick
                     )
                 }
             }

@@ -28,7 +28,8 @@ fun ExportFiletypeButton(
 ) {
     val testStyle = TextStyle(
         fontSize = 16.sp,
-        fontWeight = FontWeight.SemiBold
+        fontWeight = FontWeight.SemiBold,
+        color = OneUITheme.colors.seslPrimaryTextColor
     )
 
     Box(
