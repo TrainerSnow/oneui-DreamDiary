@@ -1,12 +1,9 @@
 package com.snow.diary.ui
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
@@ -315,10 +312,10 @@ private fun AppNavigation(
             content()
         }
     } else if (sizeClass.useNavigationRail) {
-        Box(
-            modifier = modifier.padding(WindowInsets.systemBars.asPaddingValues())
-        ) {
-            NavigationRail(modifier = Modifier.fillMaxSize(), railHeader = {
+        NavigationRail(
+            modifier = Modifier.fillMaxSize(),
+            windowInsets = WindowInsets.systemBars,
+            railHeader = {
                 NavigationRailHeader(
                     modifier = modifier,
                     navigationIconButton = {
@@ -334,7 +331,8 @@ private fun AppNavigation(
                         )
                     },
                 )
-            }, railContent = { progress ->
+            },
+            railContent = { progress ->
                 TopLevelDestinations.entries.forEach { navDest ->
                     if (navDest == TopLevelDestinations.Statistics) {
                         NavigationRailDivider(
@@ -356,8 +354,7 @@ private fun AppNavigation(
                     )
                 }
             }) {
-                content()
-            }
+            content()
         }
     }
 }
