@@ -100,7 +100,8 @@ private fun ExportScreen(
     val titleStyle = TextStyle(
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Center,
+        color = OneUITheme.colors.seslPrimaryTextColor
     )
     val infoTextStyle = TextStyle(
         fontSize = 14.sp,

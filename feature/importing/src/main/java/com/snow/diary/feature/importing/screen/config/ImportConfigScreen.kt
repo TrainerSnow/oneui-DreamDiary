@@ -26,6 +26,7 @@ import com.snow.diary.core.io.ImportFiletype
 import com.snow.diary.feature.importing.R
 import com.snow.diary.feature.importing.screen.component.ImportFiletypeButton
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
+import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.widgets.buttons.Button
 import org.oneui.compose.widgets.buttons.coloredButtonColors
 
@@ -59,7 +60,8 @@ private fun ImportConfigScreen(
     val titleStyle = TextStyle(
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Center,
+        color = OneUITheme.colors.seslPrimaryTextColor
     )
 
     CollapsingToolbarLayout(
