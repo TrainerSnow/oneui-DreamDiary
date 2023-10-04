@@ -22,8 +22,8 @@ internal fun MainImportScreen(
             onNavigateBack = onNavigateBack
         )
         importConfig(
-            onUriSelected = { uri ->
-                navController.goToImportResult(uri)
+            onUriSelected = { uri, type ->
+                navController.goToImportResult(type, uri)
             }
         )
     }

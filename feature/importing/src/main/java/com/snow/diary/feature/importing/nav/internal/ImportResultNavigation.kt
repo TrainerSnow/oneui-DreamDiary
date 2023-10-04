@@ -10,6 +10,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.snow.diary.core.io.ImportFiletype
 import com.snow.diary.feature.importing.screen.result.ImportResultScreen
+import java.util.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 
 private const val uriArgId = "uri"
 private const val typeArgId = "type"
@@ -23,19 +25,35 @@ internal class ImportResultArgs(
     val type: ImportFiletype
 ) {
     constructor(savedStateHandle: SavedStateHandle) : this(
-        uri = Uri.parse(savedStateHandle[uriArgId]),
-        type = ImportFiletype.valueOf(savedStateHandle[typeArgId]!!)
+        uri = savedStateHandle.get<String>(uriArgId)!!.let {
+            val decoded = Base64.getDecoder().decode(it).toString(Charsets.UTF_8)
+            val uri = Uri.parse(decoded)
+            uri
+        },
+        type = ImportFiletype.valueOf(savedStateHandle.get<String>(typeArgId)!!)
     )
 }
 
 
 internal fun NavController.goToImportResult(
+    type: ImportFiletype,
     uri: Uri,
     navOptions: NavOptions? = null
-) = navigate(
-    importResultRoute.withArg(uriArgId, uri.toString()),
-    navOptions
-)
+) {
+    val encodedUri = Base64.getEncoder().encode(uri.toString().toByteArray()).toString(Charsets.UTF_8)
+    navigate(
+        importResultRoute
+            .withArg(
+                uriArgId,
+                encodedUri
+            )
+            .withArg(
+                typeArgId,
+                type.name
+            ),
+        navOptions
+    )
+}
 
 internal fun NavGraphBuilder.importResult(
     onNavigateBack: () -> Unit
@@ -45,6 +63,11 @@ internal fun NavGraphBuilder.importResult(
         arguments = listOf(
             navArgument(
                 name = uriArgId
+            ) {
+                type = NavType.StringType
+            },
+            navArgument(
+                name = typeArgId
             ) {
                 type = NavType.StringType
             }

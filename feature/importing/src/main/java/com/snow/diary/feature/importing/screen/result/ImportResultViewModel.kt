@@ -12,12 +12,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Inject
 
 @HiltViewModel
-internal class ImportResultViewModel(
+internal class ImportResultViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    @ApplicationContext context: Context,
-    importIOData: ImportIOData
+    @ApplicationContext val context: Context,
+    val importIOData: ImportIOData
 ) : ViewModel() {
 
     private val args: ImportResultArgs = ImportResultArgs(savedStateHandle)

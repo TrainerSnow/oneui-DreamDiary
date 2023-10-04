@@ -32,13 +32,13 @@ import org.oneui.compose.widgets.buttons.coloredButtonColors
 @Composable
 internal fun ImportConfigScreen(
     viewModel: ImportConfigViewModel = hiltViewModel(),
-    onUriSelected: (Uri) -> Unit
+    onUriSelected: (Uri, ImportFiletype) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val launcher = rememberLauncherForActivityResult(
         ActivityResultContracts.OpenDocument()
     ) {
-        if (it != null) onUriSelected(it)
+        if (it != null) onUriSelected(it, state.selectedType)
     }
 
     ImportConfigScreen(

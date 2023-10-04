@@ -5,9 +5,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
 @HiltViewModel
-internal class ImportConfigViewModel : EventViewModel<ImportConfigEvent>() {
+internal class ImportConfigViewModel @Inject constructor() : EventViewModel<ImportConfigEvent>() {
 
     private val _state = MutableStateFlow(ImportConfigState())
     val state: StateFlow<ImportConfigState> = _state

@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.snow.diary.core.io.ImportFiletype
 import com.snow.diary.feature.importing.screen.config.ImportConfigScreen
 
 internal const val importConfigRoute = "import_config"
@@ -14,7 +15,7 @@ internal fun NavController.goToImportConfig(
 ) = navigate(importConfigRoute, navOptions)
 
 internal fun NavGraphBuilder.importConfig(
-    onUriSelected: (Uri) -> Unit
+    onUriSelected: (Uri, ImportFiletype) -> Unit
 ) {
     composable(
         route = importConfigRoute
