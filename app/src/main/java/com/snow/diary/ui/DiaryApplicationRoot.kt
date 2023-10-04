@@ -124,33 +124,44 @@ private fun DiaryNavHost(
         navController = navController,
         startDestination = "dream_list"
     ) {
-        dreamList(onAboutClick = { }, onAddClick = {
-            obfuscationBlocked {
-                navController.goToAddDream(
-                    dialog = state.fullscreenDialogFloating
-                )
-            }
-        }, onSearchClick = {
-            navController.goToSearch(SearchTabs.Dreams)
-        }, onDreamClick = { dream ->
-            navController.goToDreamDetail(dream.id!!)
-        }, onExportClick = navController::goToExport,
+        dreamList(
+            onAboutClick = { },
+            onAddClick = {
+                obfuscationBlocked {
+                    navController.goToAddDream(
+                        dialog = state.fullscreenDialogFloating
+                    )
+                }
+            },
+            onSearchClick = {
+                navController.goToSearch(SearchTabs.Dreams)
+            },
+            onDreamClick = { dream ->
+                navController.goToDreamDetail(dream.id!!)
+            },
+            onExportClick = navController::goToExport,
             onImportClick = navController::goToImport,
             onNavigateBack = state::openDrawer
         )
-        dreamDetail(onNavigateBack = state::navigateBack, onLocationClick = {
-            navController.goToLocationDetail(it.id!!)
-        }, onPersonClick = {
-            navController.goToPersonDetail(it.id!!)
-        }, onRelationClick = {
-            navController.goToRelationDetail(it.id!!)
-        }, onEditClick = {
-            obfuscationBlocked {
-                navController.goToAddDream(
-                    it.id, dialog = state.fullscreenDialogFloating
-                )
+        dreamDetail(
+            onNavigateBack = state::navigateBack,
+            onLocationClick = {
+                navController.goToLocationDetail(it.id!!)
+            },
+            onPersonClick = {
+                navController.goToPersonDetail(it.id!!)
+            },
+            onRelationClick = {
+                navController.goToRelationDetail(it.id!!)
+            },
+            onEditClick = {
+                obfuscationBlocked {
+                    navController.goToAddDream(
+                        it.id, dialog = state.fullscreenDialogFloating
+                    )
+                }
             }
-        })
+        )
         addDream(
             dismissDream = state::navigateBack
         )
@@ -159,31 +170,42 @@ private fun DiaryNavHost(
             onNavigateBack = state::navigateBack
         )
 
-        personList(onNavigateBack = state::openDrawer, onAddPerson = {
-            obfuscationBlocked {
-                navController.goToAddPerson(
-                    dialog = state.fullscreenDialogFloating
-                )
-            }
-        }, onSearchPerson = {
-            navController.goToSearch(SearchTabs.Persons)
-        }, onRelationClick = {
-            navController.goToRelationDetail(it.id!!)
-        }, onPersonClick = {
-            navController.goToPersonDetail(it.id!!)
-        }, onGroupsCLick = navController::goToRelationList
+        personList(
+            onNavigateBack = state::openDrawer,
+            onAddPerson = {
+                obfuscationBlocked {
+                    navController.goToAddPerson(
+                        dialog = state.fullscreenDialogFloating
+                    )
+                }
+            },
+            onSearchPerson = {
+                navController.goToSearch(SearchTabs.Persons)
+            },
+            onRelationClick = {
+                navController.goToRelationDetail(it.id!!)
+            },
+            onPersonClick = {
+                navController.goToPersonDetail(it.id!!)
+            },
+            onGroupsCLick = navController::goToRelationList
         )
-        personDetail(onNavigateBack = state::navigateBack, onEditClick = {
-            obfuscationBlocked {
-                navController.goToAddPerson(
-                    it.id, dialog = state.fullscreenDialogFloating
-                )
+        personDetail(
+            onNavigateBack = state::navigateBack,
+            onEditClick = {
+                obfuscationBlocked {
+                    navController.goToAddPerson(
+                        it.id, dialog = state.fullscreenDialogFloating
+                    )
+                }
+            },
+            onDreamClick = {
+                navController.goToDreamDetail(it.id!!)
+            },
+            onRelationClick = {
+                navController.goToRelationDetail(it.id!!)
             }
-        }, onDreamClick = {
-            navController.goToDreamDetail(it.id!!)
-        }, onRelationClick = {
-            navController.goToRelationDetail(it.id!!)
-        })
+        )
         addPerson(
             onNavigateBack = state::navigateBack
         )
@@ -191,50 +213,68 @@ private fun DiaryNavHost(
         addLocation(
             onNavigateBack = state::navigateBack
         )
-        locationList(onNavigateBack = state::openDrawer, onAddLocation = {
-            obfuscationBlocked {
-                navController.goToAddLocation(
-                    dialog = state.fullscreenDialogFloating
-                )
+        locationList(
+            onNavigateBack = state::openDrawer,
+            onAddLocation = {
+                obfuscationBlocked {
+                    navController.goToAddLocation(
+                        dialog = state.fullscreenDialogFloating
+                    )
+                }
+            },
+            onSearchLocation = {
+                navController.goToSearch(SearchTabs.Locations)
+            },
+            onLocationCLick = {
+                navController.goToLocationDetail(it.id!!)
             }
-        }, onSearchLocation = {
-            navController.goToSearch(SearchTabs.Locations)
-        }, onLocationCLick = {
-            navController.goToLocationDetail(it.id!!)
-        })
-        locationDetail(onNavigateBack = state::navigateBack, onEditClick = {
-            obfuscationBlocked {
-                navController.goToAddLocation(
-                    it.id, dialog = state.fullscreenDialogFloating
-                )
+        )
+        locationDetail(
+            onNavigateBack = state::navigateBack,
+            onEditClick = {
+                obfuscationBlocked {
+                    navController.goToAddLocation(
+                        it.id, dialog = state.fullscreenDialogFloating
+                    )
+                }
+            },
+            onDreamClick = {
+                navController.goToDreamDetail(it.id!!)
             }
-        }, onDreamClick = {
-            navController.goToDreamDetail(it.id!!)
-        })
+        )
 
         addRelation(
             onNavigateBack = state::navigateBack
         )
-        relationList(onNavigateBack = state::navigateBack, onAddRelation = {
-            obfuscationBlocked {
-                navController.goToAddRelation(
-                    dialog = state.fullscreenDialogFloating
-                )
+        relationList(
+            onNavigateBack = state::navigateBack,
+            onAddRelation = {
+                obfuscationBlocked {
+                    navController.goToAddRelation(
+                        dialog = state.fullscreenDialogFloating
+                    )
+                }
+            },
+            onSearchRelation = {
+                navController.goToSearch(SearchTabs.Persons)
+            },
+            onRelationClick = {
+                navController.goToRelationDetail(it.id!!)
             }
-        }, onSearchRelation = {
-            navController.goToSearch(SearchTabs.Persons)
-        }, onRelationClick = {
-            navController.goToRelationDetail(it.id!!)
-        })
-        relationDetail(onNavigateBack = state::navigateBack, onEditClick = {
-            obfuscationBlocked {
-                navController.goToAddRelation(
-                    it.id!!, dialog = state.fullscreenDialogFloating
-                )
+        )
+        relationDetail(
+            onNavigateBack = state::navigateBack,
+            onEditClick = {
+                obfuscationBlocked {
+                    navController.goToAddRelation(
+                        it.id!!, dialog = state.fullscreenDialogFloating
+                    )
+                }
+            },
+            onPersonClick = {
+                navController.goToPersonDetail(it.id!!)
             }
-        }, onPersonClick = {
-            navController.goToPersonDetail(it.id!!)
-        })
+        )
 
         mainPreferences(
             onNavigateBack = state::navigateBack,
@@ -247,13 +287,16 @@ private fun DiaryNavHost(
         statistics(
             onNavigateBack = state::openDrawer
         )
-        search(onNavigateBack = state::navigateBack, onDreamClick = {
-            navController.goToDreamDetail(it.id!!)
-        }, onPersonClick = {
-            navController.goToPersonDetail(it.id!!)
-        }, onLocationClick = {
-            navController.goToLocationDetail(it.id!!)
-        })
+        search(
+            onNavigateBack = state::navigateBack,
+            onDreamClick = {
+                navController.goToDreamDetail(it.id!!)
+            }, onPersonClick = {
+                navController.goToPersonDetail(it.id!!)
+            }, onLocationClick = {
+                navController.goToLocationDetail(it.id!!)
+            }
+        )
         import(
             onNavigateBack = state::navigateBack
         )
@@ -308,7 +351,8 @@ private fun AppNavigation(
                         onSettingsClick()
                     }, icon = Icon.Resource(IconR.drawable.ic_oui_settings_outline)
                 )
-            }) {
+            }
+        ) {
             content()
         }
     } else if (sizeClass.useNavigationRail) {
@@ -343,7 +387,8 @@ private fun AppNavigation(
                         progress = progress
                     )
                 }
-            }) {
+            }
+        ) {
             content()
         }
     }
