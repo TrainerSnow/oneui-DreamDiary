@@ -23,6 +23,8 @@ import com.snow.diary.core.domain.action.dream.DreamInformation
 import com.snow.diary.core.domain.action.dream.DreamsFromLocation
 import com.snow.diary.core.domain.action.dream.DreamsFromPerson
 import com.snow.diary.core.domain.action.dream.UpdateDream
+import com.snow.diary.core.domain.action.io.GetIOData
+import com.snow.diary.core.domain.action.io.ImportIOData
 import com.snow.diary.core.domain.action.location.AddLocation
 import com.snow.diary.core.domain.action.location.AllLocations
 import com.snow.diary.core.domain.action.location.DeleteLocation
@@ -464,5 +466,58 @@ object DomainModule {
         allDreamLocationCrossrefs: AllDreamLocationCrossrefs,
         locationById: LocationById
     ) = LocationsWithAmount(allLocations, allDreamLocationCrossrefs, locationById)
+
+    /*
+    IO usecases
+     */
+    @Provides
+    @Singleton
+    fun provideGetIOData(
+        allDreams: AllDreams,
+        allPersons: AllPersons,
+        allLocations: AllLocations,
+        allRelations: AllRelations,
+        allDreamPersonCrossrefs: AllDreamPersonCrossrefs,
+        allDreamLocationCrossrefs: AllDreamLocationCrossrefs,
+        crossrefDao: CrossrefDao
+    ) = GetIOData(
+        allDreams,
+        allPersons,
+        allLocations,
+        allRelations,
+        allDreamPersonCrossrefs,
+        allDreamLocationCrossrefs,
+        crossrefDao
+    )
+
+    @Provides
+    @Singleton
+    fun provideImportIOData(
+        addDream: AddDreamAction,
+        addPerson: AddPerson,
+        addLocation: AddLocation,
+        addRelation: AddRelation,
+        addDreamPersonCrossref: AddDreamPersonCrossref,
+        addDreamLocationCrossref: AddDreamLocationCrossref,
+        addPersonRelationCrossref: AddPersonRelationCrossref,
+        crossrefDao: CrossrefDao,
+        dreamDao: DreamDao,
+        personDao: PersonDao,
+        locationDao: LocationDao,
+        relationDao: RelationDao
+    ) = ImportIOData(
+        addDream,
+        addPerson,
+        addLocation,
+        addRelation,
+        addDreamPersonCrossref,
+        addDreamLocationCrossref,
+        addPersonRelationCrossref,
+        crossrefDao,
+        dreamDao,
+        personDao,
+        locationDao,
+        relationDao
+    )
 
 }

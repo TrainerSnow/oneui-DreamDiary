@@ -62,6 +62,8 @@ dependencies {
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
 
+    implementation(libs.simplestorage)
+
     implementation(project(":core:io"))
     implementation(project(":core:domain"))
     implementation(project(":core:common"))

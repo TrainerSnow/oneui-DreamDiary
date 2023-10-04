@@ -18,6 +18,7 @@ fun NavGraphBuilder.dreamList(
     onDreamClick: (Dream) -> Unit,
     onNavigateBack: () -> Unit,
     onExportClick: () -> Unit,
+    onImportClick: () -> Unit,
     onAboutClick: () -> Unit
 ) {
     composable(
@@ -29,6 +30,7 @@ fun NavGraphBuilder.dreamList(
             onDreamClick = onDreamClick,
             onNavigateBack = onNavigateBack,
             onExportClick = onExportClick,
+            onImportClick = onImportClick,
             onAboutClick = onAboutClick
         )
     }

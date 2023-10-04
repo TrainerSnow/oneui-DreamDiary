@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="import_title">Import</string>
+    <string name="import_title_failed">Import failed</string>
+    <string name="import_title_success">Import success</string>
+
+    <string name="import_loading">Importing…</string>
+
+    <string name="import_failed_info_title">Importing has run into several issues:</string>
+    <string name="import_failed_info_help">If you changed the file yourself, revert the changes you made. Try importing a different backup.</string>
+
+    <string name="import_problem_nonunique">- One or multiple entries have the same unique identifier.</string>
+    <string name="import_problem_invalidref">- A dream or person references a location, person or relation that doesn\'t exist.</string>
+    <string name="import_problem_corrupted">- The file is corrupted.</string>
+    <string name="import_problem_cancel">@android:string/cancel</string>
+    <string name="import_problem_reimport">Reimport</string>
+
+    <string name="import_success_info">Imported the following data:</string>
+    <string name="import_success_info_dreamsnum">- %s dreams</string>
+    <string name="import_success_info_personsnum">- %s persons</string>
+    <string name="import_success_info_locationsnum">- %s locations</string>
+    <string name="import_success_info_relationsnum">- %s relations</string>
+    <string name="import_success_info_continue">Continue</string>
+
+    <string name="import_config_title">Import configuration</string>
+    <string name="import_config_filetype_prompt">Select the filetype you want to import:</string>
+    <string name="import_config_button_label">Import</string>
+
+</resources>

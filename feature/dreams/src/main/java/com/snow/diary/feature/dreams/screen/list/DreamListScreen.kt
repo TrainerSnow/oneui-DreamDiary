@@ -40,6 +40,7 @@ internal fun DreamListScreen(
     onDreamClick: (Dream) -> Unit,
     onNavigateBack: () -> Unit,
     onExportClick: () -> Unit,
+    onImportClick: () -> Unit,
     onAboutClick: () -> Unit
 ) {
 
@@ -57,6 +58,7 @@ internal fun DreamListScreen(
         onDreamClick = onDreamClick,
         onNavigateBack = onNavigateBack,
         onExportClick = onExportClick,
+        onImportClick = onImportClick,
         onAboutClick = onAboutClick
     )
 
@@ -73,6 +75,7 @@ private fun DreamListScreen(
     onDreamClick: (Dream) -> Unit,
     onNavigateBack: () -> Unit,
     onExportClick: () -> Unit,
+    onImportClick: () -> Unit,
     onAboutClick: () -> Unit
 ) {
     //TODO: Possibly adapt nav icon to tablet mode
@@ -134,6 +137,10 @@ private fun DreamListScreen(
                     MenuItem(
                         label = stringResource(R.string.dream_list_menu_about),
                         onClick = onAboutClick
+                    )
+                    MenuItem (
+                        label = stringResource(R.string.dream_list_menu_import),
+                        onClick = onImportClick
                     )
                 }
             }
@@ -216,6 +223,7 @@ private fun DreamListScreenPreview() {
         onDreamClick = { },
         onNavigateBack = { },
         onExportClick = { },
+        onImportClick = { },
         onAboutClick = { }
     )
 }

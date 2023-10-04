@@ -1,5 +1,8 @@
 package com.snow.diary.feature.export.screen
 
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,11 +16,13 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -27,24 +32,59 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.snow.diary.core.common.time.TimeFormat.formatFullDescription
 import com.snow.diary.core.io.ExportFiletype
 import com.snow.diary.feature.export.R
 import com.snow.diary.feature.export.info
 import com.snow.diary.feature.export.screen.components.ExportFiletypeButton
 import com.snow.diary.feature.export.suitableForImporting
+import kotlinx.coroutines.flow.collectLatest
 import org.oneui.compose.progress.CircularProgressIndicatorSize
 import org.oneui.compose.progress.ProgressIndicator
 import org.oneui.compose.progress.ProgressIndicatorType
 import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.widgets.buttons.Button
 import org.oneui.compose.widgets.buttons.coloredButtonColors
+import java.time.LocalDate
 
 @Composable
 internal fun ExportScreen(
     viewModel: ExportViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit
 ) {
+    val context = LocalContext.current
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.CreateDocument(mimeType = state.selectedFiletype.mimeType)
+    ) {
+        viewModel.onEvent(ExportEvent.FileCreated(it))
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEvent.collectLatest { event ->
+            fun toast(str: String) = Toast.makeText(context, str, Toast.LENGTH_SHORT).show()
+            when (event) {
+                ExportUiEvent.ReturnFailure -> {
+                    toast(context.resources.getString(R.string.export_failure))
+                    onNavigateBack()
+                }
+
+                ExportUiEvent.ReturnSuccess -> {
+                    toast(context.resources.getString(R.string.export_success))
+                    onNavigateBack()
+                }
+
+                ExportUiEvent.OpenFilePicker -> {
+                    val fileName =
+                        context.resources.getString(
+                            R.string.export_file_name,
+                            LocalDate.now().formatFullDescription()
+                        ) + state.selectedFiletype.fileExtension
+                    launcher.launch(fileName)
+                }
+            }
+        }
+    }
 
     ExportScreen(
         state = state,
