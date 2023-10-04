@@ -320,9 +320,19 @@ private fun AppNavigation(
         ) {
             NavigationRail(modifier = Modifier.fillMaxSize(), railHeader = {
                 NavigationRailHeader(
-                    modifier = Modifier.fillMaxWidth(),
-                    onNavigateClick = onNavigationClick,
-                    onSettingsClick = onSettingsClick
+                    modifier = modifier,
+                    navigationIconButton = {
+                        IconButton(
+                            icon = Icon.Resource(IconR.drawable.ic_oui_drawer),
+                            onClick = onNavigationClick
+                        )
+                    },
+                    settingsIconButton = {
+                        IconButton(
+                            icon = Icon.Resource(IconR.drawable.ic_oui_settings_outline),
+                            onClick = onSettingsClick
+                        )
+                    },
                 )
             }, railContent = { progress ->
                 TopLevelDestinations.entries.forEach { navDest ->
