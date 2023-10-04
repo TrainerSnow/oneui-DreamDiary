@@ -3,7 +3,6 @@ package com.snow.diary.core.ui.item
 /*import com.snow.diary.core.ui.data.LocationPreviewData*/
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,24 +46,19 @@ fun LocationCard(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top
         ){
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
+            Text(
+                text = location.name,
+                style = titleTextStyle
+            )
+
+            if(location.notes != null) {
                 Text(
-                    text = location.name,
-                    style = titleTextStyle
+                    text = location.notes!!.removeLineBreaks(),
+                    style = descTextStyle,
+                    maxLines = LocationItemDefaults.descMaxLines,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
-
-            Text(
-                text = location.notes?.removeLineBreaks().orEmpty(),
-                style = descTextStyle,
-                maxLines = LocationItemDefaults.descMaxLines,
-                overflow = TextOverflow.Ellipsis
-            )
         }
     }
 }
