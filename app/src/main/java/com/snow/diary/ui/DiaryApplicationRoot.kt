@@ -318,18 +318,8 @@ private fun AppNavigation(
             railHeader = {
                 NavigationRailHeader(
                     modifier = modifier,
-                    navigationIconButton = {
-                        IconButton(
-                            icon = Icon.Resource(IconR.drawable.ic_oui_drawer),
-                            onClick = onNavigationClick
-                        )
-                    },
-                    settingsIconButton = {
-                        IconButton(
-                            icon = Icon.Resource(IconR.drawable.ic_oui_settings_outline),
-                            onClick = onSettingsClick
-                        )
-                    },
+                    onSettingsClick = onSettingsClick,
+                    onNavigateClick = onNavigationClick
                 )
             },
             railContent = { progress ->
