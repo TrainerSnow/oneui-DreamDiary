@@ -16,4 +16,5 @@
     <string name="relation_detail_error">An error occurred whilst loading the relation.</string>
     <string name="relation_detail_loading">Loading the relation. Stay tuned!</string>
     <string name="relation_detail_note">Note</string>
+    <string name="relation_detail_no_info">No further information found for this relation.</string>
 </resources>

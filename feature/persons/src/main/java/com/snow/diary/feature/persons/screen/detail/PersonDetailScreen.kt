@@ -22,8 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.core.model.data.Dream
@@ -40,6 +42,7 @@ import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.navigation.TabItem
 import org.oneui.compose.navigation.Tabs
+import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.widgets.box.RoundedCornerBox
 import org.oneui.compose.widgets.buttons.IconButton
 import org.oneui.compose.widgets.text.TextSeparator
@@ -165,6 +168,12 @@ private fun GeneralSection(
     state: PersonDetailState.Success,
     onRelationClick: (Relation) -> Unit
 ) {
+    val noInfoStyle = TextStyle(
+        fontSize = 13.sp,
+        color = OneUITheme.colors.seslSecondaryTextColor,
+        textAlign = TextAlign.Center
+    )
+
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
@@ -176,17 +185,33 @@ private fun GeneralSection(
             relations = state.relations,
             onClick = onRelationClick
         )
-        TextSeparator(
-            text = stringResource(R.string.person_detail_note)
-        )
-        RoundedCornerBox(
-            modifier = Modifier
-                .fillMaxWidth(),
-            contentAlignment = Alignment.TopStart
-        ) {
-            Text(
-                text = state.person.notes.orEmpty()
+
+        if(state.person.notes != null) {
+            TextSeparator(
+                text = stringResource(R.string.person_detail_note)
             )
+            RoundedCornerBox(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.TopStart
+            ) {
+                Text(
+                    text = state.person.notes!!
+                )
+            }
+        } else {
+            Box(
+                modifier = Modifier
+                    .weight(1F),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    text = stringResource(R.string.person_detail_no_info),
+                    style = noInfoStyle
+                )
+            }
         }
     }
 }

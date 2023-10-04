@@ -1,5 +1,6 @@
 package com.snow.diary.feature.locations.screen.detail
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,8 +14,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.core.model.data.Dream
@@ -31,6 +34,7 @@ import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.navigation.TabItem
 import org.oneui.compose.navigation.Tabs
+import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.widgets.box.RoundedCornerBox
 import org.oneui.compose.widgets.buttons.IconButton
 import org.oneui.compose.widgets.text.TextSeparator
@@ -151,6 +155,12 @@ private fun GeneralSection(
     modifier: Modifier = Modifier,
     state: LocationDetailState.Success
 ) {
+    val noInfoStyle = TextStyle(
+        fontSize = 13.sp,
+        color = OneUITheme.colors.seslSecondaryTextColor,
+        textAlign = TextAlign.Center
+    )
+
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState())
@@ -169,13 +179,18 @@ private fun GeneralSection(
                 )
             }
         } else {
-            Text(
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(LocationDetailScreenDefaults.noInfoPadding),
-                text = stringResource(R.string.location_detail_no_further_information),
-                textAlign = TextAlign.Center
-            )
+                    .weight(1F),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    text = stringResource(R.string.location_detail_no_further_information),
+                    style = noInfoStyle
+                )
+            }
         }
     }
 }
