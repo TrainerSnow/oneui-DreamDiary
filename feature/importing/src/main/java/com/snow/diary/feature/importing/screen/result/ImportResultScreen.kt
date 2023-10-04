@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.snow.diary.core.domain.action.io.ImportIOData
 import com.snow.diary.feature.importing.R
 import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
@@ -214,10 +213,10 @@ private fun ErrorScreen(
             verticalArrangement = Arrangement
                 .spacedBy(12.dp)
         ) {
-            state.problems.forEach { problem ->
+            state.errors.forEach { problem ->
                 Text(
                     style = problemTextStyle,
-                    text = stringResource(problem.descriptionRed)
+                    text = stringResource(problem.descriptionRes)
                 )
             }
         }
@@ -242,12 +241,6 @@ private val ImportResultState.titleRes: Int
         is ImportResultState.ImportSuccess -> R.string.import_title_success
     }
 
-private val ImportIOData.ImportProblem.descriptionRed: Int
-    @StringRes get() = when (this) {
-        ImportIOData.ImportProblem.InvalidCrossrefReference -> R.string.import_problem_invalidref
-        ImportIOData.ImportProblem.NonUniqueIds -> R.string.import_problem_nonunique
-    }
-
 @Preview(device = "spec:width=411dp,height=891dp")
 @Composable
 private fun ImportScreenErrorPreview() {
@@ -255,8 +248,9 @@ private fun ImportScreenErrorPreview() {
         ImportResultScreen(
             state = ImportResultState.ImportFailed(
                 listOf(
-                    ImportIOData.ImportProblem.NonUniqueIds,
-                    ImportIOData.ImportProblem.InvalidCrossrefReference
+                    ImportResultError.CorruptedFile,
+                    ImportResultError.NonUniqueId,
+                    ImportResultError.InvalidCrossref
                 )
             ),
             onNavigateBack = { }

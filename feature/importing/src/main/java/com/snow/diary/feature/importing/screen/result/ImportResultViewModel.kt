@@ -31,25 +31,39 @@ internal class ImportResultViewModel @Inject constructor(
         val `is` = context.contentResolver.openInputStream(args.uri)
         val importAdapter = IImportAdapter.getInstance(args.type)
 
-        val data = importAdapter.import(`is`!!)
-        `is`.close()
-        viewModelScope.launchInBackground {
-            val problems = importIOData(data)
+        val data = try {
+            importAdapter.import(`is`!!)
+        } catch (_: Exception) {
+            null
+        } finally {
+            `is`?.close()
+        }
 
-            val state = if (problems.isEmpty()) {
-                ImportResultState.ImportSuccess(
-                    dreamsNum = data.dreams.size,
-                    personsNum = data.persons.size,
-                    locationsNum = data.locations.size,
-                    relationsNum = data.relations.size
+        viewModelScope.launchInBackground {
+            if (data == null) {
+                _state.emit(
+                    ImportResultState.ImportFailed(
+                        errors = listOf(ImportResultError.CorruptedFile)
+                    )
                 )
             } else {
-                ImportResultState.ImportFailed(
-                    problems = problems
-                )
-            }
+                val problems = importIOData(data).map { ImportResultError.fromDomain(it) }
 
-            _state.emit(state)
+                if (problems.isNotEmpty()) {
+                    _state.emit(
+                        ImportResultState.ImportFailed(problems)
+                    )
+                } else {
+                    _state.emit(
+                        ImportResultState.ImportSuccess(
+                            data.dreams.size,
+                            data.persons.size,
+                            data.locations.size,
+                            data.relations.size
+                        )
+                    )
+                }
+            }
         }
     }
 

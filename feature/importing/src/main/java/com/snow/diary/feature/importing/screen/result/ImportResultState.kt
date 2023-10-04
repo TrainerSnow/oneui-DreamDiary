@@ -1,13 +1,11 @@
 package com.snow.diary.feature.importing.screen.result;
 
-import com.snow.diary.core.domain.action.io.ImportIOData
-
 internal sealed class ImportResultState {
 
     data object Importing: ImportResultState()
 
     data class ImportFailed(
-        val problems: List<ImportIOData.ImportProblem>
+        val errors: List<ImportResultError>
     ): ImportResultState()
 
     data class ImportSuccess(

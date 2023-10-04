@@ -12,6 +12,7 @@
 
     <string name="import_problem_nonunique">- One or multiple entries have the same unique identifier.</string>
     <string name="import_problem_invalidref">- A dream or person references a location, person or relation that doesn\'t exist.</string>
+    <string name="import_problem_corrupted">- The file is corrupted.</string>
     <string name="import_problem_cancel">@android:string/cancel</string>
     <string name="import_problem_reimport">Reimport</string>
 
