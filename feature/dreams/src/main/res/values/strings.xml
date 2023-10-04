@@ -5,7 +5,7 @@
     <string name="dream_list_subtitle">%s total</string>
 
     <string name="dream_list_menu_export">Export</string>
-    <string name="dream_list_menu_import">Export</string>
+    <string name="dream_list_menu_import">Import</string>
     <string name="dream_list_menu_about">About this app</string>
 
     <string name="dream_detail_title">Dream from %s</string>
