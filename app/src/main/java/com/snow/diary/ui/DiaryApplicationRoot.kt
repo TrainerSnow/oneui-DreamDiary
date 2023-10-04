@@ -26,6 +26,8 @@ import com.snow.diary.feature.dreams.nav.goToAddDream
 import com.snow.diary.feature.dreams.nav.goToDreamDetail
 import com.snow.diary.feature.export.navigation.exportScreen
 import com.snow.diary.feature.export.navigation.goToExport
+import com.snow.diary.feature.importing.nav.goToImport
+import com.snow.diary.feature.importing.nav.import
 import com.snow.diary.feature.locations.nav.addLocation
 import com.snow.diary.feature.locations.nav.goToAddLocation
 import com.snow.diary.feature.locations.nav.goToLocationDetail
@@ -135,7 +137,9 @@ private fun DiaryNavHost(
             navController.goToSearch(SearchTabs.Dreams)
         }, onDreamClick = { dream ->
             navController.goToDreamDetail(dream.id!!)
-        }, onExportClick = navController::goToExport, onNavigateBack = state::openDrawer
+        }, onExportClick = navController::goToExport,
+            onImportClick = navController::goToImport,
+            onNavigateBack = state::openDrawer
         )
         dreamDetail(onNavigateBack = state::navigateBack, onLocationClick = {
             navController.goToLocationDetail(it.id!!)
@@ -253,6 +257,9 @@ private fun DiaryNavHost(
         }, onLocationClick = {
             navController.goToLocationDetail(it.id!!)
         })
+        import(
+            onNavigateBack = state::navigateBack
+        )
     }
 }
 
