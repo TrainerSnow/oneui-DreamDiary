@@ -53,7 +53,7 @@ private fun ImportResultScreen(
         modifier = Modifier
             .fillMaxSize(),
         toolbarTitle = stringResource(state.titleRes),
-        toolbarSubtitle = (state as? ImportResultState.ImportFailed)?.problems?.size?.toString(),
+        toolbarSubtitle = (state as? ImportResultState.ImportFailed)?.errors?.size?.toString(),
         state = rememberCollapsingToolbarState(CollapsingToolbarCollapsedState.COLLAPSED)
     ) {
         when (state) {
