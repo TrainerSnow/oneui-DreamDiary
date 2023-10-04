@@ -3,8 +3,6 @@ package com.snow.diary.core.ui.item
 /*import com.snow.diary.core.ui.data.LocationPreviewData*/
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,19 +14,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import com.snow.diary.core.common.removeLineBreaks
 import com.snow.diary.core.model.data.Location
-import org.oneui.compose.base.Icon
 import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.util.ListPosition
 import org.oneui.compose.widgets.box.RoundedCornerListItem
-import org.oneui.compose.widgets.buttons.IconButton
-import dev.oneuiproject.oneui.R as IconR
 
 @Composable
 fun LocationCard(
     modifier: Modifier = Modifier,
     location: Location,
     onClick: ((Location) -> Unit)? = null,
-    onLocationClick: ((Location) -> Unit)? = null,
     listPosition: ListPosition = ListPosition.Single
 ) {
     val titleTextStyle = TextStyle(
@@ -52,29 +46,19 @@ fun LocationCard(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top
         ){
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
+            Text(
+                text = location.name,
+                style = titleTextStyle
+            )
+
+            if(location.notes != null) {
                 Text(
-                    text = location.name,
-                    style = titleTextStyle
-                )
-                IconButton(
-                    icon = Icon.Resource(IconR.drawable.ic_oui_location_outline),
-                    onClick = { onLocationClick?.let { it(location) } },
-                    padding = PaddingValues()
+                    text = location.notes!!.removeLineBreaks(),
+                    style = descTextStyle,
+                    maxLines = LocationItemDefaults.descMaxLines,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
-
-            Text(
-                text = location.notes?.removeLineBreaks().orEmpty(),
-                style = descTextStyle,
-                maxLines = LocationItemDefaults.descMaxLines,
-                overflow = TextOverflow.Ellipsis
-            )
         }
     }
 }
@@ -84,14 +68,3 @@ object LocationItemDefaults {
     const val descMaxLines = 3
 
 }
-
-/*
-@Preview
-@Composable
-fun LocationCard() = OneUIPreview(title = "LocationCard", padding = PaddingValues()) {
-    LocationCard(
-        location = LocationPreviewData
-            .locations
-            .random()
-    )
-}*/
