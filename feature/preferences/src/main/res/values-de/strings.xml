@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="preferences_main_title">Einstellungen</string>
+    <string name="preferences_main_section_visuals">Visuelle</string>
+    <string name="preferences_main_section_privacy">Datenschutz</string>
+    <string name="preferences_main_colormode">Farbthema</string>
+    <string name="preferences_main_requireauth">Authentifizierung erforderlich</string>
+    <string name="preferences_main_requireauth_desc">Aufforderung zur Eingabe von Passwort/PIN beim Öffnen der Anwendung.</string>
+    <string name="preferences_main_securitymode_desc">Methoden zum Schutz dieser App vor unbefugtem Zugriff.</string>
+    <string name="preferences_main_obfuscation">Präsentationsmodus</string>
+    <string name="preferences_main_obfuscation_desc">Verschleiern Sie Informationen wie z.B. Namen und Notizen, um die App zu präsentieren.</string>
+    <string name="preferences_obfuscate_title">Präsentationsmodus</string>
+    <string name="preferences_obfuscate_info">Wenn Sie Ihre Daten anderen Personen anzeigen möchten, filtern Sie aus, welche Art von Informationen verwischt werden sollten und welcher Teil der App offen gezeigt werden kann.</string>
+    <string name="preferences_obfuscate_dreams">Träume verschleiern</string>
+    <string name="preferences_obfuscate_persons">Verschleiere Personen</string>
+    <string name="preferences_obfuscate_locations">Orte verwischen</string>
+    <string name="preferences_obfuscate_relations">Verschleiern von Beziehungen</string>
+    <string name="colormode_light">Licht</string>
+    <string name="colormode_dark">Dunkel</string>
+    <string name="colormode_system">System</string>
+    <string name="securitymode_biometric">Biometrisch</string>
+    <string name="securitymode_default">Standard</string>
+    <string name="securitymode_none">Keine</string>
+
+
+</resources>

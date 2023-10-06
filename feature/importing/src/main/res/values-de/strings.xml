@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="import_title">Importieren</string>
+    <string name="import_title_failed">Import fehlgeschlagen</string>
+    <string name="import_title_success">Import erfolgreich</string>
+    <string name="import_loading">Importiere…</string>
+    <string name="import_failed_info_title">Der Import ist auf mehrere Probleme gestoßen:</string>
+    <string name="import_failed_info_help">Wenn Sie die Datei selbst geändert haben, machen Sie die Änderungen rückgängig. Versuchen Sie, eine andere Sicherung zu importieren.</string>
+    <string name="import_problem_nonunique">- Ein oder mehrere Einträge haben die gleiche eindeutige Kennung.</string>
+    <string name="import_problem_invalidref">- Ein Traum oder eine Person bezieht sich auf einen Ort, eine Person oder eine Beziehung, die nicht existiert.</string>
+    <string name="import_problem_corrupted">- Die Datei ist beschädigt.</string>
+    <string name="import_problem_cancel">@android:string/cancel</string>
+    <string name="import_problem_reimport">Reimport</string>
+    <string name="import_success_info">Importierte die folgenden Daten:</string>
+    <string name="import_success_info_dreamsnum">- %s Träume</string>
+    <string name="import_success_info_personsnum">- %s Personen</string>
+    <string name="import_success_info_locationsnum">- %s Orte</string>
+    <string name="import_success_info_relationsnum">- %s Beziehungen</string>
+    <string name="import_success_info_continue">Weiter</string>
+    <string name="import_config_title">Import Konfiguration</string>
+    <string name="import_config_filetype_prompt">Wählen Sie den Dateityp aus, den Sie importieren möchten:</string>
+    <string name="import_config_button_label">Importieren</string>
+
+</resources>

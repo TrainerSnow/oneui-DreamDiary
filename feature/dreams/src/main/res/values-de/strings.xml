@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="dream_list_title">Träume</string>
+    <string name="dream_list_subtitle">Insgesamt %s</string>
+    <string name="dream_list_menu_export">Exportieren</string>
+    <string name="dream_list_menu_import">Importieren</string>
+    <string name="dream_list_menu_about">Über diese App</string>
+    <string name="dream_detail_title">Traum von %s</string>
+    <string name="dream_detail_title_placeholder">Traum</string>
+    <string name="dream_detail_content">Inhalt</string>
+    <string name="dream_detail_notes">Notizen</string>
+    <string name="dream_detail_clearness">Klarheit</string>
+    <string name="dream_detail_happiness">Glück</string>
+    <string name="dream_detail_error_title">Ein Fehler ist aufgetreten beim Abrufen des Traums mit der ID %s.</string>
+    <string name="dream_detail_loading_title">Traum wird geladen…</string>
+    <string name="dream_detail_tab_general">Allgemein</string>
+    <string name="dream_detail_tab_persons">Personen</string>
+    <string name="dream_detail_tab_locations">Orte</string>
+    <string name="dream_detail_tab_content">Inhalt</string>
+    <string name="dream_detail_tab_other">Andere</string>
+    <string name="dream_add_person_search_hint">Person suchen…</string>
+    <string name="dream_add_location_search_hint">Standort suchen…</string>
+    <string name="dream_add_title">Traum hinzufügen</string>
+    <string name="dream_add_title_edit">Traum bearbeiten</string>
+    <string name="dream_add_content_hint">Trauminhalt</string>
+    <string name="dream_add_note_hint">Notizen</string>
+    <string name="dream_add_clearness">Klarheit</string>
+    <string name="dream_add_happiness">Glück</string>
+    <string name="dream_add_expand">Mehr anzeigen</string>
+    <string name="dream_add_shrink">Weniger anzeigen</string>
+    <string name="dream_add_markasfavourite">Als Favorit markieren</string>
+    <string name="dream_add_save">Speichern</string>
+    <string name="dream_add_cancel">@android:string/cancel</string>
+
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="location_add_title">Standort hinzufügen</string>
+    <string name="location_edit_title">Ort bearbeiten</string>
+    <string name="location_add_name">Name</string>
+    <string name="location_add_note">Notiz</string>
+    <string name="location_add_cancel">@android:string/cancel</string>
+    <string name="location_add_save">Speichern</string>
+    <string name="location_list_title">Standorte</string>
+    <string name="location_list_subtitle">%s insgesamt</string>
+    <string name="location_detail_tab_general">Allgemein</string>
+    <string name="location_detail_tab_dreams">Träume</string>
+    <string name="location_detail_error">Beim Laden dieses Ortes ist ein Fehler aufgetreten.</string>
+    <string name="location_detail_loading">Lade deinen Standort für dich. Bleib dran!</string>
+    <string name="location_detail_note">Notiz</string>
+    <string name="location_detail_no_further_information">Keine weiteren Informationen für diesen Standort gefunden.</string>
+
+</resources>
