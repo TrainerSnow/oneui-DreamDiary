@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="form_lenght_error">Muss mindestens %s und maximal %s Zeichen lang sein.</string>
+    <string name="form_exists_error">Muss eingegeben werden.</string>
+    <string name="form_integer_error">Muss eine gültige Nummer sein.</string>
+    <string name="form_float_error">Muss eine gültige Kommazahl sein.</string>
+
+</resources>

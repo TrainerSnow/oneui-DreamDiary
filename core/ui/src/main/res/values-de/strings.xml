@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="dreamcard_time_passed">Vor %s Tagen</string>
+    <string name="dreamcard_time_passed_placeholder">Heute</string>
+    <string name="dreamcard_updated">Vor %s Tagen geändert</string>
+    <string name="dreamfeed_empty_label">Es gibt derzeit keine Träume. Legen Sie los, indem Sie welche hinzufügen!</string>
+    <string name="dreamfeed_error_label">Beim Abrufen Ihrer Träume ist ein Fehler aufgetreten.</string>
+    <string name="dreamfeed_loading_label">Lädt Ihre Träume. Bleiben Sie dran.</string>
+    <string name="dreamfeed_tempsort_today">Heute</string>
+    <string name="dreamfeed_tempsort_yesterday">Gestern</string>
+    <string name="dreamfeed_tempsort_thisweek">Diese Woche</string>
+    <string name="dreamfeed_tempsort_thismonth">Diesen Monat</string>
+    <string name="dreamfeed_tempsort_earlier">Früher</string>
+    <string name="personfeed_empty_label">Es gibt derzeit keine Personen. Legen Sie los, indem Sie welche hinzufügen!</string>
+    <string name="personfeed_error_label">Beim Abrufen Ihrer Personen ist ein Fehler aufgetreten.</string>
+    <string name="personfeed_loading_label">Lädt Ihre Personen. Bleiben Sie dran.</string>
+    <string name="locationfeed_empty_label">Es gibt derzeit keine Orte. Legen Sie los, indem Sie welche hinzufügen!</string>
+    <string name="locationfeed_error_label">Beim Abrufen Ihrer Orte ist ein Fehler aufgetreten.</string>
+    <string name="locationfeed_loading_label">Lädt Ihre Orte. Bleiben Sie dran.</string>
+    <string name="relationfeed_empty_label">Derzeit gibt es keine Personengruppen. Legen Sie los, indem Sie welche hinzufügen!</string>
+    <string name="relationfeed_error_label">Beim Abrufen Ihrer Personengruppen ist ein Fehler aufgetreten.</string>
+    <string name="relationfeed_loading_label">Lädt Ihre Personengruppen. Bleiben Sie dran.</string>
+    <string name="sortmode_created">Erstellt</string>
+    <string name="sortmode_updated">Geändert</string>
+    <string name="sortmode_alphabetically">Name</string>
+    <string name="sortmode_happiness">Gefühlslage</string>
+    <string name="sortmode_clearness">Klarheit</string>
+    <string name="sortmode_relation">Personengruppe</string>
+    <string name="sortmode_length">Länge</string>
+    <string name="sortmode_none">Keine</string>
+    <string name="sortdirection_ascending">Aufsteigend</string>
+    <string name="sortdirection_descending">Absteigend</string>
+    <string name="sortdirection_none">Keine</string>
+    <string name="range_month">Letzten Monat</string>
+    <string name="range_halfyear">Letztes halbe Jahr</string>
+    <string name="range_year">Letztes Jahr</string>
+    <string name="range_fiveyear">Letzten fünf Jahre</string>
+    <string name="range_alltime">Immer</string>
+    <string name="range_dialog_title">Wählen Sie den Datumsbereich aus</string>
+
+</resources>

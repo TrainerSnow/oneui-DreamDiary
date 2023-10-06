@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="person_list_title">Personen</string>
+    <string name="person_list_subtitle">%s personen</string>
+    <string name="person_detail_note">Notizen</string>
+    <string name="person_detail_no_info">Keine weiteren Informationen zu dieser Person gefunden.</string>
+    <string name="person_detail_error">Ein Fehler ist aufgetreten und die Person konnte nicht geladen werden.</string>
+    <string name="person_detail_loading">Lädt Ihre Person. Bleiben Sie dran!</string>
+    <string name="person_detail_general">Allgemein</string>
+    <string name="person_detail_dreams">Träume</string>
+    <string name="person_add_title">Person hinzufügen</string>
+    <string name="person_edit_title">Person bearbeiten</string>
+    <string name="person_add_name">Name</string>
+    <string name="person_add_note">Notiz</string>
+    <string name="person_add_relation_list_hint">Personengruppe suchen…</string>
+    <string name="person_add_cancel">Abbrechen</string>
+    <string name="person_add_save">Speichern</string>
+
+</resources>

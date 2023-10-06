@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Traumtagebuch</string>
+    <string name="nav_dreams">Träume</string>
+    <string name="nav_persons">Personen</string>
+    <string name="nav_locations">Orte</string>
+    <string name="nav_stats">Statistiken</string>
+    <string name="blocked_by_obfuscation">Diese Aktion ist im Vorführmodus nicht verfügbar</string>
+    <string name="auth_title">Bestätigen Sie Ihre Identität</string>
+    <string name="auth_desc">Für den Zugriff auf diese App müssen Sie Ihre Identität bestätigen.</string>
+
+</resources>

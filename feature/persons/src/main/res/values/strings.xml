@@ -5,6 +5,7 @@
     <string name="person_list_subtitle">%s total</string>
 
     <string name="person_detail_note">Notes</string>
+    <string name="person_detail_no_info">No further information found for this person.</string>
     <string name="person_detail_error">An error occurred and the person could not be loaded.</string>
     <string name="person_detail_loading">Loading the person for you. Stay tuned!</string>
     <string name="person_detail_general">General</string>
