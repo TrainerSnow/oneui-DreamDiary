@@ -60,6 +60,12 @@ internal fun RelationDetail(
         onEvent = viewModel::onEvent,
         onNavigateBack = onNavigateBack,
         onEditClick = onEditClick,
+        onDeleteClick = {
+            if (state is RelationDetailState.Success) {
+                onNavigateBack()
+                viewModel.onEvent(RelationDetailEvent.Delete)
+            }
+        },
         onPersonClick = onPersonClick
     )
 }
@@ -71,6 +77,7 @@ private fun RelationDetail(
     onEvent: (RelationDetailEvent) -> Unit,
     onNavigateBack: () -> Unit,
     onEditClick: (Relation) -> Unit,
+    onDeleteClick: () -> Unit,
     onPersonClick: (Person) -> Unit
 ) {
     Column(
@@ -98,12 +105,7 @@ private fun RelationDetail(
                 IconButton(
                     icon = Icon.Resource(IconR.drawable.ic_oui_delete_outline),
                     enabled = state is RelationDetailState.Success,
-                    onClick = {
-                        onNavigateBack()
-                        onEvent(
-                            RelationDetailEvent.Delete
-                        )
-                    }
+                    onClick = onDeleteClick
                 )
             }
         ) {

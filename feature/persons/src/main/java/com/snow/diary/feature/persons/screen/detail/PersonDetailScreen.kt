@@ -66,6 +66,12 @@ internal fun PersonDetail(
         onEvent = viewModel::onEvent,
         onNavigateBack = onNavigateBack,
         onEditClick = onEditClick,
+        onDeleteClick = {
+            if (state is PersonDetailState.Success) {
+                onNavigateBack()
+                viewModel.onEvent(PersonDetailEvent.Delete)
+            }
+        },
         onDreamClick = onDreamClick,
         onRelationClick = onRelationClick
     )
@@ -78,6 +84,7 @@ private fun PersonDetail(
     onEvent: (PersonDetailEvent) -> Unit,
     onNavigateBack: () -> Unit,
     onEditClick: (Person) -> Unit,
+    onDeleteClick: () -> Unit,
     onDreamClick: (Dream) -> Unit,
     onRelationClick: (Relation) -> Unit
 ) {
@@ -106,12 +113,7 @@ private fun PersonDetail(
                 IconButton(
                     icon = Icon.Resource(IconR.drawable.ic_oui_delete_outline),
                     enabled = state is PersonDetailState.Success,
-                    onClick = {
-                        onNavigateBack()
-                        onEvent(
-                            PersonDetailEvent.Delete
-                        )
-                    }
+                    onClick = onDeleteClick
                 )
             }
         ) {
@@ -190,7 +192,7 @@ private fun GeneralSection(
             onClick = onRelationClick
         )
 
-        if(state.person.notes != null) {
+        if (state.person.notes != null) {
             TextSeparator(
                 text = stringResource(R.string.person_detail_note)
             )
