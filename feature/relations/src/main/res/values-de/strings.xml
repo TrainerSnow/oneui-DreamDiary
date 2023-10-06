@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="relation_list_title">Beziehungen</string>
-    <string name="relation_list_subtitle">%s insgesamt</string>
-    <string name="relation_edit_title">Beziehung bearbeiten</string>
-    <string name="relation_add_title">Beziehung hinzufügen</string>
+    <string name="relation_list_title">Personengruppen</string>
+    <string name="relation_list_subtitle">%s personengruppen</string>
+    <string name="relation_edit_title">Personengruppe bearbeiten</string>
+    <string name="relation_add_title">Personengruppe hinzufügen</string>
     <string name="relation_add_name">Name</string>
     <string name="relation_add_notes">Hinweis</string>
     <string name="relation_add_color">Farbe</string>
@@ -12,9 +12,9 @@
     <string name="relation_add_save">Speichern</string>
     <string name="relation_detail_tab_general">Allgemein</string>
     <string name="relation_detail_tab_persons">Personen</string>
-    <string name="relation_detail_error">Beim Laden der Beziehung ist ein Fehler aufgetreten.</string>
-    <string name="relation_detail_loading">Die Verbindung wird geladen. Bleiben Sie dran!</string>
+    <string name="relation_detail_error">Beim Laden der Personengruppe ist ein Fehler aufgetreten.</string>
+    <string name="relation_detail_loading">Die Personengruppe wird geladen. Bleiben Sie dran!</string>
     <string name="relation_detail_note">Notiz</string>
-    <string name="relation_detail_no_info">Keine weiteren Informationen zu dieser Beziehung gefunden.</string>
+    <string name="relation_detail_no_info">Keine weiteren Informationen zu dieser Personengruppe gefunden.</string>
 
 </resources>

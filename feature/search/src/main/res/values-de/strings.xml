@@ -2,13 +2,13 @@
 <resources>
 
     <string name="search_dreams">Träume</string>
-    <string name="search_dreams_hint">Träume suchen…</string>
+    <string name="search_dreams_hint">Träume durchsuchen…</string>
     <string name="search_persons">Personen</string>
-    <string name="search_persons_hint">Personen suchen…</string>
+    <string name="search_persons_hint">Personen durchsuchen…</string>
     <string name="search_locations">Orte</string>
-    <string name="search_locations_hint">Nach Standorten suchen…</string>
-    <string name="search_no_query">Geben Sie eine Suchanfrage in die Suchleiste ein, um die passende %s zu finden.</string>
-    <string name="search_no_results">Es wurden keine Ergebnisse für die Suchanfrage gefunden. Überprüfen Sie Ihre Rechtschreibung.</string>
+    <string name="search_locations_hint">Orte durchsuchen…</string>
+    <string name="search_no_query">Geben Sie eine Suchanfrage in die Suchleiste ein, um die passenden %s zu finden.</string>
+    <string name="search_no_results">Es wurden keine Ergebnisse für die Suchanfrage gefunden. Überprüfen Sie Ihre Rechtschreibung und versuchen sie es erneut.</string>
     <string name="search_searching">Suche…</string>
 
 </resources>

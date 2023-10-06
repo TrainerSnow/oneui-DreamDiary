@@ -2,11 +2,11 @@
 <resources>
 
     <string name="export_button_label">Exportieren</string>
-    <string name="export_filetype_json_info">Javascript Object Notation-Datei. Nützlich zum Übertragen Ihrer Daten auf ein neues Gerät.</string>
-    <string name="export_filetype_csv_info">Datei im CSV-Format. Nützlich, wenn du auf deine Daten über andere Software zugreifen möchtest, wie zum Beispiel Excel.</string>
+    <string name="export_filetype_json_info">JSON-Datei. Nützlich zum Übertragen Ihrer Daten auf ein neues Gerät.</string>
+    <string name="export_filetype_csv_info">Datei im CSV-Format. Nützlich, wenn Sie auf Ihre Daten über andere Software zugreifen möchten, z.B. Excel.</string>
     <string name="export_warning_no_import">Warnung: Diese Dateityp kann nicht wieder importiert werden und dient ausschließlich dazu, Ihre Daten auf eine für Menschen lesbare Weise zu teilen.</string>
     <string name="export_info">Wählen Sie Ihre gewünschte Dateityp aus</string>
-    <string name="export_title">Konfiguration exportieren</string>
+    <string name="export_title">Exportkonfiguration</string>
     <string name="export_file_name">Datenexport-%s</string>
     <string name="export_success">Es wurde eine Exportdatei Ihrer Daten erstellt.</string>
     <string name="export_failure">Beim Exportieren Ihrer Daten ist ein Fehler aufgetreten.</string>

@@ -3,34 +3,34 @@
 
     <string name="stats_nav_dreams">Träume</string>
     <string name="stats_nav_persons">Personen</string>
-    <string name="stats_nav_locations">Personen</string>
+    <string name="stats_nav_locations">Orte</string>
     <string name="stats_no_data_available">Keine Daten verfügbar für diese Statistik. Benutze diese App mehr, um Erkenntnisse zu sehen.</string>
     <string name="stats_loading">Wird geladen…</string>
-    <string name="stats_dreams_amount_title">Traumnummer</string>
-    <string name="stats_dreams_amount_amount">Gesamtträume:</string>
+    <string name="stats_dreams_amount_title">Traumanzahl</string>
+    <string name="stats_dreams_amount_amount">Gesamt:</string>
     <string name="stats_dreams_amount_avg">Monatsdurchschnitt:</string>
-    <string name="stats_dreams_metric_title">Traumstatistik</string>
-    <string name="stats_dreams_metric_happiness">Glück: %s</string>
+    <string name="stats_dreams_metric_title">Traumdaten</string>
+    <string name="stats_dreams_metric_happiness">Gefühlslage: %s</string>
     <string name="stats_dreams_metric_clearnesss">Klarheit: %s</string>
     <string name="stats_dreams_graph_period_week">Woche</string>
     <string name="stats_dreams_graph_period_month">Monat</string>
     <string name="stats_dreams_graph_period_year">Jahr</string>
-    <string name="stats_dreams_graph_title">Traummenge im Laufe der Zeit</string>
+    <string name="stats_dreams_graph_title">Traumanzahl im Laufe der Zeit</string>
     <string name="stats_dreams_weekday_title">Träume an Wochentagen</string>
     <string name="stats_dreams_weekday_most">Die meisten Träume am:</string>
     <string name="stats_dreams_main_title">Traumstatistik</string>
-    <string name="stats_dreams_main_range_title">Auswahlbereich auswählen</string>
-    <string name="stats_persons_amount_title">Personennummern</string>
-    <string name="stats_persons_amount_total">Gesamtzahl der Personen:</string>
+    <string name="stats_dreams_main_range_title">Datumsbereich auswählen</string>
+    <string name="stats_persons_amount_title">Personenanzahl</string>
+    <string name="stats_persons_amount_total">Gesamt:</string>
     <string name="stats_persons_amount_used">Verwendete Personen:</string>
     <string name="stats_persons_amount_unused">Unbenutzte Personen:</string>
-    <string name="stats_persons_amount_most_amount">%s Mal</string>
+    <string name="stats_persons_amount_most_amount">%s mal</string>
     <string name="stats_persons_main_title">Personenstatistiken</string>
-    <string name="stats_locations_amount_title">Standortnummern</string>
-    <string name="stats_locations_amount_total">Gesamt Anzahl der Orte:</string>
+    <string name="stats_locations_amount_title">Ortanzahl</string>
+    <string name="stats_locations_amount_total">Gesamt:</string>
     <string name="stats_locations_amount_used">Verwendete Standorte:</string>
     <string name="stats_locations_amount_unused">Unbenutzte Standorte:</string>
     <string name="stats_locations_amount_most_amount">%s Mal</string>
-    <string name="stats_locations_main_title">Standortstatistik</string>
+    <string name="stats_locations_main_title">Standortstatistiken</string>
 
 </resources>
