@@ -93,7 +93,7 @@ private fun DreamListScreen(
             )
         },
         appbarNavAction = {
-            if(windowSizeClass.useNavigationDrawer) {
+            if (windowSizeClass.useNavigationDrawer) {
                 IconButton(
                     icon = Icon.Resource(
                         IconR.drawable.ic_oui_drawer
@@ -135,7 +135,7 @@ private fun DreamListScreen(
                         label = stringResource(R.string.dream_list_menu_export),
                         onClick = onExportClick
                     )
-                    MenuItem (
+                    MenuItem(
                         label = stringResource(R.string.dream_list_menu_import),
                         onClick = onImportClick
                     )

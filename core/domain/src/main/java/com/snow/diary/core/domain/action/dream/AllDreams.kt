@@ -1,6 +1,5 @@
 package com.snow.diary.core.domain.action.dream
 
-import com.snow.diary.core.common.mapScoped
 import com.snow.diary.core.common.time.DateRange
 import com.snow.diary.core.database.dao.DreamDao
 import com.snow.diary.core.domain.action.FlowAction
@@ -10,6 +9,7 @@ import com.snow.diary.core.domain.pure.sortWith
 import com.snow.diary.core.model.data.Dream
 import com.snow.diary.core.model.sort.SortConfig
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 @Suppress("MemberVisibilityCanBePrivate")
 class AllDreams(
@@ -24,12 +24,14 @@ class AllDreams(
     override fun Input.createFlow(): Flow<List<Dream>> =
         dreamDao
             .getAll()
-            .mapScoped {
-                mapToModel()
+            .map {
+                it.mapToModel()
             }
-            .mapScoped {
-                sortWith(sortConfig)
-                filterRange(dateRange)
+            .map {
+                it.sortWith(sortConfig)
+            }
+            .map {
+                it.filterRange(dateRange)
             }
 
 

@@ -88,7 +88,7 @@ private fun SuccessFeed(
             ChronoUnit.DAYS
         ) to stringResource(R.string.dreamfeed_tempsort_today),
         DateRange.LastN(
-            2,
+            1,
             ChronoUnit.DAYS
         ) to stringResource(R.string.dreamfeed_tempsort_yesterday),
         DateRange.LastN(

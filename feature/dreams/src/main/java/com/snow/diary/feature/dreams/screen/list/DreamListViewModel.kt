@@ -86,8 +86,12 @@ private fun dreamListState(
         else DreamFeedState
             .Success(
                 dreams = dreams,
-                temporallySort = true,
+                temporallySort = sortConfig.value.allowsForTemporalSort,
                 sortConfig = sortConfig.value
             )
     }
+
+private val SortConfig.allowsForTemporalSort
+    get() = mode in listOf(SortMode.Created, SortMode.Updated) &&
+            direction == SortDirection.Descending
 
