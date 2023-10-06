@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.snow.diary.core.common.time.DateRange
 import com.snow.diary.core.model.data.Dream
 import com.snow.diary.core.model.sort.SortConfig
+import com.snow.diary.core.model.sort.SortDirection
 import com.snow.diary.core.model.sort.SortMode
 import com.snow.diary.core.ui.R
 import com.snow.diary.core.ui.callback.DreamCallback
@@ -216,13 +217,24 @@ sealed class DreamFeedState {
     /**
      * Dreams have been retrieved.
      *
-     * [temporallySort] should only be true when [dreams] are sorted by [Dream.created] or [Dream.updated]. Otherwise, an [IllegalStateException] is thrown.
+     * [temporallySort] should only be true when [dreams] are sorted by [Dream.created] or [Dream.updated], [SortDirection.Descending]. Otherwise, an [IllegalStateException] is thrown.
      */
     data class Success(
         val dreams: List<Dream>,
         val temporallySort: Boolean,
         val sortConfig: SortConfig
-    ) : DreamFeedState()
+    ) : DreamFeedState() {
+
+        init {
+            if (temporallySort) {
+                require(
+                    (sortConfig.mode == SortMode.Created || sortConfig.mode == SortMode.Updated) &&
+                            sortConfig.direction == SortDirection.Descending
+                )
+            }
+        }
+
+    }
 
 }
 
@@ -265,7 +277,8 @@ private fun DreamFeedSuccess() = DreamFeed(
         dreams = DreamPreviewData.dreams,
         temporallySort = true,
         sortConfig = SortConfig(
-            mode = SortMode.Created
+            mode = SortMode.Created,
+            direction = SortDirection.Descending
         )
     )
 )
