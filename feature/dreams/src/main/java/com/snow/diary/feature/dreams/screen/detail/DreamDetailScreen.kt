@@ -14,7 +14,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.core.common.time.TimeFormat.formatFullDescription
@@ -37,6 +39,7 @@ import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.navigation.SubTabItem
 import org.oneui.compose.navigation.TabItem
 import org.oneui.compose.navigation.Tabs
+import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.widgets.box.RoundedCornerBox
 import org.oneui.compose.widgets.buttons.IconButton
 import org.oneui.compose.widgets.text.TextSeparator
@@ -292,6 +295,11 @@ private fun GeneralTab(
 
         when (tabState.subtab) {
             DreamDetailSubtab.Content -> {
+                val textStyle = TextStyle(
+                    fontSize = 14.sp,
+                    color = OneUITheme.colors.seslPrimaryTextColor
+                )
+
                 Column(
                     modifier = Modifier
                         .verticalScroll(rememberScrollState())
@@ -305,7 +313,8 @@ private fun GeneralTab(
                         contentAlignment = Alignment.TopStart
                     ) {
                         Text(
-                            text = dream.description
+                            text = dream.description,
+                            style = textStyle
                         )
                     }
 
@@ -319,7 +328,8 @@ private fun GeneralTab(
                             contentAlignment = Alignment.TopStart
                         ) {
                             Text(
-                                text = note
+                                text = note,
+                                style = textStyle
                             )
                         }
                     }

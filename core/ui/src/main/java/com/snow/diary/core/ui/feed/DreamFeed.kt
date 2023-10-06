@@ -12,8 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.snow.diary.core.common.time.DateRange
 import com.snow.diary.core.model.data.Dream
 import com.snow.diary.core.model.sort.SortConfig
+import com.snow.diary.core.model.sort.SortDirection
 import com.snow.diary.core.model.sort.SortMode
 import com.snow.diary.core.ui.R
 import com.snow.diary.core.ui.callback.DreamCallback
@@ -26,9 +28,8 @@ import com.snow.diary.core.ui.util.windowSizeClass
 import org.oneui.compose.util.ListPosition
 import org.oneui.compose.util.OneUIPreview
 import org.oneui.compose.widgets.text.TextSeparator
-import java.time.DayOfWeek
 import java.time.LocalDate
-import java.time.temporal.TemporalAdjusters
+import java.time.temporal.ChronoUnit
 
 @Composable
 fun DreamFeed(
@@ -64,10 +65,12 @@ fun DreamFeed(
             )
         }
 
-        is DreamFeedState.Success -> SuccessFeed(
-            state = state,
-            dreamCallback = dreamCallback
-        )
+        is DreamFeedState.Success -> {
+            SuccessFeed(
+                state = state,
+                dreamCallback = dreamCallback
+            )
+        }
     }
 }
 
@@ -78,45 +81,38 @@ private fun SuccessFeed(
     dreamCallback: DreamCallback
 ) {
     val doListPositions = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
-    val today = LocalDate.now()
-    val yesterday = today.minusDays(1)
-    val weekBegin = today.with(DayOfWeek.MONDAY)
-    val monthBegin = today.with(TemporalAdjusters.firstDayOfMonth())
-    val ever = LocalDate.MIN
 
     val ranges = listOf(
-        (today to today) to stringResource(R.string.dreamfeed_tempsort_today),
-        (yesterday to today) to stringResource(R.string.dreamfeed_tempsort_yesterday),
-        (weekBegin to yesterday) to stringResource(R.string.dreamfeed_tempsort_thisweek),
-        (monthBegin to weekBegin) to stringResource(R.string.dreamfeed_tempsort_thismonth),
-        (ever to monthBegin) to stringResource(R.string.dreamfeed_tempsort_earlier),
+        DateRange.LastN(
+            0,
+            ChronoUnit.DAYS
+        ) to stringResource(R.string.dreamfeed_tempsort_today),
+        DateRange.LastN(
+            1,
+            ChronoUnit.DAYS
+        ) to stringResource(R.string.dreamfeed_tempsort_yesterday),
+        DateRange.LastN(
+            1,
+            ChronoUnit.WEEKS
+        ) to stringResource(R.string.dreamfeed_tempsort_thisweek),
+        DateRange.LastN(
+            1,
+            ChronoUnit.MONTHS
+        ) to stringResource(R.string.dreamfeed_tempsort_thismonth),
+        DateRange.AllTime to stringResource(R.string.dreamfeed_tempsort_earlier)
     )
-    val datePicker: (Dream) -> LocalDate = when (state.sortConfig.mode) {
-        SortMode.Created -> {
-            {
-                it.created
-            }
-        }
-
-        else -> {
-            {
-                it.updated
-            }
-        }
-    }
 
     LazyVerticalGrid(
         modifier = modifier,
         columns = GridCells.Adaptive(
             minSize = DreamFeedDefaults.dreamItemMinSize
         ),
-        horizontalArrangement = if(doListPositions) Arrangement.Start
+        horizontalArrangement = if (doListPositions) Arrangement.Start
         else Arrangement.spacedBy(4.dp),
-        verticalArrangement = if(doListPositions) Arrangement.Top else Arrangement.spacedBy(4.dp)
+        verticalArrangement = if (doListPositions) Arrangement.Top else Arrangement.spacedBy(4.dp)
     ) {
         val doTemporallySort =
             state.temporallySort && state.sortConfig.mode.let { it == SortMode.Created || it == SortMode.Updated }
-
 
         if (!doTemporallySort) {
             items(
@@ -127,72 +123,60 @@ private fun SuccessFeed(
                 DreamCard(
                     dream = state.dreams[it],
                     listPosition = if (doListPositions) ListPosition.get(
-                            state.dreams[it],
-                    state.dreams
-                ) else ListPosition.Single,
+                        state.dreams[it],
+                        state.dreams
+                    ) else ListPosition.Single,
                     dreamCallback = dreamCallback
                 )
             }
-            return@LazyVerticalGrid
-        }
+        } else {
+            val datePicker: (Dream) -> LocalDate =
+                if (state.sortConfig.mode == SortMode.Created) Dream::created else Dream::updated
 
-        var fromIndex = 0
-        ranges.forEach {
-            val title = it.second
-            val from = it.first.first
-            val to = it.first.second
-
-            val res = temporallyDreamItems(
-                dreams = state.dreams.subList(
-                    fromIndex, state.dreams.size
-                ),
-                date = datePicker,
-                dreamCallback = dreamCallback,
-                separatorTitle = title,
-                dateFrom = from,
-                dateTo = to,
-                doListPositions = doListPositions
+            temporallySortedDreams(
+                dreams = state.dreams,
+                getDate = datePicker,
+                ranges = ranges,
+                doListPositions = doListPositions,
+                callback = dreamCallback
             )
-
-            fromIndex += res + 1
         }
     }
 }
 
-private fun LazyGridScope.temporallyDreamItems(
-    dreams: List<Dream>,
-    date: (Dream) -> LocalDate,
-    dreamCallback: DreamCallback,
-    separatorTitle: String,
-    dateFrom: LocalDate, //Inclusive
-    dateTo: LocalDate, //Exclusive
-    doListPositions: Boolean
-): Int {
-    val drms = dreams.takeWhile {
-        date(it).isEqual(dateFrom) || date(it).isAfter(dateFrom) &&
-                date(it).isBefore(dateTo)
-    }
+private fun LazyGridScope.temporallySortedDreams(
+    dreams: List<Dream>, //We assume is sorted descending
+    getDate: (Dream) -> LocalDate,
+    ranges: List<Pair<DateRange, String>>, //We assume is sorted
+    doListPositions: Boolean,
+    callback: DreamCallback
+) {
+    var currentIndex = 0
+    var firstOfRange = true
 
-    if (drms.isNotEmpty()) {
-        separatorItem(separatorTitle)
-        items(
-            count = drms.size,
-            key = { drms[it].id ?: 0L },
-            contentType = { DreamFeedDefaults.ctypeDreamitem }
-        ) {
-            val pos = if(doListPositions) ListPosition.get(drms[it], drms)
-            else ListPosition.Single
-            DreamCard(
-                dream = drms[it],
-                dreamCallback = dreamCallback,
-                listPosition = pos
-            )
+    dreams.forEachIndexed { dreamIndex, dream ->
+        val date = getDate(dream)
+
+        while (!ranges[currentIndex].first.contains(date)) {
+            currentIndex += 1
+            firstOfRange = true
         }
 
-        return dreams.indexOf(drms.last())
+        if (firstOfRange) {
+            separatorItem(ranges[currentIndex].second)
+            firstOfRange = false
+        }
+        item {
+            DreamCard(
+                dream = dreams[dreamIndex],
+                listPosition = if (doListPositions) ListPosition.get(
+                    dreams[dreamIndex],
+                    dreams
+                ) else ListPosition.Single,
+                dreamCallback = callback
+            )
+        }
     }
-
-    return -1
 }
 
 private fun LazyGridScope.separatorItem(
@@ -233,13 +217,24 @@ sealed class DreamFeedState {
     /**
      * Dreams have been retrieved.
      *
-     * [temporallySort] should only be true when [dreams] are sorted by [Dream.created] or [Dream.updated]. Otherwise, an [IllegalStateException] is thrown.
+     * [temporallySort] should only be true when [dreams] are sorted by [Dream.created] or [Dream.updated], [SortDirection.Descending]. Otherwise, an [IllegalStateException] is thrown.
      */
     data class Success(
         val dreams: List<Dream>,
         val temporallySort: Boolean,
         val sortConfig: SortConfig
-    ) : DreamFeedState()
+    ) : DreamFeedState() {
+
+        init {
+            if (temporallySort) {
+                require(
+                    (sortConfig.mode == SortMode.Created || sortConfig.mode == SortMode.Updated) &&
+                            sortConfig.direction == SortDirection.Descending
+                )
+            }
+        }
+
+    }
 
 }
 
@@ -282,7 +277,8 @@ private fun DreamFeedSuccess() = DreamFeed(
         dreams = DreamPreviewData.dreams,
         temporallySort = true,
         sortConfig = SortConfig(
-            mode = SortMode.Created
+            mode = SortMode.Created,
+            direction = SortDirection.Descending
         )
     )
 )

@@ -165,7 +165,11 @@ private fun GeneralSection(
         modifier = modifier
             .verticalScroll(rememberScrollState())
     ) {
-        if(state.location.notes != null) {
+        val textStyle = TextStyle(
+            fontSize = 14.sp,
+            color = OneUITheme.colors.seslPrimaryTextColor
+        )
+        if (state.location.notes != null) {
             TextSeparator(
                 text = stringResource(R.string.location_detail_note)
             )
@@ -175,7 +179,8 @@ private fun GeneralSection(
                 contentAlignment = Alignment.TopStart
             ) {
                 Text(
-                    text = state.location.notes!!
+                    text = state.location.notes!!,
+                    style = textStyle
                 )
             }
         } else {

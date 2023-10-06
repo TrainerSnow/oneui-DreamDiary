@@ -12,14 +12,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.snow.diary.feature.locations.R
 import com.snow.diary.core.model.data.Location
 import com.snow.diary.core.model.sort.SortConfig
 import com.snow.diary.core.ui.feed.LocationFeed
 import com.snow.diary.core.ui.feed.LocationFeedState
+import com.snow.diary.core.ui.util.LocationSortModes
 import com.snow.diary.core.ui.util.SortSection
 import com.snow.diary.core.ui.util.useNavigationDrawer
 import com.snow.diary.core.ui.util.windowSizeClass
+import com.snow.diary.feature.locations.R
 import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.widgets.buttons.IconButton
@@ -101,7 +102,8 @@ private fun LocationList(
                 sortConfig = sortConfig,
                 onSortChange = {
                     onEvent(LocationListEvent.SortChange(it))
-                }
+                },
+                sortModes = LocationSortModes
             )
         }
         LocationFeed(
