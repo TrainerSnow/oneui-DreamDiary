@@ -14,10 +14,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.core.model.data.Relation
 import com.snow.diary.core.model.sort.SortConfig
-import com.snow.diary.feature.relations.R
 import com.snow.diary.core.ui.feed.RelationFeed
 import com.snow.diary.core.ui.feed.RelationFeedState
+import com.snow.diary.core.ui.util.RelationSortModes
 import com.snow.diary.core.ui.util.SortSection
+import com.snow.diary.feature.relations.R
 import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.widgets.buttons.IconButton
@@ -95,7 +96,8 @@ private fun RelationList(
                 sortConfig = sortConfig,
                 onSortChange = {
                     onEvent(RelationsListEvent.SortChange(it))
-                }
+                },
+                sortModes = RelationSortModes
             )
         }
         RelationFeed(

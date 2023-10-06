@@ -15,13 +15,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.core.model.data.Person
 import com.snow.diary.core.model.data.Relation
 import com.snow.diary.core.model.sort.SortConfig
-import com.snow.diary.feature.persons.R
 import com.snow.diary.core.ui.callback.PersonCallback
 import com.snow.diary.core.ui.feed.PersonFeed
 import com.snow.diary.core.ui.feed.PersonFeedState
+import com.snow.diary.core.ui.util.PersonSortModes
 import com.snow.diary.core.ui.util.SortSection
 import com.snow.diary.core.ui.util.useNavigationDrawer
 import com.snow.diary.core.ui.util.windowSizeClass
+import com.snow.diary.feature.persons.R
 import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.widgets.buttons.IconButton
@@ -115,7 +116,8 @@ private fun PersonList(
                 sortConfig = sortConfig,
                 onSortChange = {
                     onEvent(PersonListEvent.SortChange(it))
-                }
+                },
+                sortModes = PersonSortModes
             )
         }
         PersonFeed(

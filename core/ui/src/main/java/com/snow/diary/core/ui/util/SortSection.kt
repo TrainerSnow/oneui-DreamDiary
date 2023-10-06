@@ -43,13 +43,36 @@ import org.oneui.compose.widgets.menu.PopupMenu
 import org.oneui.compose.widgets.menu.SelectableMenuItem
 import dev.oneuiproject.oneui.R as IconR
 
+val DreamSortModes = listOf(
+    SortMode.Created,
+    SortMode.Updated,
+    SortMode.Happiness,
+    SortMode.Clearness,
+    SortMode.Length
+)
+
+val PersonSortModes = listOf(
+    SortMode.Alphabetically,
+    SortMode.Length
+)
+
+val LocationSortModes = listOf(
+    SortMode.Alphabetically,
+    SortMode.Length
+)
+
+val RelationSortModes = listOf(
+    SortMode.Alphabetically,
+    SortMode.Length
+)
+
 @Composable
 fun SortSection(
     modifier: Modifier = Modifier,
     sortConfig: SortConfig = SortConfig(
         direction = SortDirection.Ascending
     ),
-    sortModes: List<SortMode> = SortMode.values().toList(),
+    sortModes: List<SortMode> = SortMode.entries,
     onSortChange: ((SortConfig) -> Unit)? = null
 ) {
     val density = LocalDensity.current
@@ -94,7 +117,8 @@ fun SortSection(
                 ),
                 end = Offset(
                     x = size.width / 2,
-                    y = size.height - SortSectionDefaults.sectionPadding.calculateBottomPadding().toPx()
+                    y = size.height - SortSectionDefaults.sectionPadding.calculateBottomPadding()
+                        .toPx()
                 )
             )
         }
@@ -217,7 +241,7 @@ private fun ModeSection(
                         onSelect = {
                             onModeChange(it)
                             showPopup = false
-                                   },
+                        },
                         selected = it == mode
                     )
                 }

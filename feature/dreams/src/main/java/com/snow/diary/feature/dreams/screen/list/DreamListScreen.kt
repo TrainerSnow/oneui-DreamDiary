@@ -21,6 +21,7 @@ import com.snow.diary.core.model.sort.SortMode
 import com.snow.diary.core.ui.data.DreamPreviewData
 import com.snow.diary.core.ui.feed.DreamFeed
 import com.snow.diary.core.ui.feed.DreamFeedState
+import com.snow.diary.core.ui.util.DreamSortModes
 import com.snow.diary.core.ui.util.SortSection
 import com.snow.diary.core.ui.util.useNavigationDrawer
 import com.snow.diary.core.ui.util.windowSizeClass
@@ -156,7 +157,8 @@ private fun DreamListScreen(
                 sortConfig = sortConfig,
                 onSortChange = {
                     onEvent(DreamListEvent.SortChange(it))
-                }
+                },
+                sortModes = DreamSortModes
             )
         }
         DreamList(
