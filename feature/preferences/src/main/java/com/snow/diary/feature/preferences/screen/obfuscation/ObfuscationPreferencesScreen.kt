@@ -15,7 +15,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.core.model.preferences.ObfuscationPreferences
@@ -29,6 +31,7 @@ import org.oneui.compose.preference.SwitchPreference
 import org.oneui.compose.progress.CircularProgressIndicatorSize
 import org.oneui.compose.progress.ProgressIndicator
 import org.oneui.compose.progress.ProgressIndicatorType
+import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.widgets.SwitchBar
 import org.oneui.compose.widgets.buttons.IconButton
 import dev.oneuiproject.oneui.R as IconR
@@ -93,15 +96,16 @@ private fun ObfuscationPreferencesScreen(
                     }
                 )
 
+                val infoTextStyle = TextStyle(
+                    fontSize = 14.sp,
+                    color = OneUITheme.colors.seslPrimaryTextColor
+                )
                 Text(
                     modifier = Modifier
-                        .padding(
-                            start = 16.dp,
-                            end = 16.dp,
-                            top = 16.dp
-                        )
+                        .padding(16.dp)
                         .height(75.dp),
-                    text = stringResource(R.string.preferences_obfuscate_info)
+                    text = stringResource(R.string.preferences_obfuscate_info),
+                    style = infoTextStyle
                 )
 
                 PreferencesCategory(
