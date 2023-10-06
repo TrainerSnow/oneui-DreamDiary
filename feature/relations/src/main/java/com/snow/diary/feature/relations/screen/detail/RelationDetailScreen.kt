@@ -177,6 +177,11 @@ private fun GeneralSection(
                 .clip(CircleShape)
         )
         if (state.relation.notes != null) {
+            val textStyle = TextStyle(
+                fontSize = 14.sp,
+                color = OneUITheme.colors.seslPrimaryTextColor
+            )
+
             TextSeparator(
                 text = stringResource(R.string.relation_detail_note)
             )
@@ -186,7 +191,8 @@ private fun GeneralSection(
                 contentAlignment = Alignment.TopStart
             ) {
                 Text(
-                    text = state.relation.notes!!
+                    text = state.relation.notes!!,
+                    style = textStyle
                 )
             }
         } else {

@@ -173,6 +173,10 @@ private fun GeneralSection(
         color = OneUITheme.colors.seslSecondaryTextColor,
         textAlign = TextAlign.Center
     )
+    val textStyle = TextStyle(
+        fontSize = 14.sp,
+        color = OneUITheme.colors.seslPrimaryTextColor
+    )
 
     Column(
         modifier = modifier
@@ -196,7 +200,8 @@ private fun GeneralSection(
                 contentAlignment = Alignment.TopStart
             ) {
                 Text(
-                    text = state.person.notes!!
+                    text = state.person.notes!!,
+                    style = textStyle
                 )
             }
         } else {
