@@ -90,7 +90,9 @@ private fun personListState(
                 personWithRelationsAct(it)
             }
         ) {
-            it.toList()
+            it
+                .toList()
+                .filterNotNull()
         }
     }
     .map {

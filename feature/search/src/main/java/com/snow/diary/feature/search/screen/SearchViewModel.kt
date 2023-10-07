@@ -55,7 +55,7 @@ internal class SearchViewModel @Inject constructor(
     }
     private val persons = allPersons(AllPersons.Input()).flatMapMerge {
         val flows = it.map { personWithRelations(it) }
-        combine(flows) { it.toList() }
+        combine(flows) { it.toList().filterNotNull() }
     }
     private val locations = allLocations(AllLocations.Input())
 
