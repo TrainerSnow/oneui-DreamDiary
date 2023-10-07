@@ -12,13 +12,13 @@ import kotlinx.coroutines.flow.map
 
 @JvmName("sortWithFlowDream")
 fun Flow<List<Dream>>.sortWith(sortConfig: SortConfig) = map { it.sortWith(sortConfig) }
+
 @JvmName("sortWithDream")
 fun List<Dream>.sortWith(
     sortConfig: SortConfig
 ): List<Dream> = when (sortConfig.mode) {
     SortMode.Created -> sortedBy { it.created }
     SortMode.Updated -> sortedBy { it.updated }
-    SortMode.Alphabetically -> sortedBy { it.description }
     SortMode.Happiness -> sortedBy { it.happiness ?: 0F }
     SortMode.Clearness -> sortedBy { it.clearness ?: 0F }
     SortMode.Length -> sortedBy { it.description.length }
@@ -29,12 +29,13 @@ fun List<Dream>.sortWith(
 
 @JvmName("sortWithFlowPerson")
 fun Flow<List<Person>>.sortWith(sortConfig: SortConfig) = map { it.sortWith(sortConfig) }
+
 @JvmName("sortWithPerson")
 fun List<Person>.sortWith(
     sortConfig: SortConfig
 ): List<Person> = when (sortConfig.mode) {
-    SortMode.Alphabetically -> sortedBy { it.name }
-    SortMode.Length -> sortedBy { it.notes }
+    SortMode.Alphabetically -> sortedByDescending { it.name }
+    SortMode.Length -> sortedBy { it.notes?.length ?: 0 }
     else -> this
 }
     .sortedDirectional(sortConfig.direction)
@@ -42,12 +43,13 @@ fun List<Person>.sortWith(
 
 @JvmName("sortWithFlowLocation")
 fun Flow<List<Location>>.sortWith(sortConfig: SortConfig) = map { it.sortWith(sortConfig) }
+
 @JvmName("sortWithLocation")
 fun List<Location>.sortWith(
     sortConfig: SortConfig
 ): List<Location> = when (sortConfig.mode) {
-    SortMode.Alphabetically -> sortedBy { it.name }
-    SortMode.Length -> sortedBy { it.notes }
+    SortMode.Alphabetically -> sortedByDescending { it.name }
+    SortMode.Length -> sortedBy { it.notes?.length ?: 0 }
     else -> this
 }
     .sortedDirectional(sortConfig.direction)
@@ -55,11 +57,12 @@ fun List<Location>.sortWith(
 
 @JvmName("sortWithFlowRelation")
 fun Flow<List<Relation>>.sortWith(sortConfig: SortConfig) = map { it.sortWith(sortConfig) }
+
 @JvmName("sortWithFlowRelation")
 fun List<Relation>.sortWith(
     sortConfig: SortConfig
 ): List<Relation> = when (sortConfig.mode) {
-    SortMode.Alphabetically -> sortedBy { it.name }
+    SortMode.Alphabetically -> sortedByDescending { it.name }
     SortMode.Length -> sortedBy { it.name.length }
     else -> this
 }

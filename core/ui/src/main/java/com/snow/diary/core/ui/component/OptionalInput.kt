@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.widgets.box.RoundedCornerBox
 import org.oneui.compose.widgets.buttons.Checkbox
 
@@ -23,7 +24,8 @@ fun OptionalInput(
     input: @Composable () -> Unit
 ) {
     val titleStyle = TextStyle(
-        fontSize = 16.sp
+        fontSize = 17.sp,
+        color = OneUITheme.colors.seslPrimaryTextColor
     )
 
     RoundedCornerBox(

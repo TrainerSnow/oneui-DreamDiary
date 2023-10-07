@@ -57,6 +57,12 @@ internal fun LocationDetail(
         onEvent = viewModel::onEvent,
         onNavigateBack = onNavigateBack,
         onEditClick = onEditClick,
+        onDeleteClick = {
+            if (state is LocationDetailState.Success) {
+                onNavigateBack()
+                viewModel.onEvent(LocationDetailEvent.Delete)
+            }
+        },
         onDreamClick = onDreamClick
     )
 }
@@ -68,6 +74,7 @@ private fun LocationDetail(
     onEvent: (LocationDetailEvent) -> Unit,
     onNavigateBack: () -> Unit,
     onEditClick: (Location) -> Unit,
+    onDeleteClick: () -> Unit,
     onDreamClick: (Dream) -> Unit
 ) {
     Column(
@@ -95,12 +102,7 @@ private fun LocationDetail(
                 IconButton(
                     icon = Icon.Resource(IconR.drawable.ic_oui_delete_outline),
                     enabled = state is LocationDetailState.Success,
-                    onClick = {
-                        onNavigateBack()
-                        onEvent(
-                            LocationDetailEvent.Delete
-                        )
-                    }
+                    onClick = onDeleteClick
                 )
             }
         ) {
@@ -165,7 +167,11 @@ private fun GeneralSection(
         modifier = modifier
             .verticalScroll(rememberScrollState())
     ) {
-        if(state.location.notes != null) {
+        val textStyle = TextStyle(
+            fontSize = 14.sp,
+            color = OneUITheme.colors.seslPrimaryTextColor
+        )
+        if (state.location.notes != null) {
             TextSeparator(
                 text = stringResource(R.string.location_detail_note)
             )
@@ -175,7 +181,8 @@ private fun GeneralSection(
                 contentAlignment = Alignment.TopStart
             ) {
                 Text(
-                    text = state.location.notes!!
+                    text = state.location.notes!!,
+                    style = textStyle
                 )
             }
         } else {

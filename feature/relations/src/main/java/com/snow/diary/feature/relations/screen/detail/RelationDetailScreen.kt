@@ -60,6 +60,12 @@ internal fun RelationDetail(
         onEvent = viewModel::onEvent,
         onNavigateBack = onNavigateBack,
         onEditClick = onEditClick,
+        onDeleteClick = {
+            if (state is RelationDetailState.Success) {
+                onNavigateBack()
+                viewModel.onEvent(RelationDetailEvent.Delete)
+            }
+        },
         onPersonClick = onPersonClick
     )
 }
@@ -71,6 +77,7 @@ private fun RelationDetail(
     onEvent: (RelationDetailEvent) -> Unit,
     onNavigateBack: () -> Unit,
     onEditClick: (Relation) -> Unit,
+    onDeleteClick: () -> Unit,
     onPersonClick: (Person) -> Unit
 ) {
     Column(
@@ -98,12 +105,7 @@ private fun RelationDetail(
                 IconButton(
                     icon = Icon.Resource(IconR.drawable.ic_oui_delete_outline),
                     enabled = state is RelationDetailState.Success,
-                    onClick = {
-                        onNavigateBack()
-                        onEvent(
-                            RelationDetailEvent.Delete
-                        )
-                    }
+                    onClick = onDeleteClick
                 )
             }
         ) {
@@ -177,6 +179,11 @@ private fun GeneralSection(
                 .clip(CircleShape)
         )
         if (state.relation.notes != null) {
+            val textStyle = TextStyle(
+                fontSize = 14.sp,
+                color = OneUITheme.colors.seslPrimaryTextColor
+            )
+
             TextSeparator(
                 text = stringResource(R.string.relation_detail_note)
             )
@@ -186,7 +193,8 @@ private fun GeneralSection(
                 contentAlignment = Alignment.TopStart
             ) {
                 Text(
-                    text = state.relation.notes!!
+                    text = state.relation.notes!!,
+                    style = textStyle
                 )
             }
         } else {

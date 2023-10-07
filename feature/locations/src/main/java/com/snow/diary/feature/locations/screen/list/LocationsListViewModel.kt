@@ -26,7 +26,7 @@ internal class LocationsListViewModel @Inject constructor(
 
     private val _sortConfig = MutableStateFlow(
         SortConfig(
-            mode = SortMode.Created,
+            mode = SortMode.Alphabetically,
             direction = SortDirection.Descending
         )
     )

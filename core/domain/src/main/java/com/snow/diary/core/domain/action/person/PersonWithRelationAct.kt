@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.map
 
 class PersonWithRelationsAct(
     val personDao: PersonDao
-) : FlowAction<Person, PersonWithRelations>() {
-    override fun Person.createFlow(): Flow<PersonWithRelations> = personDao
+) : FlowAction<Person, PersonWithRelations?>() {
+    override fun Person.createFlow(): Flow<PersonWithRelations?> = personDao
         .getPersonWithRelationsById(id!!)
         .map {
-            it!!.toModel()
+            it?.toModel()
         }
 
 }

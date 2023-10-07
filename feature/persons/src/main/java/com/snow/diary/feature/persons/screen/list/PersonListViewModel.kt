@@ -34,7 +34,7 @@ internal class PersonListViewModel @Inject constructor(
 
     private val _sortConfig = MutableStateFlow(
         SortConfig(
-            mode = SortMode.Created,
+            mode = SortMode.Alphabetically,
             direction = SortDirection.Descending
         )
     )
@@ -90,7 +90,9 @@ private fun personListState(
                 personWithRelationsAct(it)
             }
         ) {
-            it.toList()
+            it
+                .toList()
+                .filterNotNull()
         }
     }
     .map {

@@ -36,12 +36,13 @@ internal class PersonDetailViewModel @Inject constructor(
 
     private val args = PersonDetailArgs(savedStateHandle)
 
-    val state = personDetailState(personById, args.personId, dreamsFromPerson, personWithRelationsAct)
-        .stateIn(
-            scope = viewModelScope,
-            initialValue = PersonDetailState.Loading,
-            started = SharingStarted.WhileSubscribed(5000)
-        )
+    val state =
+        personDetailState(personById, args.personId, dreamsFromPerson, personWithRelationsAct)
+            .stateIn(
+                scope = viewModelScope,
+                initialValue = PersonDetailState.Loading,
+                started = SharingStarted.WhileSubscribed(5000)
+            )
 
     private val _tabs = MutableStateFlow(PersonDetailTab.General)
     val tabs: StateFlow<PersonDetailTab> = _tabs
@@ -81,11 +82,12 @@ private fun personDetailState(
     personWithRelationsAct: PersonWithRelationsAct
 ): Flow<PersonDetailState> = personById(id)
     .flatMapMerge { person ->
-        if (person == null) flowOf(PersonDetailState.Error(id = id))
+        if (person == null) return@flatMapMerge flowOf(PersonDetailState.Error(id = id))
         else combine(
             flow = dreamsFromPerson(person),
             flow2 = personWithRelationsAct(person)
-        ) { dreams, relations ->
-            PersonDetailState.Success(person, relations.relation, dreams)
+        ) { dreams, pwr ->
+            if (pwr == null) return@combine PersonDetailState.Error(id = id)
+            PersonDetailState.Success(person, pwr.relation, dreams)
         }
     }

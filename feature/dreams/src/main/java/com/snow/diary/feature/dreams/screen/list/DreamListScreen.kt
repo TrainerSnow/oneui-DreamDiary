@@ -21,6 +21,7 @@ import com.snow.diary.core.model.sort.SortMode
 import com.snow.diary.core.ui.data.DreamPreviewData
 import com.snow.diary.core.ui.feed.DreamFeed
 import com.snow.diary.core.ui.feed.DreamFeedState
+import com.snow.diary.core.ui.util.DreamSortModes
 import com.snow.diary.core.ui.util.SortSection
 import com.snow.diary.core.ui.util.useNavigationDrawer
 import com.snow.diary.core.ui.util.windowSizeClass
@@ -92,7 +93,7 @@ private fun DreamListScreen(
             )
         },
         appbarNavAction = {
-            if(windowSizeClass.useNavigationDrawer) {
+            if (windowSizeClass.useNavigationDrawer) {
                 IconButton(
                     icon = Icon.Resource(
                         IconR.drawable.ic_oui_drawer
@@ -134,7 +135,7 @@ private fun DreamListScreen(
                         label = stringResource(R.string.dream_list_menu_export),
                         onClick = onExportClick
                     )
-                    MenuItem (
+                    MenuItem(
                         label = stringResource(R.string.dream_list_menu_import),
                         onClick = onImportClick
                     )
@@ -156,7 +157,8 @@ private fun DreamListScreen(
                 sortConfig = sortConfig,
                 onSortChange = {
                     onEvent(DreamListEvent.SortChange(it))
-                }
+                },
+                sortModes = DreamSortModes
             )
         }
         DreamList(
