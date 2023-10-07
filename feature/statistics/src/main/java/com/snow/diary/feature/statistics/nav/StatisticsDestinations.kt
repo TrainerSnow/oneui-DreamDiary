@@ -11,7 +11,7 @@ internal enum class StatisticsDestinations(
 ) {
 
     Dreams(
-        icon = Icon.Resource(IconR.drawable.ic_oui_remove_2), //TODO: Proper icon
+        icon = Icon.Resource(com.snow.diary.core.ui.R.drawable.dream),
         title = R.string.stats_nav_dreams
     ),
 

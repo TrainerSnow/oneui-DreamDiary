@@ -13,7 +13,7 @@ enum class TopLevelDestinations(
 ) {
 
     Dreams(
-        icon = Icon.Resource(IconR.drawable.ic_oui_list),
+        icon = Icon.Resource(com.snow.diary.core.ui.R.drawable.dream),
         titleRes = R.string.nav_dreams
     ),
 
