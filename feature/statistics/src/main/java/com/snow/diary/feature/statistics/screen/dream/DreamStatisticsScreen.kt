@@ -3,6 +3,7 @@ package com.snow.diary.feature.statistics.screen.dream
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
@@ -133,7 +134,8 @@ private fun DreamStatistics(
             item {
                 DreamAmountGraph(
                     modifier = Modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .height(400.dp),
                     state = amountGraphState,
                     period = graphPeriod,
                     onPeriodChange = {

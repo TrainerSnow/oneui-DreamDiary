@@ -106,7 +106,7 @@ class DreamsAmountsTest {
         val amounts = runBlocking {
             dreamAmounts(
                 DreamAmounts.Input(
-                    totalEnd = LocalDate.now()
+                    lastStart = LocalDate.now()
                 )
             ).first()
         }
