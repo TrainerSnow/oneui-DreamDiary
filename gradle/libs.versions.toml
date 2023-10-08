@@ -31,7 +31,6 @@ protobufPlugin = "0.9.4"
 splashscreen = "1.0.1"
 biometric = "1.2.0-alpha05"
 window_size_clas = "1.1.2"
-simplestorage = "1.5.5"
 
 [libraries]
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
@@ -73,7 +72,6 @@ org-jetbrains-kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name 
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-biometric = { group = "androidx.biometric", name = "biometric-ktx", version.ref = "biometric" }
-simplestorage = { group = "com.anggrayudi", name = "storage", version.ref = "simplestorage" }
 
 mockito = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
 serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "json_serialization" }
