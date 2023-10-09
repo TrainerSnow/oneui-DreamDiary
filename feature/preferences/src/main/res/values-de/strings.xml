@@ -22,6 +22,8 @@
     <string name="securitymode_biometric">Biometrisch</string>
     <string name="securitymode_default">Standard</string>
     <string name="securitymode_none">Keine</string>
+    <string name="about_this_app">Über diese App</string>
+    <string name="preferences_main_section_other">Sonstiges</string>
 
 
 </resources>

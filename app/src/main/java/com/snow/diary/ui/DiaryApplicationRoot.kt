@@ -282,7 +282,8 @@ private fun DiaryNavHost(
 
         mainPreferences(
             onNavigateBack = state::navigateBack,
-            onNavigateToObfuscationPreferences = navController::goToObfuscatePreferences
+            onNavigateToObfuscationPreferences = navController::goToObfuscatePreferences,
+            onAboutClick = navController::goToAppInfo
         )
         obfuscatePreferences(
             onNavigateBack = state::navigateBack
