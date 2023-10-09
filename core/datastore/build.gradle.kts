@@ -1,10 +1,10 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias(libs.plugins.com.android.library)
-    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.protobuf)
-    id("kotlin-kapt")
-    alias(libs.plugins.com.google.dagger.hilt.android)
+    alias(libs.plugins.kapt)
+    alias(libs.plugins.hilt)
 }
 
 android {
