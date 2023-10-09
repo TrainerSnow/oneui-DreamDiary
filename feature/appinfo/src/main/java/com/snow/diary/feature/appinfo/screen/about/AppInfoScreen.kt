@@ -20,7 +20,7 @@ import org.oneui.compose.layout.app.AppInfoLayout
 import org.oneui.compose.layout.app.AppInfoLayoutButton
 import org.oneui.compose.layout.app.UpdateState
 
-private const val GithubLink = "https://github.com/TrainerSnow/oneui-compose"
+private const val GithubLink = "https://github.com/TrainerSnow/oneui-DreamDary"
 
 @Composable
 internal fun AppInfoScreen(
