@@ -86,6 +86,7 @@ dependencies {
     implementation(project(":feature:statistics"))
     implementation(project(":feature:search"))
     implementation(project(":feature:importing"))
+    implementation(project(":feature:appinfo"))
     implementation(project(":core:model"))
     implementation(project(":core:domain"))
     implementation(project(":core:ui"))

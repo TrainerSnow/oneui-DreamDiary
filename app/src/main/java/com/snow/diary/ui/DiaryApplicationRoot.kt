@@ -16,6 +16,10 @@ import androidx.navigation.compose.NavHost
 import com.snow.diary.R
 import com.snow.diary.core.ui.util.useNavigationDrawer
 import com.snow.diary.core.ui.util.useNavigationRail
+import com.snow.diary.feature.appinfo.nav.appInfo
+import com.snow.diary.feature.appinfo.nav.goToAppInfo
+import com.snow.diary.feature.appinfo.nav.goToLicenses
+import com.snow.diary.feature.appinfo.nav.licenses
 import com.snow.diary.feature.dreams.nav.addDream
 import com.snow.diary.feature.dreams.nav.dreamDetail
 import com.snow.diary.feature.dreams.nav.dreamList
@@ -125,7 +129,7 @@ private fun DiaryNavHost(
         startDestination = "dream_list"
     ) {
         dreamList(
-            onAboutClick = { },
+            onAboutClick = navController::goToAppInfo,
             onAddClick = {
                 obfuscationBlocked {
                     navController.goToAddDream(
@@ -298,6 +302,14 @@ private fun DiaryNavHost(
             }
         )
         import(
+            onNavigateBack = state::navigateBack
+        )
+
+        appInfo(
+            onNavigateBack = state::navigateBack,
+            onLicensesClick = navController::goToLicenses
+        )
+        licenses(
             onNavigateBack = state::navigateBack
         )
     }
