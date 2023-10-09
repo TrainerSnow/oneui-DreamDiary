@@ -71,7 +71,7 @@ fun DateRangeDialog(
                 text = stringResource(R.string.range_dialog_title)
             )
         },
-        negativeButtonLabel = stringResource(org.oneui.compose.R.string.sesl_dialog_button_negative),
+        negativeButtonLabel = stringResource(org.oneui.compose.R.string.sesl_picker_cancel),
         onNegativeButtonClick = onDismissRequest,
         body = {
             VerticalRadioGroup(

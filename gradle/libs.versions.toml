@@ -15,7 +15,7 @@ org-jetbrains-kotlin-jvm = "1.9.0"
 #noinspection GradleDependency
 foundation = "1.6.0-alpha03" # For some reason, this needs to be the same version as the one in the lib. I don't know why.
 oneui_icons = "1.1.0"
-oneui = "0.4.1"
+oneui = "0.5.2"
 nav = "2.7.3"
 compose_lifecycle = "2.6.2"
 hilt_nav = "1.1.0-alpha01"
@@ -31,7 +31,6 @@ protobufPlugin = "0.9.4"
 splashscreen = "1.0.1"
 biometric = "1.2.0-alpha05"
 window_size_clas = "1.1.2"
-simplestorage = "1.5.5"
 
 [libraries]
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
@@ -58,9 +57,7 @@ protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref 
 androidx-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter-engine", version.ref = "junit_jupiter" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
-androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidx-test-core" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
@@ -73,9 +70,7 @@ org-jetbrains-kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name 
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-biometric = { group = "androidx.biometric", name = "biometric-ktx", version.ref = "biometric" }
-simplestorage = { group = "com.anggrayudi", name = "storage", version.ref = "simplestorage" }
 
-mockito = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
 serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "json_serialization" }
 
 [plugins]

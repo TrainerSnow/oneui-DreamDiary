@@ -12,14 +12,16 @@ fun NavController.goToMainPreferences(navOptions: NavOptions? = null) = navigate
 
 fun NavGraphBuilder.mainPreferences(
     onNavigateBack: () -> Unit,
-    onNavigateToObfuscationPreferences: () -> Unit
+    onNavigateToObfuscationPreferences: () -> Unit,
+    onAboutClick: () -> Unit,
 ) {
     composable(
         route = mainPreferencesRoute
     ) {
         MainPreferencesScreen(
             onNavigateBack = onNavigateBack,
-            onNavigateToObfuscationPreferences = onNavigateToObfuscationPreferences
+            onNavigateToObfuscationPreferences = onNavigateToObfuscationPreferences,
+            onAboutClick = onAboutClick
         )
     }
 }

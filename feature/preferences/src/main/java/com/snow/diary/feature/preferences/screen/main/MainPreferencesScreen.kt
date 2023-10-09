@@ -30,6 +30,7 @@ import dev.oneuiproject.oneui.R as IconR
 internal fun MainPreferencesScreen(
     viewModel: MainPreferencesViewModel = hiltViewModel(),
     onNavigateToObfuscationPreferences: () -> Unit,
+    onAboutClick: () -> Unit,
     onNavigateBack: () -> Unit
 ) {
     val prefs by viewModel.preferences.collectAsStateWithLifecycle()
@@ -38,6 +39,7 @@ internal fun MainPreferencesScreen(
         prefs = prefs,
         onEvent = viewModel::onEvent,
         onNavigateToObfuscationPreferences = onNavigateToObfuscationPreferences,
+        onAboutClick = onAboutClick,
         onNavigateBack = onNavigateBack
     )
 }
@@ -47,6 +49,7 @@ private fun MainPreferencesScreen(
     prefs: UserPreferences?,
     onEvent: (MainPreferencesEvent) -> Unit,
     onNavigateToObfuscationPreferences: () -> Unit,
+    onAboutClick: () -> Unit,
     onNavigateBack: () -> Unit
 ) {
     if (prefs == null) return //Simply blank screen. IDK if this is good
@@ -120,6 +123,24 @@ private fun MainPreferencesScreen(
                     )
                 }
             )
+        )
+
+        PreferencesCategory(
+            title = {
+                TextSeparator(
+                    text = stringResource(R.string.preferences_main_section_other)
+                )
+            },
+            preferences = listOf {
+                BasePreference(
+                    onClick = onAboutClick,
+                    title = {
+                        Text(
+                            text = stringResource(R.string.about_this_app)
+                        )
+                    }
+                )
+            }
         )
     }
 }

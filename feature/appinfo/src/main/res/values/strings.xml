@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="appinfo_github" translatable="false">GitHub</string>
+    <string name="appinfo_licenses">Open Source licenses</string>
+
+</resources>
