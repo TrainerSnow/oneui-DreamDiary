@@ -30,6 +30,7 @@ protobufPlugin = "0.9.4"
 splashscreen = "1.0.1"
 biometric = "1.2.0-alpha05"
 window_size_clas = "1.1.2"
+licenses = "10.9.1"
 
 [libraries]
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
@@ -69,6 +70,7 @@ org-jetbrains-kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name 
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-biometric = { group = "androidx.biometric", name = "biometric-ktx", version.ref = "biometric" }
+licenses-core = { group = "com.mikepenz", name = "aboutlibraries-core", version.ref = "licenses" }
 
 serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "json_serialization" }
 
@@ -81,6 +83,7 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+licenses = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "licenses" }
 
 [bundles]
 compose = ["compose-animation", "compose-bom", "compose-foundation", "compose-lifecycle-runtime", "compose-material3", "compose-material", "compose-material3-windowsizeclas", "compose-ui", "compose-ui-tooling", "compose-ui-tooling-preview", "activity-compose"]
