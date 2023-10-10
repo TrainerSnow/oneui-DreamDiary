@@ -62,6 +62,8 @@ dependencies {
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
 
+    implementation(libs.licenses.core)
+
     implementation(project(":core:model"))
     implementation(project(":core:domain"))
     implementation(project(":core:common"))
