@@ -11,7 +11,6 @@ compose-bom = "2023.09.02"
 dagger_hilt = "2.48"
 room = "2.5.2"
 coroutines = "1.7.3"
-org-jetbrains-kotlin-jvm = "1.9.0"
 #noinspection GradleDependency
 foundation = "1.6.0-alpha03" # For some reason, this needs to be the same version as the one in the lib. I don't know why.
 oneui_icons = "1.1.0"
@@ -75,10 +74,15 @@ serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serializ
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
-kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-com-android-library = { id = "com.android.library", version.ref = "agp" }
-com-google-dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "dagger_hilt" }
-org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version = "1.9.10" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger_hilt" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
+kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 
+[bundles]
+compose = ["compose-animation", "compose-bom", "compose-foundation", "compose-lifecycle-runtime", "compose-material3", "compose-material", "compose-material3-windowsizeclas", "compose-ui", "compose-ui-tooling", "compose-ui-tooling-preview", "activity-compose"]
+room = ["androidx-room-ktx", "androidx-room-runtime"]
+oneui = ["oneui", "oneui-icons"]
