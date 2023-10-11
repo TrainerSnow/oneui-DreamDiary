@@ -1,3 +1,5 @@
+import java.util.Properties
+
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.androidApplication)
@@ -25,6 +27,26 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            val propFile = rootProject.file("keystore.properties")
+            val props = Properties()
+            props.load(propFile.inputStream())
+
+            storeFile = rootProject.file(props["storeFile"]!!)
+            storePassword = props["storePassword"] as String
+            keyPassword = props["keyPassword"] as String
+            keyAlias = props["keyAlias"] as String
+        }
+
+        getByName("debug") {
+            storeFile = rootProject.file("debug.keystore")
+            storePassword = "zlLoyyyW8M6k3CqcEb"
+            keyPassword = "zlLoyyyW8M6k3CqcEb"
+            keyAlias = "signingkey"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -33,12 +55,14 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
 
         debug {
             isMinifyEnabled = false
             applicationIdSuffix = ".debug"
             isDebuggable = true
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
