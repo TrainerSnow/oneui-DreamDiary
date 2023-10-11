@@ -143,8 +143,8 @@ private fun DiaryNavHost(
             onDreamClick = { dream ->
                 navController.goToDreamDetail(dream.id!!)
             },
-            onExportClick = navController::goToExport,
-            onImportClick = navController::goToImport,
+            onExportClick = { obfuscationBlocked(navController::goToExport) },
+            onImportClick = { obfuscationBlocked(navController::goToImport) },
             onNavigateBack = state::openDrawer
         )
         dreamDetail(
