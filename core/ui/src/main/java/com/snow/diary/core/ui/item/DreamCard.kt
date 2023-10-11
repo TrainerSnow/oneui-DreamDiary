@@ -34,6 +34,7 @@ import org.oneui.compose.widgets.buttons.IconButton
 import org.oneui.compose.widgets.buttons.iconButtonColors
 import java.time.LocalDate
 import java.time.Period
+import java.time.temporal.ChronoUnit
 import dev.oneuiproject.oneui.R as IconR
 
 @Composable
@@ -81,9 +82,12 @@ fun DreamCard(
                     style = titleTextStyle
                 )
 
-                val days = Period.between(dream.created, LocalDate.now()).days
+                val period = Period.between(dream.created, LocalDate.now())
+                val isToday = period.isZero
+                val days = ChronoUnit.DAYS.between(dream.created, LocalDate.now())
+
                 val label =
-                    if (days == 0) stringResource(R.string.dreamcard_time_passed_placeholder)
+                    if (isToday) stringResource(R.string.dreamcard_time_passed_placeholder)
                     else stringResource(
                         id = R.string.dreamcard_time_passed,
                         days.toString()
