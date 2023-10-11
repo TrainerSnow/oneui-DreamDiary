@@ -1,5 +1,6 @@
 # OneUI - DreamDiary
 
-Android application to keep track of, organize and get insights into your dreaming behaviour. 
-
-Stil in development, PR's or tickets welcome.
+|          |             |                |       |
+| :---:    |    :----:   |          :---: | :---: |
+|![](screenshots/Dream_List.png)|![](screenshots/Dream_Edit.png)|![](screenshots/Search.png)|![](screenshots/Statistics.png)|
+|![](screenshots/Design_Light.png)|![](screenshots/Design_Dark.png)|![](screenshots/Settings.png)||
