@@ -11,3 +11,12 @@
 
 #### Misc. Changes
 - Properly setup different buildTypes
+
+## 1.0.0-alpha02 &rarr; 1.0.0-alpha03
+#### UI-Fixes
+- Changes app icon colors to orange tones
+- Fixed showing "0 days ago" on dream item when it was edited that day.
+
+#### Misx. Fixes
+- Removed debug logger statements
+- Fixed that when editing a dream, this would also alter the created timestamp instead of only the edited timestamp.
