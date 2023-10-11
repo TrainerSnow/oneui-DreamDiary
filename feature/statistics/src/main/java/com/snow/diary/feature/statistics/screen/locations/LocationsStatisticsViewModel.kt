@@ -41,7 +41,7 @@ internal class LocationsStatisticsViewModel @Inject constructor(
 
             val size = allLocations.size
             val best = locationsWithAmount.sortedByDescending { it.amount }.take(3)
-            val total = best.sumOf { it.amount }
+            val total = locationsWithAmount.sumOf { it.amount }
 
             return@combine StatisticsState.from(
                 LocationsAmountData(

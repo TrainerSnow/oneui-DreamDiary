@@ -41,7 +41,7 @@ internal class PersonsStatisticsViewModel @Inject constructor(
 
             val size = allPersons.size
             val best = personsWithAmount.sortedByDescending { it.amount }.take(3)
-            val total = best.sumOf { it.amount }
+            val total = personsWithAmount.sumOf { it.amount }
 
             return@combine StatisticsState.from(
                 PersonsAmountData(
