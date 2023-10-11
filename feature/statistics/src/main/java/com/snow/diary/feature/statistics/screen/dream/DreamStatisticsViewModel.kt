@@ -79,7 +79,8 @@ internal class DreamStatisticsViewModel @Inject constructor(
             DreamAmounts.Input(
                 range = tuple.first.range,
                 period = tuple.second.period,
-                totalEnd = LocalDate.now()
+                totalEnd = LocalDate.now(),
+                firstDate = tuple.first.range.resolve().from
             )
         )
     }.map {
