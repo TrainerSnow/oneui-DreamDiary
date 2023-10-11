@@ -128,7 +128,7 @@ fun DreamCard(
                 if (didUpdate) {
                     val days = Period.between(dream.updated, LocalDate.now()).days
                     Text(
-                        text = stringResource(
+                        text = if (days == 0) stringResource(R.string.dreamcard_time_passed_placeholder) else stringResource(
                             id = R.string.dreamcard_updated,
                             days.toString()
                         ),
