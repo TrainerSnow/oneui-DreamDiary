@@ -50,6 +50,8 @@ internal class AddDreamViewModel @Inject constructor(
     private val args = AddDreamArgs(savedStateHandle)
     val isEdit = args.dreamId != null
 
+    private var dreamToEdit: Dream? = null
+
     private val _inputState = MutableStateFlow(AddDreamInputState())
     val inputState = _inputState.asStateFlow()
 
@@ -68,6 +70,7 @@ internal class AddDreamViewModel @Inject constructor(
                 val dream = dreamInformation(args.dreamId!!)
                     .stateIn(viewModelScope)
                     .value!!
+                dreamToEdit = dream.dream
 
                 _inputState.emit(
                     inputState.value.run {
@@ -299,7 +302,7 @@ internal class AddDreamViewModel @Inject constructor(
                     description = description.input,
                     note = note.input.ifBlank { null },
                     isFavourite = markAsFavourite,
-                    created = LocalDate.now(),
+                    created = dreamToEdit?.created ?: LocalDate.now(),
                     updated = LocalDate.now(),
                     clearness = clearness,
                     happiness = happiness
