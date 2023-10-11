@@ -16,7 +16,7 @@ class FirstDreamDate(
         AllDreams.Input(
             sortConfig = SortConfig(
                 mode = SortMode.Created,
-                direction = SortDirection.Descending
+                direction = SortDirection.Ascending
             )
         )
     )

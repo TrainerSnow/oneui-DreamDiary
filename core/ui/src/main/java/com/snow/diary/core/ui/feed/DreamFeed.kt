@@ -156,23 +156,44 @@ private fun LazyGridScope.temporallySortedDreams(
 
     dreams.forEachIndexed { dreamIndex, dream ->
         val date = getDate(dream)
+        val lastDate = dreams.getOrNull(dreamIndex - 1)?.let { getDate(it) }
+        val nextDate = dreams.getOrNull(dreamIndex + 1)?.let { getDate(it) }
+
+        val lastRangeIndex = currentIndex
 
         while (!ranges[currentIndex].first.contains(date)) {
             currentIndex += 1
             firstOfRange = true
         }
 
+        val rangeIndexChanged = lastRangeIndex != currentIndex
+
+        val isNextDateInRange = nextDate?.let { ranges[currentIndex].first.contains(it) } ?: false
+        val wasLastDateInRange =
+            lastDate?.let { ranges[currentIndex].first.contains(lastDate) } ?: false
+
         if (firstOfRange) {
             separatorItem(ranges[currentIndex].second)
             firstOfRange = false
         }
+
+        val listPos = if (!doListPositions) ListPosition.Single
+        else when (isNextDateInRange) {
+            true -> when (wasLastDateInRange && !rangeIndexChanged) {
+                true -> ListPosition.Middle
+                false -> ListPosition.First
+            }
+
+            false -> when (wasLastDateInRange && !rangeIndexChanged) {
+                true -> ListPosition.Last
+                false -> ListPosition.Single
+            }
+        }
+
         item {
             DreamCard(
                 dream = dreams[dreamIndex],
-                listPosition = if (doListPositions) ListPosition.get(
-                    dreams[dreamIndex],
-                    dreams
-                ) else ListPosition.Single,
+                listPosition = listPos,
                 dreamCallback = callback
             )
         }

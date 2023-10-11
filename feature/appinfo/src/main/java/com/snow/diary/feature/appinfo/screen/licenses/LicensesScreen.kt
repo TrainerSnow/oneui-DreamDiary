@@ -1,6 +1,5 @@
 package com.snow.diary.feature.appinfo.screen.licenses
 
-import android.util.Log.d
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

@@ -16,10 +16,12 @@ import com.snow.diary.feature.statistics.screen.dream.components.DreamMetricData
 import com.snow.diary.feature.statistics.screen.dream.components.DreamWeekdayData
 import com.snow.diary.feature.statistics.screen.dream.components.DreamWeekdayInformation
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -46,33 +48,42 @@ internal class DreamStatisticsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(DreamStatisticsUiState())
     val uiState: StateFlow<DreamStatisticsUiState> = _uiState
 
-    val amountState: StateFlow<StatisticsState<DreamAmountData>> = combine(
-        flow = allDreams(
-            AllDreams.Input(
-                dateRange = range.value.range
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val amountState: StateFlow<StatisticsState<DreamAmountData>> = range.flatMapMerge { range ->
+        combine(
+            flow = allDreams(
+                AllDreams.Input(
+                    dateRange = range.range
+                )
+            ),
+            flow2 = dreamAmountAverage(range.range)
+        ) { dreams, avg ->
+            StatisticsState.from(
+                DreamAmountData(
+                    amount = dreams.size,
+                    average = avg
+                )
             )
-        ),
-        flow2 = dreamAmountAverage(range.value.range)
-    ) { dreams, avg ->
-        StatisticsState.from(
-            DreamAmountData(
-                amount = dreams.size,
-                average = avg
-            )
-        )
+        }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = StatisticsState.Loading()
     )
 
-    val amountGraphState = dreamAmounts(
-        DreamAmounts.Input(
-            range = range.value.range,
-            period = period.value.period,
-            totalEnd = LocalDate.now()
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val amountGraphState = combine(range, period) { range, period ->
+        Pair(range, period)
+    }.flatMapMerge { tuple ->
+        dreamAmounts(
+            DreamAmounts.Input(
+                range = tuple.first.range,
+                period = tuple.second.period,
+                totalEnd = LocalDate.now(),
+                firstDate = tuple.first.range.resolve().from
+            )
         )
-    ).map {
+    }.map {
         if (it.size < 3) return@map StatisticsState.NoData()
 
         return@map StatisticsState.from(
@@ -87,48 +98,54 @@ internal class DreamStatisticsViewModel @Inject constructor(
         initialValue = StatisticsState.Loading()
     )
 
-    val metricState = combine(
-        flow = clearnessAverage(range.value.range),
-        flow2 = happinessAverage(range.value.range)
-    ) { clearness, happiness ->
-        if (clearness == null || happiness == null) StatisticsState.NoData()
-        else StatisticsState.from(
-            DreamMetricData(happiness, clearness)
-        )
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val metricState = range.flatMapMerge { range ->
+        combine(
+            flow = clearnessAverage(range.range),
+            flow2 = happinessAverage(range.range)
+        ) { clearness, happiness ->
+            if (clearness == null || happiness == null) StatisticsState.NoData()
+            else StatisticsState.from(
+                DreamMetricData(happiness, clearness)
+            )
+        }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = StatisticsState.Loading()
     )
 
-    val weekdayState = allDreams(
-        AllDreams.Input(dateRange = range.value.range)
-    ).map {
-        val mappedAmounts = mutableMapOf<DayOfWeek, Int>()
-        val total = it.size
-        var max: Pair<DayOfWeek, Int>? = null
-        it.forEach { dream ->
-            val dow = dream.created.dayOfWeek
-            mappedAmounts[dow] =
-                if (dow in mappedAmounts.keys) mappedAmounts[dow]!! + 1
-                else 1
-            if (mappedAmounts[dow]!! > (max?.second ?: 0)) max = dow to mappedAmounts[dow]!!
-        }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val weekdayState = range.flatMapMerge { range ->
+        allDreams(
+            AllDreams.Input(dateRange = range.range)
+        ).map {
+            val mappedAmounts = mutableMapOf<DayOfWeek, Int>()
+            val total = it.size
+            var max: Pair<DayOfWeek, Int>? = null
+            it.forEach { dream ->
+                val dow = dream.created.dayOfWeek
+                mappedAmounts[dow] =
+                    if (dow in mappedAmounts.keys) mappedAmounts[dow]!! + 1
+                    else 1
+                if (mappedAmounts[dow]!! > (max?.second ?: 0)) max = dow to mappedAmounts[dow]!!
+            }
 
-        if (max == null) return@map StatisticsState.NoData()
+            if (max == null) return@map StatisticsState.NoData()
 
-        return@map StatisticsState.from(
-            DreamWeekdayData(
-                weekdays = mappedAmounts.map {
-                    DreamWeekdayInformation(
-                        it.key,
-                        it.value,
-                        it.value.toFloat() / total.toFloat()
-                    )
-                },
-                mostDreamsOn = max!!.first
+            return@map StatisticsState.from(
+                DreamWeekdayData(
+                    weekdays = mappedAmounts.map {
+                        DreamWeekdayInformation(
+                            it.key,
+                            it.value,
+                            it.value.toFloat() / total.toFloat()
+                        )
+                    },
+                    mostDreamsOn = max!!.first
+                )
             )
-        )
+        }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),

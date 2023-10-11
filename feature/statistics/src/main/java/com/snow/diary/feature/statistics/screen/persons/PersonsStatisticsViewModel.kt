@@ -8,10 +8,12 @@ import com.snow.diary.core.ui.component.StatisticsDateRanges
 import com.snow.diary.feature.statistics.screen.components.StatisticsState
 import com.snow.diary.feature.statistics.screen.persons.components.PersonsAmountData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,23 +31,26 @@ internal class PersonsStatisticsViewModel @Inject constructor(
     val showRangeDialog: StateFlow<Boolean> = _showRangeDialog
 
 
-    val amountState: StateFlow<StatisticsState<PersonsAmountData>> = combine(
-        flow = allPersons(AllPersons.Input()),
-        flow2 = personsWithAmount(range.value.range)
-    ) { allPersons, personsWithAmount ->
-        if (personsWithAmount.size < 3) return@combine StatisticsState.NoData()
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val amountState: StateFlow<StatisticsState<PersonsAmountData>> = range.flatMapMerge { range ->
+        combine(
+            flow = allPersons(AllPersons.Input()),
+            flow2 = personsWithAmount(range.range)
+        ) { allPersons, personsWithAmount ->
+            if (personsWithAmount.size < 3) return@combine StatisticsState.NoData()
 
-        val size = allPersons.size
-        val best = personsWithAmount.sortedByDescending { it.amount }.take(3)
-        val total = best.sumOf { it.amount }
+            val size = allPersons.size
+            val best = personsWithAmount.sortedByDescending { it.amount }.take(3)
+            val total = personsWithAmount.sumOf { it.amount }
 
-        return@combine StatisticsState.from(
-            PersonsAmountData(
-                personsNum = size,
-                usedPersonsNum = total,
-                most = best.map { it.person to it.amount }
+            return@combine StatisticsState.from(
+                PersonsAmountData(
+                    personsNum = size,
+                    usedPersonsNum = total,
+                    most = best.map { it.person to it.amount }
+                )
             )
-        )
+        }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
