@@ -1,7 +1,6 @@
 package com.snow.diary.feature.dreams.screen.add
 
 import android.content.Context
-import android.util.Log.d
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.core.common.launchInBackground
@@ -64,10 +63,7 @@ internal class AddDreamViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        d("AddDreamNavigation", "Received dreamId = ${args.dreamId}")
-        d("AddDreamNavigation", "Is edit mode: $isEdit")
         if (isEdit) {
-            d("AddDreamNavigation", "Will launch coroutine")
             viewModelScope.launchInBackground {
                 val dream = dreamInformation(args.dreamId!!)
                     .stateIn(viewModelScope)

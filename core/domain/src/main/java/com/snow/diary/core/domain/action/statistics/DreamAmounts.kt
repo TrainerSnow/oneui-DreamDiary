@@ -1,6 +1,5 @@
 package com.snow.diary.core.domain.action.statistics
 
-import android.util.Log.d
 import com.snow.diary.core.common.time.DateRange
 import com.snow.diary.core.domain.action.FlowAction
 import com.snow.diary.core.domain.action.dream.AllDreams
@@ -42,36 +41,29 @@ class DreamAmounts(
             firstDate?.coerceAtLeast(date) ?: date
         }
     ) { dreams, firstDate ->
-        d("DreamAmounts", "Got dreams with size  =${dreams.size} and firstDate = $firstDate")
         if (dreams.isEmpty() || firstDate == null) return@combine emptyList<Pair<LocalDate, Int>>()
 
         val amounts = mutableListOf<Pair<LocalDate, Int>>()
         var start = firstDate!! //Inclusive
         var end = firstDate.plus(period) //Exclusive
-        d("DreamAmounts", "Created initial start = $start and end = $end")
 
         while (end.isBefore(totalEnd)) {
             val dreamsInRange = dreams
                 .filter {
                     (it.created.isAfter(start) || it.created == start) && it.created.isBefore(end)
                 }
-            d("DreamAmounts", "Found ${dreamsInRange.size} dreams in range $start to $end")
-
             amounts.add(start to dreamsInRange.size)
 
             start = end
             end = start.plus(period)
-            d("DreamAmounts", "Adjusted start to $start and end to $end")
         }
 
         val lastAmount = dreams.filter {
             it.created.isAfter(start) && it.created.isBefore(end)
         }.size
-        d("DreamAmounts", "Found last dream in range $start to $end : $lastAmount")
 
         amounts.add(start to lastAmount)
 
-        d("DreamAmounts", "Will return amount: $amounts")
         return@combine amounts
     }
 
