@@ -436,9 +436,9 @@ object DomainModule {
     @Provides
     @Singleton
     fun provideDreamAmountAverage(
-        allDreams: AllDreams
-    ) = DreamAmountAverage(allDreams)
-
+        allDreams: AllDreams,
+        firstDreamDate: FirstDreamDate
+    ) = DreamAmountAverage(allDreams, firstDreamDate)
     @Provides
     @Singleton
     fun provideHappinessAverage(
