@@ -20,3 +20,7 @@
 #### Misx. Fixes
 - Removed debug logger statements
 - Fixed that when editing a dream, this would also alter the created timestamp instead of only the edited timestamp.
+
+## 1.0.0-alpha03 &rarr; 1.0.0-alpha06
+#### UI-Fixes
+- Fixed a bug where the app would crash when the dreams tab would be selected on the Person/location detail screen
