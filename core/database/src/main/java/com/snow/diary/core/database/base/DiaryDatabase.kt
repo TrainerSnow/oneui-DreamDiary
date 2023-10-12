@@ -47,7 +47,7 @@ abstract class DiaryDatabase : RoomDatabase() {
 
     companion object {
 
-        const val DB_VERSION = 5
+        const val DB_VERSION = 6
 
         const val DB_NAME = "Diary_Database"
 
