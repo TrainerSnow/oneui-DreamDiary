@@ -24,3 +24,7 @@
 ## 1.0.0-alpha03 &rarr; 1.0.0-alpha06
 #### UI-Fixes
 - Fixed a bug where the app would crash when the dreams tab would be selected on the Person/location detail screen
+
+## 1.0.0-alpha06 &rarr; 1.0.0-alpha07
+#### Misc. Fixes
+- Fixed a big where deleting a dream/person would not delete the crossreferences of that object. This would result in errors importing the exported file.
