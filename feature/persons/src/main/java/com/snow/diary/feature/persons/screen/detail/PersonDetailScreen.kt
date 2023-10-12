@@ -32,6 +32,7 @@ import com.snow.diary.core.model.data.Dream
 import com.snow.diary.core.model.data.Person
 import com.snow.diary.core.model.data.Relation
 import com.snow.diary.core.model.sort.SortConfig
+import com.snow.diary.core.model.sort.SortDirection
 import com.snow.diary.core.model.sort.SortMode
 import com.snow.diary.core.ui.feed.DreamFeed
 import com.snow.diary.core.ui.feed.DreamFeedState
@@ -232,7 +233,7 @@ private fun DreamsSection(
 ) {
     DreamFeed(
         modifier = modifier,
-        state = DreamFeedState.Success(state.dreams, true, SortConfig(SortMode.Created)),
+        state = DreamFeedState.Success(state.dreams, true, SortConfig(SortMode.Created, SortDirection.Descending)),
         dreamCallback = object : com.snow.diary.core.ui.callback.DreamCallback {
 
             override fun onClick(dream: Dream) {
