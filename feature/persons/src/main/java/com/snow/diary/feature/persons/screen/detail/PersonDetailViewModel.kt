@@ -10,6 +10,9 @@ import com.snow.diary.core.domain.action.person.PersonFromId
 import com.snow.diary.core.domain.action.person.PersonWithRelationsAct
 import com.snow.diary.core.domain.viewmodel.EventViewModel
 import com.snow.diary.core.model.data.Dream
+import com.snow.diary.core.model.sort.SortConfig
+import com.snow.diary.core.model.sort.SortDirection
+import com.snow.diary.core.model.sort.SortMode
 import com.snow.diary.feature.persons.nav.PersonDetailArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -84,7 +87,12 @@ private fun personDetailState(
     .flatMapMerge { person ->
         if (person == null) return@flatMapMerge flowOf(PersonDetailState.Error(id = id))
         else combine(
-            flow = dreamsFromPerson(person),
+            flow = dreamsFromPerson(
+                DreamsFromPerson.Input(
+                    person = person,
+                    sortConfig = SortConfig(SortMode.Created, SortDirection.Ascending)
+                )
+            ),
             flow2 = personWithRelationsAct(person)
         ) { dreams, pwr ->
             if (pwr == null) return@combine PersonDetailState.Error(id = id)

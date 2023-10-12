@@ -8,8 +8,11 @@ import com.snow.diary.core.domain.action.dream.UpdateDream
 import com.snow.diary.core.domain.action.location.DeleteLocation
 import com.snow.diary.core.domain.action.location.LocationById
 import com.snow.diary.core.domain.viewmodel.EventViewModel
-import com.snow.diary.feature.locations.nav.LocationDetailArgs
 import com.snow.diary.core.model.data.Dream
+import com.snow.diary.core.model.sort.SortConfig
+import com.snow.diary.core.model.sort.SortDirection
+import com.snow.diary.core.model.sort.SortMode
+import com.snow.diary.feature.locations.nav.LocationDetailArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -79,7 +82,12 @@ private fun locationDetailState(
 ): Flow<LocationDetailState> = locationById(id)
     .flatMapMerge { location ->
         if (location == null) flowOf(LocationDetailState.Error(id = id))
-        else dreamsFromLocation(location).map { dreams ->
+        else dreamsFromLocation(
+            DreamsFromLocation.Input(
+                location = location,
+                sortConfig = SortConfig(SortMode.Created, SortDirection.Ascending)
+            )
+        ).map { dreams ->
             LocationDetailState.Success(
                 location,
                 dreams

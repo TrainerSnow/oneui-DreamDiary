@@ -23,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.snow.diary.core.model.data.Dream
 import com.snow.diary.core.model.data.Location
 import com.snow.diary.core.model.sort.SortConfig
+import com.snow.diary.core.model.sort.SortDirection
 import com.snow.diary.core.model.sort.SortMode
 import com.snow.diary.core.ui.callback.DreamCallback
 import com.snow.diary.core.ui.feed.DreamFeed
@@ -211,7 +212,7 @@ private fun DreamsSection(
 ) {
     DreamFeed(
         modifier = modifier,
-        state = DreamFeedState.Success(state.dreams, true, SortConfig(SortMode.Created)),
+        state = DreamFeedState.Success(state.dreams, true, SortConfig(SortMode.Created, SortDirection.Descending)),
         dreamCallback = object : DreamCallback {
 
             override fun onClick(dream: Dream) {
