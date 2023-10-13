@@ -62,8 +62,7 @@ private fun ImportConfigScreen(
     val titleStyle = TextStyle(
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Center,
-        color = OneUITheme.colors.seslPrimaryTextColor
+        textAlign = TextAlign.Center
     )
 
     CollapsingToolbarLayout(

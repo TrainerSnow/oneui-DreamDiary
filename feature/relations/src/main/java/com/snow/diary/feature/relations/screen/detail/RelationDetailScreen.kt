@@ -180,8 +180,7 @@ private fun GeneralSection(
         )
         if (state.relation.notes != null) {
             val textStyle = TextStyle(
-                fontSize = 14.sp,
-                color = OneUITheme.colors.seslPrimaryTextColor
+                fontSize = 14.sp
             )
 
             TextSeparator(

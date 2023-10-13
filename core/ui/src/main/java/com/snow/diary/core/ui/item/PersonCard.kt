@@ -42,12 +42,10 @@ fun PersonCard(
     listPosition: ListPosition = ListPosition.Single,
 ) {
     val titleTextStyle = TextStyle(
-        color = OneUITheme.colors.seslPrimaryTextColor,
         fontSize = 17.sp,
         fontWeight = FontWeight.Medium
     )
     val descTextStyle = TextStyle(
-        color = OneUITheme.colors.seslPrimaryTextColor,
         fontSize = 13.sp
     )
 

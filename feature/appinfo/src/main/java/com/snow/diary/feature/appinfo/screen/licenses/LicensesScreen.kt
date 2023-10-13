@@ -85,12 +85,10 @@ private fun LicenseCard(
     onExpand: () -> Unit
 ) {
     val titleTextStyle = TextStyle(
-        color = OneUITheme.colors.seslPrimaryTextColor,
         fontSize = 17.sp,
         fontWeight = FontWeight.SemiBold
     )
     val nameTextStyle = TextStyle(
-        color = OneUITheme.colors.seslPrimaryTextColor,
         fontSize = 15.sp,
         fontWeight = FontWeight.Medium
     )
@@ -99,7 +97,6 @@ private fun LicenseCard(
         fontSize = 12.sp
     )
     val contentTextStyle = TextStyle(
-        color = OneUITheme.colors.seslPrimaryTextColor,
         fontSize = 13.sp
     )
 

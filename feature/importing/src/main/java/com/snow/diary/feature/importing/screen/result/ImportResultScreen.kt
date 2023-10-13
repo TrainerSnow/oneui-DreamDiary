@@ -85,7 +85,6 @@ private fun ImportingScreen(
 ) {
     val textStyle = TextStyle(
         fontSize = 14.sp,
-        color = OneUITheme.colors.seslPrimaryTextColor,
         textAlign = TextAlign.Center
     )
 
@@ -121,7 +120,6 @@ private fun SuccessScreen(
         val infoTextStyle = TextStyle(
             fontSize = 18.sp,
             fontWeight = FontWeight.SemiBold,
-            color = OneUITheme.colors.seslPrimaryTextColor,
             textAlign = TextAlign.Center
         )
         val importedTextStyle = TextStyle(
@@ -191,7 +189,6 @@ private fun ErrorScreen(
         val infoTextStyle = TextStyle(
             fontSize = 18.sp,
             fontWeight = FontWeight.SemiBold,
-            color = OneUITheme.colors.seslPrimaryTextColor,
             textAlign = TextAlign.Center
         )
         val problemTextStyle = TextStyle(

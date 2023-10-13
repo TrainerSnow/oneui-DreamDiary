@@ -62,8 +62,7 @@ internal fun DreamAmountGraph(
 ) {
     val periodStyle = TextStyle(
         fontSize = 16.sp,
-        fontWeight = FontWeight.Medium,
-        color = OneUITheme.colors.seslPrimaryTextColor
+        fontWeight = FontWeight.Medium
     )
     val axisLabelTextStyle = TextStyle(
         fontSize = 13.sp,
