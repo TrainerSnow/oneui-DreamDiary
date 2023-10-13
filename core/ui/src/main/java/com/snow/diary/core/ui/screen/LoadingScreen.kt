@@ -27,7 +27,6 @@ fun LoadingScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val style = TextStyle(
-            color = OneUITheme.colors.seslPrimaryTextColor,
             fontSize = 12.sp
         )
 

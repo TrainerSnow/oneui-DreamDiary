@@ -45,8 +45,7 @@ internal fun DreamMetricComponent(
 ) {
     val labelStyle = TextStyle(
         fontSize = 15.sp,
-        fontWeight = FontWeight.SemiBold,
-        color = OneUITheme.colors.seslPrimaryTextColor
+        fontWeight = FontWeight.SemiBold
     )
     val decimalFormat = DecimalFormat("#.##")
     val happinessColor = Color(0xfffcca05)

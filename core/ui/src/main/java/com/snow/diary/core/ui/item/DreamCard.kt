@@ -45,7 +45,6 @@ fun DreamCard(
     dreamCallback: DreamCallback = DreamCallback
 ) {
     val titleTextStyle = TextStyle(
-        color = OneUITheme.colors.seslPrimaryTextColor,
         fontSize = 17.sp,
         fontWeight = FontWeight.Medium
     )
@@ -54,7 +53,6 @@ fun DreamCard(
         fontSize = 12.sp
     )
     val descTextStyle = TextStyle(
-        color = OneUITheme.colors.seslPrimaryTextColor,
         fontSize = 13.sp
     )
     val updatedTextStyle = TextStyle(

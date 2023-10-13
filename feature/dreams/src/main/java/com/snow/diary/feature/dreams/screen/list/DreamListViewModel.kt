@@ -61,7 +61,13 @@ internal class DreamListViewModel @Inject constructor(
     }
 
     private fun handleDreamFavouriteClick(dream: Dream) = viewModelScope.launchInBackground {
-        updateDream(listOf(dream))
+        updateDream(
+            listOf(
+                dream.copy(
+                    isFavourite = !dream.isFavourite
+                )
+            )
+        )
     }
 
     private fun handleSortChange(sort: SortConfig) = viewModelScope.launch {

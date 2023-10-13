@@ -169,8 +169,7 @@ private fun GeneralSection(
             .verticalScroll(rememberScrollState())
     ) {
         val textStyle = TextStyle(
-            fontSize = 14.sp,
-            color = OneUITheme.colors.seslPrimaryTextColor
+            fontSize = 14.sp
         )
         if (state.location.notes != null) {
             TextSeparator(

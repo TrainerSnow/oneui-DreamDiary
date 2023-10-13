@@ -53,8 +53,7 @@ internal fun PersonsAmount(
         )
         val labelStyle = TextStyle(
             fontSize = 15.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = OneUITheme.colors.seslPrimaryTextColor
+            fontWeight = FontWeight.SemiBold
         )
         val personNumberStyle = TextStyle(
             fontSize = 13.sp,

@@ -24,8 +24,7 @@ fun OptionalInput(
     input: @Composable () -> Unit
 ) {
     val titleStyle = TextStyle(
-        fontSize = 17.sp,
-        color = OneUITheme.colors.seslPrimaryTextColor
+        fontSize = 17.sp
     )
 
     RoundedCornerBox(

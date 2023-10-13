@@ -31,7 +31,6 @@ import org.oneui.compose.preference.SwitchPreference
 import org.oneui.compose.progress.CircularProgressIndicatorSize
 import org.oneui.compose.progress.ProgressIndicator
 import org.oneui.compose.progress.ProgressIndicatorType
-import org.oneui.compose.theme.OneUITheme
 import org.oneui.compose.widgets.SwitchBar
 import org.oneui.compose.widgets.buttons.IconButton
 import dev.oneuiproject.oneui.R as IconR
@@ -97,8 +96,7 @@ private fun ObfuscationPreferencesScreen(
                 )
 
                 val infoTextStyle = TextStyle(
-                    fontSize = 14.sp,
-                    color = OneUITheme.colors.seslPrimaryTextColor
+                    fontSize = 14.sp
                 )
                 Text(
                     modifier = Modifier

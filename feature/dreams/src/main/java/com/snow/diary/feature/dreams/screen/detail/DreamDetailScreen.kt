@@ -296,8 +296,7 @@ private fun GeneralTab(
         when (tabState.subtab) {
             DreamDetailSubtab.Content -> {
                 val textStyle = TextStyle(
-                    fontSize = 14.sp,
-                    color = OneUITheme.colors.seslPrimaryTextColor
+                    fontSize = 14.sp
                 )
 
                 Column(

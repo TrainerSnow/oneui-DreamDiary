@@ -71,8 +71,7 @@ internal fun <Data> StatisticsComponent(
     ) {
         val titleStyle = TextStyle(
             fontSize = 21.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = OneUITheme.colors.seslPrimaryTextColor
+            fontWeight = FontWeight.SemiBold
         )
 
         Column(
@@ -111,8 +110,7 @@ private fun NoData(
     modifier: Modifier = Modifier
 ) {
     val infoStyle = TextStyle(
-        fontSize = 13.sp,
-        color = OneUITheme.colors.seslPrimaryTextColor
+        fontSize = 13.sp
     )
     Box(
         modifier = modifier
@@ -131,8 +129,7 @@ private fun Loading(
     modifier: Modifier = Modifier
 ) {
     val infoStyle = TextStyle(
-        fontSize = 13.sp,
-        color = OneUITheme.colors.seslPrimaryTextColor
+        fontSize = 13.sp
     )
     Column(
         modifier = modifier
