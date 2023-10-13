@@ -1,6 +1,8 @@
 package com.snow.diary
 
+import android.graphics.Color
 import android.os.Bundle
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -84,11 +86,18 @@ class RootActivity : FragmentActivity() {
 
         setupAuth()
 
-        enableEdgeToEdge()
-
         setContent {
             if (rootState == RootState.Loading) return@setContent
             val state = rootState as RootState.Success
+
+            val isDarkMode = isDarkMode(
+                system = isSystemInDarkTheme(),
+                pref = state.preferences.colorMode
+            )
+            enableEdgeToEdge(
+                statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) { isDarkMode },
+                navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) { isDarkMode }
+            )
 
             val didAuth by viewModel.didAuth.collectAsStateWithLifecycle()
             val needsAuth = state.preferences.requireAuth
@@ -98,11 +107,6 @@ class RootActivity : FragmentActivity() {
                 true -> didAuth
                 false -> true
             }
-
-            val isDarkMode = isDarkMode(
-                system = isSystemInDarkTheme(),
-                pref = state.preferences.colorMode
-            )
 
             val diaryState = rememberDiaryState(
                 windowSizeClass = calculateWindowSizeClass(this),
