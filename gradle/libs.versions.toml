@@ -14,7 +14,7 @@ coroutines = "1.7.3"
 #noinspection GradleDependency
 foundation = "1.6.0-alpha03" # For some reason, this needs to be the same version as the one in the lib. I don't know why.
 oneui_icons = "1.1.0"
-oneui = "0.5.3"
+oneui = "0.5.4"
 nav = "2.7.3"
 compose_lifecycle = "2.6.2"
 hilt_nav = "1.1.0-alpha01"
