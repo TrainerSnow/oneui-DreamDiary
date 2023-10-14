@@ -28,3 +28,13 @@
 ## 1.0.0-alpha06 &rarr; 1.0.0-alpha07
 #### Misc. Fixes
 - Fixed a big where deleting a dream/person would not delete the crossreferences of that object. This would result in errors importing the exported file.
+
+## 1.0.0-alpha07 &rarr; 1.0.0-alpha08
+#### UI-Fixes
+- Fixed a bug where when enabling dark/light theme to the opposite of what the device would be set to, the system bars were shown wrongly
+
+#### Misc. Fixes
+- Fixes a bug where clicking the favourite icon for a dream would not update the dream
+
+#### Misc. Changes
+- Bumped the oui-compose lib dependency to 0.5.3 
