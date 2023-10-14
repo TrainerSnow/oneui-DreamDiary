@@ -31,6 +31,7 @@ splashscreen = "1.0.1"
 biometric = "1.2.0-alpha05"
 window_size_clas = "1.1.2"
 licenses = "10.9.1"
+desugar_android = "2.0.3"
 
 [libraries]
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
@@ -73,6 +74,8 @@ androidx-biometric = { group = "androidx.biometric", name = "biometric-ktx", ver
 licenses-core = { group = "com.mikepenz", name = "aboutlibraries-core", version.ref = "licenses" }
 
 serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "json_serialization" }
+
+coreLibDesugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugar_android" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

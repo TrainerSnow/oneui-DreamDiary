@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId = "com.snow.diary"
-        minSdk = 28
+        minSdk = 26
         //noinspection OldTargetApi
         targetSdk = 33
         versionCode = 8
@@ -66,6 +66,8 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
@@ -124,4 +126,6 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:common"))
     implementation(libs.oneui)
+
+    coreLibraryDesugaring(libs.coreLibDesugaring)
 }
