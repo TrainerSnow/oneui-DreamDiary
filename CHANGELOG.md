@@ -37,4 +37,11 @@
 - Fixes a bug where clicking the favourite icon for a dream would not update the dream
 
 #### Misc. Changes
-- Bumped the oui-compose lib dependency to 0.5.3 
+- Bumped the oui-compose lib dependency to 0.5.3
+
+## 1.0.0-beta01 &rarr; 1.0.0
+#### Misc. Fixes:
+- Fixed a bug where the app would crash when going to the statistics tab when no dream was added yet.
+
+## Misc. Changes:
+- Changed the minSdk version to 26
