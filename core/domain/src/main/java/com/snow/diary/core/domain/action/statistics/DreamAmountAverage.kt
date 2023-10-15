@@ -24,7 +24,7 @@ class DreamAmountAverage(
     ) { dreams, firstDate ->
         val fixed = resolve()
 
-        val from = firstDate?.let { fixed.from.coerceAtLeast(firstDate) }
+        val from = firstDate?.let { fixed.from.coerceAtLeast(firstDate) } ?: return@combine 0F
         val to = fixed.to.coerceAtMost(LocalDate.now())
 
         val period = Period.between(from, to)
