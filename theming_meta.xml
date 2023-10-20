@@ -4,9 +4,9 @@
     GuideVersion="1.7">
     <AppMetaData
         BuildType="None"
-        Name="SESL"
+        Name="<App name>"
         TargetApi="19"
-        TargetPackageName="com.snow.diary"
+        TargetPackageName="<Package name>"
         VersionCode="1"
         VersionName="">
         <Property
