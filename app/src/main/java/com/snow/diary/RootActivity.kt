@@ -32,7 +32,6 @@ import com.snow.diary.core.domain.action.dream.AllDreams
 import com.snow.diary.core.domain.action.location.AllLocations
 import com.snow.diary.core.domain.action.person.AllPersons
 import com.snow.diary.core.domain.action.preferences.GetPreferences
-import com.snow.diary.core.model.preferences.ColorMode
 import com.snow.diary.ui.DiaryApplicationRoot
 import com.snow.diary.ui.rememberDiaryState
 import dagger.hilt.android.AndroidEntryPoint
@@ -90,13 +89,11 @@ class RootActivity : FragmentActivity() {
             if (rootState == RootState.Loading) return@setContent
             val state = rootState as RootState.Success
 
-            val isDarkMode = isDarkMode(
-                system = isSystemInDarkTheme(),
-                pref = state.preferences.colorMode
-            )
+            val darkMode = isSystemInDarkTheme()
+
             enableEdgeToEdge(
-                statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) { isDarkMode },
-                navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) { isDarkMode }
+                statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) { darkMode },
+                navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT) { darkMode }
             )
 
             val didAuth by viewModel.didAuth.collectAsStateWithLifecycle()
@@ -118,7 +115,7 @@ class RootActivity : FragmentActivity() {
 
             if (canProceed) {
                 OneUITheme(
-                    colorTheme = OneUIColorTheme.getTheme(dark = isDarkMode, dynamic = true)
+                    colorTheme = OneUIColorTheme.getTheme(darkMode, true)
                 ) {
                     Box(
                         modifier = Modifier
@@ -165,14 +162,5 @@ class RootActivity : FragmentActivity() {
                 .authenticate(authInfo)
         }
 
-    }
-
-    private fun isDarkMode(
-        system: Boolean,
-        pref: ColorMode
-    ): Boolean = when (pref) {
-        ColorMode.Light -> false
-        ColorMode.Dark -> true
-        ColorMode.System -> system
     }
 }

@@ -9,17 +9,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.snow.diary.core.model.preferences.ColorMode
 import com.snow.diary.core.model.preferences.UserPreferences
 import com.snow.diary.core.ui.preferences.PreferencesCategory
 import com.snow.diary.feature.preferences.R
-import com.snow.diary.feature.preferences.localization.localizedName
 import org.oneui.compose.base.Icon
 import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
 import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
 import org.oneui.compose.preference.BasePreference
-import org.oneui.compose.preference.DropdownPreference
 import org.oneui.compose.preference.SwitchPreference
 import org.oneui.compose.widgets.buttons.IconButton
 import org.oneui.compose.widgets.text.TextSeparator
@@ -65,7 +62,7 @@ private fun MainPreferencesScreen(
     ) {
         val ctx = LocalContext.current
 
-        PreferencesCategory(
+        /*PreferencesCategory(
             modifier = Modifier
                 .fillMaxWidth(),
             title = {
@@ -84,7 +81,7 @@ private fun MainPreferencesScreen(
                     onItemSelected = { onEvent(MainPreferencesEvent.ChangeColorMode(it)) }
                 )
             }
-        )
+        )*/ //TODO: Possibly re-add the option to customize dark/light mode
 
         PreferencesCategory(
             modifier = Modifier
