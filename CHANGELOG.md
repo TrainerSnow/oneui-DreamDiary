@@ -45,3 +45,8 @@
 
 ## Misc. Changes:
 - Changed the minSdk version to 26
+
+## 1.0.1 &rarr; 1.0.2
+#### Misc. Changes
+- Enabled the dynamic theming of the app on samsung devices
+- Removed the possibility to set the dark/light mide independant of the device setting
