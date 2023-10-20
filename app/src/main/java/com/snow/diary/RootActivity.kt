@@ -118,7 +118,7 @@ class RootActivity : FragmentActivity() {
 
             if (canProceed) {
                 OneUITheme(
-                    colorTheme = OneUIColorTheme.getTheme(dark = isDarkMode)
+                    colorTheme = OneUIColorTheme.getTheme(dark = isDarkMode, dynamic = true)
                 ) {
                     Box(
                         modifier = Modifier
