@@ -1,13 +1,17 @@
 package com.snow.diary.core.datastore.data
 
+import android.net.Uri
 import androidx.datastore.core.DataStore
 import com.snow.diary.core.datastore.ColorModeProto
 import com.snow.diary.core.datastore.ObfuscationPreferencesProto
 import com.snow.diary.core.datastore.UserPreferences
 import com.snow.diary.core.datastore.copy
+import com.snow.diary.core.model.preferences.BackupPreferences
+import com.snow.diary.core.model.preferences.BackupRule
 import com.snow.diary.core.model.preferences.ColorMode
 import com.snow.diary.core.model.preferences.ObfuscationPreferences
 import kotlinx.coroutines.flow.map
+import java.time.Period
 
 typealias UserPreferencesModel = com.snow.diary.core.model.preferences.UserPreferences
 
@@ -67,8 +71,28 @@ class PreferencesDataSource(
                         obfuscateLocations,
                         obfuscateRelations
                     )
-                }
+                },
+                backupPreferences = it.backupPreferences.toModel()
             )
         }
 
 }
+
+private fun com.snow.diary.core.datastore.BackupPreferences.toModel(): BackupPreferences =
+    BackupPreferences(
+        backupEnabled = backupEnabled,
+        backupDirectoryUri = try {
+            Uri.parse(backupDirUri) //Check if is valid
+            backupDirUri
+        } catch (_: Exception) {
+            null
+        },
+        backupRule = if (backupRuleDays > 0) BackupRule.TimeLimit(
+            Period.ofDays(
+                backupRuleDays
+            )
+        )
+        else if (backupRuleMaxAmount > 0) BackupRule.AmountLimit(backupRuleMaxAmount)
+        else if (backupRuleMegabytes > 0) BackupRule.StorageLimit(backupRuleMegabytes)
+        else BackupRule.Infinite
+    )

@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_package = "com.snow.diary.core.datastore";
+option java_multiple_files = true;
+
+message BackupPreferences {
+
+  bool backup_enabled = 1;
+
+  string backup_dir_uri = 2;
+
+  /*
+  Backup rules
+ */
+
+  bool backup_rule_infinite = 3;
+
+  //Disabled: -1
+  sint32 backup_rule_megabytes = 4;
+
+  //Disabled: -1
+  sint32 backup_rule_max_amount = 5;
+
+  //Disabled: -1
+  sint32 backup_rule_days = 6;
+}

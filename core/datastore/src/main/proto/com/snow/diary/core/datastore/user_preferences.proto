@@ -6,6 +6,7 @@ option java_multiple_files = true;
 import "com/snow/diary/core/datastore/color_mode.proto";
 import "com/snow/diary/core/datastore/security_mode.proto";
 import "com/snow/diary/core/datastore/obfuscation_preferences.proto";
+import "com/snow/diary/core/datastore/backup_preferences.proto";
 
 message UserPreferences {
 
@@ -14,5 +15,7 @@ message UserPreferences {
   bool requireAuth = 2;
 
   ObfuscationPreferencesProto obfuscationPreferences = 3;
+
+  BackupPreferences backupPreferences = 4;
 
 }

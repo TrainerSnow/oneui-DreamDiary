@@ -6,6 +6,8 @@ data class UserPreferences(
 
     val requireAuth: Boolean,
 
-    val obfuscationPreferences: ObfuscationPreferences
+    val obfuscationPreferences: ObfuscationPreferences,
+
+    val backupPreferences: BackupPreferences
 
 )
