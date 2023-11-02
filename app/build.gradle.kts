@@ -111,6 +111,8 @@ dependencies {
     implementation(libs.activity.compose)
     implementation(libs.compose.lifecycle.runtime)
 
+    implementation(libs.documentfile)
+
     implementation(project(":feature:dreams"))
     implementation(project(":feature:persons"))
     implementation(project(":feature:locations"))

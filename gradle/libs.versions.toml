@@ -31,7 +31,8 @@ splashscreen = "1.0.1"
 biometric = "1.2.0-alpha05"
 window_size_clas = "1.1.2"
 licenses = "10.9.1"
-desugar_android = "2.0.3"
+documentfile = "1.0.1"
+desugar_android = "2.0.4"
 
 [libraries]
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
@@ -77,6 +78,9 @@ serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serializ
 
 coreLibDesugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugar_android" }
 
+documentfile = { group = "androidx.documentfile", name = "documentfile", version.ref = "documentfile" }
+
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -87,8 +91,3 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 licenses = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "licenses" }
-
-[bundles]
-compose = ["compose-animation", "compose-bom", "compose-foundation", "compose-lifecycle-runtime", "compose-material3", "compose-material", "compose-material3-windowsizeclas", "compose-ui", "compose-ui-tooling", "compose-ui-tooling-preview", "activity-compose"]
-room = ["androidx-room-ktx", "androidx-room-runtime"]
-oneui = ["oneui", "oneui-icons"]
