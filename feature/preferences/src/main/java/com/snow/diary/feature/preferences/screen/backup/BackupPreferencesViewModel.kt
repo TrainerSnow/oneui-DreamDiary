@@ -1,6 +1,7 @@
 package com.snow.diary.feature.preferences.screen.backup;
 
 import androidx.lifecycle.viewModelScope
+import com.snow.diary.core.backup.BackupScheduler
 import com.snow.diary.core.domain.action.preferences.GetPreferences
 import com.snow.diary.core.domain.action.preferences.UpdateBackupEnabled
 import com.snow.diary.core.domain.action.preferences.UpdateBackupRule
@@ -21,7 +22,8 @@ internal class BackupPreferencesViewModel @Inject constructor(
     val updateBackupEnabled: UpdateBackupEnabled,
     val updateBackupRule: UpdateBackupRule,
     val updateBackupTiming: UpdateBackupTiming,
-    val updateBackupUri: UpdateBackupUri
+    val updateBackupUri: UpdateBackupUri,
+    val backupScheduler: BackupScheduler
 ) : EventViewModel<BackupPreferencesEvent>() {
 
     val state = getPreferences(Unit)
@@ -55,6 +57,7 @@ internal class BackupPreferencesViewModel @Inject constructor(
 
         is BackupPreferencesEvent.ChangeBackupTiming -> {
             updateBackupTiming(event.timing)
+            rescheduleBackups()
         }
 
         is BackupPreferencesEvent.ChangeBackupValue -> {
@@ -65,15 +68,24 @@ internal class BackupPreferencesViewModel @Inject constructor(
                     )
                 )
             }
-            true
+            Unit
         }
 
         BackupPreferencesEvent.ToggleBackup -> {
             state.value?.backupEnabled?.let { enabled ->
                 updateBackupEnabled(!enabled)
             }
-            true
+            if (state.value?.backupEnabled == true) {
+                rescheduleBackups()
+            } else Unit
         }
+    }
+
+    private suspend fun rescheduleBackups() {
+        val timing = state.value?.backupTiming ?: return
+
+        backupScheduler.cancelAll()
+        backupScheduler.schedule(timing)
     }
 
 }
