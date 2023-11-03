@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.snow.diary.core.domain.action.preferences.GetPreferences
 import com.snow.diary.core.domain.action.preferences.UpdateBackupEnabled
 import com.snow.diary.core.domain.action.preferences.UpdateBackupRule
+import com.snow.diary.core.domain.action.preferences.UpdateBackupTiming
 import com.snow.diary.core.domain.viewmodel.EventViewModel
 import com.snow.diary.core.model.preferences.BackupRule
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,8 @@ import javax.inject.Inject
 internal class BackupPreferencesViewModel @Inject constructor(
     getPreferences: GetPreferences,
     val updateBackupEnabled: UpdateBackupEnabled,
-    val updateBackupRule: UpdateBackupRule
+    val updateBackupRule: UpdateBackupRule,
+    val updateBackupTiming: UpdateBackupTiming
 ) : EventViewModel<BackupPreferencesEvent>() {
 
     val state = getPreferences(Unit)
@@ -25,7 +27,8 @@ internal class BackupPreferencesViewModel @Inject constructor(
             BackupPreferencesState(
                 rule = it.backupPreferences.backupRule.toUiRule(),
                 ruleValue = it.backupPreferences.backupRule.value(),
-                backupEnabled = it.backupPreferences.backupEnabled
+                backupEnabled = it.backupPreferences.backupEnabled,
+                backupTiming = it.backupPreferences.backupTiming
             )
         }
         .stateIn(
@@ -36,14 +39,15 @@ internal class BackupPreferencesViewModel @Inject constructor(
 
     override suspend fun handleEvent(event: BackupPreferencesEvent): Any = when (event) {
         is BackupPreferencesEvent.ChangeBackupRule -> {
-            state.value?.let {
-                updateBackupRule(
-                    createBackupRule(
-                        event.rule, defaultValues[event.rule]
-                    )
+            updateBackupRule(
+                createBackupRule(
+                    event.rule, defaultValues[event.rule]
                 )
-            }
-            true
+            )
+        }
+
+        is BackupPreferencesEvent.ChangeBackupTiming -> {
+            updateBackupTiming(event.timing)
         }
 
         is BackupPreferencesEvent.ChangeBackupValue -> {

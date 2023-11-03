@@ -41,4 +41,10 @@
     <string name="preferences_backup_amount_limit_hint">Total amount of backups to keep</string>
     <string name="preferences_backup_time_limit">Time limit</string>
     <string name="preferences_backup_time_limit_hint">Days</string>
+
+    <string name="preferences_backup_timing">Backup timing</string>
+    <string name="preferences_backup_timing_monthly">Monthly</string>
+    <string name="preferences_backup_timing_weekly">Weekly</string>
+    <string name="preferences_backup_timing_daily">Daily</string>
+    <string name="preferences_backup_timing_dynamic">On change</string>
 </resources>

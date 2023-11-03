@@ -2,6 +2,9 @@ package com.snow.diary.feature.preferences.screen.backup
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.snow.diary.core.model.preferences.BackupTiming
 import com.snow.diary.feature.preferences.R
 import dev.oneuiproject.oneui.R as IconR
 
@@ -11,9 +14,21 @@ internal data class BackupPreferencesState(
 
     val ruleValue: Int?,
 
-    val backupEnabled: Boolean
+    val backupEnabled: Boolean,
+
+    val backupTiming: BackupTiming
 
 )
+
+val BackupTiming.localizedName: String
+    @Composable get() = stringResource(
+        when (this) {
+            BackupTiming.Monthly -> R.string.preferences_backup_timing_monthly
+            BackupTiming.Weekly -> R.string.preferences_backup_timing_weekly
+            BackupTiming.Daily -> R.string.preferences_backup_timing_daily
+            BackupTiming.Dynamic -> R.string.preferences_backup_timing_dynamic
+        }
+    )
 
 internal enum class UIBackupRule(
 

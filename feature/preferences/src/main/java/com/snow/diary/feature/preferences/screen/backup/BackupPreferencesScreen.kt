@@ -11,7 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.snow.diary.core.model.preferences.BackupPreferences
+import com.snow.diary.core.model.preferences.BackupTiming
 import com.snow.diary.core.ui.preferences.PreferencesCategory
 import com.snow.diary.feature.preferences.R
 import org.oneui.compose.base.Icon
@@ -46,7 +46,7 @@ private fun BackupPreferencesScreen(
     onNavigateBack: () -> Unit,
     onEvent: (BackupPreferencesEvent) -> Unit
 ) {
-    if(state == null) return
+    if (state == null) return
 
     CollapsingToolbarLayout(
         modifier = Modifier
@@ -82,7 +82,43 @@ private fun BackupPreferencesScreen(
             },
             enabled = state.backupEnabled
         )
+
+        TimingSection(
+            modifier = Modifier
+                .fillMaxWidth(),
+            timing = state.backupTiming,
+            onTimingChanged = {
+                onEvent(BackupPreferencesEvent.ChangeBackupTiming(it))
+            }
+        )
     }
+}
+
+@Composable
+private fun TimingSection(
+    modifier: Modifier = Modifier,
+    timing: BackupTiming,
+    onTimingChanged: (BackupTiming) -> Unit
+) {
+    val names = BackupTiming.entries.associateWith { it.localizedName }
+
+    PreferencesCategory(
+        modifier = modifier,
+        title = {
+            TextSeparator(
+                text = stringResource(R.string.preferences_backup_timing)
+            )
+        },
+        preferences = listOf {
+            SingleSelectPreference(
+                title = stringResource(R.string.preferences_backup_timing),
+                value = timing,
+                values = BackupTiming.entries,
+                onValueChange = onTimingChanged,
+                nameFor = { names[it]!! }
+            )
+        }
+    )
 }
 
 @Composable
