@@ -17,7 +17,9 @@ import com.snow.diary.feature.preferences.R
 import org.oneui.compose.base.Icon
 import org.oneui.compose.base.IconView
 import org.oneui.compose.input.InputFormField
+import org.oneui.compose.layout.toolbar.CollapsingToolbarCollapsedState
 import org.oneui.compose.layout.toolbar.CollapsingToolbarLayout
+import org.oneui.compose.layout.toolbar.rememberCollapsingToolbarState
 import org.oneui.compose.preference.SingleSelectPreference
 import org.oneui.compose.util.ListPosition
 import org.oneui.compose.widgets.EditText
@@ -57,7 +59,8 @@ private fun BackupPreferencesScreen(
                 icon = Icon.Resource(IconR.drawable.ic_oui_back),
                 onClick = onNavigateBack
             )
-        }
+        },
+        state = rememberCollapsingToolbarState(CollapsingToolbarCollapsedState.COLLAPSED)
     ) {
         SwitchBar(
             modifier = Modifier
@@ -89,7 +92,8 @@ private fun BackupPreferencesScreen(
             timing = state.backupTiming,
             onTimingChanged = {
                 onEvent(BackupPreferencesEvent.ChangeBackupTiming(it))
-            }
+            },
+            enabled = state.backupEnabled
         )
     }
 }
@@ -98,7 +102,8 @@ private fun BackupPreferencesScreen(
 private fun TimingSection(
     modifier: Modifier = Modifier,
     timing: BackupTiming,
-    onTimingChanged: (BackupTiming) -> Unit
+    onTimingChanged: (BackupTiming) -> Unit,
+    enabled: Boolean
 ) {
     val names = BackupTiming.entries.associateWith { it.localizedName }
 
@@ -115,7 +120,8 @@ private fun TimingSection(
                 value = timing,
                 values = BackupTiming.entries,
                 onValueChange = onTimingChanged,
-                nameFor = { names[it]!! }
+                nameFor = { names[it]!! },
+                enabled = enabled
             )
         }
     )
