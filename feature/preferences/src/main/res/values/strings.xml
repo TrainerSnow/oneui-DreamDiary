@@ -3,12 +3,15 @@
     <string name="preferences_main_title">Settings</string>
     <string name="preferences_main_section_visuals">Visuals</string>
     <string name="preferences_main_section_privacy">Privacy</string>
+    <string name="preferences_main_section_data_security">Data security</string>
     <string name="preferences_main_colormode">Color theme</string>
     <string name="preferences_main_requireauth">Require authentication</string>
     <string name="preferences_main_requireauth_desc">Prompt to enter password/pin when opening the application.</string>
     <string name="preferences_main_securitymode_desc">Methods to protect this app from unauthorized access.</string>
     <string name="preferences_main_obfuscation">Showcase mode</string>
     <string name="preferences_main_obfuscation_desc">Obfuscate information such as e.g. names and notes to showcase the app.</string>
+    <string name="preferences_main_backup">Backup</string>
+    <string name="preferences_main_backup_desc">Automatically create backups to safeguard your data.</string>
 
     <string name="preferences_obfuscate_title">Showcase mode</string>
     <string name="preferences_obfuscate_info">If you want to show you data to other people, filter out what kind of information should be obfuscated and what part of the app can be shown openly.</string>
@@ -26,4 +29,16 @@
     <string name="securitymode_none">None</string>
     <string name="about_this_app">About this app</string>
     <string name="preferences_main_section_other">Other</string>
+
+    <string name="preferences_backup">Backup</string>
+    <string name="preferences_backup_rule">Backup rule</string>
+
+    <string name="preferences_backup_rule_infinite">Infinite</string>
+
+    <string name="preferences_backup_data_limit">Data limit</string>
+    <string name="preferences_backup_data_limit_hint">Maximum amount (MB)</string>
+    <string name="preferences_backup_amount_limit">Fixed amount</string>
+    <string name="preferences_backup_amount_limit_hint">Total amount of backups to keep</string>
+    <string name="preferences_backup_time_limit">Time limit</string>
+    <string name="preferences_backup_time_limit_hint">Days</string>
 </resources>
