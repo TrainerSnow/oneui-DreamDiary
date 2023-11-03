@@ -27,6 +27,7 @@ import dev.oneuiproject.oneui.R as IconR
 internal fun MainPreferencesScreen(
     viewModel: MainPreferencesViewModel = hiltViewModel(),
     onNavigateToObfuscationPreferences: () -> Unit,
+    onNavigateToBackupPreferences: () -> Unit,
     onAboutClick: () -> Unit,
     onNavigateBack: () -> Unit
 ) {
@@ -36,6 +37,7 @@ internal fun MainPreferencesScreen(
         prefs = prefs,
         onEvent = viewModel::onEvent,
         onNavigateToObfuscationPreferences = onNavigateToObfuscationPreferences,
+        onNavigateToBackupPreferences = onNavigateToBackupPreferences,
         onAboutClick = onAboutClick,
         onNavigateBack = onNavigateBack
     )
@@ -46,6 +48,7 @@ private fun MainPreferencesScreen(
     prefs: UserPreferences?,
     onEvent: (MainPreferencesEvent) -> Unit,
     onNavigateToObfuscationPreferences: () -> Unit,
+    onNavigateToBackupPreferences: () -> Unit,
     onAboutClick: () -> Unit,
     onNavigateBack: () -> Unit
 ) {
@@ -120,6 +123,31 @@ private fun MainPreferencesScreen(
                     )
                 }
             )
+        )
+
+        PreferencesCategory(
+            modifier = Modifier
+                .fillMaxWidth(),
+            title = {
+                TextSeparator(
+                    text = stringResource(R.string.preferences_main_section_data_security)
+                )
+            },
+            preferences = listOf {
+                BasePreference(
+                    onClick = onNavigateToBackupPreferences,
+                    title = {
+                        Text(
+                            text = stringResource(R.string.preferences_main_backup)
+                        )
+                    },
+                    summary = {
+                        Text(
+                            text = stringResource(R.string.preferences_main_backup_desc)
+                        )
+                    }
+                )
+            }
         )
 
         PreferencesCategory(
