@@ -47,4 +47,7 @@
     <string name="preferences_backup_timing_weekly">Weekly</string>
     <string name="preferences_backup_timing_daily">Daily</string>
     <string name="preferences_backup_timing_dynamic">On change</string>
+    <string name="preferences_backup_directory_error">An error occured while trying to pick a directory. Please try again.</string>
+    <string name="preferences_backup_directory">Backup location</string>
+    <string name="preferences_backup_directory_placeholder">[No location set]</string>
 </resources>

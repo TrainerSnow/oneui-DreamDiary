@@ -1,10 +1,12 @@
 package com.snow.diary.feature.preferences.screen.backup;
 
+import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.core.domain.action.preferences.GetPreferences
 import com.snow.diary.core.domain.action.preferences.UpdateBackupEnabled
 import com.snow.diary.core.domain.action.preferences.UpdateBackupRule
 import com.snow.diary.core.domain.action.preferences.UpdateBackupTiming
+import com.snow.diary.core.domain.action.preferences.UpdateBackupUri
 import com.snow.diary.core.domain.viewmodel.EventViewModel
 import com.snow.diary.core.model.preferences.BackupRule
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +21,8 @@ internal class BackupPreferencesViewModel @Inject constructor(
     getPreferences: GetPreferences,
     val updateBackupEnabled: UpdateBackupEnabled,
     val updateBackupRule: UpdateBackupRule,
-    val updateBackupTiming: UpdateBackupTiming
+    val updateBackupTiming: UpdateBackupTiming,
+    val updateBackupUri: UpdateBackupUri
 ) : EventViewModel<BackupPreferencesEvent>() {
 
     val state = getPreferences(Unit)
@@ -28,7 +31,10 @@ internal class BackupPreferencesViewModel @Inject constructor(
                 rule = it.backupPreferences.backupRule.toUiRule(),
                 ruleValue = it.backupPreferences.backupRule.value(),
                 backupEnabled = it.backupPreferences.backupEnabled,
-                backupTiming = it.backupPreferences.backupTiming
+                backupTiming = it.backupPreferences.backupTiming,
+                backupDirectoryPath = it.backupPreferences.backupDirectoryUri?.let { uri ->
+                    Uri.parse(uri).path
+                }
             )
         }
         .stateIn(
@@ -44,6 +50,10 @@ internal class BackupPreferencesViewModel @Inject constructor(
                     event.rule, defaultValues[event.rule]
                 )
             )
+        }
+
+        is BackupPreferencesEvent.ChangeUri -> {
+            updateBackupUri(event.uri.toString())
         }
 
         is BackupPreferencesEvent.ChangeBackupTiming -> {

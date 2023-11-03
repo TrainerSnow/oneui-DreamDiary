@@ -16,7 +16,9 @@ internal data class BackupPreferencesState(
 
     val backupEnabled: Boolean,
 
-    val backupTiming: BackupTiming
+    val backupTiming: BackupTiming,
+
+    val backupDirectoryPath: String?
 
 )
 

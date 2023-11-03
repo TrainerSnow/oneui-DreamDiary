@@ -1,5 +1,6 @@
 package com.snow.diary.feature.preferences.screen.backup
 
+import android.net.Uri
 import com.snow.diary.core.model.preferences.BackupTiming
 
 internal sealed class BackupPreferencesEvent {
@@ -16,6 +17,10 @@ internal sealed class BackupPreferencesEvent {
 
     data class ChangeBackupTiming(
         val timing: BackupTiming
+    ): BackupPreferencesEvent()
+
+    data class ChangeUri(
+        val uri: Uri
     ): BackupPreferencesEvent()
 
 }
