@@ -53,6 +53,36 @@ class PreferencesDataSource(
             }
         }
 
+    suspend fun updateBackupEnabled(enabled: Boolean) = dataStore
+        .updateData { prefs ->
+            prefs.copy {
+                backupPreferences = backupPreferences.copy {
+                    backupEnabled = enabled
+                }
+            }
+        }
+
+    suspend fun updateBackupUri(uri: String) = dataStore
+        .updateData { prefs ->
+            prefs.copy {
+                backupPreferences = backupPreferences.copy {
+                    backupDirUri = uri
+                }
+            }
+        }
+
+    suspend fun updateBackupRule(backupRule: BackupRule) = dataStore
+        .updateData { prefs ->
+            prefs.copy {
+                backupPreferences = backupPreferences.copy {
+                    backupRuleInfinite = backupRule == BackupRule.Infinite
+                    backupRuleDays = (backupRule as? BackupRule.TimeLimit)?.period?.days ?: -1
+                    backupRuleMegabytes = (backupRule as? BackupRule.StorageLimit)?.megabytes ?: -1
+                    backupRuleMaxAmount = (backupRule as? BackupRule.AmountLimit)?.backups ?: -1
+                }
+            }
+        }
+
     val data = dataStore
         .data
         .map {
