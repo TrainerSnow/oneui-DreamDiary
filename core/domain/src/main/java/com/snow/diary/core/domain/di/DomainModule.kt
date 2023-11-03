@@ -45,6 +45,7 @@ import com.snow.diary.core.domain.action.person.UpdatePerson
 import com.snow.diary.core.domain.action.preferences.GetPreferences
 import com.snow.diary.core.domain.action.preferences.UpdateBackupEnabled
 import com.snow.diary.core.domain.action.preferences.UpdateBackupRule
+import com.snow.diary.core.domain.action.preferences.UpdateBackupTiming
 import com.snow.diary.core.domain.action.preferences.UpdateBackupUri
 import com.snow.diary.core.domain.action.preferences.UpdateColorMode
 import com.snow.diary.core.domain.action.preferences.UpdateObfuscationPreferences
@@ -408,6 +409,12 @@ object DomainModule {
     fun provideUpdateBackupUri(
         prefsDataSource: PreferencesDataSource
     ) = UpdateBackupUri(prefsDataSource)
+
+    @Provides
+    @Singleton
+    fun provideUpdateBackupTiming(
+        prefsDataSource: PreferencesDataSource
+    ) = UpdateBackupTiming(prefsDataSource)
 
 
     /*

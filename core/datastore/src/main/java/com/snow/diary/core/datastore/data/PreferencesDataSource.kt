@@ -85,6 +85,20 @@ class PreferencesDataSource(
             }
         }
 
+    suspend fun updateBackupTiming(timing: BackupTiming) = dataStore
+        .updateData { prefs ->
+            prefs.copy {
+                backupPreferences = backupPreferences.copy {
+                    backupTiming = when (timing) {
+                        BackupTiming.Monthly -> BackupTimingProto.BACKUP_TIMING_MONTHLY
+                        BackupTiming.Weekly -> BackupTimingProto.BACKUP_TIMING_WEEKLY
+                        BackupTiming.Daily -> BackupTimingProto.BACKUP_TIMING_DAILY
+                        BackupTiming.Dynamic -> BackupTimingProto.BACKUP_TIMING_DYNAMIC
+                    }
+                }
+            }
+        }
+
     val data = dataStore
         .data
         .map {
