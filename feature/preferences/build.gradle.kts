@@ -69,4 +69,6 @@ dependencies {
     implementation(project(":core:form"))
     implementation(libs.oneui)
     implementation(libs.oneui.icons)
+
+    implementation(libs.reflect)
 }
