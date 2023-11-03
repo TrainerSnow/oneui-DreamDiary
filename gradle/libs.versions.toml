@@ -33,6 +33,7 @@ window_size_clas = "1.1.2"
 licenses = "10.9.1"
 documentfile = "1.0.1"
 desugar_android = "2.0.4"
+work = "2.8.1"
 
 [libraries]
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
@@ -81,6 +82,7 @@ coreLibDesugaring = { group = "com.android.tools", name = "desugar_jdk_libs", ve
 documentfile = { group = "androidx.documentfile", name = "documentfile", version.ref = "documentfile" }
 
 reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
+workmanager = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "work" }
 
 
 [plugins]

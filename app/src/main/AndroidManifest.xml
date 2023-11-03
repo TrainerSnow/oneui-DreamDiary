@@ -12,6 +12,19 @@
         android:theme="@style/Theme.App"
         tools:targetApi="31">
 
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <!-- If you are using androidx.startup to initialize other components -->
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
+
+
         <meta-data
             android:name="theming-meta"
             android:value="theming_meta_example" />

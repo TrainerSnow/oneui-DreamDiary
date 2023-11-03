@@ -112,6 +112,7 @@ dependencies {
     implementation(libs.compose.lifecycle.runtime)
 
     implementation(libs.documentfile)
+    implementation(libs.workmanager)
 
     implementation(project(":feature:dreams"))
     implementation(project(":feature:persons"))
@@ -127,6 +128,7 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:ui"))
     implementation(project(":core:common"))
+    implementation(project(":core:backup"))
     implementation(libs.oneui)
 
     coreLibraryDesugaring(libs.coreLibDesugaring)
