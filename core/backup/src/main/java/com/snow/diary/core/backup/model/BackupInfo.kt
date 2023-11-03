@@ -16,10 +16,17 @@ data class BackupInfo(
 
         fun createFilename(timestamp: LocalDateTime): String = "Diary-Backup($timestamp).json"
 
-        fun timestampFromName(name: String): LocalDateTime = name
+        fun timestampFromName(name: String): LocalDateTime? = name
             .replace("Diary-Backup(", "")
             .replace(").json", "")
-            .let(LocalDateTime::parse)
+            .replace("_", ":") // Android filesystem replaces ':' with '_'
+            .let {
+                try {
+                    LocalDateTime.parse(it)
+                } catch (_: Exception) {
+                    null
+                }
+            }
 
     }
 
