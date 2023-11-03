@@ -1,6 +1,5 @@
 package com.snow.diary.core.datastore.data
 
-import android.net.Uri
 import androidx.datastore.core.DataStore
 import com.snow.diary.core.datastore.BackupTimingProto
 import com.snow.diary.core.datastore.ColorModeProto
@@ -13,6 +12,7 @@ import com.snow.diary.core.model.preferences.BackupTiming
 import com.snow.diary.core.model.preferences.ColorMode
 import com.snow.diary.core.model.preferences.ObfuscationPreferences
 import kotlinx.coroutines.flow.map
+import java.net.URI
 import java.time.Period
 
 typealias UserPreferencesModel = com.snow.diary.core.model.preferences.UserPreferences
@@ -127,9 +127,9 @@ class PreferencesDataSource(
 private fun com.snow.diary.core.datastore.BackupPreferences.toModel(): BackupPreferences =
     BackupPreferences(
         backupEnabled = backupEnabled,
-        backupDirectoryUri = try {
-            Uri.parse(backupDirUri) //Check if is valid
-            backupDirUri
+        backupDirectoryUri = if (backupDirUri.isBlank()) null
+        else try {
+            URI(backupDirUri)
         } catch (_: Exception) {
             null
         },

@@ -1,12 +1,13 @@
 package com.snow.diary.core.model.preferences
 
+import java.net.URI
 import java.time.Period
 
 data class BackupPreferences(
 
     val backupEnabled: Boolean,
 
-    val backupDirectoryUri: String?,
+    val backupDirectoryUri: URI?,
 
     val backupRule: BackupRule,
 

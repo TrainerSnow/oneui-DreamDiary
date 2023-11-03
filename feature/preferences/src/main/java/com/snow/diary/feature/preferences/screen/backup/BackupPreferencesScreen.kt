@@ -125,7 +125,8 @@ private fun BackupPreferencesScreen(
             modifier = Modifier
                 .fillMaxWidth(),
             path = state.backupDirectoryPath,
-            onClick = onSelectDirectory
+            onClick = onSelectDirectory,
+            enabled = state.backupEnabled
         )
     }
 }
@@ -134,7 +135,8 @@ private fun BackupPreferencesScreen(
 private fun DirectorySection(
     modifier: Modifier = Modifier,
     path: String?,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    enabled: Boolean
 ) {
     PreferencesCategory(
         modifier = modifier,
@@ -151,7 +153,8 @@ private fun DirectorySection(
                         text = path
                             ?: stringResource(R.string.preferences_backup_directory_placeholder)
                     )
-                }
+                },
+                enabled = enabled
             )
         },
         title = {

@@ -1,6 +1,5 @@
 package com.snow.diary.feature.preferences.screen.backup;
 
-import android.net.Uri
 import androidx.lifecycle.viewModelScope
 import com.snow.diary.core.domain.action.preferences.GetPreferences
 import com.snow.diary.core.domain.action.preferences.UpdateBackupEnabled
@@ -32,9 +31,7 @@ internal class BackupPreferencesViewModel @Inject constructor(
                 ruleValue = it.backupPreferences.backupRule.value(),
                 backupEnabled = it.backupPreferences.backupEnabled,
                 backupTiming = it.backupPreferences.backupTiming,
-                backupDirectoryPath = it.backupPreferences.backupDirectoryUri?.let { uri ->
-                    Uri.parse(uri).path
-                }
+                backupDirectoryPath = it.backupPreferences.backupDirectoryUri?.path
             )
         }
         .stateIn(
