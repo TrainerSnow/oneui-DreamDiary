@@ -1,7 +1,6 @@
 package com.snow.diary.core.backup.di
 
 import android.content.Context
-import androidx.work.WorkerFactory
 import com.snow.diary.core.backup.BackupRepository
 import com.snow.diary.core.backup.BackupScheduler
 import com.snow.diary.core.backup.implementation.FileBackupRepository
@@ -41,6 +40,6 @@ object BackupModule {
     fun backupWorkerFactory(
         getPreferences: GetPreferences,
         backupRepository: BackupRepository
-    ): WorkerFactory = BackupWorkerFactory(getPreferences, backupRepository)
+    ): BackupWorkerFactory = BackupWorkerFactory(getPreferences, backupRepository)
 
 }
