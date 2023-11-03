@@ -8,11 +8,13 @@ import com.snow.diary.feature.preferences.screen.main.MainPreferencesScreen
 
 private const val mainPreferencesRoute = "main_preferences"
 
-fun NavController.goToMainPreferences(navOptions: NavOptions? = null) = navigate(mainPreferencesRoute)
+fun NavController.goToMainPreferences(navOptions: NavOptions? = null) =
+    navigate(mainPreferencesRoute)
 
 fun NavGraphBuilder.mainPreferences(
     onNavigateBack: () -> Unit,
     onNavigateToObfuscationPreferences: () -> Unit,
+    onNavigateToBackupPreferences: () -> Unit,
     onAboutClick: () -> Unit,
 ) {
     composable(
@@ -21,6 +23,7 @@ fun NavGraphBuilder.mainPreferences(
         MainPreferencesScreen(
             onNavigateBack = onNavigateBack,
             onNavigateToObfuscationPreferences = onNavigateToObfuscationPreferences,
+            onNavigateToBackupPreferences = onNavigateToBackupPreferences,
             onAboutClick = onAboutClick
         )
     }

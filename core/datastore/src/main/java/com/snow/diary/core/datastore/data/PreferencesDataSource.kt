@@ -1,16 +1,18 @@
 package com.snow.diary.core.datastore.data
 
-import android.net.Uri
 import androidx.datastore.core.DataStore
+import com.snow.diary.core.datastore.BackupTimingProto
 import com.snow.diary.core.datastore.ColorModeProto
 import com.snow.diary.core.datastore.ObfuscationPreferencesProto
 import com.snow.diary.core.datastore.UserPreferences
 import com.snow.diary.core.datastore.copy
 import com.snow.diary.core.model.preferences.BackupPreferences
 import com.snow.diary.core.model.preferences.BackupRule
+import com.snow.diary.core.model.preferences.BackupTiming
 import com.snow.diary.core.model.preferences.ColorMode
 import com.snow.diary.core.model.preferences.ObfuscationPreferences
 import kotlinx.coroutines.flow.map
+import java.net.URI
 import java.time.Period
 
 typealias UserPreferencesModel = com.snow.diary.core.model.preferences.UserPreferences
@@ -53,6 +55,50 @@ class PreferencesDataSource(
             }
         }
 
+    suspend fun updateBackupEnabled(enabled: Boolean) = dataStore
+        .updateData { prefs ->
+            prefs.copy {
+                backupPreferences = backupPreferences.copy {
+                    backupEnabled = enabled
+                }
+            }
+        }
+
+    suspend fun updateBackupUri(uri: String) = dataStore
+        .updateData { prefs ->
+            prefs.copy {
+                backupPreferences = backupPreferences.copy {
+                    backupDirUri = uri
+                }
+            }
+        }
+
+    suspend fun updateBackupRule(backupRule: BackupRule) = dataStore
+        .updateData { prefs ->
+            prefs.copy {
+                backupPreferences = backupPreferences.copy {
+                    backupRuleInfinite = backupRule == BackupRule.Infinite
+                    backupRuleDays = (backupRule as? BackupRule.TimeLimit)?.period?.days ?: -1
+                    backupRuleMegabytes = (backupRule as? BackupRule.StorageLimit)?.megabytes ?: -1
+                    backupRuleMaxAmount = (backupRule as? BackupRule.AmountLimit)?.backups ?: -1
+                }
+            }
+        }
+
+    suspend fun updateBackupTiming(timing: BackupTiming) = dataStore
+        .updateData { prefs ->
+            prefs.copy {
+                backupPreferences = backupPreferences.copy {
+                    backupTiming = when (timing) {
+                        BackupTiming.Monthly -> BackupTimingProto.BACKUP_TIMING_MONTHLY
+                        BackupTiming.Weekly -> BackupTimingProto.BACKUP_TIMING_WEEKLY
+                        BackupTiming.Daily -> BackupTimingProto.BACKUP_TIMING_DAILY
+                        BackupTiming.Dynamic -> BackupTimingProto.BACKUP_TIMING_DYNAMIC
+                    }
+                }
+            }
+        }
+
     val data = dataStore
         .data
         .map {
@@ -81,9 +127,9 @@ class PreferencesDataSource(
 private fun com.snow.diary.core.datastore.BackupPreferences.toModel(): BackupPreferences =
     BackupPreferences(
         backupEnabled = backupEnabled,
-        backupDirectoryUri = try {
-            Uri.parse(backupDirUri) //Check if is valid
-            backupDirUri
+        backupDirectoryUri = if (backupDirUri.isBlank()) null
+        else try {
+            URI(backupDirUri)
         } catch (_: Exception) {
             null
         },
@@ -94,5 +140,11 @@ private fun com.snow.diary.core.datastore.BackupPreferences.toModel(): BackupPre
         )
         else if (backupRuleMaxAmount > 0) BackupRule.AmountLimit(backupRuleMaxAmount)
         else if (backupRuleMegabytes > 0) BackupRule.StorageLimit(backupRuleMegabytes)
-        else BackupRule.Infinite
+        else BackupRule.Infinite,
+        backupTiming = when (backupTiming) {
+            BackupTimingProto.BACKUP_TIMING_MONTHLY -> BackupTiming.Monthly
+            BackupTimingProto.BACKUP_TIMING_DAILY -> BackupTiming.Daily
+            BackupTimingProto.BACKUP_TIMING_DYNAMIC -> BackupTiming.Dynamic
+            else -> BackupTiming.Weekly
+        }
     )

@@ -3,6 +3,8 @@ syntax = "proto3";
 option java_package = "com.snow.diary.core.datastore";
 option java_multiple_files = true;
 
+import "com/snow/diary/core/datastore/backup_timing.proto";
+
 message BackupPreferences {
 
   bool backup_enabled = 1;
@@ -11,7 +13,7 @@ message BackupPreferences {
 
   /*
   Backup rules
- */
+  */
 
   bool backup_rule_infinite = 3;
 
@@ -23,4 +25,10 @@ message BackupPreferences {
 
   //Disabled: -1
   sint32 backup_rule_days = 6;
+
+  /*
+  Backup timing
+  */
+
+  BackupTimingProto backupTiming = 7;
 }

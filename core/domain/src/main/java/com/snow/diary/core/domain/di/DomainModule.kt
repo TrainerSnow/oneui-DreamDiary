@@ -43,6 +43,10 @@ import com.snow.diary.core.domain.action.person.PersonsFromRelation
 import com.snow.diary.core.domain.action.person.PersonsWithRelationsAct
 import com.snow.diary.core.domain.action.person.UpdatePerson
 import com.snow.diary.core.domain.action.preferences.GetPreferences
+import com.snow.diary.core.domain.action.preferences.UpdateBackupEnabled
+import com.snow.diary.core.domain.action.preferences.UpdateBackupRule
+import com.snow.diary.core.domain.action.preferences.UpdateBackupTiming
+import com.snow.diary.core.domain.action.preferences.UpdateBackupUri
 import com.snow.diary.core.domain.action.preferences.UpdateColorMode
 import com.snow.diary.core.domain.action.preferences.UpdateObfuscationPreferences
 import com.snow.diary.core.domain.action.preferences.UpdateRequireAuth
@@ -388,6 +392,30 @@ object DomainModule {
         prefsDataSource: PreferencesDataSource
     ) = UpdateObfuscationPreferences(prefsDataSource)
 
+    @Provides
+    @Singleton
+    fun provideUpdateBackupEnabled(
+        prefsDataSource: PreferencesDataSource
+    ) = UpdateBackupEnabled(prefsDataSource)
+
+    @Provides
+    @Singleton
+    fun provideUpdateBackupRule(
+        prefsDataSource: PreferencesDataSource
+    ) = UpdateBackupRule(prefsDataSource)
+
+    @Provides
+    @Singleton
+    fun provideUpdateBackupUri(
+        prefsDataSource: PreferencesDataSource
+    ) = UpdateBackupUri(prefsDataSource)
+
+    @Provides
+    @Singleton
+    fun provideUpdateBackupTiming(
+        prefsDataSource: PreferencesDataSource
+    ) = UpdateBackupTiming(prefsDataSource)
+
 
     /*
     Obfuscation
@@ -439,6 +467,7 @@ object DomainModule {
         allDreams: AllDreams,
         firstDreamDate: FirstDreamDate
     ) = DreamAmountAverage(allDreams, firstDreamDate)
+
     @Provides
     @Singleton
     fun provideHappinessAverage(
