@@ -2,12 +2,14 @@ package com.snow.diary.core.datastore.data
 
 import android.net.Uri
 import androidx.datastore.core.DataStore
+import com.snow.diary.core.datastore.BackupTimingProto
 import com.snow.diary.core.datastore.ColorModeProto
 import com.snow.diary.core.datastore.ObfuscationPreferencesProto
 import com.snow.diary.core.datastore.UserPreferences
 import com.snow.diary.core.datastore.copy
 import com.snow.diary.core.model.preferences.BackupPreferences
 import com.snow.diary.core.model.preferences.BackupRule
+import com.snow.diary.core.model.preferences.BackupTiming
 import com.snow.diary.core.model.preferences.ColorMode
 import com.snow.diary.core.model.preferences.ObfuscationPreferences
 import kotlinx.coroutines.flow.map
@@ -124,5 +126,11 @@ private fun com.snow.diary.core.datastore.BackupPreferences.toModel(): BackupPre
         )
         else if (backupRuleMaxAmount > 0) BackupRule.AmountLimit(backupRuleMaxAmount)
         else if (backupRuleMegabytes > 0) BackupRule.StorageLimit(backupRuleMegabytes)
-        else BackupRule.Infinite
+        else BackupRule.Infinite,
+        backupTiming = when (backupTiming) {
+            BackupTimingProto.BACKUP_TIMING_MONTHLY -> BackupTiming.Monthly
+            BackupTimingProto.BACKUP_TIMING_DAILY -> BackupTiming.Daily
+            BackupTimingProto.BACKUP_TIMING_DYNAMIC -> BackupTiming.Dynamic
+            else -> BackupTiming.Weekly
+        }
     )

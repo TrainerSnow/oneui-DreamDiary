@@ -8,7 +8,9 @@ data class BackupPreferences(
 
     val backupDirectoryUri: String?,
 
-    val backupRule: BackupRule
+    val backupRule: BackupRule,
+
+    val backupTiming: BackupTiming
 
 )
 
