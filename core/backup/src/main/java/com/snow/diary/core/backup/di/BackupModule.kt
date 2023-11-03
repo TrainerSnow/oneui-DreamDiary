@@ -1,8 +1,10 @@
 package com.snow.diary.core.backup.di
 
 import android.content.Context
+import androidx.work.WorkerFactory
 import com.snow.diary.core.backup.BackupRepository
 import com.snow.diary.core.backup.implementation.FileBackupRepository
+import com.snow.diary.core.backup.worker.BackupWorkerFactory
 import com.snow.diary.core.domain.action.io.GetIOData
 import com.snow.diary.core.domain.action.io.ImportIOData
 import com.snow.diary.core.domain.action.preferences.GetPreferences
@@ -25,5 +27,12 @@ object BackupModule {
         getIOData: GetIOData,
         importIOData: ImportIOData
     ): BackupRepository = FileBackupRepository(getPreferences, getIOData, importIOData, context)
+
+    @Provides
+    @Singleton
+    fun backupWorkerFactory(
+        getPreferences: GetPreferences,
+        backupRepository: BackupRepository
+    ): WorkerFactory = BackupWorkerFactory(getPreferences, backupRepository)
 
 }

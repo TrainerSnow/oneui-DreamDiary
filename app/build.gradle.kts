@@ -112,6 +112,7 @@ dependencies {
     implementation(libs.compose.lifecycle.runtime)
 
     implementation(libs.documentfile)
+    implementation(libs.workmanager)
 
     implementation(project(":feature:dreams"))
     implementation(project(":feature:persons"))

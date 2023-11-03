@@ -46,7 +46,8 @@ dependencies {
     implementation(libs.com.google.dagger.hilt.android)
     kapt(libs.com.google.dagger.hilt.android.compiler)
 
-    androidTestImplementation(libs.documentfile)
+    implementation(libs.documentfile)
+    implementation(libs.workmanager)
 
     implementation(project(":core:model"))
     implementation(project(":core:domain"))
