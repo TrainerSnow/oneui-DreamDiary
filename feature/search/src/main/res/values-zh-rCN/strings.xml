@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_dreams">旖梦</string>
+    <string name="search_dreams_hint">搜索梦……</string>
+    <string name="search_persons">人物</string>
+    <string name="search_persons_hint">搜索人物……</string>
+    <string name="search_locations">地点</string>
+    <string name="search_locations_hint">搜索地点……</string>
+    <string name="search_no_query">在搜索框中输入来查找%s</string>
+    <string name="search_no_results">搜索不到，检查是否输错了。</string>
+    <string name="search_searching">搜索中……</string>
+</resources>

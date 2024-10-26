@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="import_title">导入</string>
+    <string name="import_title_failed">导入失败</string>
+    <string name="import_title_success">导入成功</string>
+    <string name="import_loading">导入中……</string>
+    <string name="import_failed_info_title">导入中产生了如下问题：</string>
+    <string name="import_failed_info_help">尝试自己修改这个文件。</string>
+    <string name="import_problem_nonunique">使用了重复的识别id。</string>
+    <string name="import_problem_invalidref">一个梦或者人物引用了一个不存在的构梦元素。</string>
+    <string name="import_problem_corrupted">这个文件截断了。</string>
+    <string name="import_problem_cancel">取消</string>
+    <string name="import_problem_reimport">重新导入</string>
+    <string name="import_success_info">导入以下数据：</string>
+    <string name="import_success_info_dreamsnum">- %s 个梦</string>
+    <string name="import_success_info_personsnum">- %s 个人</string>
+    <string name="import_success_info_locationsnum">- %s 个地点</string>
+    <string name="import_success_info_relationsnum">- %s 段关系</string>
+    <string name="import_success_info_continue">继续</string>
+    <string name="import_config_title">导入选项</string>
+    <string name="import_config_filetype_prompt">选择你要导入的文件类型</string>
+    <string name="import_config_button_label">导入</string>
+</resources>

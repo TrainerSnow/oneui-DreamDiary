@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="location_add_title">新增地点</string>
+    <string name="location_edit_title">编辑地点</string>
+    <string name="location_add_name">地名</string>
+    <string name="location_add_note">记录</string>
+    <string name="location_add_cancel">取消</string>
+    <string name="location_add_save">保存</string>
+    <string name="location_list_title">地点</string>
+    <string name="location_list_subtitle">共计 %s</string>
+    <string name="location_detail_tab_general">一般</string>
+    <string name="location_detail_tab_dreams">梦</string>
+    <string name="location_detail_error">加载地点时发生了一个错误。</string>
+    <string name="location_detail_loading">稍安勿躁，正在加载。</string>
+    <string name="location_detail_note">记录</string>
+    <string name="location_detail_no_further_information">没有更多信息了。</string>
+</resources>

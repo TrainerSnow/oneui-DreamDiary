@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dream_list_title">Dreams</string>
+    <string name="dream_list_subtitle">共计 %s</string>
+    <string name="dream_list_menu_export">导出</string>
+    <string name="dream_list_menu_import">导入</string>
+    <string name="dream_list_menu_about">关于应用</string>
+    <string name="dream_detail_title">来自 %s 的梦</string>
+    <string name="dream_detail_title_placeholder">旖梦</string>
+    <string name="dream_detail_content">内容</string>
+    <string name="dream_detail_notes">记录</string>
+    <string name="dream_detail_clearness">清明</string>
+    <string name="dream_detail_happiness">欢乐</string>
+    <string name="dream_detail_error_title">获取id为%s的梦时发生了错误</string>
+    <string name="dream_detail_loading_title">梦境家在中……</string>
+    <string name="dream_detail_tab_general">一般</string>
+    <string name="dream_detail_tab_persons">人物</string>
+    <string name="dream_detail_tab_locations">地点</string>
+    <string name="dream_detail_tab_content">内容</string>
+    <string name="dream_detail_tab_other">其他</string>
+    <string name="dream_add_person_search_hint">搜索人物……</string>
+    <string name="dream_add_location_search_hint">搜索地点……</string>
+    <string name="dream_add_title">新增</string>
+    <string name="dream_add_title_edit">编辑</string>
+    <string name="dream_add_content_hint">内容</string>
+    <string name="dream_add_note_hint">记录</string>
+    <string name="dream_add_clearness">清明</string>
+    <string name="dream_add_happiness">欢乐</string>
+    <string name="dream_add_expand">查看更多</string>
+    <string name="dream_add_shrink">收起</string>
+    <string name="dream_add_markasfavourite">添加至收藏</string>
+    <string name="dream_add_save">保存</string>
+    <string name="dream_add_cancel">取消</string>
+</resources>
