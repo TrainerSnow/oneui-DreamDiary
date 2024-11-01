@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preferences_main_title">设置</string>
+    <string name="preferences_main_section_visuals">界面</string>
+    <string name="preferences_main_section_privacy">隐私</string>
+    <string name="preferences_main_colormode">主题</string>
+    <string name="preferences_main_requireauth">需要认证</string>
+    <string name="preferences_main_requireauth_desc">密码提示</string>
+    <string name="preferences_main_securitymode_desc">保护数据的手段</string>
+    <string name="preferences_main_obfuscation">展示模式</string>
+    <string name="preferences_main_obfuscation_desc">隐藏展示信息</string>
+    <string name="preferences_obfuscate_title">展示模式</string>
+    <string name="preferences_obfuscate_info">如果你会对外人展示你的数据，请选择哪些需要混淆。</string>
+    <string name="preferences_obfuscate_dreams">要隐藏的梦</string>
+    <string name="preferences_obfuscate_persons">要隐藏的人</string>
+    <string name="preferences_obfuscate_locations">要隐藏的地点</string>
+    <string name="preferences_obfuscate_relations">要隐藏的关系</string>
+    <string name="colormode_light">亮色</string>
+    <string name="colormode_dark">深色</string>
+    <string name="colormode_system">跟随系统</string>
+    <string name="securitymode_biometric">生物识别</string>
+    <string name="securitymode_default">默认</string>
+    <string name="securitymode_none">无</string>
+    <string name="about_this_app">关于应用</string>
+    <string name="preferences_main_section_other">其他</string>
+</resources>

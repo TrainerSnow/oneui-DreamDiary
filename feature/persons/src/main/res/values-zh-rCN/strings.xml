@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="person_list_title">人物</string>
+    <string name="person_list_subtitle">共计</string>
+    <string name="person_detail_note">记录</string>
+    <string name="person_detail_no_info">没有更多信息。</string>
+    <string name="person_detail_error">出错了，不能加载这个人。</string>
+    <string name="person_detail_loading">稍安勿躁，正在加载。</string>
+    <string name="person_detail_general">一般</string>
+    <string name="person_detail_dreams">梦</string>
+    <string name="person_add_title">新增人物</string>
+    <string name="person_edit_title">编辑人物</string>
+    <string name="person_add_name">姓名</string>
+    <string name="person_add_note">记录</string>
+    <string name="person_add_relation_list_hint">搜索联系</string>
+    <string name="person_add_cancel">取消</string>
+    <string name="person_add_save">保存</string>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="relation_list_title">关系</string>
+    <string name="relation_list_subtitle">共计 %s</string>
+    <string name="relation_edit_title">编辑关系</string>
+    <string name="relation_add_title">新增关系</string>
+    <string name="relation_add_name">名字</string>
+    <string name="relation_add_notes">记录</string>
+    <string name="relation_add_color">颜色</string>
+    <string name="relation_add_cancel">取消</string>
+    <string name="relation_add_save">保存</string>
+    <string name="relation_detail_tab_general">一般</string>
+    <string name="relation_detail_tab_persons">人物</string>
+    <string name="relation_detail_error">加载关系时出错了。</string>
+    <string name="relation_detail_loading">稍安勿躁，正在加载。</string>
+    <string name="relation_detail_note">记录</string>
+    <string name="relation_detail_no_info">没有更多信息了。</string>
+</resources>

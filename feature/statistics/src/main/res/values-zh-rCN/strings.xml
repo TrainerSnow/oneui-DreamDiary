@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stats_nav_dreams">旖梦</string>
+    <string name="stats_nav_persons">人物</string>
+    <string name="stats_nav_locations">人物</string>
+    <string name="stats_no_data_available">没有可供统计的数据。多多益善！</string>
+    <string name="stats_loading">加载中……</string>
+    <string name="stats_dreams_amount_title">做梦总数</string>
+    <string name="stats_dreams_amount_amount">总共做梦：</string>
+    <string name="stats_dreams_amount_avg">月平均：</string>
+    <string name="stats_dreams_metric_title">做梦质量</string>
+    <string name="stats_dreams_metric_happiness">欢乐：%s</string>
+    <string name="stats_dreams_metric_clearnesss">清明：%s</string>
+    <string name="stats_dreams_graph_period_week">周</string>
+    <string name="stats_dreams_graph_period_month">月</string>
+    <string name="stats_dreams_graph_period_year">年</string>
+    <string name="stats_dreams_graph_title">做梦周期</string>
+    <string name="stats_dreams_weekday_title">周末的梦</string>
+    <string name="stats_dreams_weekday_most">何时常常做梦：</string>
+    <string name="stats_dreams_main_title">做梦统计</string>
+    <string name="stats_dreams_main_range_title">选择范围</string>
+    <string name="stats_persons_amount_title">人物总数</string>
+    <string name="stats_persons_amount_total">总共人物：</string>
+    <string name="stats_persons_amount_used">出场人物：</string>
+    <string name="stats_persons_amount_unused">未出场人物：</string>
+    <string name="stats_persons_amount_most_amount">%s次</string>
+    <string name="stats_persons_main_title">人物统计</string>
+    <string name="stats_locations_amount_title">地点总数</string>
+    <string name="stats_locations_amount_total">总共地点：</string>
+    <string name="stats_locations_amount_used">发生地点：</string>
+    <string name="stats_locations_amount_unused">未发生地点：</string>
+    <string name="stats_locations_amount_most_amount">%次</string>
+    <string name="stats_locations_main_title">地点统计</string>
+</resources>

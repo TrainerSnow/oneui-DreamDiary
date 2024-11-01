@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="export_button_label">Export</string>
+    <string name="export_filetype_json_info">JSON文件。常用于在设备间传输。</string>
+    <string name="export_filetype_csv_info">CSV文件。常用于使用其他软件访问，例如Excel。</string>
+    <string name="export_warning_no_import">警告：这种文件格式将不能被重新导入，只能用于让人类阅读。</string>
+    <string name="export_info">选择文件类型</string>
+    <string name="export_title">导出选项</string>
+    <string name="export_file_name">数据导出至%s</string>
+    <string name="export_success">已导出。</string>
+    <string name="export_failure">导出数据时发生错误。</string>
+</resources>

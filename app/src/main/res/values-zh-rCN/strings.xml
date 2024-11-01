@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">一梦华胥</string>
+    <string name="nav_dreams">旖梦</string>
+    <string name="nav_persons">人物</string>
+    <string name="nav_locations">地点</string>
+    <string name="nav_stats">统计</string>
+    <string name="blocked_by_obfuscation">展示模式下，此操作无法完成。</string>
+    <string name="auth_title">身份验证</string>
+    <string name="auth_desc">验证身份以访问这个应用</string>
+</resources>
